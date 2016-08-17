@@ -13,19 +13,6 @@ var babel = require("gulp-babel");
 var autoprefixer = require("gulp-autoprefixer");
 var sourcemaps = require("gulp-sourcemaps");
 
-gulp.task("concat", function() {
-	var files = "mavo util permissions storage node unit expression functions scope primitive primitive.imgur collection prettyprint debug storage.dropbox storage.github"
-	            .split(" ").map(path => `src/${path}.js`);
-	files.unshift("../bliss/bliss.js");
-	files.unshift("../stretchy/stretchy.js");
-
-	return gulp.src(files)
-		.pipe(sourcemaps.init())
-		.pipe(concat("mavo.js"))
-		.pipe(sourcemaps.write("."))
-		.pipe(gulp.dest("."));
-});
-
 gulp.task("sass", function() {
 	return gulp.src(["**/*.scss", "!node_modules/**"])
 		.pipe(sourcemaps.init())
@@ -39,45 +26,13 @@ gulp.task("sass", function() {
 		.pipe(gulp.dest("."));
 });
 
-gulp.task("transpile", ["concat"], function() {
-	return gulp.src(["mavo.js"])
-	.pipe(sourcemaps.init())
-	.pipe(babel({
-		"presets": ["ES2015"],
-		compact: false
-	}))
-	.on("error", function(error) {
-		console.error(error.message, error.loc);
-		this.emit("end");
-	})
-	.pipe(rename({ suffix: ".es5" }))
-	.pipe(sourcemaps.write("."))
-	.pipe(gulp.dest("."));
-
-});
-
-gulp.task("minify", ["concat", "transpile"], function() {
-	var u = uglify({output: {
-		max_line_len  : 1000 // to prevent merge conflicts
-	}});
-
-	u.on("error", function(error) {
-		console.error(error);
-		u.end();
-	});
-
-	return gulp.src(["mavo.es5.js"])
-	.pipe(sourcemaps.init())
-	.pipe(u)
-	.pipe(rename("mavo.min.js"))
-	.pipe(sourcemaps.write("."))
-	.pipe(gulp.dest("."));
-
+gulp.task("update", function() {
+	gulp.src(["../mavo/build/*"]).pipe(gulp.dest("mavo"));
 });
 
 gulp.task("watch", function() {
-	gulp.watch(["src/*.js", "../bliss/bliss.min.js", "../stretchy/stretchy.js"], ["concat", "transpile", "minify"]);
+	gulp.watch(["../mavo/build/*"], ["update"]);
 	gulp.watch(["**/*.scss"], ["sass"]);
 });
 
-gulp.task("default", ["concat", "sass", "transpile", "minify"]);
+gulp.task("default", ["update", "sass"]);
