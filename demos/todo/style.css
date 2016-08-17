@@ -119,7 +119,7 @@ input::-moz-placeholder {
 
 body > header {
 	display: block;
-	margin: 2em 0 3.5em;
+	margin: 2em 0 3em;
 	text-shadow: 0 -1px 3px black;
 	opacity: .9;
 }
@@ -142,27 +142,6 @@ body > footer {
 
 .auth-controls, .progress {
 	mix-blend-mode: multiply;
-}
-
-/* For paper figure */
-h1 {
-	display: none;
-}
-
-body > header {
-	margin: 1.5em 0;
-}
-
-header > p {
-	font-size: 1.5em;
-	font-weight: bold;
-	letter-spacing: -.02em;
-}
-
-header > p::before {
-	content: "My Tasks: ";
-	font-weight: 100;
-	letter-spacing: normal;
 }
 
 li[property=task].deleted {

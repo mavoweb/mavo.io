@@ -31,7 +31,7 @@ gulp.task("update", function() {
 });
 
 gulp.task("watch", function() {
-	gulp.watch(["../mavo/build/*"], ["update"]);
+	gulp.watch(["../mavo/dist/*"], ["update"]);
 	gulp.watch(["**/*.scss"], ["sass"]);
 });
 
