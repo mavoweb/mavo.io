@@ -27,7 +27,7 @@ gulp.task("sass", function() {
 });
 
 gulp.task("update", function() {
-	gulp.src(["../mavo/build/*"]).pipe(gulp.dest("mavo"));
+	gulp.src(["../mavo/dist/**/*"]).pipe(gulp.dest("mavo"));
 });
 
 gulp.task("watch", function() {
