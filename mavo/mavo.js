@@ -1,4 +1,7 @@
 !function(){"use strict";function t(e,n,s){return n=void 0===n?1:n,s=s||n+1,1>=s-n?function(){if(arguments.length<=n||"string"===r.type(arguments[n]))return e.apply(this,arguments);var t,s=arguments[n];for(var i in s){var o=Array.from(arguments);o.splice(n,1,i,s[i]),t=e.apply(this,o)}return t}:t(t(e,n+1,s),n,s-1)}function e(t,r,s){var i=n(s);if("string"===i){var o=Object.getOwnPropertyDescriptor(r,s);!o||o.writable&&o.configurable&&o.enumerable&&!o.get&&!o.set?t[s]=r[s]:(delete t[s],Object.defineProperty(t,s,o))}else if("array"===i)s.forEach(function(n){n in r&&e(t,r,n)});else for(var a in r)s&&("regexp"===i&&!s.test(a)||"function"===i&&!s.call(r,a))||e(t,r,a);return t}function n(t){if(null===t)return"null";if(void 0===t)return"undefined";var e=(Object.prototype.toString.call(t).match(/^\[object\s+(.*?)\]$/)[1]||"").toLowerCase();return"number"==e&&isNaN(t)?"nan":e}var r=self.Bliss=e(function(t,e){return 2!=arguments.length||e?"string"===r.type(t)?(e||document).querySelector(t):t||null:null},self.Bliss);e(r,{extend:e,overload:t,type:n,property:r.property||"_",sources:{},noop:function(){},$:function(t,e){return t instanceof Node||t instanceof Window?[t]:2!=arguments.length||e?Array.from("string"==typeof t?(e||document).querySelectorAll(t):t||[]):[]},defined:function(){for(var t=0;t<arguments.length;t++)if(void 0!==arguments[t])return arguments[t]},create:function(t,e){return t instanceof Node?r.set(t,e):(1===arguments.length&&("string"===r.type(t)?e={}:(e=t,t=e.tag,e=r.extend({},e,function(t){return"tag"!==t}))),r.set(document.createElement(t||"div"),e))},each:function(t,e,n){n=n||{};for(var r in t)n[r]=e.call(t,r,t[r]);return n},ready:function(t){return t=t||document,new Promise(function(e,n){"loading"!==t.readyState?e():t.addEventListener("DOMContentLoaded",function(){e()})})},Class:function(t){var e=["constructor","extends","abstract","static"].concat(Object.keys(r.classProps)),n=t.hasOwnProperty("constructor")?t.constructor:r.noop,s=function(){if(this.constructor.__abstract&&this.constructor===s)throw new Error("Abstract classes cannot be directly instantiated.");s["super"]&&s["super"].apply(this,arguments),n.apply(this,arguments)};s["super"]=t["extends"]||null,s.prototype=r.extend(Object.create(s["super"]?s["super"].prototype:Object),{constructor:s});var i=function(t){return this.hasOwnProperty(t)&&-1===e.indexOf(t)};if(t["static"]){r.extend(s,t["static"],i);for(var o in r.classProps)o in t["static"]&&r.classProps[o](s,t["static"][o])}r.extend(s.prototype,t,i);for(var o in r.classProps)o in t&&r.classProps[o](s.prototype,t[o]);return s.prototype["super"]=s["super"]?s["super"].prototype:null,s.__abstract=!!t["abstract"],s},classProps:{lazy:t(function(t,e,n){return Object.defineProperty(t,e,{get:function(){var t=n.call(this);return Object.defineProperty(this,e,{value:t,configurable:!0,enumerable:!0,writable:!0}),t},set:function(t){Object.defineProperty(this,e,{value:t,configurable:!0,enumerable:!0,writable:!0})},configurable:!0,enumerable:!0}),t}),live:t(function(t,e,n){return"function"===r.type(n)&&(n={set:n}),Object.defineProperty(t,e,{get:function(){var t=this["_"+e],r=n.get&&n.get.call(this,t);return void 0!==r?r:t},set:function(t){var r=this["_"+e],s=n.set&&n.set.call(this,t,r);this["_"+e]=void 0!==s?s:t},configurable:n.configurable,enumerable:n.enumerable}),t})},include:function(){var t=arguments[arguments.length-1],e=2===arguments.length?arguments[0]:!1,n=document.createElement("script");return e?Promise.resolve():new Promise(function(e,s){r.set(n,{async:!0,onload:function(){e(),r.remove(n)},onerror:function(){s()},src:t,inside:document.head})})},fetch:function(t,n){if(!t)throw new TypeError("URL parameter is mandatory and cannot be "+t);var s=e({url:new URL(t,location),data:"",method:"GET",headers:{},xhr:new XMLHttpRequest},n);s.method=s.method.toUpperCase(),r.hooks.run("fetch-args",s),"GET"===s.method&&s.data&&(s.url.search+=s.data),document.body.setAttribute("data-loading",s.url),s.xhr.open(s.method,s.url.href,s.async!==!1,s.user,s.password);for(var i in n)if(i in s.xhr)try{s.xhr[i]=n[i]}catch(o){self.console&&console.error(o)}"GET"===s.method||s.headers["Content-type"]||s.headers["Content-Type"]||s.xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");for(var a in s.headers)s.xhr.setRequestHeader(a,s.headers[a]);return new Promise(function(t,e){s.xhr.onload=function(){document.body.removeAttribute("data-loading"),0===s.xhr.status||s.xhr.status>=200&&s.xhr.status<300||304===s.xhr.status?t(s.xhr):e(r.extend(Error(s.xhr.statusText),{xhr:s.xhr,get status(){return this.xhr.status}}))},s.xhr.onerror=function(){document.body.removeAttribute("data-loading"),e(r.extend(Error("Network Error"),{xhr:s.xhr}))},s.xhr.ontimeout=function(){document.body.removeAttribute("data-loading"),e(r.extend(Error("Network Timeout"),{xhr:s.xhr}))},s.xhr.send("GET"===s.method?null:s.data)})},value:function(t){var e="string"!==r.type(t);return r.$(arguments).slice(+e).reduce(function(t,e){return t&&t[e]},e?t:self)}}),r.Hooks=new r.Class({add:function(t,e,n){(Array.isArray(t)?t:[t]).forEach(function(t){this[t]=this[t]||[],this[t][n?"unshift":"push"](e)},this)},run:function(t,e){this[t]=this[t]||[],this[t].forEach(function(t){t.call(e&&e.context?e.context:e,e)})}}),r.hooks=new r.Hooks;var s=r.property;r.Element=function(t){this.subject=t,this.data={},this.bliss={}},r.Element.prototype={set:t(function(t,e){t in r.setProps?r.setProps[t].call(this,e):t in this?this[t]=e:this.setAttribute(t,e)},0),transition:function(t,e){return e=+e||400,new Promise(function(n,s){if("transition"in this.style){var i=r.extend({},this.style,/^transition(Duration|Property)$/);r.style(this,{transitionDuration:(e||400)+"ms",transitionProperty:Object.keys(t).join(", ")}),r.once(this,"transitionend",function(){clearTimeout(o),r.style(this,i),n(this)});var o=setTimeout(n,e+50,this);r.style(this,t)}else r.style(this,t),n(this)}.bind(this))},fire:function(t,e){var n=document.createEvent("HTMLEvents");return n.initEvent(t,!0,!0),this.dispatchEvent(r.extend(n,e))},unbind:t(function(t,e){(t||"").split(/\s+/).forEach(function(t){if(s in this&&(t.indexOf(".")>-1||!e)){t=(t||"").split(".");var n=t[1];t=t[0];var r=this[s].bliss.listeners=this[s].bliss.listeners||{};for(var i in r)if(!t||i===t)for(var o,a=0;o=r[i][a];a++)n&&n!==o.className||e&&e!==o.callback||(this.removeEventListener(i,o.callback,o.capture),a--)}else this.removeEventListener(t,e)},this)},0)},r.setProps={style:function(t){r.extend(this.style,t)},attributes:function(t){for(var e in t)this.setAttribute(e,t[e])},properties:function(t){r.extend(this,t)},events:function(t){if(t&&t.addEventListener){var e=this;if(t[s]&&t[s].bliss){var n=t[s].bliss.listeners;for(var i in n)n[i].forEach(function(t){e.addEventListener(i,t.callback,t.capture)})}for(var o in t)0===o.indexOf("on")&&(this[o]=t[o])}else if(arguments.length>1&&"string"===r.type(t)){var a=arguments[1],u=arguments[2];t.split(/\s+/).forEach(function(t){this.addEventListener(t,a,u)},this)}else for(var c in t)r.events(this,c,t[c])},once:t(function(t,e){t=t.split(/\s+/);var n=this,r=function(){return t.forEach(function(t){n.removeEventListener(t,r)}),e.apply(n,arguments)};t.forEach(function(t){n.addEventListener(t,r)})},0),delegate:t(function(t,e,n){this.addEventListener(t,function(t){t.target.closest(e)&&n.call(this,t)})},0,2),contents:function(t){(t||0===t)&&(Array.isArray(t)?t:[t]).forEach(function(t){var e=r.type(t);/^(string|number)$/.test(e)?t=document.createTextNode(t+""):"object"===e&&(t=r.create(t)),t instanceof Node&&this.appendChild(t)},this)},inside:function(t){t.appendChild(this)},before:function(t){t.parentNode.insertBefore(this,t)},after:function(t){t.parentNode.insertBefore(this,t.nextSibling)},start:function(t){t.insertBefore(this,t.firstChild)},around:function(t){t.parentNode&&r.before(this,t),(/^template$/i.test(this.nodeName)?this.content||this:this).appendChild(t)}},r.Array=function(t){this.subject=t},r.Array.prototype={all:function(t){var e=$$(arguments).slice(1);return this[t].apply(this,e)}},r.add=t(function(t,e,n,s){n=r.extend({$:!0,element:!0,array:!0},n),"function"==r.type(e)&&(!n.element||t in r.Element.prototype&&s||(r.Element.prototype[t]=function(){return this.subject&&r.defined(e.apply(this.subject,arguments),this.subject)}),!n.array||t in r.Array.prototype&&s||(r.Array.prototype[t]=function(){var t=arguments;return this.subject.map(function(n){return n&&r.defined(e.apply(n,t),n)})}),n.$&&(r.sources[t]=r[t]=e,(n.array||n.element)&&(r[t]=function(){var e=[].slice.apply(arguments),s=e.shift(),i=n.array&&Array.isArray(s)?"Array":"Element";return r[i].prototype[t].apply({subject:s},e)})))},0),r.add(r.Array.prototype,{element:!1}),r.add(r.Element.prototype),r.add(r.setProps),r.add(r.classProps,{element:!1,array:!1});var i=document.createElement("_");r.add(r.extend({},HTMLElement.prototype,function(t){return"function"===r.type(i[t])}),null,!0)}(),function(t){"use strict";if(Bliss&&!Bliss.shy){var e=Bliss.property;if(t.add({clone:function(){var e=this.cloneNode(!0),n=t.$("*",e).concat(e);return t.$("*",this).concat(this).forEach(function(e,r,s){t.events(n[r],e),n[r]._.data=t.extend({},e._.data)}),e}},{array:!1}),Object.defineProperty(Node.prototype,e,{get:function o(){return Object.defineProperty(Node.prototype,e,{get:void 0}),Object.defineProperty(this,e,{value:new t.Element(this)}),Object.defineProperty(Node.prototype,e,{get:o}),this[e]},configurable:!0}),Object.defineProperty(Array.prototype,e,{get:function(){return Object.defineProperty(this,e,{value:new t.Array(this)}),this[e]},configurable:!0}),self.EventTarget&&"addEventListener"in EventTarget.prototype){var n=EventTarget.prototype.addEventListener,r=EventTarget.prototype.removeEventListener,s=function(t,e,n){return n.callback===t&&n.capture==e},i=function(){return!s.apply(this,arguments)};EventTarget.prototype.addEventListener=function(t,r,i){if(this&&this[e]&&this[e].bliss&&r){var o=this[e].bliss.listeners=this[e].bliss.listeners||{};if(t.indexOf(".")>-1){t=t.split(".");var a=t[1];t=t[0]}o[t]=o[t]||[],0===o[t].filter(s.bind(null,r,i)).length&&o[t].push({callback:r,capture:i,className:a})}return n.call(this,t,r,i)},EventTarget.prototype.removeEventListener=function(t,n,s){if(this&&this[e]&&this[e].bliss&&n){var o=this[e].bliss.listeners=this[e].bliss.listeners||{};o[t]&&(o[t]=o[t].filter(i.bind(null,n,s)))}return r.call(this,t,n,s)}}self.$=self.$||t,self.$$=self.$$||t.$}}(Bliss);
+/* jsep v0.3.0 (http://jsep.from.so/) */
+!function(a){"use strict";var b="Compound",c="Identifier",d="MemberExpression",e="Literal",f="ThisExpression",g="CallExpression",h="UnaryExpression",i="BinaryExpression",j="LogicalExpression",k="ConditionalExpression",l="ArrayExpression",m=46,n=44,o=39,p=34,q=40,r=41,s=91,t=93,u=63,v=59,w=58,x=function(a,b){var c=new Error(a+" at character "+b);throw c.index=b,c.description=a,c},y=!0,z={"-":y,"!":y,"~":y,"+":y},A={"||":1,"&&":2,"|":3,"^":4,"&":5,"==":6,"!=":6,"===":6,"!==":6,"<":7,">":7,"<=":7,">=":7,"<<":8,">>":8,">>>":8,"+":9,"-":9,"*":10,"/":10,"%":10},B=function(a){var b,c=0;for(var d in a)(b=d.length)>c&&a.hasOwnProperty(d)&&(c=b);return c},C=B(z),D=B(A),E={"true":!0,"false":!1,"null":null},F="this",G=function(a){return A[a]||0},H=function(a,b,c){var d="||"===a||"&&"===a?j:i;return{type:d,operator:a,left:b,right:c}},I=function(a){return a>=48&&57>=a},J=function(a){return 36===a||95===a||a>=65&&90>=a||a>=97&&122>=a},K=function(a){return 36===a||95===a||a>=65&&90>=a||a>=97&&122>=a||a>=48&&57>=a},L=function(a){for(var i,j,y=0,B=a.charAt,L=a.charCodeAt,M=function(b){return B.call(a,b)},N=function(b){return L.call(a,b)},O=a.length,P=function(){for(var a=N(y);32===a||9===a;)a=N(++y)},Q=function(){var a,b,c=S();return P(),N(y)!==u?c:(y++,a=Q(),a||x("Expected expression",y),P(),N(y)===w?(y++,b=Q(),b||x("Expected expression",y),{type:k,test:c,consequent:a,alternate:b}):void x("Expected :",y))},R=function(){P();for(var b=a.substr(y,D),c=b.length;c>0;){if(A.hasOwnProperty(b))return y+=c,b;b=b.substr(0,--c)}return!1},S=function(){var a,b,c,d,e,f,g,h;if(f=T(),b=R(),!b)return f;for(e={value:b,prec:G(b)},g=T(),g||x("Expected expression after "+b,y),d=[f,e,g];(b=R())&&(c=G(b),0!==c);){for(e={value:b,prec:c};d.length>2&&c<=d[d.length-2].prec;)g=d.pop(),b=d.pop().value,f=d.pop(),a=H(b,f,g),d.push(a);a=T(),a||x("Expected expression after "+b,y),d.push(e,a)}for(h=d.length-1,a=d[h];h>1;)a=H(d[h-1].value,d[h-2],a),h-=2;return a},T=function(){var b,c,d;if(P(),b=N(y),I(b)||b===m)return U();if(b===o||b===p)return V();if(J(b)||b===q)return Y();if(b===s)return $();for(c=a.substr(y,C),d=c.length;d>0;){if(z.hasOwnProperty(c))return y+=d,{type:h,operator:c,argument:T(),prefix:!0};c=c.substr(0,--d)}return!1},U=function(){for(var a,b,c="";I(N(y));)c+=M(y++);if(N(y)===m)for(c+=M(y++);I(N(y));)c+=M(y++);if(a=M(y),"e"===a||"E"===a){for(c+=M(y++),a=M(y),("+"===a||"-"===a)&&(c+=M(y++));I(N(y));)c+=M(y++);I(N(y-1))||x("Expected exponent ("+c+M(y)+")",y)}return b=N(y),J(b)?x("Variable names cannot start with a number ("+c+M(y)+")",y):b===m&&x("Unexpected period",y),{type:e,value:parseFloat(c),raw:c}},V=function(){for(var a,b="",c=M(y++),d=!1;O>y;){if(a=M(y++),a===c){d=!0;break}if("\\"===a)switch(a=M(y++)){case"n":b+="\n";break;case"r":b+="\r";break;case"t":b+="	";break;case"b":b+="\b";break;case"f":b+="\f";break;case"v":b+=""}else b+=a}return d||x('Unclosed quote after "'+b+'"',y),{type:e,value:b,raw:c+b+c}},W=function(){var b,d=N(y),g=y;for(J(d)?y++:x("Unexpected "+M(y),y);O>y&&(d=N(y),K(d));)y++;return b=a.slice(g,y),E.hasOwnProperty(b)?{type:e,value:E[b],raw:b}:b===F?{type:f}:{type:c,name:b}},X=function(a){for(var c,d,e=[];O>y;){if(P(),c=N(y),c===a){y++;break}c===n?y++:(d=Q(),d&&d.type!==b||x("Expected comma",y),e.push(d))}return e},Y=function(){var a,b;for(a=N(y),b=a===q?Z():W(),P(),a=N(y);a===m||a===s||a===q;)y++,a===m?(P(),b={type:d,computed:!1,object:b,property:W()}):a===s?(b={type:d,computed:!0,object:b,property:Q()},P(),a=N(y),a!==t&&x("Unclosed [",y),y++):a===q&&(b={type:g,arguments:X(r),callee:b}),P(),a=N(y);return b},Z=function(){y++;var a=Q();return P(),N(y)===r?(y++,a):void x("Unclosed (",y)},$=function(){return y++,{type:l,elements:X(t)}},_=[];O>y;)i=N(y),i===v||i===n?y++:(j=Q())?_.push(j):O>y&&x('Unexpected "'+M(y)+'"',y);return 1===_.length?_[0]:{type:b,body:_}};if(L.version="0.3.0",L.toString=function(){return"JavaScript Expression Parser (JSEP) v"+L.version},L.addUnaryOp=function(a){return z[a]=y,this},L.addBinaryOp=function(a,b){return D=Math.max(a.length,D),A[a]=b,this},L.removeUnaryOp=function(a){return delete z[a],a.length===C&&(C=B(z)),this},L.removeBinaryOp=function(a){return delete A[a],a.length===D&&(D=B(A)),this},"undefined"==typeof exports){var M=a.jsep;a.jsep=L,L.noConflict=function(){return a.jsep===L&&(a.jsep=M),L}}else"undefined"!=typeof module&&module.exports?exports=module.exports=L:exports.parse=L}(this);
+//# sourceMappingURL=jsep.min.js.map
 /*
  * Stretchy: Form element autosizing, the way it should be.
  * by Lea Verou http://lea.verou.me
@@ -618,15 +621,6 @@ var _ = $.extend(Mavo, {
 				 .replace(/^[a-z]/, $0 => $0.toUpperCase()); // Capitalize
 	},
 
-	// Inverse of _.readable(): Take a readable string and turn it into an identifier
-	identifier: function (readable) {
-		readable = readable + "";
-		return readable && readable
-				 .replace(/\s+/g, "-") // Convert whitespace to hyphens
-				 .replace(/[^\w-]/g, "") // Remove weird characters
-				 .toLowerCase();
-	},
-
 	queryJSON: function(data, path) {
 		if (!path || !data) {
 			return data;
@@ -1121,16 +1115,7 @@ var _ = Mavo.Storage = $.Class({
 
 	live: {
 		inProgress: function(value) {
-			if (value) {
-				var p = $.create("div", {
-					textContent: value + "…",
-					className: "progress",
-					inside: this.mavo.wrapper
-				});
-			}
-			else {
-				$.remove($(".progress", this.mavo.wrapper));
-			}
+			this.mavo.wrapper[`${value? "set" : "remove"}Attribute`]("data-mv-progress", value);
 		}
 	},
 
@@ -1568,7 +1553,7 @@ var _ = Mavo.Expression = $.Class({
 
 		try {
 			if (!this.function) {
-				this.function = this.createFunction();
+				this.function = _.compile(this.expression);
 			}
 
 			this.value = this.function(data);
@@ -1586,27 +1571,6 @@ var _ = Mavo.Expression = $.Class({
 		return this.expression;
 	},
 
-	createFunction: function() {
-		var code = this.expression;
-
-		if (/^if\([\S\s]+\)$/i.test(code)) {
-			code = code.replace(/^if\(/, "iff(");
-		}
-
-		// Transform simple operators to array-friendly math functions
-		code = code.replace(_.simpleOperation, (expr, operand1, operator, operand2) => {
-			var ret = `(${Mavo.Functions.operators[operator]}(${operand1}, ${operand2}))`;
-			return ret;
-		});
-
-		_.simpleOperation.lastIndex = 0;
-
-		return new Function("data", `with(Mavo.Functions._Trap)
-				with(data) {
-					return ${code};
-				}`);
-	},
-
 	live: {
 		expression: function(value) {
 			var code = value = value.trim();
@@ -1618,6 +1582,61 @@ var _ = Mavo.Expression = $.Class({
 	static: {
 		ERROR: "N/A",
 
+		serializers: {
+			"BinaryExpression": node => `${_.serialize(node.left)} ${node.operator} ${_.serialize(node.right)}`,
+			"UnaryExpression": node => `${node.operator}${_.serialize(node.argument)}`,
+			"CallExpression": node => `${_.serialize(node.callee)}(${node.arguments.map(_.serialize).join(", ")})`,
+			"ConditionalExpression": node => `${_.serialize(node.test)}? ${_.serialize(node.consequent)} : ${_.serialize(node.alternate)}`,
+			"MemberExpression": node => `${_.serialize(node.object)}[${_.serialize(node.property)}]`,
+			"ArrayExpression": node => `[${node.elements.map(_.serialize).join(", ")}]`,
+			"Literal": node => node.raw,
+			"Identifier": node => node.name,
+			"ThisExpression": node => "this",
+			"Compound": node => node.body.map(_.serialize).join(" ")
+		},
+
+		transformations: {
+			"BinaryExpression": node => `${Mavo.Functions.operators[node.operator] || node.operator}(${_.serialize(node.left)}, ${_.serialize(node.right)})`,
+			"CallExpression": node => {
+				if (node.callee.type == "Identifier" && node.callee.name == "if") {
+					node.callee.name = "iff";
+				}
+			}
+		},
+
+		serialize: node => {
+			if (_.transformations[node.type]) {
+				var ret = _.transformations[node.type](node);
+
+				if (ret !== undefined) {
+					return ret;
+				}
+			}
+
+			return _.serializers[node.type](node);
+		},
+
+		rewrite: function(code) {
+			try {
+				return _.serialize(_.parse(code));
+			}
+			catch (e) {
+				// Parsing as MavoScript failed, falling back to plain JS
+				return code;
+			}
+		},
+
+		compile: function(code) {
+			code = _.rewrite(code);
+
+			return new Function("data", `with(Mavo.Functions._Trap)
+					with(data) {
+						return ${code};
+					}`);
+		},
+
+		parse: self.jsep,
+
 		lazy: {
 			simpleOperation: function() {
 				var operator = Object.keys(Mavo.Functions.operators).map(o => o.replace(/[|*+]/g, "\\$&")).join("|");
@@ -1628,6 +1647,74 @@ var _ = Mavo.Expression = $.Class({
 		}
 	}
 });
+
+if (self.jsep) {
+	jsep.addBinaryOp("and", 2);
+	jsep.addBinaryOp("or", 2);
+	jsep.addBinaryOp("=", 6);
+	jsep.removeBinaryOp("===");
+}
+
+_.serializers.LogicalExpression = _.serializers.BinaryExpression;
+_.transformations.LogicalExpression = _.transformations.BinaryExpression;
+
+(function() {
+var _ = Mavo.Expression.Syntax = $.Class({
+	constructor: function(start, end) {
+		this.start = start;
+		this.end = end;
+		this.regex = RegExp(`${Mavo.escapeRegExp(start)}([\\S\\s]+?)${Mavo.escapeRegExp(end)}`, "gi");
+	},
+
+	test: function(str) {
+		this.regex.lastIndex = 0;
+
+		return this.regex.test(str);
+	},
+
+	tokenize: function(str) {
+		var match, ret = [], lastIndex = 0;
+
+		this.regex.lastIndex = 0;
+
+		while ((match = this.regex.exec(str)) !== null) {
+			// Literal before the expression
+			if (match.index > lastIndex) {
+				ret.push(str.substring(lastIndex, match.index));
+			}
+
+			lastIndex = this.regex.lastIndex;
+
+			ret.push(new Mavo.Expression(match[1]));
+		}
+
+		// Literal at the end
+		if (lastIndex < str.length) {
+			ret.push(str.substring(lastIndex));
+		}
+
+		return ret;
+	},
+
+	static: {
+		create: function(element) {
+			if (element) {
+				var syntax = element.getAttribute("data-expressions");
+
+				if (syntax) {
+					syntax = syntax.trim();
+					return /\s/.test(syntax)? new _(...syntax.split(/\s+/)) : _.ESCAPE;
+				}
+			}
+		},
+
+		ESCAPE: -1
+	}
+});
+
+_.default = new _("[", "]");
+
+})();
 
 (function() {
 
@@ -1646,29 +1733,33 @@ var _ = Mavo.Expression.Text = $.Class({
 		}
 
 		this.element = this.node;
-
 		this.attribute = o.attribute || null;
 
-		if (this.node.nodeType === 3) {
-			this.element = this.node.parentNode;
+		if (this.attribute == "data-content") {
+			this.attribute = Mavo.Primitive.getValueAttribute(this.element);
+			this.expression = Mavo.Primitive.getValue(this.element, "data-content", null, {raw: true});
 
-			// If no element siblings make this.node the element, which is more robust
-			// Same if attribute, there are no attributes on a text node!
-			if (!this.node.parentNode.children.length || this.attribute) {
-				this.node = this.element;
-				this.element.normalize();
+			if (!this.syntax.test(this.expression)) {
+				// If no delimiters, assume entire thing is an expression
+				this.expression = this.syntax.start + this.expression + this.syntax.end;
 			}
 		}
+		else {
+			if (this.node.nodeType === 3) {
+				this.element = this.node.parentNode;
 
-		this.expression = (this.attribute? this.node.getAttribute(this.attribute) : this.node.textContent).trim();
-		this.template = o.template? o.template.template : this.tokenize(this.expression);
+				// If no element siblings make this.node the element, which is more robust
+				// Same if attribute, there are no attributes on a text node!
+				if (!this.node.parentNode.children.length || this.attribute) {
+					this.node = this.element;
+					this.element.normalize();
+				}
+			}
 
-		// Is this a computed property?
-		var primitive = Mavo.Unit.get(this.element);
-		if (primitive && this.attribute === primitive.attribute) {
-			this.primitive = primitive;
-			primitive.computed = true; // Primitives containing an expression as their value are implicitly computed
+			this.expression = (this.attribute? this.node.getAttribute(this.attribute) : this.node.textContent).trim();
 		}
+
+		this.template = o.template? o.template.template : this.syntax.tokenize(this.expression);
 
 		Mavo.hooks.run("expressiontext-init-end", this);
 
@@ -1719,7 +1810,7 @@ var _ = Mavo.Expression.Text = $.Class({
 		}
 
 		ret.value = ret.value.length === 1? ret.value[0] : ret.value.join("");
-
+//console.log(this.primitive, this.element.getAttribute("property"));
 		if (this.primitive && this.template.length === 1) {
 			if (typeof ret.value === "number") {
 				this.primitive.datatype = "number";
@@ -1741,38 +1832,33 @@ var _ = Mavo.Expression.Text = $.Class({
 		}
 	},
 
-	tokenize: function(template) {
-		var regex = this.syntax;
-		var match, ret = [], lastIndex = 0;
-
-		this.syntax.lastIndex = 0;
-
-		while ((match = this.syntax.exec(template)) !== null) {
-			// Literal before the expression
-			if (match.index > lastIndex) {
-				ret.push(template.substring(lastIndex, match.index));
-			}
-
-			lastIndex = this.syntax.lastIndex;
-
-			ret.push(new Mavo.Expression(match[1]));
-		}
-
-		// Literal at the end
-		if (lastIndex < template.length) {
-			ret.push(template.substring(lastIndex));
-		}
-
-		return ret;
-	},
-
 	proxy: {
-		scope: "all",
-		expressionRegex: "all"
+		scope: "all"
 	},
 
 	static: {
-		elements: new WeakMap()
+		elements: new WeakMap(),
+
+		/**
+		 * Search for Mavo.Expression.Text object(s) associated with a given element
+		 * and optionally an attribute.
+		 *
+		 * @return If one argument, array of matching Expression.Text objects.
+		 *         If two arguments, the matching Expression.Text object or null
+		 */
+		search: function(element, attribute) {
+			var all = _.elements.get(element) || [];
+
+			if (arguments.length > 1) {
+				if (!all.length) {
+					return null;
+				}
+
+				return all.filter(et => et.attribute === attribute)[0] || null;
+			}
+
+			return all;
+		}
 	}
 });
 
@@ -1807,7 +1893,7 @@ var _ = Mavo.Expressions = $.Class({
 				}
 			}
 			else {
-				var syntax = _.getSyntax(this.scope.element.closest("[data-expressions]")) || _.defaultSyntax;
+				var syntax = Mavo.Expression.Syntax.create(this.scope.element.closest("[data-expressions]")) || Mavo.Expression.Syntax.default;
 				this.traverse(this.scope.element, undefined, syntax);
 			}
 		}
@@ -1844,9 +1930,9 @@ var _ = Mavo.Expressions = $.Class({
 	},
 
 	extract: function(node, attribute, path, syntax) {
-		syntax.lastIndex = 0;
-
-		if (syntax.test(attribute? attribute.value : node.textContent)) {
+		if ((attribute && attribute.name == "data-content") ||
+		    syntax.test(attribute? attribute.value : node.textContent)
+		) {
 			this.all.push(new Mavo.Expression.Text({
 				node, syntax,
 				path: (path || "").slice(1).split("/").map(i => +i),
@@ -1865,34 +1951,18 @@ var _ = Mavo.Expressions = $.Class({
 		// Traverse children and attributes as long as this is NOT the root of a child scope
 		// (otherwise, it will be taken care of its own Expressions object)
 		else if (node == this.scope.element || !Mavo.is("scope", node)) {
-			syntax = _.getSyntax(node) || syntax;
+			syntax = Mavo.Expression.Syntax.create(node) || syntax;
+
+			if (syntax === Mavo.Expression.Syntax.ESCAPE) {
+				return;
+			}
+
 			$$(node.attributes).forEach(attribute => this.extract(node, attribute, path, syntax));
 			$$(node.childNodes).forEach((child, i) => this.traverse(child, `${path}/${i}`, syntax));
 		}
 	},
 
-	static: {
-		defaultSyntax: /\[([\S\s]+?)\]/gi,
-		emptySyntax: /(?!)/,
-
-		getSyntax: function(element) {
-			if (element) {
-				var syntax = element.getAttribute("data-expressions");
-
-				if (syntax) {
-					if (/^\S+expression\S+$/i.test(syntax)) {
-						syntax = Mavo.escapeRegExp(syntax).replace("expression", "([\\S\\s]+?)");
-						syntax = RegExp(syntax, "gi");
-					}
-					else {
-						return _.emptySyntax; // empty set regex
-					}
-				}
-
-				return syntax;
-			}
-		}
-	}
+	static: {}
 });
 
 })();
@@ -1975,8 +2045,19 @@ Mavo.Node.prototype.getRelativeData = function(o = { dirty: true, computed: true
 	return ret;
 };
 
-Mavo.hooks.add("scope-init-end", function() {
+Mavo.hooks.add("scope-init-start", function() {
 	new Mavo.Expressions(this);
+});
+Mavo.hooks.add("primitive-init-start", function() {
+	this.expressionText = Mavo.Expression.Text.search(this.element, this.attribute);
+	this.computed = !!this.expressionText;
+
+	if (this.expressionText) {
+		this.expressionText.primitive = this;
+	}
+});
+
+Mavo.hooks.add("scope-init-end", function() {
 	this.expressions.update();
 });
 
@@ -2000,7 +2081,9 @@ Mavo.hooks.add("scope-render-end", function() {
 (function() {
 
 var _ = Mavo.Functions = {
-	operators: {},
+	operators: {
+		"=": "eq"
+	},
 
 	/**
 	 * Aggregate sum
@@ -2050,8 +2133,25 @@ var _ = Mavo.Functions = {
 	},
 
 	iff: function(condition, iftrue, iffalse="") {
+		if (Array.isArray(condition)) {
+			return condition.map((c, i) => {
+				var ret = c? iftrue : iffalse;
+
+				if (Array.isArray(ret)) {
+					return ret[Math.min(i, ret.length - 1)];
+				}
+
+				return ret;
+			});
+		}
+
 		return condition? iftrue : iffalse;
-	}
+	},
+
+	idify: readable => ((text || "") + "")
+		.replace(/\s+/g, "-") // Convert whitespace to hyphens
+		.replace(/[^\w-]/g, "") // Remove weird characters
+		.toLowerCase()
 };
 
 /**
@@ -2375,7 +2475,7 @@ var _ = Mavo.Scope = $.Class({
 var _ = Mavo.Primitive = $.Class({
 	extends: Mavo.Unit,
 	constructor: function (element, mavo, o) {
-		if (!this.fromTemplate("attribute", "datatype", "humanReadable", "computed", "templateValue")) {
+		if (!this.fromTemplate("attribute", "datatype", "humanReadable", "templateValue")) {
 			// Which attribute holds the data, if any?
 			// "null" or null for none (i.e. data is in content).
 			this.attribute = _.getValueAttribute(this.element);
@@ -2383,14 +2483,15 @@ var _ = Mavo.Primitive = $.Class({
 			if (this.attribute) {
 				this.humanReadable = this.attribute.humanReadable;
 			}
-			else {
-				this.element.normalize();
-			}
 
 			this.datatype = _.getDatatype(this.element, this.attribute);
 
-			this.templateValue = this.getValue({raw: true});
+			this.templateValue = this.getValue();
 		}
+
+		this.computed = false;
+
+		Mavo.hooks.run("primitive-init-start", this);
 
 		/**
 		 * Set up input widget
@@ -2402,6 +2503,10 @@ var _ = Mavo.Primitive = $.Class({
 			this.editorType = "exposed";
 
 			this.edit();
+		}
+		else if (!this.computed) {
+			// If this is NOT exposed and NOT computed, we need an edit button
+			this.mavo.needsEdit = true;
 		}
 
 		// Nested widgets
@@ -2437,16 +2542,6 @@ var _ = Mavo.Primitive = $.Class({
 				}
 			}
 		}
-
-		if (!this.fromTemplate("templateValue")) {
-			this.templateValue = this.getValue();
-		}
-
-		requestAnimationFrame(() => {
-			if (!this.exposed && !this.computed) {
-				this.mavo.needsEdit = true;
-			}
-		});
 
 		this.default = this.element.getAttribute("data-default");
 
@@ -2500,6 +2595,14 @@ var _ = Mavo.Primitive = $.Class({
 	},
 
 	get editorValue() {
+		if (this.getEditorValue) {
+			var value = this.getEditorValue();
+
+			if (value !== undefined) {
+				return value;
+			}
+		}
+
 		if (this.editor) {
 			if (this.editor.matches(Mavo.selectors.formControl)) {
 				return _.getValue(this.editor, undefined, this.datatype);
@@ -2515,6 +2618,10 @@ var _ = Mavo.Primitive = $.Class({
 	},
 
 	set editorValue(value) {
+		if (this.setEditorValue && this.setEditorValue(value) !== undefined) {
+			return;
+		}
+
 		if (this.editor) {
 			if (this.editor.matches(Mavo.selectors.formControl)) {
 				_.setValue(this.editor, value);
@@ -3066,8 +3173,7 @@ var _ = Mavo.Primitive = $.Class({
 
 			var ret;
 
-			// TODO Get rid of this horrible raw hack
-			if (attribute in element && !o.raw && _.useProperty(element, attribute)) {
+			if (attribute in element && _.useProperty(element, attribute)) {
 				// Returning properties (if they exist) instead of attributes
 				// is needed for dynamic elements such as checkboxes, sliders etc
 				ret = element[attribute];
@@ -3230,6 +3336,7 @@ _.editors = {
 			var editor = $.create(tag);
 
 			if (tag == "textarea") {
+				// Actually multiline
 				var width = this.element.offsetWidth;
 
 				if (width) {
@@ -3240,14 +3347,26 @@ _.editors = {
 			return editor;
 		},
 
-		get editorValue () {
-			return this.editor && _.safeCast(this.editor.value, this.datatype);
-		},
-
-		set editorValue (value) {
-			if (this.editor) {
-				this.editor.value = value ? value.replace(/\r?\n/g, "") : "";
+		setEditorValue: function(value) {
+			if (this.datatype != "string") {
+				return;
 			}
+
+			var cs = getComputedStyle(this.element);
+			value = value || "";
+
+			if (["normal", "nowrap"].indexOf(cs.whiteSpace) > -1) {
+				// Collapse lines
+				value = value.replace(/\r?\n/g, " ");
+			}
+
+			if (["normal", "nowrap", "pre-line"].indexOf(cs.whiteSpace) > -1) {
+				// Collapse whitespace
+				value = value.replace(/^[ \t]+|[ \t]+$/gm, "").replace(/[ \t]+/g, " ");
+			}
+
+			this.editor.value = value;
+			return true;
 		}
 	},
 
@@ -4342,7 +4461,7 @@ Mavo.prototype.render = _.timed("render", Mavo.prototype.render);
 Mavo.selectors.debug = ".debug";
 
 var selector = ", .mv-debuginfo";
-Mavo.Expressions.escape += selector;
+
 Stretchy.selectors.filter += selector;
 
 // Add element to show saved data
@@ -4413,7 +4532,8 @@ Mavo.hooks.add("scope-init-start", function() {
 					inside: this.element,
 					contents: $.create("summary", {
 						textContent: "Debug"
-					})
+					}),
+					"data-expressions": "none"
 				})
 			})
 		});
@@ -4833,7 +4953,7 @@ var _ = Mavo.Storage.Backend.register($.Class({
 					// Show window
 					var popup = {
 						width: Math.min(1000, innerWidth - 100),
-						height: Math.min(600, innerHeight - 100)
+						height: Math.min(800, innerHeight - 100)
 					};
 
 					popup.top = (innerHeight - popup.height)/2 + (screen.top || screenTop);
@@ -4856,25 +4976,33 @@ var _ = Mavo.Storage.Backend.register($.Class({
 				}
 			}))
 			.then(() => this.getUser())
-			.then(u => {
-				this.permissions.on("logout");
-
-				return this.req(`repos/${this.username}/${this.repo}`);
-			})
-			.then(repoInfo => {
-				this.repoInfo = repoInfo;
-
-				if (repoInfo.permissions.push) {
-					this.permissions.on(["edit", "save"]);
+			.catch(xhr => {
+				if (xhr.status == 401) {
+					// Unauthorized. Access token we have is invalid, discard it
+					this.logout();
 				}
 			})
-			.catch(xhr => {
-				if (xhr.status == 404) {
-					// Repo does not exist so we can't check permissions
-					// Just check if authenticated user is the same as our URL username
-					if (this.user.login.toLowerCase() == this.username.toLowerCase()) {
-						this.permissions.on(["edit", "save"]);
-					}
+			.then(u => {
+				if (this.user) {
+					this.permissions.on("logout");
+
+					return this.req(`repos/${this.username}/${this.repo}`)
+						.then(repoInfo => {
+							this.repoInfo = repoInfo;
+
+							if (repoInfo.permissions.push) {
+								this.permissions.on(["edit", "save"]);
+							}
+						})
+						.catch(xhr => {
+							if (xhr.status == 404) {
+								// Repo does not exist so we can't check permissions
+								// Just check if authenticated user is the same as our URL username
+								if (this.user.login.toLowerCase() == this.username.toLowerCase()) {
+									this.permissions.on(["edit", "save"]);
+								}
+							}
+						});
 				}
 			});
 		});
