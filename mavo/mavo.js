@@ -318,7 +318,7 @@ var _ = self.Mavo = $.Class({
 			});
 
 			if (this.autoEdit) {
-				requestAnimationFrame(() => this.ui.edit.click());
+				this.wrapper.addEventListener("mavo:load", evt => this.ui.edit.click());
 			}
 		}, () => { // cannot
 			$.remove(this.ui.edit);
@@ -416,7 +416,15 @@ var _ = self.Mavo = $.Class({
 		_.hooks.run("render-start", {context: this, data});
 
 		if (data) {
-			this.root.render(data);
+			if (this.editing) {
+				this.done();
+				this.root.render(data);
+				this.edit();
+			}
+			else {
+				this.root.render(data);
+			}
+
 		}
 
 		this.unsavedChanges = false;
@@ -1448,15 +1456,9 @@ var _ = Mavo.Unit = $.Class({
 
 	lazy: {
 		closestCollection: function() {
-			if (this.collection) {
-				return this.collection;
-			}
-
-			return this.walkUp(scope => {
-				if (scope.collection) {
-					return scope.collection;
-				}
-			}) || null;
+			return this.collection ||
+			       this.scope.collection ||
+			       (this.parentScope? this.parentScope.closestCollection : null);
 		}
 	},
 
@@ -2415,14 +2417,13 @@ var _ = Mavo.Scope = $.Class({
 	// Inject data in this element
 	render: function(data) {
 		if (!data) {
-			this.clear();
 			return;
 		}
 
 		Mavo.hooks.run("scope-render-start", this);
 
 		// TODO retain dropped elements
-		data = data.isArray? data[0] : data;
+		data = Array.isArray(data)? data[0] : data;
 
 		// TODO what if it was a primitive and now it's a scope?
 		// In that case, render the this.properties[this.property] with it
@@ -2488,6 +2489,8 @@ var _ = Mavo.Primitive = $.Class({
 
 			this.templateValue = this.getValue();
 		}
+
+		this.view = "read";
 
 		this.computed = false;
 
@@ -2594,6 +2597,10 @@ var _ = Mavo.Primitive = $.Class({
 		this.observe();
 	},
 
+	get editing() {
+		return this.view == "edit";
+	},
+
 	get editorValue() {
 		if (this.getEditorValue) {
 			var value = this.getEditorValue();
@@ -2677,7 +2684,7 @@ var _ = Mavo.Primitive = $.Class({
 		this.unobserve();
 
 		if (this.popup) {
-			this.hidePopup();
+			this.popup.close();
 		}
 		else if (!this.attribute && !this.exposed && this.editing) {
 			$.remove(this.editor);
@@ -2685,7 +2692,7 @@ var _ = Mavo.Primitive = $.Class({
 		}
 
 		if (!this.exposed) {
-			this.editing = false;
+			this.view = "read";
 		}
 
 		// Revert tabIndex
@@ -2695,8 +2702,6 @@ var _ = Mavo.Primitive = $.Class({
 		else {
 			this.element.removeAttribute("tabindex");
 		}
-
-		this.element._.unbind(".mavo:edit .mavo:preedit .mavo:showpopup");
 
 		this.observe();
 	},
@@ -2724,6 +2729,12 @@ var _ = Mavo.Primitive = $.Class({
 			this.edit();
 			return;
 		}
+
+		if (this.view == "preEdit") {
+			return;
+		}
+
+		this.view = "preEdit";
 
 		var timer;
 
@@ -2812,16 +2823,6 @@ var _ = Mavo.Primitive = $.Class({
 			"focus": evt => {
 				this.editor.select && this.editor.select();
 			},
-			"keyup": evt => {
-				if (this.popup && evt.keyCode == 13 || evt.keyCode == 27) {
-					if (this.popup.contains(document.activeElement)) {
-						this.element.focus();
-					}
-
-					evt.stopPropagation();
-					this.hidePopup();
-				}
-			},
 			"mavo:datachange": evt => {
 				if (evt.property === "output") {
 					evt.stopPropagation();
@@ -2844,58 +2845,7 @@ var _ = Mavo.Primitive = $.Class({
 			}, this);
 
 			if (this.attribute) {
-				// Set up popup
-				this.element.classList.add("using-popup");
-
-				this.popup = this.popup || $.create("div", {
-					className: "mv-popup",
-					hidden: true,
-					contents: [
-						this.label + ":",
-						this.editor
-					]
-				});
-
-				// No point in having a dropdown in a popup
-				if (this.editor.matches("select")) {
-					this.editor.size = Math.min(10, this.editor.children.length);
-				}
-
-				// Toggle popup events & methods
-				var hideCallback = evt => {
-					if (!this.popup.contains(evt.target) && !this.element.contains(evt.target)) {
-						this.hidePopup();
-					}
-				};
-
-				this.showPopup = function() {
-					$.unbind([this.element, this.popup], ".mavo:showpopup");
-					this.popup._.after(this.element);
-
-					var x = this.element.offsetLeft;
-					var y = this.element.offsetTop + this.element.offsetHeight;
-
-					 // TODO what if it doesn’t fit?
-					this.popup._.style({ top:  `${y}px`, left: `${x}px` });
-
-					this.popup._.removeAttribute("hidden"); // trigger transition
-
-					$.events(document, "focus click", hideCallback, true);
-				};
-
-				this.hidePopup = function() {
-					$.unbind(document, "focus click", hideCallback, true);
-
-					this.popup.setAttribute("hidden", ""); // trigger transition
-
-					setTimeout(() => {
-						$.remove(this.popup);
-					}, 400); // TODO transition-duration could override this
-
-					$.events(this.element, "focus.mavo:showpopup click.mavo:showpopup", evt => {
-						this.showPopup();
-					}, true);
-				};
+				this.popup = new _.Popup(this);
 			}
 		}
 
@@ -2918,7 +2868,7 @@ var _ = Mavo.Primitive = $.Class({
 		}
 
 		if (this.popup) {
-			this.showPopup();
+			this.popup.show();
 		}
 
 		if (!this.attribute) {
@@ -2932,7 +2882,7 @@ var _ = Mavo.Primitive = $.Class({
 			}
 		}
 
-		this.editing = true;
+		this.view = "edit";
 	}, // edit
 
 	clear: function() {
@@ -2948,7 +2898,13 @@ var _ = Mavo.Primitive = $.Class({
 			data = data[this.property];
 		}
 
-		this.value = data === undefined? this.default : data;
+		if (data === undefined) {
+			// New property has been added to the schema and nobody has saved since
+			this.value = this.closestCollection? this.default : this.templateValue;
+		}
+		else {
+			this.value = data;
+		}
 
 		this.save();
 	},
@@ -3049,6 +3005,10 @@ var _ = Mavo.Primitive = $.Class({
 			});
 		}
 
+		if (this.view == "preEdit") {
+			this.preEdit();
+		}
+
 		this.observe();
 
 		return value;
@@ -3064,8 +3024,8 @@ var _ = Mavo.Primitive = $.Class({
 			this.element.classList.toggle("empty", hide);
 		},
 
-		editing: function (value) {
-			this.element.classList.toggle("editing", value);
+		view: function (value) {
+			this.element.classList.toggle("editing", value == "edit");
 		},
 
 		computed: function (value) {
@@ -3399,6 +3359,101 @@ _.editors = {
 		return $.create("input", {type: type});
 	}
 };
+
+_.Popup = $.Class({
+	constructor: function(primitive) {
+		this.primitive = primitive;
+
+		this.popup = $.create("div", {
+			className: "mv-popup",
+			hidden: true,
+			contents: [
+				this.primitive.label + ":",
+				this.editor
+			],
+			events: {
+				keyup: evt => {
+					if (evt.keyCode == 13 || evt.keyCode == 27) {
+						if (this.popup.contains(document.activeElement)) {
+							this.element.focus();
+						}
+
+						evt.stopPropagation();
+						this.hide();
+					}
+				}
+			}
+		});
+
+		// No point in having a dropdown in a popup
+		if (this.editor.matches("select")) {
+			this.editor.size = Math.min(10, this.editor.children.length);
+		}
+	},
+
+	show: function() {
+		$.unbind([this.element, this.popup], ".mavo:showpopup");
+
+		this.shown = true;
+
+		this.hideCallback = evt => {
+			if (!this.popup.contains(evt.target) && !this.element.contains(evt.target)) {
+				this.hide();
+			}
+		};
+
+		this.position = evt => {
+			var bounds = this.element.getBoundingClientRect();
+			var x = bounds.left;
+			var y = bounds.bottom;
+
+			 // TODO what if it doesn’t fit?
+			$.style(this.popup, { top:  `${y}px`, left: `${x}px` });
+		};
+
+		this.position();
+
+		document.body.appendChild(this.popup);
+
+		requestAnimationFrame(e => this.popup.removeAttribute("hidden")); // trigger transition
+
+		$.events(document, "focus click", this.hideCallback, true);
+		window.addEventListener("scroll", this.position);
+	},
+
+	hide: function() {
+		$.unbind(document, "focus click", this.hideCallback, true);
+		window.removeEventListener("scroll", this.position);
+		this.popup.setAttribute("hidden", ""); // trigger transition
+		this.shown = false;
+
+		setTimeout(() => {
+			$.remove(this.popup);
+		}, parseFloat(getComputedStyle(this.popup).transitionDuration) * 1000 || 400); // TODO transition-duration could override this
+
+		$.events(this.element, {
+			"click.mavo:showpopup": evt => {
+				this.show();
+			},
+			"keyup.mavo:showpopup": evt => {
+				if ([13, 113].indexOf(evt.keyCode) > -1) { // Enter or F2
+					this.show();
+					this.editor.focus();
+				}
+			}
+		});
+	},
+
+	close: function() {
+		this.hide();
+		$.unbind(this.element, ".mavo:edit .mavo:preedit .mavo:showpopup");
+	},
+
+	proxy: {
+		"editor": "primitive",
+		"element": "primitive"
+	}
+});
 
 })(Bliss, Bliss.$);
 

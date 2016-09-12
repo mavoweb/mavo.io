@@ -328,7 +328,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				});
 
 				if (_this.autoEdit) {
-					requestAnimationFrame(function () {
+					_this.wrapper.addEventListener("mavo:load", function (evt) {
 						return _this.ui.edit.click();
 					});
 				}
@@ -442,7 +442,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			_.hooks.run("render-start", { context: this, data: data });
 
 			if (data) {
-				this.root.render(data);
+				if (this.editing) {
+					this.done();
+					this.root.render(data);
+					this.edit();
+				} else {
+					this.root.render(data);
+				}
 			}
 
 			this.unsavedChanges = false;
@@ -1608,15 +1614,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 		lazy: {
 			closestCollection: function closestCollection() {
-				if (this.collection) {
-					return this.collection;
-				}
-
-				return this.walkUp(function (scope) {
-					if (scope.collection) {
-						return scope.collection;
-					}
-				}) || null;
+				return this.collection || this.scope.collection || (this.parentScope ? this.parentScope.closestCollection : null);
 			}
 		},
 
@@ -2744,14 +2742,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			var _this2 = this;
 
 			if (!data) {
-				this.clear();
 				return;
 			}
 
 			Mavo.hooks.run("scope-render-start", this);
 
 			// TODO retain dropped elements
-			data = data.isArray ? data[0] : data;
+			data = Array.isArray(data) ? data[0] : data;
 
 			// TODO what if it was a primitive and now it's a scope?
 			// In that case, render the this.properties[this.property] with it
@@ -2821,6 +2818,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 				this.templateValue = this.getValue();
 			}
+
+			this.view = "read";
 
 			this.computed = false;
 
@@ -2956,6 +2955,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			this.observe();
 		},
 
+		get editing() {
+			return this.view == "edit";
+		},
+
 		get editorValue() {
 			if (this.getEditorValue) {
 				var value = this.getEditorValue();
@@ -3037,14 +3040,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			this.unobserve();
 
 			if (this.popup) {
-				this.hidePopup();
+				this.popup.close();
 			} else if (!this.attribute && !this.exposed && this.editing) {
 				$.remove(this.editor);
 				this.element.textContent = this.editorValue;
 			}
 
 			if (!this.exposed) {
-				this.editing = false;
+				this.view = "read";
 			}
 
 			// Revert tabIndex
@@ -3053,8 +3056,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			} else {
 				this.element.removeAttribute("tabindex");
 			}
-
-			this.element._.unbind(".mavo:edit .mavo:preedit .mavo:showpopup");
 
 			this.observe();
 		},
@@ -3084,6 +3085,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				this.edit();
 				return;
 			}
+
+			if (this.view == "preEdit") {
+				return;
+			}
+
+			this.view = "preEdit";
 
 			var timer;
 
@@ -3178,16 +3185,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				"focus": function focus(evt) {
 					_this5.editor.select && _this5.editor.select();
 				},
-				"keyup": function keyup(evt) {
-					if (_this5.popup && evt.keyCode == 13 || evt.keyCode == 27) {
-						if (_this5.popup.contains(document.activeElement)) {
-							_this5.element.focus();
-						}
-
-						evt.stopPropagation();
-						_this5.hidePopup();
-					}
-				},
 				"mavo:datachange": function mavoDatachange(evt) {
 					if (evt.property === "output") {
 						evt.stopPropagation();
@@ -3210,57 +3207,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				}, this);
 
 				if (this.attribute) {
-					// Set up popup
-					this.element.classList.add("using-popup");
-
-					this.popup = this.popup || $.create("div", {
-						className: "mv-popup",
-						hidden: true,
-						contents: [this.label + ":", this.editor]
-					});
-
-					// No point in having a dropdown in a popup
-					if (this.editor.matches("select")) {
-						this.editor.size = Math.min(10, this.editor.children.length);
-					}
-
-					// Toggle popup events & methods
-					var hideCallback = function hideCallback(evt) {
-						if (!_this5.popup.contains(evt.target) && !_this5.element.contains(evt.target)) {
-							_this5.hidePopup();
-						}
-					};
-
-					this.showPopup = function () {
-						$.unbind([this.element, this.popup], ".mavo:showpopup");
-						this.popup._.after(this.element);
-
-						var x = this.element.offsetLeft;
-						var y = this.element.offsetTop + this.element.offsetHeight;
-
-						// TODO what if it doesn’t fit?
-						this.popup._.style({ top: y + "px", left: x + "px" });
-
-						this.popup._.removeAttribute("hidden"); // trigger transition
-
-						$.events(document, "focus click", hideCallback, true);
-					};
-
-					this.hidePopup = function () {
-						var _this6 = this;
-
-						$.unbind(document, "focus click", hideCallback, true);
-
-						this.popup.setAttribute("hidden", ""); // trigger transition
-
-						setTimeout(function () {
-							$.remove(_this6.popup);
-						}, 400); // TODO transition-duration could override this
-
-						$.events(this.element, "focus.mavo:showpopup click.mavo:showpopup", function (evt) {
-							_this6.showPopup();
-						}, true);
-					};
+					this.popup = new _.Popup(this);
 				}
 			}
 
@@ -3283,7 +3230,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			}
 
 			if (this.popup) {
-				this.showPopup();
+				this.popup.show();
 			}
 
 			if (!this.attribute) {
@@ -3297,7 +3244,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				}
 			}
 
-			this.editing = true;
+			this.view = "edit";
 		}, // edit
 
 		clear: function clear() {
@@ -3313,7 +3260,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				data = data[this.property];
 			}
 
-			this.value = data === undefined ? this.default : data;
+			if (data === undefined) {
+				// New property has been added to the schema and nobody has saved since
+				this.value = this.closestCollection ? this.default : this.templateValue;
+			} else {
+				this.value = data;
+			}
 
 			this.save();
 		},
@@ -3325,12 +3277,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		},
 
 		observe: function observe() {
-			var _this7 = this;
+			var _this6 = this;
 
 			if (!this.computed) {
 				this.observer = Mavo.observe(this.element, this.attribute, this.observer || function (record) {
-					if (_this7.attribute || !_this7.mavo.editing) {
-						_this7.value = _this7.getValue();
+					if (_this6.attribute || !_this6.mavo.editing) {
+						_this6.value = _this6.getValue();
 					}
 				});
 			}
@@ -3365,7 +3317,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		},
 
 		setValue: function setValue(value) {
-			var _this8 = this;
+			var _this7 = this;
 
 			var o = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
@@ -3409,15 +3361,19 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				}
 
 				requestAnimationFrame(function () {
-					$.fire(_this8.element, "mavo:datachange", {
-						property: _this8.property,
+					$.fire(_this7.element, "mavo:datachange", {
+						property: _this7.property,
 						value: value,
-						mavo: _this8.mavo,
-						node: _this8,
-						dirty: _this8.editing,
+						mavo: _this7.mavo,
+						node: _this7,
+						dirty: _this7.editing,
 						action: "propertychange"
 					});
 				});
+			}
+
+			if (this.view == "preEdit") {
+				this.preEdit();
 			}
 
 			this.observe();
@@ -3435,8 +3391,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				this.element.classList.toggle("empty", hide);
 			},
 
-			editing: function editing(value) {
-				this.element.classList.toggle("editing", value);
+			view: function view(value) {
+				this.element.classList.toggle("editing", value == "edit");
 			},
 
 			computed: function computed(value) {
@@ -3772,6 +3728,107 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			return $.create("input", { type: type });
 		}
 	};
+
+	_.Popup = $.Class({
+		constructor: function constructor(primitive) {
+			var _this8 = this;
+
+			this.primitive = primitive;
+
+			this.popup = $.create("div", {
+				className: "mv-popup",
+				hidden: true,
+				contents: [this.primitive.label + ":", this.editor],
+				events: {
+					keyup: function keyup(evt) {
+						if (evt.keyCode == 13 || evt.keyCode == 27) {
+							if (_this8.popup.contains(document.activeElement)) {
+								_this8.element.focus();
+							}
+
+							evt.stopPropagation();
+							_this8.hide();
+						}
+					}
+				}
+			});
+
+			// No point in having a dropdown in a popup
+			if (this.editor.matches("select")) {
+				this.editor.size = Math.min(10, this.editor.children.length);
+			}
+		},
+
+		show: function show() {
+			var _this9 = this;
+
+			$.unbind([this.element, this.popup], ".mavo:showpopup");
+
+			this.shown = true;
+
+			this.hideCallback = function (evt) {
+				if (!_this9.popup.contains(evt.target) && !_this9.element.contains(evt.target)) {
+					_this9.hide();
+				}
+			};
+
+			this.position = function (evt) {
+				var bounds = _this9.element.getBoundingClientRect();
+				var x = bounds.left;
+				var y = bounds.bottom;
+
+				// TODO what if it doesn’t fit?
+				$.style(_this9.popup, { top: y + "px", left: x + "px" });
+			};
+
+			this.position();
+
+			document.body.appendChild(this.popup);
+
+			requestAnimationFrame(function (e) {
+				return _this9.popup.removeAttribute("hidden");
+			}); // trigger transition
+
+			$.events(document, "focus click", this.hideCallback, true);
+			window.addEventListener("scroll", this.position);
+		},
+
+		hide: function hide() {
+			var _this10 = this;
+
+			$.unbind(document, "focus click", this.hideCallback, true);
+			window.removeEventListener("scroll", this.position);
+			this.popup.setAttribute("hidden", ""); // trigger transition
+			this.shown = false;
+
+			setTimeout(function () {
+				$.remove(_this10.popup);
+			}, parseFloat(getComputedStyle(this.popup).transitionDuration) * 1000 || 400); // TODO transition-duration could override this
+
+			$.events(this.element, {
+				"click.mavo:showpopup": function clickMavoShowpopup(evt) {
+					_this10.show();
+				},
+				"keyup.mavo:showpopup": function keyupMavoShowpopup(evt) {
+					if ([13, 113].indexOf(evt.keyCode) > -1) {
+						// Enter or F2
+						_this10.show();
+						_this10.editor.focus();
+					}
+				}
+			});
+		},
+
+		close: function close() {
+			this.hide();
+			$.unbind(this.element, ".mavo:edit .mavo:preedit .mavo:showpopup");
+		},
+
+		proxy: {
+			"editor": "primitive",
+			"element": "primitive"
+		}
+	});
 })(Bliss, Bliss.$);
 "use strict";
 
