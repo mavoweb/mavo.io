@@ -46,7 +46,8 @@ pre {
   padding: 1em 1.5em;
   margin: .5em -1.5em;
   overflow: auto;
-  background: radial-gradient(white, #ebebeb);
+  background: floralwhite;
+  box-shadow: 0 0 10em #ffeacc inset;
   -webkit-clip-path: polygon(0 0, 100% 0.5em, calc(100% - .5em) calc(100% - 1em), 0 100%);
   clip-path: polygon(0 0, 100% 0.5em, calc(100% - .5em) calc(100% - 1em), 0 100%); }
   @supports not ((-webkit-clip-path: polygon(0 0)) or (clip-path: polygon(0 0))) {
