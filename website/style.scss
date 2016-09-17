@@ -77,7 +77,8 @@ pre, code {
 		padding: 1em 1.5em;
 		margin: .5em -1.5em;
 		overflow: auto;
-		background: radial-gradient(white, hsl(0, 0%, 92%));
+		background: hsl(40, 100%, 97%);
+		box-shadow: 0 0 10em hsl(35, 100%, 90%) inset;
 
 		clip-path: polygon(0 0, 100% .5em, calc(100% - .5em) calc(100% - 1em), 0 100%);
 

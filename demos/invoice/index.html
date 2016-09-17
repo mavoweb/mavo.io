@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<title>My Invoices</title>
+<link rel="stylesheet" href="../../mavo/mavo.css">
+<link rel="stylesheet" href="style.css">
+<script src="../../mavo/mavo.js"></script>
+
+</head>
+<body data-store="local" data-source="data.json" property="invoices" class="autoedit">
+
+<header>
+	<h1>Invoice issuer</h1>
+
+	<div class="company">
+		<img property="companyLogo" src="http://lea.verou.me/logo.svg" />
+		<div>
+			<h2 property="companyName">Lea Verou</h2>
+			<address property="companyAddress">42 JavaScript Way
+			Boston, MA 02114
+			USA</address>
+		</div>
+		<div class="online">
+			<a property="companyURL" data-attribute="null" href="[companyURL]" target="_blank">http://lea.verou.me</a>
+			<a property="companyEmail" data-attribute="null" href="mailto:[companyEmail]">lea@verou.me</a>
+		</div>
+	</div>
+</header>
+
+<article class="invoice" property="invoice" data-multiple id="invoice[$index]">
+	<header>
+		<h1>Invoice #<span data-content="$index">?</span></h1>
+		<div class="company">
+			<img src="[companyLogo]" />
+			<div>
+				<h2>[companyName]</h2>
+				<address>[companyAddress]</address>
+			</div>
+			<div class="online">
+				<a href="[companyURL]" target="_blank">[companyURL]</a>
+				<a href="mailto:[companyEmail]">[companyEmail]</a>
+			</div>
+		</div>
+	</header>
+
+	<p class="invoice-date">
+		Invoice date: <time property="date">Invoice date</time>
+	</p>
+
+	<article class="recipient">
+		<h1>Recipient:</h1>
+		<div property="recipient">
+			<h2 property="name">Recipient name</h2>
+			<address property="address">Recipient address</address>
+		</div>
+	</article>
+
+	<section>
+		<h1>Services provided:</h1>
+		<table>
+			<thead>
+				<tr>
+					<td>Date</td>
+					<td>Description</td>
+					<td>Amount (<span property="currency"><select>
+						<option>$</option>
+						<option>€</option>
+						<option>£</option>
+					</select></span>)</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr property="services">
+					<td><time property="date">Date</time></td>
+					<td property="description">
+						Description of service provided
+					</td>
+					<td>
+						[currency]<span property="amount">Amount</span>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="2">Total due:</td>
+					<td>[currency][sum(amount)]</td>
+				</tr>
+			</tfoot>
+		</table>
+	</section>
+</article>
+
+</body>
+</html>

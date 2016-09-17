@@ -17,13 +17,18 @@ code {
 	width: 50px;
 	border-radius: 50%;
 	box-shadow: 2px 2px 8px rgba(0,0,0,.3);
-	
+
 	-webkit-transform: rotate(-15deg);
 	-moz-transform: rotate(-15deg);
 	-ms-transform: rotate(-15deg);
 	transform: rotate(-15deg);
 }
 
-[typeof=Event] button.add {
+button.add-talk {
 	margin-left: 130px;
+	margin-bottom: .8em;
+}
+
+a[href^="https://github.com"]:before {
+	content: none;
 }
