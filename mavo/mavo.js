@@ -1479,6 +1479,16 @@ var _ = Mavo.Unit = $.Class({
 				});
 
 				$.contents(this.element, [
+					{
+						tag: "button",
+						class: "close",
+						textContent: "×",
+						events: {
+							"click": function(evt) {
+								$.remove(this.parentNode);
+							}
+						}
+					},
 					"Deleted " + this.name,
 					{
 						tag: "button",
@@ -3108,7 +3118,7 @@ var _ = Mavo.Primitive = $.Class({
 			return value;
 		}
 
-		if (this.editor) {
+		if (this.editor && document.activeElement != this.editor) {
 			this.editorValue = value;
 		}
 
@@ -5125,6 +5135,7 @@ var _ = Mavo.Storage.Backend.register($.Class({
 					branch: this.branch
 				}, "PUT");
 			}
+			// TODO include time out
 		}).then(data => {
 			console.log("success");
 			return file;

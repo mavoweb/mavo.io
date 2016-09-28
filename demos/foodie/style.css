@@ -65,9 +65,12 @@ main > article {
     main > article > header img {
       width: 5em;
       height: 5em;
+      border: none;
       border-radius: 5em;
       object-fit: cover;
       box-shadow: 0 0 0 0.3em rgba(255, 255, 255, 0.4); }
+    main > article > header img:not([src]), main > article > header img[src=""] {
+      background: linear-gradient(to bottom right, transparent 49%, rgba(0, 0, 0, 0.2) 0, rgba(0, 0, 0, 0.2) 51%, transparent 0), linear-gradient(to bottom left, transparent 49%, rgba(0, 0, 0, 0.2) 0, rgba(0, 0, 0, 0.2) 51%, transparent 0) rgba(255, 255, 255, 0.1); }
     main > article > header > a, main > article > header > p, main > article > header > img {
       position: relative;
       z-index: 1; }
