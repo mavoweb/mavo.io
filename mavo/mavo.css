@@ -99,9 +99,27 @@
   position: relative; }
   .mv-item.delete-hover, .mv-item.deleted {
     box-shadow: 0 0 0 50vmax rgba(255, 0, 0, 0.2) inset !important; }
-  .mv-item.deleted button {
-    display: inline-block;
-    margin-left: .4em; }
+  .mv-item.deleted {
+    display: block; }
+    .mv-item.deleted button {
+      display: inline-block;
+      margin-left: .4em; }
+      .mv-item.deleted button.close {
+        all: unset;
+        float: right;
+        width: 1.1em;
+        padding-bottom: .1em;
+        border: none;
+        border-radius: 50%;
+        margin: 0 0 0 1em;
+        background: rgba(180, 0, 0, 0.6);
+        color: white;
+        font-weight: bold;
+        line-height: 1;
+        cursor: pointer;
+        text-align: center; }
+        .mv-item.deleted button.close:hover {
+          background: #b40000; }
   .mv-wrapper:not([data-editing]) .mv-item.deleted {
     display: none; }
 
@@ -172,7 +190,7 @@
 .mv-popup {
   all: initial;
   position: fixed;
-  z-index: 2;
+  z-index: 100;
   padding: 1em;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: .4em;

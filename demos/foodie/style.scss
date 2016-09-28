@@ -83,9 +83,16 @@ main > article {
 		img {
 			width: 5em;
 			height: 5em;
+			border: none;
 			border-radius: 5em;
 			object-fit: cover;
 			box-shadow: 0 0 0 .3em hsla(0,0%,100%,.4);
+		}
+
+		img:not([src]), img[src=""] {
+			background: linear-gradient(to bottom right, transparent 49%, rgba(0,0,0,.2) 0, rgba(0,0,0,.2) 51%, transparent 0),
+			            linear-gradient(to bottom left, transparent 49%, rgba(0,0,0,.2) 0, rgba(0,0,0,.2) 51%, transparent 0)
+			            hsla(0, 0%, 100%, .1);
 		}
 
 		& > a, & > p, & > img {
