@@ -30,9 +30,9 @@
 	</div>
 </header>
 
-<article class="invoice" property="invoice" data-multiple id="invoice[$index]">
+<article class="invoice" property="invoice" data-multiple id="invoice[$index]" data-order="desc">
 	<header>
-		<h1>Invoice #<span data-content="$index">?</span></h1>
+		<h1>Invoice #<span property="id" data-default="[count(invoice) + 1]">?</span></h1>
 		<div class="company">
 			<img src="[companyLogo]" />
 			<div>
@@ -63,7 +63,6 @@
 		<table>
 			<thead>
 				<tr>
-					<td>Date</td>
 					<td>Description</td>
 					<td>Amount (<span property="currency"><select>
 						<option>$</option>
@@ -74,7 +73,6 @@
 			</thead>
 			<tbody>
 				<tr property="services">
-					<td><time property="date">Date</time></td>
 					<td property="description">
 						Description of service provided
 					</td>
@@ -85,7 +83,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="2">Total due:</td>
+					<td>Total due:</td>
 					<td>[currency][sum(amount)]</td>
 				</tr>
 			</tfoot>
