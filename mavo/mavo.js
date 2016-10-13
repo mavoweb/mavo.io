@@ -1475,7 +1475,7 @@ var _ = Mavo.Unit = $.Class({
 				$.contents(this.element, [
 					{
 						tag: "button",
-						class: "close",
+						className: "close mv-ui",
 						textContent: "×",
 						events: {
 							"click": function(evt) {
@@ -1486,6 +1486,7 @@ var _ = Mavo.Unit = $.Class({
 					"Deleted " + this.name,
 					{
 						tag: "button",
+						className: "undo mv-ui",
 						textContent: "Undo",
 						events: {
 							"click": evt => this.deleted = false
@@ -2147,7 +2148,7 @@ var _ = Mavo.Functions = {
 	},
 
 	count: function(array) {
-		return Mavo.toArray(array).filter(a => a !== null && a !== false).length;
+		return Mavo.toArray(array).filter(a => a !== null && a !== false && a !== "").length;
 	},
 
 	round: function(num, decimals) {
@@ -2428,7 +2429,7 @@ Mavo.Functions._Trap = self.Proxy? new Proxy(_, {
 function numbers(array, args) {
 	array = Array.isArray(array)? array : (args? $$(args) : [array]);
 
-	return array.filter(number => !isNaN(number)).map(n => +n);
+	return array.filter(number => !isNaN(number) && number !== "").map(n => +n);
 }
 
 })();
@@ -2708,7 +2709,7 @@ var _ = Mavo.Primitive = $.Class({
 			// Collection of primitives, deal with setting textContent etc without the UI interfering.
 			var swapUI = callback => {
 				this.unobserve();
-				var ui = $.remove($(Mavo.selectors.ui, this.element));
+				var ui = $.remove($(".mv-item-controls", this.element));
 
 				var ret = callback();
 
@@ -3126,7 +3127,7 @@ var _ = Mavo.Primitive = $.Class({
 		}
 
 		if (!this.editing || this.attribute) {
-			if (this.editor && this.editor.matches("select") && this.editor.selectedOptions[0]) {
+			if (this.editor && this.editor.matches("select") && !this.exposed && this.editor.selectedOptions[0]) {
 				presentational = this.editor.selectedOptions[0].textContent;
 			}
 
@@ -3638,12 +3639,14 @@ Mavo.Primitive.register("button, .counter", {
 	datatype: "number",
 	is: "formControl",
 	init: function(element) {
-		element.setAttribute("data-clicked", "0");
+		if (this.attribute === "data-clicked") {
+			element.setAttribute("data-clicked", "0");
 
-		element.addEventListener("click", evt => {
-			let clicked = +element.getAttribute("data-clicked") || 0;
-			element.setAttribute("data-clicked", clicked + 1);
-		});
+			element.addEventListener("click", evt => {
+				let clicked = +element.getAttribute("data-clicked") || 0;
+				element.setAttribute("data-clicked", clicked + 1);
+			});
+		}
 	}
 });
 
