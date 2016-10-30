@@ -480,6 +480,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			this.setUnsavedChanges();
 		},
 
+		/**
+   * Set this mavo instance’s unsavedChanges flag.
+   * @param {Boolean} [value]
+   *        If true, just sets the flag to true, no traversal.
+   *        If false, sets the flag of the Mavo instance and every tree node to false
+   *        If not provided, traverses the tree and recalculates the flag value.
+   */
 		setUnsavedChanges: function setUnsavedChanges(value) {
 			var unsavedChanges = !!value;
 
@@ -4320,7 +4327,7 @@ Mavo.Primitive.editors.img = {
 			}
 
 			if (!o.silent) {
-				item.unsavedChanges = this.mavo.unsavedChanges = true;
+				this.unsavedChanges = item.unsavedChanges = this.mavo.unsavedChanges = true;
 			}
 
 			return item;
@@ -4355,7 +4362,7 @@ Mavo.Primitive.editors.img = {
 					item: item
 				});
 
-				item.unsavedChanges = _this2.mavo.unsavedChanges = true;
+				_this2.unsavedChanges = item.unsavedChanges = _this2.mavo.unsavedChanges = true;
 			});
 		},
 
