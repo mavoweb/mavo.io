@@ -3,70 +3,66 @@
 body > header {
 	display: block;
 	text-align: center;
-	padding: 5em;
-	padding: 2em calc(50% - 15em) 5em;
 	clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 5em), 0% 100%);
 	background: linear-gradient(transparent, rgba(0,0,0,.5)), url(../img/header.jpg) bottom / cover;
-	font-size: 150%;
 
 	a {
 		color: inherit;
 	}
 
-	.logo {
-		position: absolute;
-		left: 1em;
-		top: 1em;
+	.masthead {
+		display: flex;
+		justify-content: space-between;
 
-		img {
-			display: block;
+		.logo {
+			img {
+				display: block;
 
-			&:not(:hover) {
-				filter: grayscale(100%) brightness(400%);
+				&:not(:hover) {
+					filter: grayscale(100%) brightness(400%);
+				}
 			}
 		}
 	}
 
-	.tagline {
-		font-size: 300%;
-		line-height: 1;
-		margin-bottom: 0;
-		font-weight: 100;
-	}
-
 	.promo {
+		padding: 5em;
+		padding: 3em calc(50% - 16em) 5em;
+		font-size: 150%;
+
+		.tagline {
+			font-size: 280%;
+			line-height: 1;
+			margin-bottom: 0;
+			font-weight: 100;
+		}
+
 		p {
 			hyphens: manual;
 			font-weight: 500;
 		}
-	}
 
-	.button {
-		display: block;
-		width: fit-content;
-		margin: auto;
-		padding: .5em 1em .4em;
-		border-radius: .3em;
-		text-align: center;
-		text-transform: uppercase;
-		text-decoration: none;
-		font-weight: bold;
+		.button {
+			display: block;
+			width: fit-content;
+			margin: auto;
+			padding: .5em 1em .4em;
+			border-radius: .3em;
+			text-align: center;
+			text-transform: uppercase;
+			text-decoration: none;
+			font-weight: bold;
 
-		&:not(:hover) {
-			background: white;
-			color: black;
-			mix-blend-mode: screen;
+			&:not(:hover) {
+				background: white;
+				color: black;
+				mix-blend-mode: screen;
+			}
+
+			&:hover {
+				background: $green;
+				color: white;
+			}
 		}
-
-		&:hover {
-			background: $green;
-			color: white;
-		}
-	}
-
-	.button + p {
-		font-style: italic;
-		font-size: 70%;
-		text-align: center;
 	}
 }

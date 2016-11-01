@@ -1,4 +1,28 @@
-@import url("https://fontlibrary.org/face/libre-bodoni");
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900");
+@font-face {
+  font-family: 'Libre Bodoni';
+  src: url("fonts/LibreBodoniBold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Libre Bodoni';
+  src: url("/assets/fonts/libre-bodoni/0f49c646c8f12a9dbd4730215d10a2a8/629d903227943776cbe3783d8cc1e84b/LibreBodoniBoldItalic.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic; }
+
+@font-face {
+  font-family: 'Libre Bodoni';
+  src: url("/assets/fonts/libre-bodoni/0f49c646c8f12a9dbd4730215d10a2a8/bb68fe30ffd78ce5863852f076341165/LibreBodoniItalic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic; }
+
+@font-face {
+  font-family: 'Libre Bodoni';
+  src: url("fonts/LibreBodoniRegular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+
 .flat-button {
   display: inline-block;
   padding: .2em .8em;
@@ -16,7 +40,7 @@
 
 body {
   margin: 0;
-  font: 300 106%/1.5 Helvetica Neue, sans-serif;
+  font: 300 106%/1.5 Roboto, "Helvetica Neue", sans-serif;
   -webkit-font-kerning: auto;
   font-kerning: auto;
   -webkit-hyphens: auto;
@@ -112,6 +136,21 @@ body > header {
   clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%);
   background: #222;
   color: white; }
+  body > header nav {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    font-weight: 700; }
+    body > header nav a {
+      display: block;
+      padding: 0 1em;
+      border-radius: 2em;
+      line-height: 2; }
+      body > header nav a:hover {
+        background: white;
+        color: black;
+        mix-blend-mode: screen;
+        text-decoration: none; }
   body > header .logo {
     margin: 0; }
     body > header .logo img {
