@@ -1,5 +1,5 @@
 @import url("https://fontlibrary.org/face/libre-bodoni");
-.button {
+.flat-button {
   display: inline-block;
   padding: .2em .8em;
   border: 2px solid white;
@@ -10,7 +10,7 @@
   font-size: 130%;
   font-weight: 400;
   text-decoration: none; }
-  .button:hover {
+  .flat-button:hover {
     background: var(--color);
     color: var(--background); }
 
@@ -24,9 +24,15 @@ body {
   hyphens: auto; }
 
 a {
-  color: #25aff4; }
-  a:not(:hover) {
-    text-decoration: none; }
+  color: #25aff4;
+  text-decoration: none; }
+  a:hover {
+    text-decoration: underline; }
+
+p {
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto; }
 
 dd + dt {
   margin-top: 1.5em; }
@@ -106,9 +112,6 @@ body > header {
   clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%);
   background: #222;
   color: white; }
-  body > header .button {
-    --color: white;
-    --background: #222; }
   body > header .logo {
     margin: 0; }
     body > header .logo img {
@@ -132,44 +135,6 @@ body > section > h1 {
 body > section > * {
   width: 900px;
   max-width: 90vw; }
-
-.home body > header {
-  display: block;
-  text-align: center;
-  padding: 5em;
-  padding: 2em calc(50% - 12em) 5em;
-  -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 5em), 0% 100%);
-  clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 5em), 0% 100%); }
-  .home body > header .logo img {
-    display: block;
-    height: 7rem;
-    margin: auto;
-    margin-bottom: .5em; }
-  .home body > header .tagline {
-    font-size: 120%;
-    color: rgba(255, 255, 255, 0.6);
-    color: #ff9500;
-    font-weight: 100;
-    margin-bottom: 0; }
-  .home body > header .intro {
-    margin-top: .1em;
-    text-align: justify;
-    -webkit-hyphens: auto;
-    -ms-hyphens: auto;
-    hyphens: auto;
-    font-weight: 500; }
-  .home body > header .button {
-    margin: auto;
-    --color: #82cf17; }
-    .home body > header .button + p {
-      color: rgba(255, 255, 255, 0.7);
-      font-style: italic;
-      font-size: 75%; }
-      .home body > header .button + p a {
-        color: inherit;
-        text-decoration: underline; }
-        .home body > header .button + p a:hover {
-          color: white; }
 
 .docs body > header + h2 {
   background: #82cf17; }
@@ -304,6 +269,11 @@ body > section > * {
 .tip::before {
   content: "Tip: "; }
 
+.unimplemented {
+  text-decoration: line-through;
+  -webkit-text-decoration-style: dashed;
+  text-decoration-style: dashed; }
+
 .token.comment,
 .token.prolog,
 .token.doctype,
@@ -363,10 +333,5 @@ body > section > * {
 
 .token.entity {
   cursor: help; }
-
-.unimplemented {
-  text-decoration: line-through;
-  -webkit-text-decoration-style: dashed;
-  text-decoration-style: dashed; }
 
 /*# sourceMappingURL=style.css.map */

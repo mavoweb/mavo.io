@@ -1,0 +1,55 @@
+body > header {
+  display: block;
+  text-align: center;
+  padding: 5em;
+  padding: 2em calc(50% - 15em) 5em;
+  -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 5em), 0% 100%);
+  clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 5em), 0% 100%);
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.5)), url(../img/header.jpg) bottom/cover;
+  font-size: 150%; }
+  body > header a {
+    color: inherit; }
+  body > header .logo {
+    position: absolute;
+    left: 1em;
+    top: 1em; }
+    body > header .logo img {
+      display: block; }
+      body > header .logo img:not(:hover) {
+        -webkit-filter: grayscale(100%) brightness(400%);
+        filter: grayscale(100%) brightness(400%); }
+  body > header .tagline {
+    font-size: 300%;
+    line-height: 1;
+    margin-bottom: 0;
+    font-weight: 100; }
+  body > header .promo p {
+    -webkit-hyphens: manual;
+    -ms-hyphens: manual;
+    hyphens: manual;
+    font-weight: 500; }
+  body > header .button {
+    display: block;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin: auto;
+    padding: .5em 1em .4em;
+    border-radius: .3em;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: bold; }
+    body > header .button:not(:hover) {
+      background: white;
+      color: black;
+      mix-blend-mode: screen; }
+    body > header .button:hover {
+      background: #82cf17;
+      color: white; }
+  body > header .button + p {
+    font-style: italic;
+    font-size: 70%;
+    text-align: center; }
+
+/*# sourceMappingURL=home.css.map */
