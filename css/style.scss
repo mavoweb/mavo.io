@@ -20,6 +20,9 @@
 }
 
 body {
+	display: flex;
+	flex-flow: column;
+	min-height: 100vh;
 	margin: 0;
 	font: 300 106%/1.5 $body-font;
 	font-kerning: auto;
@@ -153,6 +156,8 @@ body > header {
 }
 
 body > section {
+	flex: 1;
+
 	& > h1 {
 		font: bold 200% $heading-font;
 		color: $orange;
@@ -161,6 +166,39 @@ body > section {
 	& > * {
 		width: 900px;
 		max-width: 90vw;
+	}
+}
+
+body > footer {
+	display: flex;
+	flex-flow: row wrap;
+	padding: 3em 1em 1em;
+	background: hsl(220, 10%, 92%);
+	color: rgba(0,0,0,.8);
+	font-size: 80%;
+	clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%);
+
+	& > div {
+		margin-right: 1em;
+	}
+
+	p {
+		margin: 0;
+	}
+
+	a {
+		color: inherit;
+		font-weight: bold;
+		color: rgba(0,0,0,.7);
+	}
+
+	a.logo {
+		height: 3em;
+		margin: 0 .5em;
+
+		img {
+			height: 100%;
+		}
 	}
 }
 

@@ -39,6 +39,13 @@
     color: var(--background); }
 
 body {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column;
+  -ms-flex-flow: column;
+  flex-flow: column;
+  min-height: 100vh;
   margin: 0;
   font: 300 106%/1.5 Roboto, "Helvetica Neue", sans-serif;
   -webkit-font-kerning: auto;
@@ -167,13 +174,43 @@ body > header {
     font-weight: 200;
     line-height: 1; }
 
-body > section > h1 {
-  font: bold 200% Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
-  color: #ff9500; }
+body > section {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1; }
+  body > section > h1 {
+    font: bold 200% Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
+    color: #ff9500; }
+  body > section > * {
+    width: 900px;
+    max-width: 90vw; }
 
-body > section > * {
-  width: 900px;
-  max-width: 90vw; }
+body > footer {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  padding: 3em 1em 1em;
+  background: #e9eaed;
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 80%;
+  -webkit-clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%);
+  clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%); }
+  body > footer > div {
+    margin-right: 1em; }
+  body > footer p {
+    margin: 0; }
+  body > footer a {
+    color: inherit;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.7); }
+  body > footer a.logo {
+    height: 3em;
+    margin: 0 .5em; }
+    body > footer a.logo img {
+      height: 100%; }
 
 .docs body > header + h2 {
   background: #82cf17; }
