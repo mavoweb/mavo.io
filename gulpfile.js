@@ -36,6 +36,8 @@ gulp.task("html", function() {
 	gulp.src(["**/*.tpl.html"])
 		.pipe(fileinclude({
 			basepath: "templates/"
+		}).on("error", function(error) {
+			console.error(error);
 		}))
 		.pipe(rename({ extname: "" }))
 		.pipe(rename({ extname: ".html" }))

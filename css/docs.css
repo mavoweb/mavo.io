@@ -1,0 +1,223 @@
+@font-face {
+  font-family: 'Libre Bodoni';
+  src: url("fonts/LibreBodoniBold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Libre Bodoni';
+  src: url("/assets/fonts/libre-bodoni/0f49c646c8f12a9dbd4730215d10a2a8/629d903227943776cbe3783d8cc1e84b/LibreBodoniBoldItalic.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic; }
+
+@font-face {
+  font-family: 'Libre Bodoni';
+  src: url("/assets/fonts/libre-bodoni/0f49c646c8f12a9dbd4730215d10a2a8/bb68fe30ffd78ce5863852f076341165/LibreBodoniItalic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic; }
+
+@font-face {
+  font-family: 'Libre Bodoni';
+  src: url("fonts/LibreBodoniRegular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+
+body > header + h2 {
+  background: #82cf17; }
+
+.example > h1 {
+  color: #82cf17; }
+
+.example.color-picker .example-container {
+  padding: 0; }
+  .example.color-picker .example-container div[style] {
+    padding: 2em; }
+  .example.color-picker .example-container input {
+    display: block; }
+
+.example.scoped-expressions .example-container [typeof] {
+  padding: 1em;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.05);
+  margin: 1em; }
+
+.example.pow .example-container {
+  font-size: 300%; }
+  .example.pow .example-container input {
+    background: rgba(0, 0, 0, 0.05);
+    border: none; }
+  .example.pow .example-container input {
+    text-align: center; }
+  .example.pow .example-container [property="exponent"] {
+    font-size: 60%;
+    vertical-align: top; }
+
+.example.movie .example-container {
+  padding: 0; }
+  .example.movie .example-container div[class] {
+    padding: 2em; }
+
+.example .example-container {
+  position: relative;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  padding: 2.5em 2em 2em;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  margin: 1em 0 0; }
+  .example .example-container input[type="number"] {
+    font-size: 150%;
+    max-width: 2em; }
+  .example .example-container [data-multiple] {
+    padding: .5em;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin: .5em 0; }
+    .example .example-container [data-multiple] h1 {
+      margin-top: 0; }
+  @media print {
+    .example .example-container {
+      display: none; } }
+
+.example .mv-debug-storage {
+  margin: 0;
+  background: rgba(0, 0, 0, 0.06);
+  color: black .example .mv-debug-storage; }
+  .example .mv-debug-storage :not(:last-child) {
+    margin-bottom: 1em; }
+  .example .mv-debug-storage summary {
+    display: block;
+    padding: .3em .8em;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    font-size: 75%;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none; }
+    .example .mv-debug-storage summary:hover, .example .mv-debug-storage summary:focus {
+      background: rgba(0, 0, 0, 0.6); }
+  .example .mv-debug-storage pre {
+    background: none;
+    margin: 0;
+    color: black; }
+    .example .mv-debug-storage pre th {
+      color: white; }
+    .example .mv-debug-storage pre th, .example .mv-debug-storage pre td {
+      border-color: rgba(0, 0, 0, 0.1); }
+  @media print {
+    .example .mv-debug-storage {
+      display: none; } }
+
+#show-examples, #show-examples + label {
+  margin: 0;
+  line-height: 1; }
+  @media print {
+    #show-examples, #show-examples + label {
+      display: none; } }
+  @media (min-width: 1300px) {
+    #show-examples, #show-examples + label {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem; } }
+
+#show-examples + label {
+  left: 3.5rem; }
+
+#show-examples:not(:checked) ~ section .example {
+  display: none; }
+
+#summary {
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid; }
+  #summary dt {
+    font-size: 120%;
+    font-weight: bold; }
+
+body > section > table {
+  border-spacing: 0;
+  border-collapse: collapse; }
+  body > section > table th, body > section > table td {
+    text-align: left; }
+  body > section > table td {
+    padding: .1em .5em;
+    border: 1px solid rgba(0, 0, 0, 0.1); }
+  body > section > table code {
+    background: transparent; }
+
+.note, .tip {
+  border-left: 0.5em solid #66c7f7;
+  padding-left: .5em;
+  margin-left: -1em; }
+  .note::before, .tip::before {
+    content: "Note: ";
+    font-weight: bold;
+    color: #25aff4; }
+
+.tip::before {
+  content: "Tip: "; }
+
+.unimplemented {
+  text-decoration: line-through;
+  -webkit-text-decoration-style: dashed;
+  text-decoration-style: dashed; }
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: slategray; }
+
+.token.punctuation {
+  color: #999; }
+
+.namespace {
+  opacity: .7; }
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #ff0080; }
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #75ba15; }
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #a67f59;
+  background: rgba(255, 255, 255, 0.5); }
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #25aff4; }
+
+.token.function {
+  color: #DD4A68; }
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #e90; }
+
+.token.important,
+.token.bold {
+  font-weight: bold; }
+
+.token.italic {
+  font-style: italic; }
+
+.token.entity {
+  cursor: help; }
+
+/*# sourceMappingURL=docs.css.map */
