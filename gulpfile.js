@@ -24,7 +24,8 @@ gulp.task("sass", function() {
 		}))
 		.pipe(rename({ extname: ".css" }))
 		.pipe(sourcemaps.write("."))
-		.pipe(gulp.dest("."));
+		.pipe(gulp.dest("."))
+		.pipe(notify("<%= file.relative %> done!"));
 });
 
 gulp.task("update", function() {

@@ -193,15 +193,19 @@ body > footer {
   -ms-flex-flow: row wrap;
   flex-flow: row wrap;
   padding: 3em 1em 1em;
+  padding: 3em calc(50% - 450px) 1em;
   background: #e9eaed;
   color: rgba(0, 0, 0, 0.8);
   font-size: 80%;
   -webkit-clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%);
   clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%); }
   body > footer > div {
-    margin-right: 1em; }
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    margin: 0 1em 0 .5em; }
   body > footer p {
-    margin: 0; }
+    margin: .5em; }
   body > footer a {
     color: inherit;
     font-weight: bold;

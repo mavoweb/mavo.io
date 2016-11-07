@@ -164,7 +164,7 @@ body > section {
 	}
 
 	& > * {
-		width: 900px;
+		width: $content-width;
 		max-width: 90vw;
 	}
 }
@@ -173,17 +173,19 @@ body > footer {
 	display: flex;
 	flex-flow: row wrap;
 	padding: 3em 1em 1em;
+	padding: 3em calc(50% - #{$content-width/2}) 1em;
 	background: hsl(220, 10%, 92%);
 	color: rgba(0,0,0,.8);
 	font-size: 80%;
 	clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%);
 
 	& > div {
-		margin-right: 1em;
+		flex: 1;
+		margin: 0 1em 0 .5em;
 	}
 
 	p {
-		margin: 0;
+		margin: .5em;
 	}
 
 	a {
