@@ -1,6 +1,5 @@
 /*
 Build file to concat & minify files, compile SCSS and so on.
-npm install gulp gulp-util gulp-uglify gulp-rename gulp-concat gulp-sourcemaps gulp-babel gulp-sass gulp-autoprefixer --save-dev
 */
 // grab our gulp packages
 var gulp  = require("gulp");
@@ -12,6 +11,8 @@ var sass = require("gulp-sass");
 var babel = require("gulp-babel");
 var autoprefixer = require("gulp-autoprefixer");
 var sourcemaps = require("gulp-sourcemaps");
+var fileinclude = require("gulp-file-include");
+var notify = require("gulp-notify");
 
 gulp.task("sass", function() {
 	return gulp.src(["**/*.scss", "!node_modules/**"])
@@ -30,9 +31,20 @@ gulp.task("update", function() {
 	gulp.src(["../mavo/dist/**/*"]).pipe(gulp.dest("mavo"));
 });
 
+gulp.task("html", function() {
+	gulp.src(["**/*.tpl.html"])
+		.pipe(fileinclude({
+			basepath: "templates/"
+		}))
+		.pipe(rename({ extname: "" }))
+		.pipe(rename({ extname: ".html" }))
+		.pipe(gulp.dest("."));
+});
+
 gulp.task("watch", function() {
 	gulp.watch(["../mavo/dist/*"], ["update"]);
 	gulp.watch(["**/*.scss"], ["sass"]);
+	gulp.watch(["**/*.tpl.html", "./templates/*.html"], ["html"]);
 });
 
 gulp.task("default", ["update", "sass"]);
