@@ -132,15 +132,15 @@ body > header + h2 {
     font-size: 120%;
     font-weight: bold; }
 
-body > section > table {
+body > section table {
   border-spacing: 0;
   border-collapse: collapse; }
-  body > section > table th, body > section > table td {
+  body > section table th, body > section table td {
     text-align: left; }
-  body > section > table td {
+  body > section table td {
     padding: .1em .5em;
     border: 1px solid rgba(0, 0, 0, 0.1); }
-  body > section > table code {
+  body > section table code {
     background: transparent; }
 
 .note, .tip {

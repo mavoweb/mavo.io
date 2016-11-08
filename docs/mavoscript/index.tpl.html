@@ -1,5 +1,5 @@
 @@include('_head-docs.html', {
-	"title": "Primer"
+	"title": "MavoScript"
 })
 <body class="language-markup">
 
@@ -66,80 +66,94 @@
 <section id="math-functions">
 	<h1>Math Functions</h1>
 
-	<table>
-		<thead>
-			<tr>
-				<th>Math</th>
-				<th>Function</th>
-				<th>What it does</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><code>a + b</code></td>
-				<td><code>add(a, b)</code></td>
-				<td>Addition</td>
-			</tr>
-			<tr>
-				<td><code>a - b</code></td>
-				<td><code>subtract(a, b)</code></td>
-				<td>Subtraction</td>
-			</tr>
-			<tr>
-				<td><code>a * b</code></td>
-				<td><code>multiply(a, b)</code></td>
-				<td>Multiplication</td>
-			</tr>
-			<tr>
-				<td><code>a / b</code></td>
-				<td><code>div(a, b)</code></td>
-				<td>Division. Note that division by 0 will show up as ±∞ or <code>NaN</code> if it’s 0/0.</td>
-			</tr>
-			<tr>
-				<td><code>a and b</code></td>
-				<td><code>and(a, b)</code></td>
-				<td>Check that both a and b have a value</td>
-			</tr>
-			<tr>
-				<td><code>a or b</code></td>
-				<td><code>or(a, b)</code></td>
-				<td>Check that at least a or b have a value</td>
-			</tr>
-			<tr>
-				<td><code>!a</code></td>
-				<td><code>not(a)</code></td>
-				<td>Check if a doesn’t have a value</td>
-			</tr>
-			<tr>
-				<td><code>a < b</code></td>
-				<td><code>lt(a, b)</code></td>
-				<td>Check if a is less than b</td>
-			</tr>
-			<tr>
-				<td><code>a < b</code></td>
-				<td><code>lte(a, b)</code></td>
-				<td>Check if a is less than, or equal to b</td>
-			</tr>
-			<tr>
-				<td><code>a > b</code></td>
-				<td><code>gt(a, b)</code></td>
-				<td>Check if a is greater than b</td>
-			</tr>
-			<tr>
-				<td><code>a >= b</code></td>
-				<td><code>gte(a, b)</code></td>
-				<td>Check if a is greater than, or equal to b</td>
-			</tr>
-			<tr>
-				<td><code>a = b</code></td>
-				<td><code>eq(a, b)</code></td>
-				<td>Check if a is equal to b</td>
-			</tr>
-		</tbody>
-	</table>
+	<section>
+		<h1>Functions with operators</h1>
 
-	<p class="tip">If you have more operands you don’t need to nest these functions, just provide more parameters.
-		E.g. you don’t need to do <code>add(a, add(b, c))</code>, <code>add(a, b, c)</code> will just work.</p>
+		<p>In most cases, you don't need to use a function for the following, you can just use the syntax in the first column.</p>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Math</th>
+					<th>Function</th>
+					<th>What it does</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><code>a + b</code></td>
+					<td><code>add(a, b)</code></td>
+					<td>Addition</td>
+				</tr>
+				<tr>
+					<td><code>a - b</code></td>
+					<td><code>subtract(a, b)</code></td>
+					<td>Subtraction</td>
+				</tr>
+				<tr>
+					<td><code>a * b</code></td>
+					<td><code>multiply(a, b)</code></td>
+					<td>Multiplication</td>
+				</tr>
+				<tr>
+					<td><code>a / b</code></td>
+					<td><code>div(a, b)</code></td>
+					<td>Division. Note that division by 0 will show up as ±∞ or <code>NaN</code> if it’s 0/0.</td>
+				</tr>
+				<tr>
+					<td><code>a and b</code></td>
+					<td><code>and(a, b)</code></td>
+					<td>Check that both a and b have a value</td>
+				</tr>
+				<tr>
+					<td><code>a or b</code></td>
+					<td><code>or(a, b)</code></td>
+					<td>Check that at least a or b have a value</td>
+				</tr>
+				<tr>
+					<td><code>!a</code></td>
+					<td><code>not(a)</code></td>
+					<td>Check if a doesn’t have a value</td>
+				</tr>
+				<tr>
+					<td><code>a < b</code></td>
+					<td><code>lt(a, b)</code></td>
+					<td>Check if a is less than b</td>
+				</tr>
+				<tr>
+					<td><code>a < b</code></td>
+					<td><code>lte(a, b)</code></td>
+					<td>Check if a is less than, or equal to b</td>
+				</tr>
+				<tr>
+					<td><code>a > b</code></td>
+					<td><code>gt(a, b)</code></td>
+					<td>Check if a is greater than b</td>
+				</tr>
+				<tr>
+					<td><code>a >= b</code></td>
+					<td><code>gte(a, b)</code></td>
+					<td>Check if a is greater than, or equal to b</td>
+				</tr>
+				<tr>
+					<td><code>a = b</code></td>
+					<td><code>eq(a, b)</code></td>
+					<td>Check if a is equal to b</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<p class="tip">If you have more operands you don’t need to nest these functions, just provide more parameters.
+			E.g. you don’t need to do <code>add(a, add(b, c))</code>, <code>add(a, b, c)</code> will just work.
+		</p>
+	</section>
+
+	<section>
+		<h1>Advanced Math functions</h1>
+
+		<p>All <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math">JavaScript Math functions</a> can be used in Mavo without having to type <code>Math.</code> before them.
+		For example, to calculate the square root of 4, you don’t need to type <code>Math.sqrt(4)</code>, you can just type <code>sqrt(4)</code>.</p>
+	</section>
 </section>
 
 <section>

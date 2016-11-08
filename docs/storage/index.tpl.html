@@ -1,0 +1,82 @@
+@@include('_head-docs.html', {
+	"title": "Storage"
+})
+<body class="language-markup">
+
+@@include('_header.html')
+
+<h2>Storage</h2>
+
+<section>
+	<p>
+		The <code>data-store</code> attribute tells Mavo where any saved data will be stored.
+	</p>
+</section>
+
+<section>
+	<h1>Naming your application</h1>
+
+	<p>
+		It’s <strong>strongly recommended</strong> to name your application, for many reasons, such as storage, referring to properties in your Mavo from another Mavo, and many more.
+		If you don't name your application, it will automatically get an id based on its index in the page, such as <code>mavo1</code>, <code>mavo2</code> etc.
+		As you can imagine, this is flimsy: You don't want to lose your data if you just rearrange your Mavos in the page or add more Mavo-enabled pages in the same website!
+		You can name your application via any of the following attributes.
+		If more than one of the following are present, this is also the order they are checked in.
+	</p>
+
+	<ul>
+		<li><code>data-mavo</code></li>
+		<li><code>property</code></li>
+		<li><code>itemprop</code></li>
+		<li><code>id</code></li>
+		<li><code>class</code> (Only the first class is used)</li>
+	</ul>
+</section>
+
+<section>
+	<h1>Disabling storage</h1>
+
+	<p>
+		If your application does not need to store any data, you can use <code>data-store="none"</code>, or the <code>data-mavo</code> attribute with no <code>data-store</code> attribute.
+	</p>
+</section>
+
+<section>
+	<h1>Local storage</h1>
+
+	<p>You can save your data in the browser’s <code>localStorage</code>, by using the keyword <code>local</code> as the value of the <code>data-store</code> attribute (<code>data-store="local"</code>).</p>
+
+	<p>This can be useful if you are not planning to share your data with other people.
+		Please note that most <code>localStorage</code> implementations have a limit of 4MB.
+		Also, <code>localStorage</code> is bound by the same-origin policy. This means that if you change your URL, your data will be left behind!
+	</p>
+</section>
+
+<section>
+	<h1>Github</h1>
+	<p>TODO</p>
+</section>
+
+<section>
+	<h1>Dropbox</h1>
+	<p>TODO</p>
+</section>
+
+<section>
+	<h1>HTML element</h1>
+	<p>TODO</p>
+</section>
+
+<section>
+	<h1><code>data-source</code> attribute</h1>
+	<p>TODO</p>
+</section>
+
+<section>
+	<h1>Changing data-store and data-source via the URL</h1>
+</section>
+
+@@include('_footer-docs.html')
+
+</body>
+</html>

@@ -51,4 +51,4 @@ gulp.task("watch", function() {
 	gulp.watch(["**/*.tpl.html", "./templates/*.html"], ["html"]);
 });
 
-gulp.task("default", ["update", "sass"]);
+gulp.task("default", ["update", "sass", "html"]);
