@@ -15,29 +15,15 @@
 
 	<p>The <code>data-store</code> attribute has two purposes: its presence tells mavo that it should pay attention to what is inside that element
 		and its value tells mavo where to store any data.
-		The value of the <code>data-store</code> attribute is a valid URL or a keyword and has the following meaning:</p>
+		The value of the <code>data-store</code> attribute is a valid URL or a keyword, like <code>local</code>. <a href="storage">Learn more about the different types of Mavo Storage</a></p>
 
-	<dl>
-		<dt>No value or <code>""</code> or <code>none</code></dt>
-		<dd>Disable storage.</dd>
+		<script type="text/plain">
+			<div data-store="local" id="mavoTest">
+				My first Mavo app!
+			</div>
+		</script>
 
-		<dt><code>local</code></dt>
-		<dd>Save in the browser (in <code>localStorage</code>).</dd>
-
-		<dt><code>#hash</code></dt>
-		<dd>A local hash can mean two things, depending on whether an element exists in the page with that id:
-			<ol>
-				<li>If an element exists, that element will receive any saved data.</li>
-				<li>If there is no corresponding element, the data will be saved in the browser (<code>localStorage</code>).</li>
-			</ol>
-		</dd>
-
-		<dt><code>https://www.dropbox.com/s/[lettersandnumbers]/[filename]?dl=0</code></dt>
-		<dd>
-			This is the URL that Dropbox gives you if you click “Share” on a file.
-			In that case, the data will be saved back to Dropbox, and mavo will ask you to log in to edit or save.
-		</dd>
-	</dl>
+	<p>By default, this will not do anything, until you start adding some properties. We’ll learn about properties in the next section.</p>
 </section>
 
 <section id="property">

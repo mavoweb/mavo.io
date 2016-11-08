@@ -54,7 +54,35 @@
 
 <section>
 	<h1>Github</h1>
-	<p>TODO</p>
+
+	<p>
+		Mavo will provide login controls and will not allow any edits until the viewer has logged in and has commit permissions.
+		If the file and/or repo does not exist, Mavo will create it upon saving.
+		The value of the `data-store` attribute can take almost any Github file URL, as well as some more fuzzy ones:
+	</p>
+
+	<dl>
+		<dt><code>https://github.com/[username]</code></dt>
+		<dd>This is perfect for people who want to use Github as a storage backend but are not familiar with it, since all it requires is signing up to get a username.
+			Mavo will create a default repository of <em>mv-data</em> and will store data in a file called <em>[mavo-id].json</em></dd>
+
+		<dt><code>https://github.com/[username]/[reponame]</code></dt>
+		<dd>Mavo will create a file called [mavo id].json in that repository.</dd>
+
+		<dt><code>https://github.com/[username]/[reponame]/[filename]</code></dt>
+		<dd>Mavo will assume a default branch of <code>master</code></dd>
+
+		<dt><code>https://github.com/[username]/[reponame]/blob/[branch]/[filename]</code></dt>
+		<dd>The URL Github gives you when using its file browser. As specific as it gets, Mavo makes no assumptions.</dd>
+
+		<dt><code>https://[username].github.io/[reponame]/[filename]</code></dt>
+		<dd>Github Pages URL. Try to avoid these, as Mavo has to make some assumptions about what is the repo name, branch name, and filename, which could be wrong.</dd>
+
+		<dt><code>https://raw.githubusercontent.com/[username]/[reponame]/[branch]/[filename]</code></dt>
+		<dd>The URL that shows when you click the button <em>Raw</em> from the Github file browser.</dd>
+	</dl>
+
+	<p class="note">Note that <em>[filename]</em> above could include a path, e.g. <code>foo/bar/baz.json</code>.</p>
 </section>
 
 <section>
@@ -68,12 +96,13 @@
 </section>
 
 <section>
-	<h1><code>data-source</code> attribute</h1>
+	<h1>data-source attribute</h1>
 	<p>TODO</p>
 </section>
 
 <section>
 	<h1>Changing data-store and data-source via the URL</h1>
+	<p>TODO</p>
 </section>
 
 @@include('_footer-docs.html')
