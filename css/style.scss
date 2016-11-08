@@ -80,10 +80,11 @@ pre, code {
 		border-radius: .25em;
 	}
 
-hr {
-	height: 2em;
+body > section > hr {
+	height: .5em;
+	width: 5em;
 	margin: 1.5em 0 1em;
-	background: url(hr.svg) no-repeat center;
+	background: $magenta;
 	border: none;
 }
 

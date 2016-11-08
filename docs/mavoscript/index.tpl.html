@@ -1,0 +1,174 @@
+@@include('_head-docs.html', {
+	"title": "Primer"
+})
+<body class="language-markup">
+
+@@include('_header.html')
+
+<h2>MavoScript</h2>
+
+<section>
+	<p>
+		<em>MavoScript</em> is Mavo's simple expression language, used in Mavo expressions.
+		It's based on a subset of JavaScript, with a few simplifications to make it easy to use even by people with no JavaScript knowledge.
+		If a Mavo expression is more advanced than MavoScript, it is automatically parsed as JavaScript, allowing experienced HTML authors to do more with Mavo expressions.
+	</p>
+</section>
+
+<section>
+	<h1>Using Mavo expressions</h1>
+
+	<p>By default, Mavo Expressions are denoted by square brackets, e.g. <code>[5 + 5]</code>.</p>
+
+	<p>
+		You can change this, by using the <code>data-expressions</code> attribute.
+		For example, to make expressions require <code>{{</code> and <code>}}</code> around them, you can use <code>data-expressions="{{ }}".</code>
+		To disable expressions in an element and its descendants altogether, use <code>data-expressions="none"</code>.
+	</p>
+</section>
+
+<section id="list-functions">
+	<h1>List Functions</h1>
+	<p>The following functions are useful with properties that have multiple values, i.e. are on or inside a <code>data-multiple</code> element.</p>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Function</th>
+				<th>What it does</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><code>count(property)</code></td>
+				<td>Count how many items in a list actually have a value.</td>
+			</tr>
+			<tr>
+				<td><code>sum(property)</code></td>
+				<td>Sum all numbers in the list.</td>
+			</tr>
+			<tr>
+				<td><code>average(property)</code></td>
+				<td>Calculate the average of all numbers in the list.</td>
+			</tr>
+			<tr>
+				<td><code>min(property)</code></td>
+				<td>Calculate the minimum of all numbers in the list.</td>
+			</tr>
+			<tr>
+				<td><code>max(property)</code></td>
+				<td>Calculate the maximum of all numbers in the list.</td>
+			</tr>
+		</tbody>
+	</table>
+</section>
+
+<section id="math-functions">
+	<h1>Math Functions</h1>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Math</th>
+				<th>Function</th>
+				<th>What it does</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><code>a + b</code></td>
+				<td><code>add(a, b)</code></td>
+				<td>Addition</td>
+			</tr>
+			<tr>
+				<td><code>a - b</code></td>
+				<td><code>subtract(a, b)</code></td>
+				<td>Subtraction</td>
+			</tr>
+			<tr>
+				<td><code>a * b</code></td>
+				<td><code>multiply(a, b)</code></td>
+				<td>Multiplication</td>
+			</tr>
+			<tr>
+				<td><code>a / b</code></td>
+				<td><code>div(a, b)</code></td>
+				<td>Division. Note that division by 0 will show up as ±∞ or <code>NaN</code> if it’s 0/0.</td>
+			</tr>
+			<tr>
+				<td><code>a and b</code></td>
+				<td><code>and(a, b)</code></td>
+				<td>Check that both a and b have a value</td>
+			</tr>
+			<tr>
+				<td><code>a or b</code></td>
+				<td><code>or(a, b)</code></td>
+				<td>Check that at least a or b have a value</td>
+			</tr>
+			<tr>
+				<td><code>!a</code></td>
+				<td><code>not(a)</code></td>
+				<td>Check if a doesn’t have a value</td>
+			</tr>
+			<tr>
+				<td><code>a < b</code></td>
+				<td><code>lt(a, b)</code></td>
+				<td>Check if a is less than b</td>
+			</tr>
+			<tr>
+				<td><code>a < b</code></td>
+				<td><code>lte(a, b)</code></td>
+				<td>Check if a is less than, or equal to b</td>
+			</tr>
+			<tr>
+				<td><code>a > b</code></td>
+				<td><code>gt(a, b)</code></td>
+				<td>Check if a is greater than b</td>
+			</tr>
+			<tr>
+				<td><code>a >= b</code></td>
+				<td><code>gte(a, b)</code></td>
+				<td>Check if a is greater than, or equal to b</td>
+			</tr>
+			<tr>
+				<td><code>a = b</code></td>
+				<td><code>eq(a, b)</code></td>
+				<td>Check if a is equal to b</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p class="tip">If you have more operands you don’t need to nest these functions, just provide more parameters.
+		E.g. you don’t need to do <code>add(a, add(b, c))</code>, <code>add(a, b, c)</code> will just work.</p>
+</section>
+
+<section>
+	<h1>Other Functions</h1>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Function</th>
+				<th>What it does</th>
+				<th>Example</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><code>if(test, ifyes)</code></td>
+				<td>Print out some text if the test passes, otherwise nothing.</td>
+				<td><code>if(rating > 3, good)</code></td>
+			</tr>
+			<tr>
+				<td><code>if(test, ifyes, ifno)</code></td>
+				<td>Print out different text depending on a condition</td>
+				<td><code>if(rating > 3, good, bad)</code></td>
+			</tr>
+		</tbody>
+	</table>
+</section>
+
+@@include('_footer-docs.html')
+
+</body>
+</html>

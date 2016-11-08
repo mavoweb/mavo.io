@@ -41,7 +41,8 @@ gulp.task("html", function() {
 		}))
 		.pipe(rename({ extname: "" }))
 		.pipe(rename({ extname: ".html" }))
-		.pipe(gulp.dest("."));
+		.pipe(gulp.dest("."))
+		.pipe(notify("<%= file.relative %> done!"));
 });
 
 gulp.task("watch", function() {
