@@ -106,24 +106,6 @@ body > header + h2 {
     .example .mv-debug-storage {
       display: none; } }
 
-#show-examples, #show-examples + label {
-  margin: 0;
-  line-height: 1; }
-  @media print {
-    #show-examples, #show-examples + label {
-      display: none; } }
-  @media (min-width: 1300px) {
-    #show-examples, #show-examples + label {
-      position: fixed;
-      bottom: 2rem;
-      left: 2rem; } }
-
-#show-examples + label {
-  left: 3.5rem; }
-
-#show-examples:not(:checked) ~ section .example {
-  display: none; }
-
 #summary {
   -webkit-column-break-inside: avoid;
   page-break-inside: avoid;
@@ -160,6 +142,42 @@ body > section table {
   -webkit-text-decoration-style: dashed;
   text-decoration-style: dashed; }
 
+#toc {
+  margin: 1em;
+  overflow: hidden;
+  border-radius: .4em;
+  background: rgba(37, 175, 244, 0.2);
+  font-weight: bold;
+  font-size: 80%; }
+  @media (min-width: 1300px) {
+    #toc {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      z-index: 1;
+      max-width: calc(50vw - 450px - 2em);
+      max-height: calc(100vh - 3em); } }
+  #toc summary, #toc ul {
+    margin: 0;
+    padding: .6rem; }
+  #toc summary {
+    background: rgba(37, 175, 244, 0.6);
+    color: rgba(255, 255, 255, 0.8);
+    text-transform: uppercase;
+    cursor: pointer; }
+    #toc summary:focus {
+      background: #ff9500;
+      outline: none; }
+  #toc ul {
+    list-style: none;
+    overflow: auto; }
+  #toc a {
+    display: block;
+    margin: .3em 0; }
+
+/**
+ * Syntax highlighting
+ */
 .token.comment,
 .token.prolog,
 .token.doctype,

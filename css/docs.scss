@@ -127,31 +127,6 @@ body > header + h2 {
 	}
 }
 
-#show-examples {
-	&, & + label {
-		margin: 0;
-		line-height: 1;
-
-		@media print {
-			display: none;
-		}
-
-		@media (min-width: 1300px) {
-			position: fixed;
-			bottom: 2rem;
-			left: 2rem;
-		}
-	}
-
-	& + label {
-		left: 3.5rem;
-	}
-
-	&:not(:checked) ~ section .example {
-		display: none;
-	}
-}
-
 #summary {
 	break-inside: avoid;
 
@@ -202,6 +177,56 @@ body > section table {
 	text-decoration-style: dashed;
 }
 
+#toc {
+	margin: 1em;
+	overflow: hidden;
+	border-radius: .4em;
+	background: rgba($blue, .2);
+	font-weight: bold;
+	font-size: 80%;
+
+	@media (min-width: 1300px) {
+		& {
+			position: fixed;
+			left: 0;
+			bottom: 0;
+			z-index: 1;
+			max-width: calc(50vw - #{$content-width/2} - 2em);
+			max-height: calc(100vh - 3em);
+		}
+	}
+
+	summary, ul {
+		margin: 0;
+		padding: .6rem;
+	}
+
+	summary {
+		background: rgba($blue, .6);
+		color: rgba(white, .8);
+		text-transform: uppercase;
+		cursor: pointer;
+
+		&:focus {
+			background: $orange;
+			outline: none;
+		}
+	}
+
+	ul {
+		list-style: none;
+		overflow: auto;
+	}
+
+	a {
+		display: block;
+		margin: .3em 0;
+	}
+}
+
+/**
+ * Syntax highlighting
+ */
 .token.comment,
 .token.prolog,
 .token.doctype,

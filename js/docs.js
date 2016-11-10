@@ -34,11 +34,46 @@ $$('a[href^="#"]:empty').forEach(function (a) {
 	a.textContent = a.getAttribute("href").slice(1);
 });
 
-// Give every top-level heading an id
-$$("body > section > h1").forEach(function (h1) {
+// Give every section an id
+$$("body > section h1").forEach(function (h1) {
 	var section = h1.parentNode;
 
 	if (!section.id) {
 		section.id = h1.textContent.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
 	}
 });
+
+// Build Table Of Contents for current page
+if (!document.body.classList.contains("no-toc")) {
+	let toc = [];
+
+	$$("body > section:not(.no-toc) > h1").forEach(function (h1) {
+		toc.push($.create("li", {
+			contents: {
+				tag: "a",
+				href: "#" + h1.parentNode.id,
+				textContent: h1.textContent
+			}
+		}));
+	});
+
+	$.create("nav", {
+		id: "toc",
+		className: "no-toc",
+		contents: {
+			tag: "details",
+			open: true,
+			contents: [
+				{
+					tag: "summary",
+					textContent: "On This Page"
+				},
+				{
+					tag: "ul",
+					contents: toc
+				}
+			]
+		},
+		before: $("body > section:first-of-type")
+	});
+}
