@@ -3,7 +3,6 @@ Build file to concat & minify files, compile SCSS and so on.
 */
 // grab our gulp packages
 var gulp  = require("gulp");
-var gutil = require("gulp-util");
 var uglify = require("gulp-uglify");
 var rename = require("gulp-rename");
 var concat = require("gulp-concat");
