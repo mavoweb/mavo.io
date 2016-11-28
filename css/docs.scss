@@ -137,6 +137,7 @@ body > header + h2 {
 }
 
 body > section table {
+	table-layout: fixed;
 	border-spacing: 0;
 	border-collapse: collapse;
 
@@ -149,7 +150,7 @@ body > section table {
 		border: 1px solid rgba(0,0,0,.1);
 	}
 
-	code {
+	td:first-child code {
 		background: transparent;
 	}
 }

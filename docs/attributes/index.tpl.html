@@ -1,0 +1,249 @@
+@@include('_head-docs.html', {
+	"title": "Attributes & Classes Index"
+})
+<body class="language-markup">
+
+@@include('_header.html')
+
+<h2>Attributes & Classes</h2>
+<style>
+td:nth-child(2):empty::before {
+	content: "(Any element)";
+	opacity: .5;
+	font-size: 70%;
+	font-style: italic;
+	font-weight: bold;
+}
+</style>
+
+<section>
+	<p>
+		This is an index of all Mavo attributes and classes, with links to their respective pages in the documentation, if any.
+	</p>
+</section>
+
+<section>
+	<h1>Core attributes</h1>
+	<p>These attributes are crucial, most Mavo apps need them and elements with them are special.</p>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Attribute</th>
+				<th style="width: 72%;">Purpose</th>
+				<th style="width: 6em">Read more</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><code>data-mavo</code></td>
+				<td>Allows you to assign an id to your app, which is used in a number of places. The element with this attribute is called the <strong>Mavo wrapper</strong>.</td>
+				<td><a href="/docs/storage">Storage</a></td>
+			</tr>
+			<tr>
+				<td><code>data-store</code></td>
+				<td>Tells Mavo where data is stored. The element with this attribute is called the <strong>Mavo wrapper</strong>.</td>
+				<td><a href="/docs/storage">Storage</a></td>
+			</tr>
+			<tr>
+				<td><code>property</code></td>
+				<td>Names elements that will be saved, edited, or used in expressions. Elements with this attribute are called <strong>Properties</strong>.</td>
+				<td><a href="/docs/primer">Primer</a></td>
+			</tr>
+			<tr>
+				<td><code>typeof</code></td>
+				<td>The value of this property element is not an attribute or its text content, but the union of the values of the properties inside it.
+					This is almost always inferred from the structure of your properties and added automatically, but you can use it to force an element to be a group, or to declare the type of the group (e.g. <code>typeof="Person"</code>) for better semantic value.
+					Elements with this attribute are called <strong>groups</strong>.</td>
+				<td><a href="/docs/primer">Primer</a></td>
+			</tr>
+			<tr>
+				<td><code>data-multiple</code></td>
+				<td>Makes elements repeatable. Only has meaning on property elements. Elements with this attribute are called <strong>Collections</strong>.</td>
+				<td><a href="/docs/primer">Primer</a></td>
+			</tr>
+
+		</tbody>
+	</table>
+</section>
+
+<section>
+	<h1>Other attributes</h1>
+	<p>These are attributes you can use to further customize your Mavo app.</p>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Attribute</th>
+				<th>On</th>
+				<th style="width: 45%;">Purpose</th>
+				<th style="width: 6em">Read more</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><code>data-attribute</code></td>
+				<td>Properties and elements with <code>data-content</code></td>
+				<td>Customize which attribute data goes into on this element. For the element content, specify <code>"null"</code>.</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>data-source</code></td>
+				<td>Mavo wrapper</td>
+				<td>If no data is stored, <code>data-source</code> will be used to load initial data. Same values as <code>data-store</code>.</td>
+				<td><a href="/docs/storage">Storage</a></td>
+			</tr>
+			<tr>
+				<td><code>data-default</code></td>
+				<td>Properties</td>
+				<td>Sets the default value. If no value, the default value becomes the property content.</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>data-order</code></td>
+				<td>Collections</td>
+				<td>Values: <code>desc</code> or <code>asc</code>. Controls the order that new items are added to collections.</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>data-expressions</code></td>
+				<td></td>
+				<td>Change the expression syntax or disable expressions altogether.</td>
+				<td><a href="/docs/mavoscript">MavoScript</a></td>
+			</tr>
+			<tr>
+				<td><code>data-content</code></td>
+				<td></td>
+				<td>Set an element's content to the result of an expression.</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>data-edit</code></td>
+				<td>Properties</td>
+				<td>Customize how an element is edited by linking to another element, anywhere in the page.</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>data-input-*</code></td>
+				<td>Properties</td>
+				<td>Any attributes set that way will be copied over to the property's editor.</td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+</section>
+
+<section>
+	<h1>Author classes</h1>
+	<p>In addition to attributes, you can also use these classes to customize the behavior of your Mavo app.</p>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>On</th>
+				<th>Purpose</th>
+				<th>Read more</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><code>autoedit</code></td>
+				<td>Mavo wrapper</td>
+				<td>Mavo will start in edit mode (no need to click the Edit button). Useful for apps that are almost always in edit mode, such as a to-do list.</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>debug</code></td>
+				<td>Mavo wrapper or any group</td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+</section>
+
+<section>
+	<h1>Generated attributes & classes</h1>
+	<p>You can use these attributes and classes in your CSS to customize your Mavo app.
+		Classes are listed with a dot (<code>.</code>) before their name.</p>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>On</th>
+				<th>Purpose</th>
+				<th>Read more</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><code>.mv-wrapper</code></td>
+				<td>Mavo wrapper</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>data-mv-progress</code></td>
+				<td>Mavo wrapper</td>
+				<td>Only set when an event is in progress. Its value reflects what event, e.g. <code>"Saving"</code> or <code>"Loading"</code>.</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>data-clicked</code></td>
+				<td>Properties that are <code>&lt;button></code> elements</td>
+				<td>The number of times the button has been clicked.</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>.mv-ui</code></td>
+				<td>Any (usually generated) controls for triggering Mavo-related actions</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>.mv-item</code></td>
+				<td>Collection items</td>
+				<td>Deleted but not saved items have the class <code>.deleted</code>.</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>.mv-item-controls</code></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>.mv-highlight</code></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>.mv-bar</code></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>.mv-editor</code></td>
+				<td>Element used for editing a property</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>.mv-popup</code></td>
+				<td>Generated popup for editing an attribute.</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<!-- tr>td>code^td*3 -->
+		</tbody>
+	</table>
+</section>
+
+@@include('_footer-docs.html')
+
+</body>
+</html>
