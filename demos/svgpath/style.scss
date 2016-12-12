@@ -1,0 +1,178 @@
+body {
+	font: 100%/1.5 sans-serif;
+
+	& > h1 {
+		text-align: center;
+		font-weight: 300;
+		font-size: 350%;
+	}
+}
+
+main {
+	display: flex;
+}
+
+main > section {
+	flex: 1;
+}
+
+main > section > svg {
+	max-height: 90vh;
+	max-width: 100%;
+}
+
+svg {
+	display: block;
+	overflow: visible;
+}
+
+svg * {
+	transform-box: fill-box;
+}
+
+[property=segment] {
+	--color: hsl(220, 10%, 50%);
+	position: relative;
+	margin: .8em 0;
+	border: 1px solid var(--color);
+	border-radius: .3em;
+	background: linear-gradient(hsla(0,0%,100%,.8), hsla(0,0%,100%,.8)) var(--color);
+
+	.mv-item-controls {
+		position: static;
+		opacity: 1;
+		border: 0;
+		pointer-events: auto;
+
+		&:not(:hover):not(:focus) {
+			mix-blend-mode: multiply;
+		}
+	}
+
+	h1 {
+		display: flex;
+		align-items: center;
+		padding: .5em;
+		padding-left: 3em;
+		margin: 0;
+		background: var(--color);
+		color: hsla(0,0%,100%,.8);
+
+		input[type=number] {
+			border-color: hsla(0,0%,100%,.5);
+			color: white;
+		}
+	}
+
+	&::before {
+		content: attr(data-segtype);
+		min-width: 1em;
+		position: absolute;
+		top: .5em; left: .5em;
+		padding: .3em;
+		border-radius: 50%;
+		margin-right: .5em;
+		color: var(--color);
+		background: hsla(0,0%,100%,.8);
+		font-size: 120%;
+		text-align: center;
+		line-height: 1;
+	}
+
+	&.absolute::before {
+		text-transform: uppercase;
+	}
+
+	&[data-segtype="m"] {
+		--color: hsl(90, 50%, 45%);
+	}
+
+	&[data-segtype="l"] {
+		--color: #f47;
+	}
+
+	&[data-segtype="h"] {
+		--color: hsl(210, 40%, 50%);
+	}
+
+	&[data-segtype="v"] {
+		--color: hsl(10, 70%, 45%);
+	}
+
+	&[data-segtype="a"] {
+		--color: hsl(170, 40%, 50%);
+	}
+
+	label {
+		margin-right: .5em;
+	}
+
+	input[type=number] {
+		width: 3em;
+		border: 1px solid white;
+		background: hsla(0,0%,100%,.3);
+		border-radius: .2em;
+		font-weight: bold;
+	}
+
+	& > div {
+		padding: 1em;
+	}
+}
+
+select[property="type"] {
+	margin-right: auto;
+	background: transparent;
+	border: 1px solid hsla(0,0%,100%,.2);
+	color: white;
+	font: inherit;
+	font-size: 120%;
+	font-weight: 200;
+}
+
+label {
+	display: inline-block;
+}
+
+fieldset {
+	border: 1px solid silver;
+	border-radius: .4em;
+}
+
+	fieldset > label {
+		width: 24%;
+	}
+
+input {
+	padding: .1em .4em;
+	font: inherit;
+}
+
+pre > code {
+	white-space: normal;
+}
+
+svg {
+	margin-left: 1em;
+	background: linear-gradient(#ddd 1px, transparent 1px), linear-gradient(to right, #ddd 1px, transparent 1px);
+	background-size: 50px 50px;
+}
+
+.preview {
+	h1 {
+		a {
+			padding: .4em .5em;
+			border-radius: .3em;
+			background: hsla(220, 10%, 50%, .7);
+			color: white;
+			text-decoration: none;
+			text-transform: uppercase;
+			font-size: 75%;
+			font-weight: 300;
+
+			&:hover, &:focus {
+				background: hsl(220, 10%, 50%);
+			}
+		}
+	}
+}

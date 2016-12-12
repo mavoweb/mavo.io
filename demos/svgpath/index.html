@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<title>SVG &lt;path> helper</title>
+<link rel="stylesheet" href="../../mavo/mavo.css">
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body data-mavo="svgpath" data-store="local" class="autoedit">
+
+<h1>SVG &lt;path> helper</h1>
+<div class="mv-bar"></div>
+
+<section>
+	<label>Width: <input type="number" property="width" value="100" /></label>
+	<label>Height <input type="number" property="height" value="100" /></label>
+</section>
+<main>
+<section>
+	<h1>Path segments</h1>
+
+	<pre><code>&lt;path d="<span property="path">[segment & " "]</span>" /></code></pre>
+
+	<article property="segment" data-segtype="[type]" class="[if(absolute, 'absolute')]" data-multiple data-view="edit">
+		<h1>
+			<select property="type">
+				<option value="m">Move</option>
+				<option value="l">Line</option>
+				<option value="h">Horizontal Line</option>
+				<option value="v">Vertical Line</option>
+				<option value="a">Arc</option>
+				<option value="s">Smooth Bézier curve</option>
+				<option value="c">Bézier curve</option>
+				<option value="t">Smooth Quadratic Bézier</option>
+				<option value="q">Quadratic Bézier</option>
+				<option value="z">Close path</option>
+			</select>
+
+			<label data-if="type != v and type != z">
+				X <input type="number" property="x" value="0" />
+			</label>
+
+			<label data-if="type != h and type != z">
+				Y <input type="number" property="y" value="0" />
+			</label>
+
+			<label>
+				<input type="checkbox" property="absolute">
+				Absolute
+			</label>
+
+			<div class="mv-item-controls"></div>
+		</h1>
+
+		<div data-if="type = a">
+			<label>
+				rx: <input type="number" property="rx" value="0" />
+			</label>
+			<label>
+				ry: <input type="number" property="ry" value="0" />
+			</label>
+			<label>
+				X Axis rotation: <input type="number" property="axisRotation" value="0" />
+			</label>
+			<label>
+				<input type="checkbox" property="largeArc">
+				Large Arc?
+			</label>
+			<label>
+				<input type="checkbox" property="sweep">
+				Sweep?
+			</label>
+			<meta property="arcFlags" content="[rx] [ry] [axisRotation] [largeArc + 0] [sweep + 0]">
+		</div>
+
+		<div data-if="type = c or type = s or type = q">
+			<label data-if="type = c or type = q">
+				<span data-if="type = c">First</span> Control point:
+				<input type="number" property="x1" value="0" />
+				<input type="number" property="y1" value="0" />
+			</label>
+			<label data-if="type = c">
+				Second control point:
+				<input type="number" property="x2" value="0" />
+				<input type="number" property="y2" value="0" />
+			</label>
+		</div>
+
+		<meta property="summary" content="[if(absolute, uppercase(type), type)] [arcFlags] [x] [y]">
+	</article>
+
+</section>
+<section class="preview">
+	<h1>
+		Preview
+
+		<a property="svgfile" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 [width] [height]">
+	<path d="[path]" stroke="black" fill="yellow" />
+</svg>' target="_blank">↗️ Open in new tab</a>
+		<a href='[svgfile]' download="path.svg" target="_blank">⏬ Download</a>
+	</h1>
+
+	<svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 [width] [height]" style="background-size: [width/10]% [height/10]%">
+		<path d="[path]" stroke="black" fill="yellow" />
+	</svg>
+</section>
+
+</main>
+
+<script src="../../mavo/mavo.js"></script>
+
+</body>
+</html>

@@ -24,7 +24,10 @@ gulp.task("sass", function() {
 		.pipe(rename({ extname: ".css" }))
 		.pipe(sourcemaps.write("."))
 		.pipe(gulp.dest("."))
-		.pipe(notify("<%= file.relative %> done!"));
+		.pipe(notify({
+			message: "Sass done!",
+			onLast: true
+		}));
 });
 
 gulp.task("update", function() {
@@ -41,7 +44,10 @@ gulp.task("html", function() {
 		.pipe(rename({ extname: "" }))
 		.pipe(rename({ extname: ".html" }))
 		.pipe(gulp.dest("."))
-		.pipe(notify("<%= file.relative %> done!"));
+		.pipe(notify({
+			message: "HTML done!",
+			onLast: true
+		}));
 });
 
 gulp.task("watch", function() {
