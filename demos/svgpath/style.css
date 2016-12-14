@@ -14,6 +14,9 @@ main > section {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1; }
+  main > section > h1 {
+    font-weight: 300;
+    font-size: 200%; }
 
 main > section > svg {
   max-height: 90vh;
@@ -84,13 +87,17 @@ svg * {
   [property=segment] label {
     margin-right: .5em; }
   [property=segment] input[type=number] {
-    width: 3em;
-    border: 1px solid white;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: .2em;
-    font-weight: bold; }
+    border-color: white;
+    background: rgba(255, 255, 255, 0.3); }
   [property=segment] > div {
     padding: 1em; }
+
+input[type=number] {
+  width: 3em;
+  border-radius: .2em;
+  font-weight: bold;
+  border-width: 1px;
+  border-style: solid; }
 
 select[property="type"] {
   margin-right: auto;
@@ -115,24 +122,42 @@ input {
   padding: .1em .4em;
   font: inherit; }
 
-pre > code {
-  white-space: normal; }
-
 svg {
   margin-left: 1em;
   background: linear-gradient(#ddd 1px, transparent 1px), linear-gradient(to right, #ddd 1px, transparent 1px);
   background-size: 50px 50px; }
 
-.preview h1 a {
-  padding: .4em .5em;
+.editor > h1 details summary, .preview h1 a {
+  padding: .4em .8em;
   border-radius: .3em;
+  cursor: pointer;
   background: rgba(115, 123, 140, 0.7);
   color: white;
   text-decoration: none;
   text-transform: uppercase;
-  font-size: 75%;
+  font-size: .8rem;
   font-weight: 300; }
-  .preview h1 a:hover, .preview h1 a:focus {
+  .editor > h1 details summary:hover, .preview h1 a:hover, .editor > h1 details summary:focus, .preview h1 a:focus {
     background: #737b8c; }
+
+.editor > h1 details {
+  font-size: 1rem; }
+  .editor > h1 details ::-webkit-details-marker {
+    display: none; }
+  .editor > h1 details summary {
+    display: inline-block; }
+  .editor > h1 details summary::before {
+    content: "Show "; }
+  .editor > h1 details:not([open]) {
+    display: inline-block; }
+  .editor > h1 details[open] summary::before {
+    content: "Hide "; }
+
+.editor > h1 textarea {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  font: 100% Consolas, Monaco, monospace;
+  white-space: normal; }
 
 /*# sourceMappingURL=style.css.map */

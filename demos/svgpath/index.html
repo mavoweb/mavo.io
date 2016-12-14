@@ -14,14 +14,19 @@
 <div class="mv-bar"></div>
 
 <section>
-	<label>Width: <input type="number" property="width" value="100" /></label>
-	<label>Height <input type="number" property="height" value="100" /></label>
+	Coordinate system:
+	<input type="number" property="width" value="100" /> &times;
+	<input type="number" property="height" value="100" />
 </section>
 <main>
-<section>
-	<h1>Path segments</h1>
-
-	<pre><code>&lt;path d="<span property="path">[segment & " "]</span>" /></code></pre>
+<section class="editor">
+	<h1>
+		Path segments
+		<details>
+			<summary>path code</summary>
+			<textarea property="path">[join(segment, ' ')]</textarea>
+		</details>
+	</h1>
 
 	<article property="segment" data-segtype="[type]" class="[if(absolute, 'absolute')]" data-multiple data-view="edit">
 		<h1>
