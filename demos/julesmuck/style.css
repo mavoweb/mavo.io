@@ -2,7 +2,7 @@ body {
 	max-width: 950px;
 	margin: 0 auto;
 	padding-left: 10em;
-	font: 80%/1.5 Trebuchet MS, sans-serif;	
+	font: 80%/1.5 Trebuchet MS, sans-serif;
 }
 
 a {
@@ -77,10 +77,10 @@ article {
 
 	article:not(.editing) div {
 		overflow: hidden;
-		
+
 	}
 
-	article:not(:hover):not([data-editing]) p {
+	article:not(:hover):not([mv-mode="edit"]) p {
 		bottom: -6em;
 	}
 

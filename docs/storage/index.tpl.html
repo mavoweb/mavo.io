@@ -9,7 +9,7 @@
 
 <section>
 	<p>
-		The <code>data-store</code> attribute tells Mavo where any saved data will be stored.
+		The <code>mv-storage</code> attribute tells Mavo where any saved data will be stored.
 	</p>
 </section>
 
@@ -25,7 +25,7 @@
 	</p>
 
 	<ul>
-		<li><code>data-mavo</code></li>
+		<li><code>mv-app</code></li>
 		<li><code>property</code></li>
 		<li><code>itemprop</code></li>
 		<li><code>id</code></li>
@@ -37,14 +37,14 @@
 	<h1>Disabling storage</h1>
 
 	<p>
-		If your application does not need to store any data, you can use <code>data-store="none"</code>, or the <code>data-mavo</code> attribute with no <code>data-store</code> attribute.
+		If your application does not need to store any data, you can use <code>mv-storage="none"</code>, or the <code>mv-app</code> attribute with no <code>mv-storage</code> attribute.
 	</p>
 </section>
 
 <section>
 	<h1>Local storage</h1>
 
-	<p>You can save your data in the browser’s <code>localStorage</code>, by using the keyword <code>local</code> as the value of the <code>data-store</code> attribute (<code>data-store="local"</code>).</p>
+	<p>You can save your data in the browser’s <code>localStorage</code>, by using the keyword <code>local</code> as the value of the <code>mv-storage</code> attribute (<code>mv-storage="local"</code>).</p>
 
 	<p>This can be useful if you are not planning to share your data with other people.
 		Please note that most <code>localStorage</code> implementations have a limit of 4MB.
@@ -58,7 +58,7 @@
 	<p>
 		Mavo will provide login controls and will not allow any edits until the viewer has logged in and has commit permissions.
 		If the file and/or repo does not exist, Mavo will create it upon saving.
-		The value of the `data-store` attribute can take almost any Github file URL, as well as some more fuzzy ones:
+		The value of the `mv-storage` attribute can take almost any Github file URL, as well as some more fuzzy ones:
 	</p>
 
 	<dl>
@@ -96,12 +96,12 @@
 </section>
 
 <section>
-	<h1>data-source attribute</h1>
+	<h1>mv-init attribute</h1>
 	<p>TODO</p>
 </section>
 
 <section>
-	<h1>Changing data-store and data-source via the URL</h1>
+	<h1>Changing mv-storage and mv-init via the URL</h1>
 	<p>TODO</p>
 </section>
 

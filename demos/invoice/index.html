@@ -10,7 +10,7 @@
 
 </head>
 
-<body data-store="http://github.com/leaverou" property="invoices" class="autoedit">
+<body mv-storage="http://github.com/leaverou" property="invoices" class="autoedit">
 
 <header>
 	<h1>Invoice issuer</h1>
@@ -24,15 +24,15 @@
 			USA</address>
 		</div>
 		<div class="online">
-			<a property="companyURL" data-attribute="null" href="[companyURL]" target="_blank">http://lea.verou.me</a>
-			<a property="companyEmail" data-attribute="null" href="mailto:[companyEmail]">lea@verou.me</a>
+			<a property="companyURL" mv-attribute="null" href="[companyURL]" target="_blank">http://lea.verou.me</a>
+			<a property="companyEmail" mv-attribute="null" href="mailto:[companyEmail]">lea@verou.me</a>
 		</div>
 	</div>
 </header>
 
-<article class="invoice" property="invoice" data-multiple id="invoice[id]" data-order="desc">
+<article class="invoice" property="invoice" mv-multiple id="invoice[id]" mv-order="desc">
 	<header>
-		<h1>Invoice #<span property="id" data-default="[count(invoice) + 1]">?</span></h1>
+		<h1>Invoice #<span property="id" mv-default="[count(invoice) + 1]">?</span></h1>
 		<div class="company">
 			<img src="[companyLogo]" />
 			<div>

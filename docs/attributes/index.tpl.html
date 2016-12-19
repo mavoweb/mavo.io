@@ -36,12 +36,12 @@ td:nth-child(2):empty::before {
 		</thead>
 		<tbody>
 			<tr>
-				<td><code>data-mavo</code></td>
+				<td><code>mv-app</code></td>
 				<td>Allows you to assign an id to your app, which is used in a number of places. The element with this attribute is called the <strong>Mavo wrapper</strong>.</td>
 				<td><a href="/docs/storage">Storage</a></td>
 			</tr>
 			<tr>
-				<td><code>data-store</code></td>
+				<td><code>mv-storage</code></td>
 				<td>Tells Mavo where data is stored. The element with this attribute is called the <strong>Mavo wrapper</strong>.</td>
 				<td><a href="/docs/storage">Storage</a></td>
 			</tr>
@@ -58,7 +58,7 @@ td:nth-child(2):empty::before {
 				<td><a href="/docs/primer">Primer</a></td>
 			</tr>
 			<tr>
-				<td><code>data-multiple</code></td>
+				<td><code>mv-multiple</code></td>
 				<td>Makes elements repeatable. Only has meaning on property elements. Elements with this attribute are called <strong>Collections</strong>.</td>
 				<td><a href="/docs/primer">Primer</a></td>
 			</tr>
@@ -82,49 +82,55 @@ td:nth-child(2):empty::before {
 		</thead>
 		<tbody>
 			<tr>
-				<td><code>data-attribute</code></td>
-				<td>Properties and elements with <code>data-content</code></td>
+				<td><code>mv-attribute</code></td>
+				<td>Properties and elements with <code>mv-value</code></td>
 				<td>Customize which attribute data goes into on this element. For the element content, specify <code>"null"</code>.</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td><code>data-source</code></td>
+				<td><code>mv-init</code></td>
 				<td>Mavo wrapper</td>
-				<td>If no data is stored, <code>data-source</code> will be used to load initial data. Same values as <code>data-store</code>.</td>
+				<td>If no data is stored, <code>mv-init</code> will be used to load initial data. Same values as <code>mv-storage</code>.</td>
 				<td><a href="/docs/storage">Storage</a></td>
 			</tr>
 			<tr>
-				<td><code>data-default</code></td>
+				<td><code>mv-default</code></td>
 				<td>Properties</td>
 				<td>Sets the default value. If no value, the default value becomes the property content.</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td><code>data-order</code></td>
+				<td><code>mv-order</code></td>
 				<td>Collections</td>
 				<td>Values: <code>desc</code> or <code>asc</code>. Controls the order that new items are added to collections.</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td><code>data-expressions</code></td>
+				<td><code>mv-expressions</code></td>
 				<td></td>
 				<td>Change the expression syntax or disable expressions altogether.</td>
 				<td><a href="/docs/mavoscript">MavoScript</a></td>
 			</tr>
 			<tr>
-				<td><code>data-content</code></td>
+				<td><code>mv-value</code></td>
 				<td></td>
 				<td>Set an element's content to the result of an expression.</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td><code>data-edit</code></td>
+				<td><code>mv-if</code></td>
+				<td></td>
+				<td>Remove an element from the DOM if the expression doesn't match and re-add it when it does.</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>mv-edit</code></td>
 				<td>Properties</td>
 				<td>Customize how an element is edited by linking to another element, anywhere in the page.</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td><code>data-input-*</code></td>
+				<td><code>mv-edit-*</code></td>
 				<td>Properties</td>
 				<td>Any attributes set that way will be copied over to the property's editor.</td>
 				<td></td>
@@ -185,7 +191,7 @@ td:nth-child(2):empty::before {
 				<td></td>
 			</tr>
 			<tr>
-				<td><code>data-mv-progress</code></td>
+				<td><code>mv-progress</code></td>
 				<td>Mavo wrapper</td>
 				<td>Only set when an event is in progress. Its value reflects what event, e.g. <code>"Saving"</code> or <code>"Loading"</code>.</td>
 				<td></td>

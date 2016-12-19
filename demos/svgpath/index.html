@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="style.css">
 
 </head>
-<body data-mavo="svgpath" data-store="local" class="autoedit">
+<body mv-app="svgpath" mv-storage="local" class="mv-autoedit">
 
 <h1>SVG &lt;path> helper</h1>
 <div class="mv-bar"></div>
@@ -28,7 +28,7 @@
 		</details>
 	</h1>
 
-	<article property="segment" data-segtype="[type]" class="[if(absolute, 'absolute')]" data-multiple data-view="edit">
+	<article property="segment" data-segtype="[type]" class="[if(absolute, 'absolute')]" mv-multiple mv-mode="edit">
 		<h1>
 			<select property="type">
 				<option value="m">Move</option>
@@ -43,11 +43,11 @@
 				<option value="z">Close path</option>
 			</select>
 
-			<label data-if="type != v and type != z">
+			<label mv-if="type != v and type != z">
 				X <input type="number" property="x" value="0" />
 			</label>
 
-			<label data-if="type != h and type != z">
+			<label mv-if="type != h and type != z">
 				Y <input type="number" property="y" value="0" />
 			</label>
 
@@ -59,7 +59,7 @@
 			<div class="mv-item-controls"></div>
 		</h1>
 
-		<div data-if="type = a">
+		<div mv-if="type = a">
 			<label>
 				rx: <input type="number" property="rx" value="0" />
 			</label>
@@ -80,14 +80,14 @@
 			<meta property="arcFlags" content="[rx] [ry] [axisRotation] [largeArc + 0] [sweep + 0]">
 		</div>
 
-		<div data-if="type = c or type = s or type = q">
-			<label data-if="type = c or type = q">
-				<span data-if="type = c">First</span> Control point:
+		<div mv-if="type = c or type = s or type = q">
+			<label mv-if="type = c or type = q">
+				<span mv-if="type = c">First</span> Control Point:
 				<input type="number" property="x1" value="0" />
 				<input type="number" property="y1" value="0" />
 			</label>
-			<label data-if="type = c">
-				Second control point:
+			<label mv-if="type = c">
+				Second Control Point:
 				<input type="number" property="x2" value="0" />
 				<input type="number" property="y2" value="0" />
 			</label>

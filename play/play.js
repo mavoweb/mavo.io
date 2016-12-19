@@ -4,7 +4,7 @@ tinymce.init({
 	toolbar2: "image link | table | visualblocks mavoapp mavoproperty mavomultiple",
 	plugins: "visualblocks image code link table charmap colorpicker lists media tabfocus textcolor",
 	//menubar: "file edit insert view format table tools",
-	//extended_valid_elements: "*[data-store|property|itemprop|data-multiple]",
+	//extended_valid_elements: "*[mv-storage|property|itemprop|mv-multiple]",
 	valid_elements: "*[*]",
 	visualblocks_default_state: true,
 	setup: function (editor) {
@@ -13,8 +13,8 @@ tinymce.init({
 			icon: false,
 			onclick: function () {
 				var node = editor.selection.getNode();
-				node = node.closest("[data-store]") || node.closest("body > *") || node;
-				node.setAttribute("data-store", prompt("Where to store data?", "local"));
+				node = node.closest("[mv-storage]") || node.closest("body > *") || node;
+				node.setAttribute("mv-storage", prompt("Where to store data?", "local"));
 
 				update();
 
@@ -36,8 +36,8 @@ tinymce.init({
 
 		function nodeChange(element) {
 			requestAnimationFrame(() => {
-				var mavo = element.matches("[data-store], [data-store] *");
-console.log(element, element.children > 0 ,!element.hasAttribute("data-multiple"));
+				var mavo = element.matches("[mv-storage], [mv-storage] *");
+
 				propertyButton && propertyButton.disabled(!mavo || element.children.length > 0);
 
 				multipleButton && multipleButton.disabled(!mavo);
@@ -56,7 +56,7 @@ console.log(element, element.children > 0 ,!element.hasAttribute("data-multiple"
 			disabled: true,
 			onclick: function () {
 				var node = editor.selection.getNode();
-				node.setAttribute("data-multiple", "");
+				node.setAttribute("mv-multiple", "");
 
 				if (!node.hasAttribute("property")) {
 					node.setAttribute("property", prompt("Property name?", "thing"));

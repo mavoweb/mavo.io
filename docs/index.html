@@ -20,15 +20,15 @@
 
 <h2>Primer</h2>
 
-<section id="data-store">
+<section id="mv-storage">
 	<h1>Defining a mavo app</h1>
 
-	<p>The <code>data-store</code> attribute has two purposes: its presence tells mavo that it should pay attention to what is inside that element
+	<p>The <code>mv-storage</code> attribute has two purposes: its presence tells mavo that it should pay attention to what is inside that element
 		and its value tells mavo where to store any data.
-		The value of the <code>data-store</code> attribute is a valid URL or a keyword, like <code>local</code>. <a href="storage">Learn more about the different types of Mavo Storage</a></p>
+		The value of the <code>mv-storage</code> attribute is a valid URL or a keyword, like <code>local</code>. <a href="storage">Learn more about the different types of Mavo Storage</a></p>
 
 		<script type="text/plain">
-			<div data-store="local" id="mavoTest">
+			<div mv-storage="local" id="mavoTest">
 				My first Mavo app!
 			</div>
 		</script>
@@ -90,8 +90,8 @@
 	<p class="note">There is no “Edit” button in the example above since all its properties are form elements, which are always editable.</p>
 </section>
 
-<section id="data-multiple">
-	<h1>Creating lists: The data-multiple attribute</h1>
+<section id="mv-multiple">
+	<h1>Creating lists: The mv-multiple attribute</h1>
 
 	<p>Let’s assume we have a list of hobbies that we want to make editable.
 		We <em>could</em> add <code>property</code> attributes to every item:</p>
@@ -108,28 +108,28 @@
 	</section>
 
 	<p>This works, but we cannot add new hobbies or delete existing ones.
-		To do that, we need the <code>data-multiple</code> attribute, which tells mavo that <strong>this element can be multiplied</strong>:</p>
+		To do that, we need the <code>mv-multiple</code> attribute, which tells mavo that <strong>this element can be multiplied</strong>:</p>
 
 	<section class="example">
 		<h1>Example: Simple list</h1>
 		<script type="text/plain">
 			Hobbies:
 			<ul>
-				<li property="hobby" data-multiple>Eating</li>
+				<li property="hobby" mv-multiple>Eating</li>
 			</ul>
 		</script>
 	</section>
 
-	<p class="note">The <code>data-multiple</code> attribute goes on <strong>the element that will be multiplied, NOT the container of the collection</strong>!</p>
+	<p class="note">The <code>mv-multiple</code> attribute goes on <strong>the element that will be multiplied, NOT the container of the collection</strong>!</p>
 
 	<hr />
 
-	<p>We can use <code>property</code> and <code>data-multiple</code> to create lists of more complex structures with multiple properties.</p>
+	<p>We can use <code>property</code> and <code>mv-multiple</code> to create lists of more complex structures with multiple properties.</p>
 
 	<section class="example">
 		<h1>Example: More complex lists</h1>
 		<script type="text/plain">
-			<article property="pet" data-multiple>
+			<article property="pet" mv-multiple>
 				<h1 property="name">Adam Catlace</h1>
 				Born on <time property="birthday" datetime="2014-06-01"></time>
 			</article>
@@ -246,7 +246,7 @@
 		<div property="foo">
 			<h2>My cats</h2>
 			<ul>
-				<li property="cat" data-multiple>
+				<li property="cat" mv-multiple>
 					<div property="name">Vector</div>
 					<div property="age">10</div>
 					<!-- Note that expression inside list item refers to the value in the current item -->
@@ -314,7 +314,7 @@
 				.movie .good { background: #efd; }
 			</style>
 
-			<div data-store class="[iff(rating < 3, bad, iff(rating > 3, good, ok))]">
+			<div mv-storage class="[iff(rating < 3, bad, iff(rating > 3, good, ok))]">
 				<label>Rating:
 					<input property="rating" type="range" min="1" max="5" />
 				</label>
@@ -338,7 +338,7 @@
 
 	<section class="example">
 		<script type="text/plain">
-			<div data-store class="debug">
+			<div mv-storage class="debug">
 				<p>
 					<label>x = <input type="number" property="x" value="15" /></label>,
 					<label>y = <input type="number" property="y" value="5" /></label>
@@ -359,15 +359,15 @@
 	<h1>Summary/Cheatsheet</h1>
 
 	<dl>
-		<dt><a href="#data-store"><code>data-store</code> attribute</a></dt>
+		<dt><a href="#mv-storage"><code>mv-storage</code> attribute</a></dt>
 		<dd>Wysify an element and its contents. Its value specifies where data is stored.</dd>
 
 		<dt><a href="#property"><code>property</code> attribute</a></dt>
 		<dd>Name an element and make it editable, or group other properties.</dd>
 
-		<dt><a href="#data-multiple"><code>data-multiple</code> attribute</a></dt>
+		<dt><a href="#mv-multiple"><code>mv-multiple</code> attribute</a></dt>
 		<dd>This element will be multiplied (i.e. create a list).
-			Can only be used on elements with <code>property</code> or <code>data-store</code> attributes.</dd>
+			Can only be used on elements with <code>property</code> or <code>mv-storage</code> attributes.</dd>
 
 		<dt><a href="#expressions"><code>[foo]</code></a></dt>
 		<dd>Print out the value of the "foo" property.</dd>
@@ -377,7 +377,7 @@
 
 		<dt><a href="#functions"><code>[count(foo)]</code>, <code>[sum(foo)]</code>, <code>[average(foo)]</code>, <code>[min(foo)]</code>, <code>[max(foo)]</code></a></dt>
 		<dd>Display the count, sum, average, minimum or maximum of the different values of the "foo" property respectively.
-		The "foo" property must be either a list (i.e. an element with <code>data-multiple</code>) or contained in a list for this to work.</dd>
+		The "foo" property must be either a list (i.e. an element with <code>mv-multiple</code>) or contained in a list for this to work.</dd>
 
 		<dt><a href="#functions"><code>[if(foo > 5, 'Yes!', No)]</code></a></dt>
 		<dd>Output different text depending a condition.</dd>

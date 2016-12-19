@@ -29,8 +29,8 @@
 		<li>
 			Add <code>property</code> attributes on any element you want to make editable.
 		</li>
-		<li>Find an element that encloses all your editable attributes, and add a <code>data-store</code> attribute to it.
-			The <code>data-store</code> attribute usually takes URI that tells mavo <strong>where</strong> to store the data.
+		<li>Find an element that encloses all your editable attributes, and add a <code>mv-storage</code> attribute to it.
+			The <code>mv-storage</code> attribute usually takes URI that tells mavo <strong>where</strong> to store the data.
 			However to start experimenting as soon as possible, you can use it without a value, in which case it does not store the data anywhere.
 		</li>
 	</ol>
@@ -42,14 +42,14 @@
 	<h1>HTML attribute reference</h1>
 
 	<article>
-		<h1><code>data-store</code></h1>
+		<h1><code>mv-storage</code></h1>
 
 		<p>A URL that tells mavo <strong>where</strong> to find the data. It’s exact format depends on the backend used.
-		Each backend might also require more <code>data-store-*</code> properties.</p>
+		Each backend might also require more <code>mv-storage-*</code> properties.</p>
 
 		<p>You can use any URL you want, but if there is no supported backend associated with such URLs, the data will not be editable.</p>
 
-		<p>If the value is a hash (e.g. <code>data-store="#todo"</code>), mavo only stores the data locally.
+		<p>If the value is a hash (e.g. <code>mv-storage="#todo"</code>), mavo only stores the data locally.
 			If the value is <code>none</code>, the data is not stored anywhere.
 			This can be useful for experimenting, or for applications that don't require storage (e.g. a colour picker).</p>
 	</article>
@@ -98,12 +98,12 @@
 		}</code></pre>
 	</article>
 	<article>
-		<h1><code>data-multiple</code></h1>
+		<h1><code>mv-multiple</code></h1>
 
 		<p>Tells mavo that this element can be multiplied (i.e. is a collection).
 			This way mavo knows to add controls for adding new elements, deleting existing ones<span class="unimplemented"> and dragging to rearrange</span>.</p>
 
-		<p>Some elements get this attribute automatically<span class="unimplemented">, which can be disabled with <code>data-multiple="false"</code></span>.
+		<p>Some elements get this attribute automatically<span class="unimplemented">, which can be disabled with <code>mv-multiple="false"</code></span>.
 			These elements are:</p>
 
 		<ul>
@@ -114,7 +114,7 @@
 		<section class="example">
 			<p>For example, this could be the markup for a basic to-do list, saved locally:</p>
 			<script type="text/plain">
-				<ul data-store="#todo">
+				<ul mv-storage="#todo">
 					<li property="task">
 						<input type="checkbox" property="done" />
 						<span property="title">Sample task</span>
@@ -122,7 +122,7 @@
 				</ul>
 			</script>
 
-			<p>Note that the <code>&lt;li></code> element is automatically turned into a collection, even though we did not specify a <code>data-multiple</code> attribute.</p>
+			<p>Note that the <code>&lt;li></code> element is automatically turned into a collection, even though we did not specify a <code>mv-multiple</code> attribute.</p>
 		</section>
 
 
@@ -163,13 +163,13 @@
 			For more details on editing widgets see the <a href="#editors"></a> section.</p>
 	</article>
 	<article>
-		<h1><code>data-attribute</code></h1>
+		<h1><code>mv-attribute</code></h1>
 
 		<p>Overrides the default for which attribute (if any) contains the element’s data.
 			Specify <code>"null"</code> for the data to be in the content.</p>
 	</article>
 	<article>
-		<h1><code>data-default</code></h1>
+		<h1><code>mv-default</code></h1>
 
 		<p>Specifies the default value of the property.
 			If specified without a value, the default value of the property will be its content in the template.
@@ -178,7 +178,7 @@
 		</p>
 	</article>
 	<article>
-		<h1><code>data-store-root</code></h1>
+		<h1><code>mv-storage-root</code></h1>
 
 		<p>Allows setting a path to the data, in the form of <code>property/childProperty/grandChildPropery/...</code> to only render a portion.</p>
 	</article>

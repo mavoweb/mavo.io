@@ -9,7 +9,7 @@
 <script src="/mavo/mavo.js"></script>
 
 </head>
-<body data-store="local" property="chequebook" class="autoedit">
+<body mv-storage="local" property="chequebook" class="autoedit">
 
 <header>
 	<h1>chequebook</h1>
@@ -24,7 +24,7 @@ New York City, NY 10001</address>
 
 </header>
 
-<article property class="cheque" data-multiple>
+<article property class="cheque" mv-multiple>
 	<div class="details">
 		<div class="id number" property="chequeId">[$index]</div>
 		<address class="own">[senderAddress]</address>

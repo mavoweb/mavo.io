@@ -12,12 +12,12 @@
 </head>
 <body>
 
-<main class="talks" data-store="https://github.com/leaverou/leaverou.github.io/data.json">
+<main class="talks" mv-storage="https://github.com/leaverou/leaverou.github.io/data.json">
 	<h1>[count(talk)] sessions at [count(event)] events ([count(upcoming)] events upcoming)</h1>
-	<article data-multiple property="event" data-order="desc">
+	<article mv-multiple property="event" mv-order="desc">
 		<meta property="upcoming" content="[date > $now]" />
-		<h1 data-multiple property="talk">
-			<span property="title" data-default>TBD</span>
+		<h1 mv-multiple property="talk">
+			<span property="title" mv-default>TBD</span>
 			<span property class="type">
 				<select>
 					<option selected>Talk</option>
@@ -37,7 +37,7 @@
 		<p class="date"><time property="date"></time></p>
 		<address class="flag-[country]">
 			<span property="city"></span>,
-			<span property="country" data-edit="#countries"></span>
+			<span property="country" mv-edit="#countries"></span>
 		</address>
 		<p class="comment" property></p>
 		<p class="comment" style="display: [iff(feedback, block, none)]">
@@ -46,9 +46,9 @@
 	</article>
 </main>
 
-<div hidden data-source="http://leaverou.github.io/countries.json" class="mavo mv-keep-unhandled">
+<div hidden mv-init="http://leaverou.github.io/countries.json" class="mv-app mv-keep-unhandled">
 	<select id="countries">
-		<option value="[code]" property="country" data-multiple typeof>[name]</option>
+		<option value="[code]" property="country" mv-multiple typeof>[name]</option>
 	</select>
 </div>
 

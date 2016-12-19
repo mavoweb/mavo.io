@@ -8,13 +8,13 @@
 <link rel="stylesheet" href="style.css" />
 
 </head>
-<body data-store="local" class="autoedit" vocab="http://schema.org/">
+<body mv-storage="local" class="autoedit" vocab="http://schema.org/">
 
 <h1>
 	[count(contact)]<span>contacts</span>
 </h1>
 
-<details property="contact" typeof="Person" data-multiple open>
+<details property="contact" typeof="Person" mv-multiple open>
 	<summary>
 		<img property="picture" src="https://pbs.twimg.com/profile_images/584963092120899586/TxkxQ7Y5_400x400.png">
 		<h1>
@@ -24,16 +24,16 @@
 	</summary>
 	<section>
 		<section class="phones">
-			<article property="phoneNumber" typeof="ContactPoint" data-multiple>
-				<span property="name" data-default>Mobile</span>
+			<article property="phoneNumber" typeof="ContactPoint" mv-multiple>
+				<span property="name" mv-default>Mobile</span>
 				<span property="telephone">555-123-4567</span>
 				<a href="tel:[telephone]" title="Call">📞</a>
 			</article>
 		</section>
 
 		<section class="emails">
-			<article property="emailAddress" typeof="ContactPoint" data-multiple>
-				<span property="name" data-default>Email</span>
+			<article property="emailAddress" typeof="ContactPoint" mv-multiple>
+				<span property="name" mv-default>Email</span>
 				<span property="email">leaverou@mit.edu</span>
 				<a href="mailto:[email]" title="Send email">✉</a>
 			</article>

@@ -199,38 +199,45 @@ if (self.MutationObserver) {
 
 var _ = self.Mavo = $.Class({
 	constructor: function (element) {
+		this.treeBuilt = Mavo.defer();
+
+		this.element = element;
+
+		// Convert any data-mv-* attributes to mv-*
+		var dataMv = _.attributes.map(attribute => `[data-${attribute}]`);
+		for (let element of $$(dataMv.join(", "), this.element).concat(this.element)) {
+			for (let attribute of _.attributes) {
+				let value = element.getAttribute("data-" + attribute);
+
+				if (value !== null) {
+					element.setAttribute(attribute, value);
+				}
+
+			}
+		}
+
 		// Index among other mavos in the page, 1 is first
 		this.index = _.all.push(this);
 
 		// Assign a unique (for the page) id to this mavo instance
-		this.id = element.getAttribute("data-mavo") || Mavo.Node.getProperty(element) || element.id || `mavo${this.index}`;
+		this.id = Mavo.getAttribute(this.element, "mv-app", "id") || `mavo${this.index}`;
+		this.element.setAttribute("mv-app", this.id);
 
-		this.unhandled = element.classList.contains("mv-keep-unhandled");
-
-		this.autoEdit = _.has("autoedit", element);
-
-		this.element = _.is("group", element)? element : $(_.selectors.rootGroup, element);
-
-		if (!this.element) {
-			element.setAttribute("typeof", element.getAttribute("property") || "");
-			element.removeAttribute("property");
-			this.element = element;
-		}
-
-		this.element.classList.add("mv-root");
+		this.unhandled = this.element.classList.contains("mv-keep-unhandled");
+		this.autoEdit = this.element.classList.contains("mv-autoedit");
 
 		if (this.index == 1) {
 			this.storage = _.urlParam("store");
 			this.source = _.urlParam("source");
 		}
 
-		this.wrapper = element.closest(".mv-wrapper") || element;
+		this.storage = this.storage || _.urlParam(`${this.id}_store`) || this.element.getAttribute("mv-storage") || null;
+		this.source = this.source || _.urlParam(`${this.id}_source`) || this.element.getAttribute("mv-init") || null;
 
-		this.storage = this.storage || _.urlParam(`${this.id}_store`) || element.getAttribute("data-store") || null;
-		this.source = this.source || _.urlParam(`${this.id}_source`) || element.getAttribute("data-source") || null;
+		if (this.storage) {
+			this.storage = this.storage.trim();
 
-		if (this.storage && !/^\s*none\s*$/i.test(this.storage)) {
-			this.storage = _.Backend.create(this.storage, this);
+			this.storage = this.storage == "none"? null : _.Backend.create(this.storage, this);
 		}
 
 		if (this.source) {
@@ -239,59 +246,39 @@ var _ = self.Mavo = $.Class({
 
 		this.permissions = this.storage ? this.storage.permissions : new Mavo.Permissions();
 
-		// Apply heuristic for collections
-		$$(_.selectors.property + ", " + _.selectors.group, element).concat([this.element]).forEach(element => {
-			if (_.is("autoMultiple", element) && !element.hasAttribute("data-multiple")) {
-				element.setAttribute("data-multiple", "");
-			}
-		});
-
 		// Ctrl + S or Cmd + S to save
-		this.wrapper.addEventListener("keydown", evt => {
+		this.element.addEventListener("keydown", evt => {
 			if (evt.keyCode == 83 && evt[_.superKey]) {
 				evt.preventDefault();
 				this.save();
 			}
 		});
 
-		// Apply heuristic forgroups
-		$$(_.selectors.primitive, element).forEach(element => {
-			var isGroup = $(`${_.selectors.not(_.selectors.formControl)}, ${_.selectors.property}`, element) && (// Contains other properties or non-form elements and...
-			                Mavo.is("multiple", element) || // is a collection...
-			                Mavo.Primitive.getValueAttribute(element) === null  // ...or its content is not in an attribute
-						) || element.matches("template");
+		this.element.setAttribute("typeof", "");
 
-			if (isGroup) {
-				element.setAttribute("typeof", "");
+		// Apply heuristic for groups
+		$$(_.selectors.primitive, element).forEach(element => {
+			var hasChildren = $(`${_.selectors.not(_.selectors.formControl)}, ${_.selectors.property}`, element);
+
+			if (hasChildren) {
+				var defaults = Mavo.Primitive.getDefaults(element);
+				var isCollection = Mavo.is("multiple", element);
+
+				if (isCollection || !Mavo.Primitive.getValueAttribute(element, defaults) && !defaults.hasChildren) {
+					element.setAttribute("typeof", "");
+				}
 			}
 		});
 
-		if (this.wrapper === this.element && _.is("multiple", element)) {
-			// Need to create a wrapper
-			var around = this.element;
-
-			// Avoid producing invalid HTML
-			if (this.element.matches("li, option")) {
-				around = around.parentNode;
-			}
-			else if (this.element.matches("td, tr, tbody, thead, tfoot")) {
-				around = around.closest("table");
-			}
-
-			this.wrapper = $.create({ around });
-		}
-
-		this.wrapper.classList.add("mv-wrapper");
-
 		this.ui = {
-			bar: $(".mv-bar", this.wrapper) || $.create({
+			bar: $(".mv-bar", this.element) || $.create({
 				className: "mv-bar mv-ui",
-				start: this.wrapper
+				start: this.element
 			})
 		};
 
-		this.ui.status = $(".status", this.ui.bar) || $.create("span", {
-			className: "status",
+		this.ui.status = $(".mv-status", this.ui.bar) || $.create("span", {
+			className: "mv-status",
 			inside: this.ui.bar
 		});
 
@@ -308,14 +295,14 @@ var _ = self.Mavo = $.Class({
 					tag: "a",
 					href: this.loginHash,
 					textContent: "Login",
-					className: "login button",
+					className: "mv-login mv-button",
 					events: {
 						click: evt => {
 							evt.preventDefault();
 							this.storage.login();
 						}
 					},
-					after: $(".status", this.ui.bar)
+					after: $(".mv-status", this.ui.bar)
 				});
 
 				// We also support a hash to trigger login, in case the user doesn't want visible login UI
@@ -330,13 +317,13 @@ var _ = self.Mavo = $.Class({
 				window.addEventListener("hashchange.mavo", login);
 			}, () => {
 				$.remove(this.authControls.login);
-				this.wrapper._.unbind("hashchange.mavo");
+				this.element._.unbind("hashchange.mavo");
 			});
 
 			// Update login status
-			this.wrapper.addEventListener("mavo:login.mavo", evt => {
+			this.element.addEventListener("mavo:login.mavo", evt => {
 				if (evt.backend == this.storage) { // ignore logins from source backend
-					var status = $(".status", this.ui.bar);
+					var status = $(".mv-status", this.ui.bar);
 					status.innerHTML = "";
 					status._.contents([
 						"Logged in to " + evt.backend.id + " as ",
@@ -344,7 +331,7 @@ var _ = self.Mavo = $.Class({
 						{
 							tag: "button",
 							textContent: "Logout",
-							className: "logout",
+							className: "mv-logout",
 							events: {
 								click: e => evt.backend.logout()
 							},
@@ -353,8 +340,8 @@ var _ = self.Mavo = $.Class({
 				}
 			});
 
-			this.wrapper.addEventListener("mavo:logout.mavo", evt => {
-				$(".status", this.ui.bar).textContent = "";
+			this.element.addEventListener("mavo:logout.mavo", evt => {
+				$(".mv-status", this.ui.bar).textContent = "";
 			});
 		}
 
@@ -364,26 +351,27 @@ var _ = self.Mavo = $.Class({
 		// Build mavo objects
 		Mavo.hooks.run("init-tree-before", this);
 
-		this.root = Mavo.Node.create(this.element, this);
+		this.root = new Mavo.Group(this.element, this);
+		this.treeBuilt.resolve();
 
 		Mavo.hooks.run("init-tree-after", this);
 
 		this.setUnsavedChanges(false);
 
 		this.permissions.onchange(({action, value}) => {
-			this.wrapper.classList.toggle(`can-${action}`, value);
+			this.element.classList.toggle(`mv-can-${action}`, !!value);
 		});
 
 		this.permissions.can(["edit", "add", "delete"], () => {
 			this.ui.edit = $.create("button", {
-				className: "edit",
+				className: "mv-edit",
 				textContent: "Edit",
 				onclick: e => this.editing? this.done() : this.edit(),
 				inside: this.ui.bar
 			});
 
 			if (this.autoEdit) {
-				this.wrapper.addEventListener("mavo:load", evt => this.ui.edit.click());
+				this.element.addEventListener("mavo:load", evt => this.ui.edit.click());
 			}
 		}, () => { // cannot
 			$.remove(this.ui.edit);
@@ -396,32 +384,32 @@ var _ = self.Mavo = $.Class({
 		if (this.needsEdit) {
 			this.permissions.can("save", () => {
 				this.ui.save = $.create("button", {
-					className: "save",
+					className: "mv-save",
 					textContent: "Save",
 					events: {
 						click: e => this.save(),
 						"mouseenter focus": e => {
-							this.wrapper.classList.add("save-hovered");
+							this.element.classList.add("mv-save-hovered");
 							this.setUnsavedChanges();
 						},
-						"mouseleave blur": e => this.wrapper.classList.remove("save-hovered")
+						"mouseleave blur": e => this.element.classList.remove("mv-save-hovered")
 					},
 					inside: this.ui.bar
 				});
 
 				this.ui.revert = $.create("button", {
-					className: "revert",
+					className: "mv-revert",
 					textContent: "Revert",
 					disabled: true,
 					events: {
 						click: e => this.revert(),
 						"mouseenter focus": e => {
 							if (!this.unsavedChanges) {
-								this.wrapper.classList.add("revert-hovered");
+								this.element.classList.add("mv-revert-hovered");
 								this.setUnsavedChanges();
 							}
 						},
-						"mouseleave blur": e => this.wrapper.classList.remove("revert-hovered")
+						"mouseleave blur": e => this.element.classList.remove("mv-revert-hovered")
 					},
 					inside: this.ui.bar
 				});
@@ -433,7 +421,7 @@ var _ = self.Mavo = $.Class({
 
 		this.permissions.can("delete", () => {
 			this.ui.clear = $.create("button", {
-				className: "clear",
+				className: "mv-clear",
 				textContent: "Clear",
 				onclick: e => this.clear()
 			});
@@ -447,20 +435,24 @@ var _ = self.Mavo = $.Class({
 
 		if (this.storage || this.source) {
 			// Fetch existing data
+			if (!this.storage) {
+				this.source.permissions.can("read", () => this.permissions.read = true);
+			}
+
 			this.permissions.can("read", () => this.load());
 		}
 		else {
 			// No storage
 			this.permissions.on(["read", "edit"]);
 
-			$.fire(this.wrapper, "mavo:load");
+			$.fire(this.element, "mavo:load");
 		}
 
 		if (!this.needsEdit) {
 			this.permissions.off(["edit", "add", "delete"]);
 
 			// If there's no edit mode, we must save immediately when properties change
-			this.wrapper.addEventListener("mavo:load", evt => {
+			this.element.addEventListener("mavo:load", evt => {
 				var debouncedSave = _.debounce(() => {
 					this.save();
 				}, 1000);
@@ -473,9 +465,9 @@ var _ = self.Mavo = $.Class({
 
 				requestAnimationFrame(() => {
 					this.permissions.can("save", () => {
-						this.wrapper.addEventListener("mavo:datachange", callback);
+						this.element.addEventListener("mavo:datachange", callback);
 					}, () => {
-						this.wrapper.removeEventListener("mavo:datachange", callback);
+						this.element.removeEventListener("mavo:datachange", callback);
 					});
 				});
 			});
@@ -528,19 +520,19 @@ var _ = self.Mavo = $.Class({
 	edit: function() {
 		this.root.edit();
 
-		$.events(this.wrapper, "mouseenter.mavo:edit mouseleave.mavo:edit", evt => {
-			if (evt.target.matches(".mv-item-controls .delete")) {
+		$.events(this.element, "mouseenter.mavo:edit mouseleave.mavo:edit", evt => {
+			if (evt.target.matches(".mv-item-controls .mv-delete")) {
 				var item = evt.target.closest(_.selectors.item);
-				item.classList.toggle("delete-hover", evt.type == "mouseenter");
+				item.classList.toggle("mv-delete-hover", evt.type == "mouseenter");
 			}
 
 			if (evt.target.matches(_.selectors.item)) {
-				evt.target.classList.remove("has-hovered-item");
+				evt.target.classList.remove("mv-has-hovered-item");
 
 				var parent = evt.target.parentNode.closest(_.selectors.item);
 
 				if (parent) {
-					parent.classList.toggle("has-hovered-item", evt.type == "mouseenter");
+					parent.classList.toggle("mv-has-hovered-item", evt.type == "mouseenter");
 				}
 			}
 		}, true);
@@ -578,7 +570,7 @@ var _ = self.Mavo = $.Class({
 	// Conclude editing
 	done: function() {
 		this.root.done();
-		$.unbind(this.wrapper, ".mavo:edit");
+		$.unbind(this.element, ".mavo:edit");
 		this.unsavedChanges = false;
 	},
 
@@ -622,7 +614,7 @@ var _ = self.Mavo = $.Class({
 		})
 		.then(() => {
 			this.inProgress = false;
-			$.fire(this.wrapper, "mavo:load");
+			$.fire(this.element, "mavo:load");
 		});
 	},
 
@@ -636,7 +628,7 @@ var _ = self.Mavo = $.Class({
 		this.storage.login()
 		.then(() => this.storage.put())
 		.then(file => {
-			$.fire(this.wrapper, "mavo:save", {
+			$.fire(this.element, "mavo:save", {
 				data: file.data,
 				dataString: file.dataString
 			});
@@ -672,11 +664,11 @@ var _ = self.Mavo = $.Class({
 
 	live: {
 		inProgress: function(value) {
-			$.toggleAttribute(this.wrapper, "data-mv-progress", value, value);
+			$.toggleAttribute(this.element, "mv-progress", value, value);
 		},
 
 		unsavedChanges: function(value) {
-			this.wrapper.classList.toggle("unsaved-changes", value);
+			this.element.classList.toggle("mv-unsaved-changes", value);
 
 			if (this.ui && this.ui.save) {
 				this.ui.save.disabled = !value;
@@ -700,23 +692,26 @@ var _ = self.Mavo = $.Class({
 				.map(element => new _(element));
 		},
 
-		hooks: new $.Hooks()
+		hooks: new $.Hooks(),
+
+		attributes: [
+			"mv-app", "mv-storage", "mv-init", "mv-attribute",
+			"mv-default", "mv-mode", "mv-edit", "mv-permisssions"
+		]
 	}
 });
 
 {
 
 let s = _.selectors = {
-	init: ".mavo, [mavo], [data-mavo], [data-store]",
+	init: ".mv-app, [mv-app], [data-mv-app], [mv-storage], [data-mv-storage]",
 	property: "[property], [itemprop]",
 	specificProperty: name => `[property=${name}], [itemprop=${name}]`,
 	group: "[typeof], [itemscope], [itemtype], .mv-group",
-	multiple: "[multiple], [data-multiple], .multiple",
-	required: "[required], [data-required], .required",
+	multiple: "[mv-multiple], .mv-multiple",
 	formControl: "input, select, option, textarea",
 	item: ".mv-item",
 	ui: ".mv-ui",
-	option: name => `[${name}], [data-${name}], .${name}`,
 	container: {
 		"li": "ul, ol",
 		"tr": "table",
@@ -741,8 +736,7 @@ let andNot = s.andNot = (selector1, selector2) => and(selector1, not(selector2))
 $.extend(_.selectors, {
 	primitive: andNot(s.property, s.group),
 	rootGroup: andNot(s.group, s.property),
-	output: or(s.specificProperty("output"), ".output, .value"),
-	autoMultiple: and("li, tr, option", ":only-of-type")
+	output: or(s.specificProperty("output"), ".mv-output, .mv-value")
 });
 
 }
@@ -810,8 +804,19 @@ var _ = $.extend(Mavo, {
 		return element.matches && element.matches(_.selectors[thing]);
 	},
 
-	has: function(option, element) {
-		return element.matches && element.matches(_.selectors.option(option));
+	/**
+	 * Get the value of an attribute, with fallback attributes in priority order.
+	 */
+	getAttribute: function(element, ...attributes) {
+		for (let i=0, attribute; attribute = attributes[i]; i++) {
+			let value = element.getAttribute(attribute);
+
+			if (value) {
+				return value;
+			}
+		}
+
+		return null;
 	},
 
 	urlParam: function(...names) {
@@ -919,6 +924,31 @@ var _ = $.extend(Mavo, {
 			return ret;
 		}
 	}),
+
+	defer: function(constructor) {
+		var res, rej;
+
+		var promise = new Promise((resolve, reject) => {
+			if (constructor) {
+				constructor(resolve, reject);
+			}
+
+			res = resolve;
+			rej = reject;
+		});
+
+		promise.resolve = a => {
+			res(a);
+			return promise;
+		};
+
+		promise.reject = a => {
+			rej(a);
+			return promise;
+		};
+
+		return promise;
+	}
 });
 
 // Bliss plugins
@@ -964,7 +994,7 @@ $.classProps.propagated = function(proto, names) {
 
 // :focus-within and :target-within shim
 function updateWithin(cl, element) {
-	cl = cl + "-within";
+	cl = "mv-" + cl + "-within";
 	$$("." + cl).forEach(el => el.classList.remove(cl));
 
 	while (element && (element = element.parentNode) && element.classList) {
@@ -1097,7 +1127,7 @@ var _ = Mavo.Permissions = $.Class({
 		// need to set it manually, otherwise it still has its previous value
 		this["_" + action] = value;
 
-		// TODO add classes to wrapper
+		// TODO add classes to element
 		this.triggers.forEach(trigger => {
 			var match = this.is(trigger.actions, trigger.value);
 
@@ -1320,15 +1350,19 @@ _.register($.Class({
 
 var _ = Mavo.Node = $.Class({
 	abstract: true,
-	constructor: function (element, mavo, o = {}) {
+	constructor: function (element, mavo, options = {}) {
 		if (!element || !mavo) {
 			throw new Error("Mavo.Node constructor requires an element argument and a mavo object");
 		}
 
+		var env = {context: this, options};
+
 		this.uid = ++_.maxId;
 
+		_.all.set(element, [...(_.all.get(this.element) || []), this]);
+
 		this.element = element;
-		this.template = o.template;
+		this.template = env.options.template;
 
 		if (this.template) {
 			// TODO remove if this is deleted
@@ -1343,21 +1377,21 @@ var _ = Mavo.Node = $.Class({
 		if (!this.fromTemplate("property", "type", "modes")) {
 			this.property = _.getProperty(element);
 			this.type = Mavo.Group.normalize(element);
-			this.store = this.element.getAttribute("data-store");
-			this.modes = this.element.getAttribute("data-mode");
+			this.store = this.element.getAttribute("mv-storage");
+			this.modes = this.element.getAttribute("mv-mode");
 		}
 
-		this.modeObserver = new Mavo.Observer(this.element, "data-mode", records => {
+		this.modeObserver = new Mavo.Observer(this.element, "mv-mode", records => {
 			console.log("%cmutation observer on", "color:purple;", this.property, this.uid, this.template);
-			this.mode = this.element.getAttribute("data-mode");
+			this.mode = this.element.getAttribute("mv-mode");
 			this[this.mode == "edit"? "edit" : "done"]();
 		});
 
 		this.mode = this.modes || "read";
 
-		this.group = this.parentGroup = o.group;
+		this.group = this.parentGroup = env.options.group;
 
-		Mavo.hooks.run("node-init-end", this);
+		Mavo.hooks.run("node-init-end", env);
 	},
 
 	get editing() {
@@ -1385,160 +1419,6 @@ var _ = Mavo.Node = $.Class({
 		return this.store !== "none";
 	},
 
-	walk: function(callback) {
-		var walker = obj => {
-			var ret = callback(obj);
-
-			if (ret !== false) {
-				obj.propagate && obj.propagate(walker);
-			}
-		};
-
-		walker(this);
-	},
-
-	walkUp: function(callback) {
-		var group = this;
-
-		while (group = group.parentGroup) {
-			var ret = callback(group);
-
-			if (ret !== undefined) {
-				return ret;
-			}
-		}
-	},
-
-	call: function(callback, ...args) {
-		args = args || [];
-
-		if (typeof callback === "string") {
-			return this[callback](...args);
-		}
-		else {
-			return callback.apply(this, [this, ...args]);
-		}
-	},
-
-	edit: function() {
-		this.mode = "edit";
-
-		this.propagate("edit");
-	},
-
-	done: function() {
-		this.mode = "read";
-		$.unbind(this.element, ".mavo:edit");
-
-		this.propagate("done");
-	},
-
-	propagate: function() {
-		for (let i in this.children) {
-			let node = this.children[i];
-
-			if (node instanceof Mavo.Node) {
-				node.call(...arguments);
-			}
-		}
-	},
-
-	propagated: ["save", "revert"],
-
-	toJSON: Mavo.prototype.toJSON,
-
-	fromTemplate: function(...properties) {
-		if (this.template) {
-			for (let property of properties) {
-				this[property] = this.template[property];
-			}
-		}
-
-		return !!this.template;
-	},
-
-	live: {
-		mode: function (value) {
-			if (this._mode != value) {
-				// If we don't do this, calling setAttribute below will
-				// result in infinite recursion
-				this._mode = value;
-
-				this.modeObserver.sneak(() => this.element.setAttribute("data-mode", value));
-			}
-		},
-	},
-
-	static: {
-		maxId: 0,
-
-		create: function(element, mavo, o = {}) {
-			if (Mavo.is("multiple", element) && !o.collection) {
-				return new Mavo.Collection(element, mavo, o);
-			}
-
-			return Mavo.Unit.create(...arguments);
-		},
-
-		/**
-		 * Get & normalize property name, if exists
-		 */
-		getProperty: function(element) {
-			var property = element.getAttribute("property") || element.getAttribute("itemprop");
-
-			if (!property && element.hasAttribute("property")) {
-				property = element.name || element.id || element.classList[0];
-			}
-
-			if (property) {
-				element.setAttribute("property", property);
-			}
-
-			return property;
-		}
-	}
-});
-
-})(Bliss, Bliss.$);
-
-/*
- * Mavo Unit: Super class that Group and Primitive inherit from
- */
-(function($, $$) {
-
-var _ = Mavo.Unit = $.Class({
-	abstract: true,
-	extends: Mavo.Node,
-	constructor: function(element, mavo, o = {}) {
-		this.constructor.all.set(this.element, this);
-
-		this.collection = o.collection;
-
-		if (this.collection) {
-			// This is a collection item
-			this.group = this.parentGroup = this.collection.parentGroup;
-		}
-
-		if (!this.fromTemplate("required")) {
-			this.required = Mavo.is("required", this.element);
-		}
-
-		Mavo.hooks.run("unit-init-end", this);
-	},
-
-	/**
-	 * Check if this unit is either deleted or inside a deleted group
-	 */
-	isDeleted: function() {
-		var ret = this.deleted;
-
-		if (this.deleted) {
-			return true;
-		}
-
-		return !!this.parentGroup && this.parentGroup.isDeleted();
-	},
-
 	getData: function(o = {}) {
 		if (this.isDataNull(o)) {
 			return null;
@@ -1564,70 +1444,79 @@ var _ = Mavo.Unit = $.Class({
 		return env.result;
 	},
 
-	lazy: {
-		closestCollection: function() {
-			return this.collection ||
-			       this.group.collection ||
-			       (this.parentGroup? this.parentGroup.closestCollection : null);
+	walk: function(callback) {
+		var walker = obj => {
+			var ret = callback(obj);
+
+			if (ret !== false) {
+				obj.propagate && obj.propagate(walker);
+			}
+		};
+
+		walker(this);
+	},
+
+	walkUp: function(callback) {
+		var group = this;
+
+		while (group = group.parentGroup) {
+			var ret = callback(group);
+
+			if (ret !== undefined) {
+				return ret;
+			}
 		}
+	},
+
+	edit: function() {
+		this.mode = "edit";
+
+		this.propagate("edit");
+
+		Mavo.hooks.run("node-edit-end", this);
+	},
+
+	done: function() {
+		this.mode = "read";
+		$.unbind(this.element, ".mavo:edit");
+
+		this.propagate("done");
+
+		Mavo.hooks.run("node-done-end", this);
+	},
+
+	propagate: function(callback) {
+		for (let i in this.children) {
+			let node = this.children[i];
+
+			if (node instanceof Mavo.Node) {
+				if (typeof callback === "function") {
+					callback.call(node, node);
+				}
+				else if (callback in node) {
+					node[callback]();
+				}
+			}
+		}
+	},
+
+	propagated: ["save", "revert"],
+
+	toJSON: Mavo.prototype.toJSON,
+
+	fromTemplate: function(...properties) {
+		if (this.template) {
+			for (let property of properties) {
+				this[property] = this.template[property];
+			}
+		}
+
+		return !!this.template;
 	},
 
 	live: {
 		store: function(value) {
-			$.toggleAttribute(this.element, "data-store", value);
-		},
-
-		deleted: function(value) {
-			this.element.classList.toggle("deleted", value);
-
-			if (value) {
-				// Soft delete, store element contents in a fragment
-				// and replace them with an undo prompt.
-				this.elementContents = document.createDocumentFragment();
-				$$(this.element.childNodes).forEach(node => {
-					this.elementContents.appendChild(node);
-				});
-
-				$.contents(this.element, [
-					{
-						tag: "button",
-						className: "close mv-ui",
-						textContent: "×",
-						events: {
-							"click": function(evt) {
-								$.remove(this.parentNode);
-							}
-						}
-					},
-					"Deleted " + this.name,
-					{
-						tag: "button",
-						className: "undo mv-ui",
-						textContent: "Undo",
-						events: {
-							"click": evt => this.deleted = false
-						}
-					}
-				]);
-
-				this.element.classList.remove("delete-hover");
-			}
-			else if (this.deleted) {
-				// Undelete
-				this.element.textContent = "";
-				this.element.appendChild(this.elementContents);
-
-				// otherwise expressions won't update because this will still seem as deleted
-				// Alternatively, we could fire datachange with a timeout.
-				this._deleted = false;
-
-				$.fire(this.element, "mavo:datachange", {
-					unit: this.collection,
-					mavo: this.mavo,
-					action: "undelete",
-					item: this
-				});
-			}
+			$.toggleAttribute(this.element, "mv-storage", value);
 		},
 
 		unsavedChanges: function(value) {
@@ -1635,1048 +1524,76 @@ var _ = Mavo.Unit = $.Class({
 				value = false;
 			}
 
-			this.element.classList.toggle("unsaved-changes", value);
+			this.element.classList.toggle("mv-unsaved-changes", value);
 
 			return value;
-		}
+		},
+
+		mode: function (value) {
+			if (this._mode != value) {
+				// If we don't do this, calling setAttribute below will
+				// result in infinite recursion
+				this._mode = value;
+
+				this.modeObserver.sneak(() => {
+					var set = this.modes || this.mode == "edit";
+					$.toggleAttribute(this.element, "mv-mode", value, set);
+				});
+			}
+		},
 	},
 
 	static: {
-		get: function(element, prioritizePrimitive) {
-			var group = Mavo.Group.all.get(element);
+		maxId: 0,
 
-			return (prioritizePrimitive || !group)? Mavo.Primitive.all.get(element) : group;
-		},
+		all: new WeakMap(),
 
 		create: function(element, mavo, o = {}) {
-			if (!element || !mavo) {
-				throw new TypeError("Mavo.Unit.create() requires an element argument and a mavo object");
+			if (Mavo.is("multiple", element) && !o.collection) {
+				return new Mavo.Collection(element, mavo, o);
 			}
 
 			return new Mavo[Mavo.is("group", element)? "Group" : "Primitive"](element, mavo, o);
+		},
+
+		/**
+		 * Get & normalize property name, if exists
+		 */
+		getProperty: function(element) {
+			var property = element.getAttribute("property") || element.getAttribute("itemprop");
+
+			if (!property && element.hasAttribute("property")) {
+				property = element.name || element.id || element.classList[0];
+			}
+
+			if (property) {
+				element.setAttribute("property", property);
+			}
+
+			return property;
+		},
+
+		get: function(element, prioritizePrimitive) {
+			var nodes = (_.all.get(element) || []).filter(node => !(node instanceof Mavo.Collection));
+
+			if (nodes.length < 2 || !prioritizePrimitive) {
+				return nodes[0];
+			}
+
+			if (nodes[0] instanceof Mavo.Group) {
+				return node[1];
+			}
 		}
 	}
 });
 
 })(Bliss, Bliss.$);
-
-(function($, $$) {
-
-var _ = Mavo.Expression = $.Class({
-	constructor: function(expression) {
-		this.expression = expression;
-	},
-
-	eval: function(data) {
-		this.oldValue = this.value;
-
-		Mavo.hooks.run("expression-eval-beforeeval", this);
-
-		try {
-			if (!this.function) {
-				this.function = _.compile(this.expression);
-			}
-
-			this.value = this.function(data);
-		}
-		catch (exception) {
-			Mavo.hooks.run("expression-eval-error", {context: this, exception});
-
-			this.value = exception;
-		}
-
-		return this.value;
-	},
-
-	toString() {
-		return this.expression;
-	},
-
-	live: {
-		expression: function(value) {
-			var code = value = value.trim();
-
-			this.function = null;
-		}
-	},
-
-	static: {
-		/**
-		 * These serializers transform the AST into JS
-		 */
-		serializers: {
-			"BinaryExpression": node => `${_.serialize(node.left)} ${node.operator} ${_.serialize(node.right)}`,
-			"UnaryExpression": node => `${node.operator}${_.serialize(node.argument)}`,
-			"CallExpression": node => `${_.serialize(node.callee)}(${node.arguments.map(_.serialize).join(", ")})`,
-			"ConditionalExpression": node => `${_.serialize(node.test)}? ${_.serialize(node.consequent)} : ${_.serialize(node.alternate)}`,
-			"MemberExpression": node => `${_.serialize(node.object)}[${_.serialize(node.property)}]`,
-			"ArrayExpression": node => `[${node.elements.map(_.serialize).join(", ")}]`,
-			"Literal": node => node.raw,
-			"Identifier": node => node.name,
-			"ThisExpression": node => "this",
-			"Compound": node => node.body.map(_.serialize).join(" ")
-		},
-
-		/**
-		 * These are run before the serializers and transform the expression to support MavoScript
-		 */
-		transformations: {
-			"BinaryExpression": node => {
-				let name = Mavo.Script.getOperatorName(node.operator);
-				let details = Mavo.Script.operators[name];
-
-				// Flatten same operator calls
-				var nodeLeft = node;
-				var args = [];
-
-				do {
-					args.unshift(nodeLeft.right);
-					nodeLeft = nodeLeft.left;
-				} while (Mavo.Script.getOperatorName(nodeLeft.operator) === name);
-
-				args.unshift(nodeLeft);
-
-				if (args.length > 1) {
-					return `${name}(${args.map(_.serialize).join(", ")})`;
-				}
-			},
-			"CallExpression": node => {
-				if (node.callee.type == "Identifier" && node.callee.name == "if") {
-					node.callee.name = "iff";
-				}
-			}
-		},
-
-		serialize: node => {
-			if (_.transformations[node.type]) {
-				var ret = _.transformations[node.type](node);
-
-				if (ret !== undefined) {
-					return ret;
-				}
-			}
-
-			return _.serializers[node.type](node);
-		},
-
-		rewrite: function(code) {
-			try {
-				return _.serialize(_.parse(code));
-			}
-			catch (e) {
-				// Parsing as MavoScript failed, falling back to plain JS
-				return code;
-			}
-		},
-
-		compile: function(code) {
-			code = _.rewrite(code);
-
-			return new Function("data", `with(Mavo.Functions._Trap)
-					with(data) {
-						return ${code};
-					}`);
-		},
-
-		parse: self.jsep,
-	}
-});
-
-if (self.jsep) {
-	jsep.addBinaryOp("and", 2);
-	jsep.addBinaryOp("or", 2);
-	jsep.addBinaryOp("=", 6);
-	jsep.removeBinaryOp("===");
-}
-
-_.serializers.LogicalExpression = _.serializers.BinaryExpression;
-_.transformations.LogicalExpression = _.transformations.BinaryExpression;
-
-(function() {
-var _ = Mavo.Expression.Syntax = $.Class({
-	constructor: function(start, end) {
-		this.start = start;
-		this.end = end;
-		this.regex = RegExp(`${Mavo.escapeRegExp(start)}([\\S\\s]+?)${Mavo.escapeRegExp(end)}`, "gi");
-	},
-
-	test: function(str) {
-		this.regex.lastIndex = 0;
-
-		return this.regex.test(str);
-	},
-
-	tokenize: function(str) {
-		var match, ret = [], lastIndex = 0;
-
-		this.regex.lastIndex = 0;
-
-		while ((match = this.regex.exec(str)) !== null) {
-			// Literal before the expression
-			if (match.index > lastIndex) {
-				ret.push(str.substring(lastIndex, match.index));
-			}
-
-			lastIndex = this.regex.lastIndex;
-
-			ret.push(new Mavo.Expression(match[1]));
-		}
-
-		// Literal at the end
-		if (lastIndex < str.length) {
-			ret.push(str.substring(lastIndex));
-		}
-
-		return ret;
-	},
-
-	static: {
-		create: function(element) {
-			if (element) {
-				var syntax = element.getAttribute("data-expressions");
-
-				if (syntax) {
-					syntax = syntax.trim();
-					return /\s/.test(syntax)? new _(...syntax.split(/\s+/)) : _.ESCAPE;
-				}
-			}
-		},
-
-		ESCAPE: -1
-	}
-});
-
-_.default = new _("[", "]");
-
-})();
-
-(function() {
-
-var _ = Mavo.Expression.Text = $.Class({
-	constructor: function(o) {
-		this.all = o.all; // the Mavo.Expressions object that this belongs to
-		this.node = o.node;
-		this.path = o.path;
-		this.syntax = o.syntax;
-		this.fallback = o.fallback;
-
-		if (!this.node) {
-			// No node provided, figure it out from path
-			this.node = this.path.reduce((node, index) => {
-				return node.childNodes[index];
-			}, this.group.element);
-		}
-
-		this.element = this.node;
-		this.attribute = o.attribute || null;
-
-		Mavo.hooks.run("expressiontext-init-start", this);
-
-		if (!this.expression) { // Still unhandled?
-			if (this.node.nodeType === 3) {
-				this.element = this.node.parentNode;
-
-				// If no element siblings make this.node the element, which is more robust
-				// Same if attribute, there are no attributes on a text node!
-				if (!this.node.parentNode.children.length || this.attribute) {
-					this.node = this.element;
-					this.element.normalize();
-				}
-			}
-
-			this.expression = (this.attribute? this.node.getAttribute(this.attribute) : this.node.textContent).trim();
-
-			this.template = o.template? o.template.template : this.syntax.tokenize(this.expression);
-		}
-
-		Mavo.hooks.run("expressiontext-init-end", this);
-
-		_.elements.set(this.element, [...(_.elements.get(this.element) || []), this]);
-	},
-
-	update: function(data) {
-		this.data = data;
-
-		var ret = {};
-
-		ret.value = this.value = this.template.map(expr => {
-			if (expr instanceof Mavo.Expression) {
-				var env = {context: this, expr};
-
-				Mavo.hooks.run("expressiontext-update-beforeeval", env);
-
-				env.value = env.expr.eval(data);
-
-				Mavo.hooks.run("expressiontext-update-aftereval", env);
-
-				if (env.value instanceof Error) {
-					return this.fallback !== undefined? this.fallback : env.expr.expression;
-				}
-				if (env.value === undefined || env.value === null) {
-					// Don’t print things like "undefined" or "null"
-					return "";
-				}
-
-				return env.value;
-			}
-
-			return expr;
-		});
-
-		if (!this.attribute) {
-			// Separate presentational & actual values only apply when content is variable
-			ret.presentational = this.value.map(value => {
-				if (Array.isArray(value)) {
-					return value.join(", ");
-				}
-
-				if (typeof value == "number") {
-					return Mavo.Primitive.formatNumber(value);
-				}
-
-				return value;
-			});
-
-			ret.presentational = ret.presentational.length === 1? ret.presentational[0] : ret.presentational.join("");
-		}
-
-		ret.value = ret.value.length === 1? ret.value[0] : ret.value.join("");
-
-		if (this.primitive && this.template.length === 1) {
-			if (typeof ret.value === "number") {
-				this.primitive.datatype = "number";
-			}
-			else if (typeof ret.value === "boolean") {
-				this.primitive.datatype = "boolean";
-			}
-		}
-
-		if (ret.presentational === ret.value) {
-			ret = ret.value;
-		}
-
-		if (this.primitive) {
-			this.primitive.value = ret;
-		}
-		else {
-			Mavo.Primitive.setValue(this.node, ret, {attribute: this.attribute});
-		}
-
-		Mavo.hooks.run("expressiontext-update-end", this);
-	},
-
-	proxy: {
-		group: "all"
-	},
-
-	static: {
-		elements: new WeakMap(),
-
-		/**
-		 * Search for Mavo.Expression.Text object(s) associated with a given element
-		 * and optionally an attribute.
-		 *
-		 * @return If one argument, array of matching Expression.Text objects.
-		 *         If two arguments, the matching Expression.Text object or null
-		 */
-		search: function(element, attribute) {
-			var all = _.elements.get(element) || [];
-
-			if (arguments.length > 1) {
-				if (!all.length) {
-					return null;
-				}
-
-				return all.filter(et => et.attribute === attribute)[0] || null;
-			}
-
-			return all;
-		}
-	}
-});
-
-})();
-
-(function() {
-
-var _ = Mavo.Expressions = $.Class({
-	constructor: function(group) {
-		if (group) {
-			this.group = group;
-			this.group.expressions = this;
-		}
-
-		this.all = []; // all Expression.Text objects in this group
-
-		Mavo.hooks.run("expressions-init-start", this);
-
-		if (this.group) {
-			var template = this.group.template;
-
-			if (template && template.expressions) {
-				// We know which expressions we have, don't traverse again
-				for (let et of template.expressions.all) {
-					this.all.push(new Mavo.Expression.Text({
-						path: et.path,
-						syntax: et.syntax,
-						attribute: et.attribute,
-						all: this,
-						template: et
-					}));
-				}
-			}
-			else {
-				var syntax = Mavo.Expression.Syntax.create(this.group.element.closest("[data-expressions]")) || Mavo.Expression.Syntax.default;
-				this.traverse(this.group.element, undefined, syntax);
-			}
-		}
-
-		this.dependents = new Set();
-
-		this.active = true;
-
-		// Watch changes and update value
-		this.group.element.addEventListener("mavo:datachange", evt => this.update());
-	},
-
-	/**
-	 * Update all expressions in this group
-	 */
-	update: function callee() {
-		if (!this.active || this.group.isDeleted() || this.all.length + this.dependents.size === 0) {
-			return;
-		}
-
-		var env = { context: this, data: this.group.getRelativeData() };
-
-		Mavo.hooks.run("expressions-update-start", env);
-
-		for (let ref of this.all) {
-			ref.update(env.data);
-		}
-
-		for (let exp of this.dependents) {
-			exp.update();
-		}
-	},
-
-	extract: function(node, attribute, path, syntax) {
-		if ((attribute && _.directives.indexOf(attribute.name) > -1) ||
-		    syntax.test(attribute? attribute.value : node.textContent)
-		) {
-			this.all.push(new Mavo.Expression.Text({
-				node, syntax,
-				path: (path || "").slice(1).split("/").map(i => +i),
-				attribute: attribute && attribute.name,
-				all: this
-			}));
-		}
-	},
-
-	// Traverse an element, including attribute nodes, text nodes and all descendants
-	traverse: function(node, path = "", syntax) {
-		if (node.nodeType === 3 || node.nodeType === 8) { // Text node
-			// Leaf node, extract references from content
-			this.extract(node, null, path, syntax);
-		}
-		// Traverse children and attributes as long as this is NOT the root of a child group
-		// (otherwise, it will be taken care of its own Expressions object)
-		else if (node == this.group.element || !Mavo.is("group", node)) {
-			syntax = Mavo.Expression.Syntax.create(node) || syntax;
-
-			if (syntax === Mavo.Expression.Syntax.ESCAPE) {
-				return;
-			}
-
-			$$(node.attributes).forEach(attribute => this.extract(node, attribute, path, syntax));
-			$$(node.childNodes).forEach((child, i) => this.traverse(child, `${path}/${i}`, syntax));
-		}
-	},
-
-	static: {
-		directives: ["data-if"]
-	}
-});
-
-})();
-
-Mavo.Node.prototype.getRelativeData = function(o = { store: "*", null: true }) {
-	o.unhandled = this.mavo.unhandled;
-
-	var ret = this.getData(o);
-
-	if (self.Proxy && ret && typeof ret === "object") {
-		ret = new Proxy(ret, {
-			get: (data, property) => {
-				if (property in data) {
-					return data[property];
-				}
-
-				if (property == "$index") {
-					return this.index + 1;
-				}
-
-				if (property == this.mavo.id) {
-					return data;
-				}
-
-				// Look in ancestors
-				var ret = this.walkUp(group => {
-					if (property in group.children) {
-						// TODO decouple
-						group.expressions.dependents.add(this.expressions);
-
-						return group.children[property].getRelativeData(o);
-					};
-				});
-
-				if (ret !== undefined) {
-					return ret;
-				}
-			},
-
-			has: (data, property) => {
-				if (property in data) {
-					return true;
-				}
-
-				// Property does not exist, look for it elsewhere
-				if (property == "$index" || property == this.mavo.id) {
-					return true;
-				}
-
-				// First look in ancestors
-				var ret = this.walkUp(group => {
-					if (property in group.children) {
-						return true;
-					};
-				});
-
-				if (ret !== undefined) {
-					return ret;
-				}
-
-				// Still not found, look in descendants
-				ret = this.find(property);
-
-				if (ret !== undefined) {
-					if (Array.isArray(ret)) {
-						ret = ret.map(item => item.getData(o))
-								 .filter(item => item !== null);
-					}
-					else {
-						ret = ret.getData(o);
-					}
-
-					data[property] = ret;
-
-					return true;
-				}
-			},
-
-			set: function(data, property, value) {
-				throw Error("You can’t set data via expressions.");
-			}
-		});
-	}
-
-	return ret;
-};
-
-Mavo.hooks.add("group-init-start", function() {
-	new Mavo.Expressions(this);
-});
-
-Mavo.hooks.add("primitive-init-start", function() {
-	this.expressionText = Mavo.Expression.Text.search(this.element, this.attribute);
-
-	if (this.expressionText) {
-		this.expressionText.primitive = this;
-		this.store = this.store || "none";
-		this.modes = "read";
-	}
-});
-
-Mavo.hooks.add("group-init-end", function() {
-	this.expressions.update();
-});
-
-Mavo.hooks.add("group-render-start", function() {
-	this.expressions.active = false;
-});
-
-Mavo.hooks.add("group-render-end", function() {
-	requestAnimationFrame(() => {
-		this.expressions.active = true;
-		this.expressions.update();
-	});
-});
-
-})(Bliss, Bliss.$);
-
-// data-content plugin
-Mavo.Expressions.directives.push("data-content");
-
-Mavo.hooks.add("expressiontext-init-start", function() {
-	if (this.attribute == "data-content") {
-		this.attribute = Mavo.Primitive.getValueAttribute(this.element);
-		this.fallback = this.fallback || Mavo.Primitive.getValue(this.element, {attribute: this.attribute});
-		this.expression = this.element.getAttribute("data-content");
-
-		this.template = [new Mavo.Expression(this.expression)];
-		this.expression = this.syntax.start + this.expression + this.syntax.end;
-	}
-});
-
-// data-if plugin
-Mavo.Expressions.directives.push("data-if");
-
-Mavo.hooks.add("expressiontext-init-start", function() {
-	if (this.attribute == "data-if") {
-		this.expression = this.element.getAttribute("data-if");
-
-		this.template = [new Mavo.Expression(this.expression)];
-		this.expression = this.syntax.start + this.expression + this.syntax.end;
-
-		$.lazy(this, "childProperties", () => {
-			return $$(Mavo.selectors.property, this.element).map(el => Mavo.Unit.get(el));
-		});
-	}
-});
-
-Mavo.hooks.add("expressiontext-update-end", function() {
-	if (this.attribute == "data-if") {
-		var value = this.value[0];
-
-		if (this.group.mavo.root) {
-			if ( !value && !Object.keys(this.group.children).length) {
-				console.trace();
-			}
-			// Only apply this after the tree is built, otherwise any properties inside the if will go missing!
-			if (value && this.comment && this.comment.parentNode) {
-				// Is removed from the DOM and needs to get back
-				this.comment.parentNode.replaceChild(this.element, this.comment);
-
-				// Unmark any properties inside as hidden
-				for (let property of this.childProperties) {
-					property.hidden = false;
-				}
-			}
-			else if (!value && this.element.parentNode) {
-				// Is in the DOM and needs to be removed
-				if (!this.comment) {
-					this.comment = document.createComment("mv-if");
-				}
-
-				this.element.parentNode.replaceChild(this.comment, this.element);
-
-				// Mark any properties inside as hidden
-				for (let property of this.childProperties) {
-					property.hidden = true;
-				}
-			}
-		}
-
-	}
-});
-
-Mavo.hooks.add("unit-isdatanull", function(env) {
-	env.result = env.result || (this.hidden && env.options.store == "*");
-});
-
-/**
- * Functions available inside Mavo expressions
- */
-
-(function() {
-
-var _ = Mavo.Functions = {
-	operators: {
-		"=": "eq"
-	},
-
-	get $now() {
-		return new Date();
-	},
-
-	/*********************
-	 * Number functions
-	 *********************/
-
-	/**
-	 * Aggregate sum
-	 */
-	sum: function(array) {
-		return numbers(array, arguments).reduce((prev, current) => {
-			return +prev + (+current || 0);
-		}, 0);
-	},
-
-	/**
-	 * Average of an array of numbers
-	 */
-	average: function(array) {
-		array = numbers(array, arguments);
-
-		return array.length && _.sum(array) / array.length;
-	},
-
-	/**
-	 * Min of an array of numbers
-	 */
-	min: function(array) {
-		return Math.min(...numbers(array, arguments));
-	},
-
-	/**
-	 * Max of an array of numbers
-	 */
-	max: function(array) {
-		return Math.max(...numbers(array, arguments));
-	},
-
-	count: function(array) {
-		return Mavo.toArray(array).filter(a => a !== null && a !== false && a !== "").length;
-	},
-
-	round: function(num, decimals) {
-		if (!num || !decimals || !isFinite(num)) {
-			return Math.round(num);
-		}
-
-		return +num.toLocaleString("en-US", {
-			useGrouping: false,
-			maximumFractionDigits: decimals
-		});
-	},
-
-	iff: function(condition, iftrue, iffalse="") {
-		if (Array.isArray(condition)) {
-			return condition.map((c, i) => {
-				var ret = c? iftrue : iffalse;
-
-				if (Array.isArray(ret)) {
-					return ret[Math.min(i, ret.length - 1)];
-				}
-
-				return ret;
-			});
-		}
-
-		return condition? iftrue : iffalse;
-	},
-
-	/*********************
-	 * String functions
-	 *********************/
-
-	/**
-	 * Replace all occurences of a string with another string
-	 */
-	replace: function(haystack, needle, replacement, iterations = 1) {
-		if (Array.isArray(haystack)) {
-			return haystack.map(item => _.replace(item, needle, replacement));
-		}
-
-		// Simple string replacement
-		var needleRegex = RegExp(Mavo.escapeRegExp(needle), "g");
-		var ret = haystack, prev;
-		var counter = 0;
-
-		while (ret != prev && (counter++ < iterations)) {
-			prev = ret; // foo
-			ret = ret.replace(needleRegex, replacement); // fo
-		}
-
-		return ret;
-	},
-
-	join: function(array, glue = "") {
-		return Mavo.toArray(array).join(glue);
-	},
-
-	idify: readable => ((text || "") + "")
-		.replace(/\s+/g, "-") // Convert whitespace to hyphens
-		.replace(/[^\w-]/g, "") // Remove weird characters
-		.toLowerCase(),
-
-	uppercase: str => (str + "").toUpperCase(),
-	lowercase: str => (str + "").toLowerCase(),
-};
-
-Mavo.Script = {
-	addUnaryOperator: function(name, o) {
-		return operand => Array.isArray(operand)? operand.map(o.scalar) : o.scalar(operand);
-	},
-
-	/**
-	 * Extend a scalar operator to arrays, or arrays and scalars
-	 * The operation between arrays is applied element-wise.
-	 * The operation operation between a scalar and an array will result in
-	 * the operation being applied between the scalar and every array element.
-	 */
-	addBinaryOperator: function(name, o) {
-		if (o.symbol) {
-			// Build map of symbols to function names for easy rewriting
-			for (let symbol of Mavo.toArray(o.symbol)) {
-				Mavo.Script.symbols[symbol] = name;
-			}
-		}
-
-		o.identity = o.identity === undefined? 0 : o.identity;
-
-		return _[name] = o.code || function(...operands) {
-			if (operands.length === 1) {
-				if (Array.isArray(operands[0])) {
-					// Operand is an array of operands, expand it out
-					operands = [...operands[0]];
-				}
-			}
-
-			var prev = o.logical? o.identity : operands[0], result;
-
-			for (let i = 1; i < operands.length; i++) {
-				let a = o.logical? operands[i - 1] : prev;
-				let b = operands[i];
-
-				if (Array.isArray(b)) {
-					if (typeof o.identity == "number") {
-						b = numbers(b);
-					}
-
-					if (Array.isArray(a)) {
-						result = [
-							...b.map((n, i) => o.scalar(a[i] === undefined? o.identity : a[i], n)),
-							...a.slice(b.length)
-						];
-					}
-					else {
-						result = b.map(n => o.scalar(a, n));
-					}
-				}
-				else {
-					// Operand is scalar
-					if (typeof o.identity == "number") {
-						b = +b;
-					}
-
-					if (Array.isArray(a)) {
-						result = a.map(n => o.scalar(n, b));
-					}
-					else {
-						result = o.scalar(a, b);
-					}
-				}
-
-				if (o.reduce) {
-					prev = o.reduce(prev, result, a, b);
-				}
-				else if (o.logical) {
-					prev = prev && result;
-				}
-				else {
-					prev = result;
-				}
-			}
-
-			return prev;
-		};
-	},
-
-	/**
-	 * Mapping of operator symbols to function name.
-	 * Populated via addOperator() and addLogicalOperator()
-	 */
-	symbols: {},
-
-	getOperatorName: op => Mavo.Script.symbols[op] || op,
-
-	/**
-	 * Operations for elements and scalars.
-	 * Operations between arrays happen element-wise.
-	 * Operations between a scalar and an array will result in the operation being performed between the scalar and every array element.
-	 * Ordered by precedence (higher to lower)
-	 * @param scalar {Function} The operation between two scalars
-	 * @param identity The operation’s identity element. Defaults to 0.
-	 */
-	operators: {
-		"not": {
-			scalar: a => a => !a
-		},
-		"multiply": {
-			scalar: (a, b) => a * b,
-			identity: 1,
-			symbol: "*"
-		},
-		"divide": {
-			scalar: (a, b) => a / b,
-			identity: 1,
-			symbol: "/"
-		},
-		"add": {
-			scalar: (a, b) => +a + +b,
-			symbol: "+"
-		},
-		"subtract": {
-			scalar: (a, b) => a - b,
-			symbol: "-"
-		},
-
-		"lte": {
-			logical: true,
-			scalar: (a, b) => {
-				[a, b] = Mavo.Script.getNumericalOperands(a, b);
-				return a <= b;
-			},
-			identity: true,
-			symbol: "<="
-		},
-		"lt": {
-			logical: true,
-			scalar: (a, b) => {
-				[a, b] = Mavo.Script.getNumericalOperands(a, b);
-				return a < b;
-			},
-			identity: true,
-			symbol: "<"
-		},
-		"gte": {
-			logical: true,
-			scalar: (a, b) => {
-				[a, b] = Mavo.Script.getNumericalOperands(a, b);
-				return a >= b;
-			},
-			identity: true,
-			symbol: ">="
-		},
-		"gt": {
-			logical: true,
-			scalar: (a, b) => {
-				[a, b] = Mavo.Script.getNumericalOperands(a, b);
-				return a > b;
-			},
-			identity: true,
-			symbol: ">"
-		},
-		"eq": {
-			logical: true,
-			scalar: (a, b) => a == b,
-			symbol: ["=", "=="],
-			identity: true
-		},
-		"neq": {
-			logical: true,
-			scalar: (a, b) => a != b,
-			symbol: ["!="],
-			identity: true
-		},
-		"and": {
-			logical: true,
-			scalar: (a, b) => !!a && !!b,
-			identity: true,
-			symbol: "&&"
-		},
-		"or": {
-			logical: true,
-			scalar: (a, b) => !!a || !!b,
-			reduce: (p, r) => p || r,
-			identity: false,
-			symbol: "||"
-		},
-		"concatenate": {
-			symbol: "&",
-			identity: "",
-			scalar: (a, b) => "" + a + b
-		}
-	},
-
-	getNumericalOperands: function(a, b) {
-		if (isNaN(a) || isNaN(b)) {
-			// Try comparing as dates
-			var da = new Date(a), db = new Date(b);
-
-			if (!isNaN(da) && !isNaN(db)) {
-				// Both valid dates
-				return [da, db];
-			}
-		}
-
-		return [a, b];
-	}
-};
-
-for (let name in Mavo.Script.operators) {
-	let details = Mavo.Script.operators[name];
-
-	if (details.scalar.length < 2) {
-		Mavo.Script.addUnaryOperator(name, details);
-	}
-	else {
-		Mavo.Script.addBinaryOperator(name, details);
-	}
-}
-
-var aliases = {
-	average: "avg",
-	iff: "iff IF",
-	subtract: "minus",
-	multiply: "mult product",
-	divide: "div",
-	lt: "lessThan smaller",
-	gt: "moreThan greater greaterThan bigger",
-	eq: "equal equality"
-};
-
-for (let name in aliases) {
-	aliases[name].split(/\s+/g).forEach(alias => _[alias] = _[name]);
-}
-
-// Make function names case insensitive
-Mavo.Functions._Trap = self.Proxy? new Proxy(_, {
-	get: (functions, property) => {
-		if (property in functions) {
-			return functions[property];
-		}
-
-		var propertyL = property.toLowerCase && property.toLowerCase();
-
-		if (propertyL && functions.hasOwnProperty(propertyL)) {
-			return functions[propertyL];
-		}
-
-		if (property in Math || propertyL in Math) {
-			return Math[property] || Math[propertyL];
-		}
-
-		if (property in self) {
-			return self[property];
-		}
-
-		// Prevent undefined at all costs
-		return property;
-	},
-
-	// Super ugly hack, but otherwise data is not
-	// the local variable it should be, but the string "data"
-	// so all property lookups fail.
-	has: (functions, property) => property != "data"
-}) : Mavo.Functions;
-
-/**
- * Private helper methods
- */
-function numbers(array, args) {
-	array = Array.isArray(array)? array : (args? $$(args) : [array]);
-
-	return array.filter(number => !isNaN(number) && number !== "").map(n => +n);
-}
-
-})();
 
 (function($, $$) {
 
 var _ = Mavo.Group = $.Class({
-	extends: Mavo.Unit,
+	extends: Mavo.Node,
+	nodeType: "Group",
 	constructor: function (element, mavo, o) {
 		this.children = {};
 
@@ -2784,7 +1701,7 @@ var _ = Mavo.Group = $.Class({
 
 	/**
 	 * Search entire subtree for property, return relative value
-	 * @return {Mavo.Unit}
+	 * @return {Mavo.Node}
 	 */
 	find: function(property) {
 		if (this.property == property) {
@@ -2838,9 +1755,8 @@ var _ = Mavo.Group = $.Class({
 	},
 
 	// Check if this group contains a property
-	// property can be either a Mavo.Unit or a Node
 	contains: function(property) {
-		if (property instanceof Mavo.Unit) {
+		if (property instanceof Mavo.Node) {
 			return property.parentGroup === this;
 		}
 
@@ -2855,7 +1771,7 @@ var _ = Mavo.Group = $.Class({
 		normalize: function(element) {
 			// Get & normalize typeof name, if exists
 			if (Mavo.is("group", element)) {
-				var type = element.getAttribute("typeof") || element.getAttribute("itemtype") || _.DEFAULT_TYPE;
+				var type = Mavo.getAttribute(element, "typeof", "itemtype") || _.DEFAULT_TYPE;
 
 				element.setAttribute("typeof", type);
 
@@ -2872,7 +1788,8 @@ var _ = Mavo.Group = $.Class({
 (function($, $$) {
 
 var _ = Mavo.Primitive = $.Class({
-	extends: Mavo.Unit,
+	extends: Mavo.Node,
+	nodeType: "Primitive",
 	constructor: function (element, mavo, o) {
 		if (!this.fromTemplate("defaults", "attribute", "templateValue")) {
 			this.defaults = _.getDefaults(element);
@@ -2882,7 +1799,6 @@ var _ = Mavo.Primitive = $.Class({
 			this.attribute = _.getValueAttribute(this.element, this.defaults);
 		}
 
-		this.humanReadable = this.defaults.humanReadable;
 		this.datatype = this.defaults.datatype;
 		this.modes = this.modes || this.defaults.modes;
 		this.mode = this.modes || "read";
@@ -2922,8 +1838,8 @@ var _ = Mavo.Primitive = $.Class({
 		}
 
 		// Linked widgets
-		if (!this.editor && this.element.hasAttribute("data-edit")) {
-			var original = $(this.element.getAttribute("data-edit"));
+		if (!this.editor && this.element.hasAttribute("mv-edit")) {
+			var original = $(this.element.getAttribute("mv-edit"));
 
 			if (original && Mavo.is("formControl", original)) {
 				this.editor = original.cloneNode(true);
@@ -2942,7 +1858,7 @@ var _ = Mavo.Primitive = $.Class({
 
 		this.templateValue = this.getValue();
 
-		this.default = this.element.getAttribute("data-default");
+		this.default = this.element.getAttribute("mv-default");
 
 		if (this.constant || this.default === "") { // attribute exists, no value, default is template value
 			this.default = this.templateValue;
@@ -2951,38 +1867,8 @@ var _ = Mavo.Primitive = $.Class({
 			this.default = this.editor? this.editorValue : this.emptyValue;
 		}
 		else {
-			new Mavo.Observer(this.element, "data-default", record => {
-				this.default = this.element.getAttribute("data-default");
-			});
-		}
-
-		if (this.collection) {
-			// Collection of primitives, deal with setting textContent etc without the UI interfering.
-			var swapUI = callback => {
-				this.sneak(() => {
-					var ui = $.remove($(".mv-item-controls", this.element));
-
-					var ret = callback();
-
-					$.inside(ui, this.element);
-				});
-
-				return ret;
-			};
-
-			// Intercept certain properties so that any Mavo UI inside this primitive will not be destroyed
-			["textContent", "innerHTML"].forEach(property => {
-				var descriptor = Object.getOwnPropertyDescriptor(Node.prototype, property);
-
-				Object.defineProperty(this.element, property, {
-					get: function() {
-						return swapUI(() => descriptor.get.call(this));
-					},
-
-					set: function(value) {
-						swapUI(() => descriptor.set.call(this, value));
-					}
-				});
+			new Mavo.Observer(this.element, "mv-default", record => {
+				this.default = this.element.getAttribute("mv-default");
 			});
 		}
 
@@ -3000,15 +1886,13 @@ var _ = Mavo.Primitive = $.Class({
 				this.value = this.getValue();
 			}
 		});
+
+		Mavo.hooks.run("primitive-init-end", this);
 	},
 
 	get editorValue() {
-		if (this.getEditorValue) {
-			var value = this.getEditorValue();
-
-			if (value !== undefined) {
-				return value;
-			}
+		if (this.defaults.getEditorValue) {
+			return this.defaults.getEditorValue.call(this);
 		}
 
 		if (this.editor) {
@@ -3020,14 +1904,14 @@ var _ = Mavo.Primitive = $.Class({
 			var output = $(Mavo.selectors.output + ", " + Mavo.selectors.formControl, this.editor);
 
 			if (output) {
-				return _.all.has(output)? _.all.get(output).value : _.getValue(output);
+				return _.getValue(output);
 			}
 		}
 	},
 
 	set editorValue(value) {
-		if (this.setEditorValue && this.setEditorValue(value) !== undefined) {
-			return;
+		if (this.defaults.setEditorValue) {
+			return this.defaults.setEditorValue.call(this, value);
 		}
 
 		if (this.editor) {
@@ -3039,12 +1923,7 @@ var _ = Mavo.Primitive = $.Class({
 				var output = $(Mavo.selectors.output + ", " + Mavo.selectors.formControl, this.editor);
 
 				if (output) {
-					if (_.all.has(output)) {
-						_.all.get(output).value = value;
-					}
-					else {
-						_.setValue(output, value);
-					}
+					_.setValue(output, value);
 				}
 			}
 		}
@@ -3080,6 +1959,10 @@ var _ = Mavo.Primitive = $.Class({
 	done: function () {
 		this.super.done.call(this);
 
+		if ("preEdit" in this) {
+			$.unbind(this.element, ".mavo:preedit .mavo:edit");
+		}
+
 		this.sneak(() => {
 			if (this.defaults.done) {
 				this.defaults.done.call(this);
@@ -3106,7 +1989,7 @@ var _ = Mavo.Primitive = $.Class({
 
 	revert: function() {
 		if (this.unsavedChanges && this.savedValue !== undefined) {
-			// FIXME if we have a collection of properties (notgroups), this will cause
+			// FIXME if we have a collection of properties (not groups), this will cause
 			// cancel to not remove new unsaved items
 			// This should be fixed by handling this on the collection level.
 			this.value = this.savedValue;
@@ -3124,11 +2007,6 @@ var _ = Mavo.Primitive = $.Class({
 			// No editor provided, use default for element type
 			// Find default editor for datatype
 			var editor = this.defaults.editor || Mavo.Elements["*"].editor;
-
-			if (this.defaults.setEditorValue) {
-				// TODO Temporary hack; refactor soon
-				this.setEditorValue = this.defaults.setEditorValue;
-			}
 
 			this.editor = $.create($.type(editor) === "function"? editor.call(this) : editor);
 			this.editorValue = this.value;
@@ -3154,7 +2032,7 @@ var _ = Mavo.Primitive = $.Class({
 		}
 
 		// Copy any data-input-* attributes from the element to the editor
-		var dataInput = /^data-edit-/i;
+		var dataInput = /^mv-edit-/i;
 		$$(this.element.attributes).forEach(function (attribute) {
 			if (dataInput.test(attribute.name)) {
 				this.editor.setAttribute(attribute.name.replace(dataInput, ""), attribute.value);
@@ -3183,38 +2061,27 @@ var _ = Mavo.Primitive = $.Class({
 		this.element._.data.prevTabindex = this.element.getAttribute("tabindex");
 		this.element.tabIndex = 0;
 
-		if (this.defaults.edit) {
-			this.defaults.edit.call(this);
-			return;
-		}
+		// Prevent default actions while editing
+		// e.g. following links etc
+		this.element.addEventListener("click.mavo:edit", evt => evt.preventDefault());
 
-		(new Promise((resolve, reject) => {
-			// Prepare for edit
-
+		this.preEdit = Mavo.defer((resolve, reject) => {
 			// Empty properties should become editable immediately
 			// otherwise they could be invisible!
 			if (this.empty && !this.attribute) {
-				resolve();
+				return resolve();
 			}
-
-			this.element._.events({
-				// click is needed too because it works with the keyboard as well
-				"click.mavo:preedit": e => this.edit(),
-				"focus.mavo:preedit": e => {
-					resolve();
-				},
-				"click.mavo:edit": evt => {
-					// Prevent default actions while editing
-					// e.g. following links etc
-					evt.preventDefault();
-				}
-			});
 
 			var timer;
 
+			$.events(this.element, {
+				"click.mavo:preedit": resolve,
+				"focus.mavo:preedit": resolve
+			});
+
 			if (!this.attribute) {
 				// Hovering over the element for over 150ms will trigger edit
-				this.element._.events({
+				$.events(this.element, {
 					"mouseenter.mavo:preedit": e => {
 						clearTimeout(timer);
 						timer = setTimeout(resolve, 150);
@@ -3224,9 +2091,16 @@ var _ = Mavo.Primitive = $.Class({
 					}
 				});
 			}
-		})).then(() => {
+		});
+
+		if (this.defaults.edit) {
+			this.defaults.edit.call(this);
+			return;
+		}
+
+		this.preEdit.then(() => {
 			// Actual edit
-			this.element._.unbind(".mavo:preedit");
+			$.unbind(this.element, ".mavo:preedit");
 
 			if (this.initEdit) {
 				this.initEdit();
@@ -3332,20 +2206,25 @@ var _ = Mavo.Primitive = $.Class({
 				this.editorValue = value;
 			}
 
-			if (this.humanReadable && this.attribute) {
-				presentational = this.humanReadable(value);
+			if (this.defaults.humanReadable && this.attribute) {
+				presentational = this.defaults.humanReadable.call(this, value);
 			}
 
 			if (!this.editing || this.attribute) {
-				if (this.editor && this.editor.matches("select") && this.editor.selectedOptions[0]) {
-					presentational = this.editor.selectedOptions[0].textContent;
+				if (this.defaults.setValue) {
+					this.defaults.setValue.call(this, this.element, value);
 				}
+				else {
+					if (this.editor && this.editor.matches("select") && this.editor.selectedOptions[0]) {
+						presentational = this.editor.selectedOptions[0].textContent;
+					}
 
-				_.setValue(this.element, {value, presentational}, {
-					defaults: this.defaults,
-					attribute: this.attribute,
-					datatype: this.datatype
-				});
+					_.setValue(this.element, {value, presentational}, {
+						defaults: this.defaults,
+						attribute: this.attribute,
+						datatype: this.datatype
+					});
+				}
 			}
 
 			this.empty = value === "";
@@ -3357,19 +2236,21 @@ var _ = Mavo.Primitive = $.Class({
 					this.unsavedChanges = this.mavo.unsavedChanges = true;
 				}
 
-				requestAnimationFrame(() => {
-					$.fire(this.element, "mavo:datachange", {
-						property: this.property,
-						value: value,
-						mavo: this.mavo,
-						node: this,
-						action: "propertychange"
-					});
-				});
+				requestAnimationFrame(() => this.dataChanged(value));
 			}
 		});
 
 		return value;
+	},
+
+	dataChanged: function(value) {
+		$.fire(this.element, "mavo:datachange", {
+			property: this.property,
+			value: value,
+			mavo: this.mavo,
+			node: this,
+			action: "propertychange"
+		});
 	},
 
 	live: {
@@ -3382,7 +2263,7 @@ var _ = Mavo.Primitive = $.Class({
 			!this.constant && // and editable
 			!(this.attribute && $(Mavo.selectors.property, this.element)); // and has no property inside
 
-			this.element.classList.toggle("empty", hide);
+			this.element.classList.toggle("mv-empty", hide);
 		}
 	},
 
@@ -3402,7 +2283,7 @@ var _ = Mavo.Primitive = $.Class({
 		},
 
 		getValueAttribute: function (element, defaults = _.getDefaults(element)) {
-			var ret = element.getAttribute("data-attribute") || defaults.attribute;
+			var ret = element.getAttribute("mv-attribute") || defaults.attribute;
 
 			if (!ret || ret === "null") {
 				ret = null;
@@ -3726,15 +2607,15 @@ Mavo.Elements = {
 	},
 
 	"button, .counter": {
-		attribute: "data-clicked",
+		attribute: "mv-clicked",
 		datatype: "number",
 		modes: "read",
 		init: function(element) {
-			if (this.attribute === "data-clicked") {
-				element.setAttribute("data-clicked", "0");
+			if (this.attribute === "mv-clicked") {
+				element.setAttribute("mv-clicked", "0");
 
 				element.addEventListener("click", evt => {
-					let clicked = +element.getAttribute("data-clicked") || 0;
+					let clicked = +element.getAttribute("mv-clicked") || 0;
 					this.value = ++clicked;
 				});
 			}
@@ -3755,7 +2636,7 @@ Mavo.Elements = {
 			var min = +this.element.getAttribute("min") || 0;
 			var max = +this.element.getAttribute("max") || 1;
 			var range = max - min;
-			var step = +this.element.getAttribute("data-edit-step") || (range > 1? 1 : range/100);
+			var step = +this.element.getAttribute("mv-edit-step") || (range > 1? 1 : range/100);
 
 			this.element.addEventListener("mousemove.mavo:edit", evt => {
 				// Change property as mouse moves
@@ -3800,7 +2681,7 @@ Mavo.Elements = {
 		attribute: "content"
 	},
 
-	"p, div, li, dt, dd, h1, h2, h3, h4, h5, h6, article, section, address, .multiline": {
+	"p, div, li, dt, dd, h1, h2, h3, h4, h5, h6, article, section, address": {
 		editor: function() {
 			var display = getComputedStyle(this.element).display;
 			var tag = display.indexOf("inline") === 0? "input" : "textarea";
@@ -3819,7 +2700,7 @@ Mavo.Elements = {
 		},
 
 		setEditorValue: function(value) {
-			if (this.datatype != "string") {
+			if (this.datatype && this.datatype != "string") {
 				return;
 			}
 
@@ -3889,8 +2770,11 @@ Mavo.Elements = {
 
 (function($, $$) {
 
+Mavo.attributes.push("mv-multiple", "mv-order");
+
 var _ = Mavo.Collection = $.Class({
 	extends: Mavo.Node,
+	nodeType: "Collection",
 	constructor: function (element, mavo, o) {
 		/*
 		 * Create the template, remove it from the DOM and store it
@@ -3965,56 +2849,25 @@ var _ = Mavo.Collection = $.Class({
 			element = this.templateElement.cloneNode(true);
 		}
 
-		var item = Mavo.Unit.create(element, this.mavo, {
+		var item = Mavo.Node.create(element, this.mavo, {
 			collection: this,
 			template: this.itemTemplate || (this.template? this.template.itemTemplate : null),
 			property: this.property,
 			type: this.type
 		});
 
-		// Add delete & add buttons
-		if (this.mutable) {
-			this.mavo.permissions.can("edit", () => {
-				var itemControls = $$(".mv-item-controls", element)
-				                       .filter(el => el.closest(Mavo.selectors.item) == element)[0];
-
-				itemControls = itemControls || $.create({
-					className: "mv-item-controls mv-ui",
-					inside: element
-				});
-
-				$.contents(itemControls, [
-					{
-						tag: "button",
-						title: "Delete this " + this.name,
-						className: "delete",
-						events: {
-							"click": evt => this.delete(item)
-						}
-					}, {
-						tag: "button",
-						title: `Add new ${this.name.replace(/s$/i, "")} ${this.bottomUp? "after" : "before"}`,
-						className: "add",
-						events: {
-							"click": evt => this.add(null, this.children.indexOf(item)).edit()
-						}
-					}
-				]);
-			});
-		}
-
 		return item;
 	},
 
 	/**
 	 * Add a new item to this collection
-	 * @param item {Node|Mavo.Unit} Optional. Element or Mavo object for the new item
+	 * @param item {Node|Mavo.Node} Optional. Element or Mavo object for the new item
 	 * @param index {Number} Optional. Index of existing item, will be added opposite to list direction
 	 * @param silent {Boolean} Optional. Throw a datachange event? Mainly used internally.
 	 */
 	add: function(item, index, o = {}) {
 		if (item instanceof Node) {
-			item = Mavo.Unit.get(item) || this.createItem(item);
+			item = Mavo.Node.get(item) || this.createItem(item);
 		}
 		else {
 			item = item || this.createItem();
@@ -4087,11 +2940,36 @@ var _ = Mavo.Collection = $.Class({
 	},
 
 	edit: function() {
-		this.propagate("edit");
+		this.super.edit.call(this);
+
+		if (this.mutable) {
+			// Insert the add button if it's not already in the DOM
+			if (!this.addButton.parentNode) {
+				if (this.bottomUp) {
+					this.addButton._.before($.value(this.children[0], "element") || this.marker);
+				}
+				else {
+					var tag = this.element.tagName.toLowerCase();
+					var containerSelector = Mavo.selectors.container[tag];
+
+					if (containerSelector) {
+						var after = this.marker.closest(containerSelector);
+					}
+
+					this.addButton._.after(after && after.parentNode? after : this.marker);
+				}
+			}
+		}
 	},
 
 	done: function() {
-		this.propagate("done");
+		this.super.done.call(this);
+
+		if (this.mutable) {
+			if (this.addButton.parentNode) {
+				this.addButton.remove();
+			}
+		}
 	},
 
 	/**
@@ -4210,12 +3088,10 @@ var _ = Mavo.Collection = $.Class({
 			if (value && value !== this.mutable) {
 				// Why is all this code here? Because we want it executed
 				// every time mutable changes, not just in the constructor
-				// (think multiple elements with the same property name, where only one has data-multiple)
+				// (think multiple elements with the same property name, where only one has mv-multiple)
 				this._mutable = value;
 
 				this.mavo.needsEdit = true;
-
-				this.required = this.templateElement.matches(Mavo.selectors.required);
 
 				// Keep position of the template in the DOM, since we might remove it
 				this.marker = $.create("div", {
@@ -4225,23 +3101,6 @@ var _ = Mavo.Collection = $.Class({
 				});
 
 				this.templateElement.classList.add("mv-item");
-
-				// Insert the add button if it's not already in the DOM
-				if (!this.addButton.parentNode) {
-					if (this.bottomUp) {
-						this.addButton._.before($.value(this.children[0], "element") || this.marker);
-					}
-					else {
-						var tag = this.element.tagName.toLowerCase();
-						var containerSelector = Mavo.selectors.container[tag];
-
-						if (containerSelector) {
-							var after = this.marker.closest(containerSelector);
-						}
-
-						this.addButton._.after(after && after.parentNode? after : this.marker);
-					}
-				}
 			}
 		}
 	},
@@ -4256,7 +3115,7 @@ var _ = Mavo.Collection = $.Class({
 				return false;
 			}
 
-			var order = this.templateElement.getAttribute("data-order");
+			var order = this.templateElement.getAttribute("mv-order");
 			if (order !== null) {
 				// Attribute has the highest priority and overrides any heuristics
 				return /^desc\b/i.test(order);
@@ -4279,7 +3138,7 @@ var _ = Mavo.Collection = $.Class({
 
 		addButton: function() {
 			// Find add button if provided, or generate one
-			var selector = `button.add-${this.property}`;
+			var selector = `button.mv-add-${this.property}`;
 			var group = this.closestCollection || this.marker.closest(Mavo.selectors.group);
 
 			if (group) {
@@ -4290,7 +3149,7 @@ var _ = Mavo.Collection = $.Class({
 
 			if (!button) {
 				button = $.create("button", {
-					className: "add",
+					className: "mv-add",
 					textContent: "Add " + this.name
 				});
 			};
@@ -4298,7 +3157,7 @@ var _ = Mavo.Collection = $.Class({
 			button.classList.add("mv-ui", "mv-add");
 
 			if (this.property) {
-				button.classList.add(`add-${this.property}`);
+				button.classList.add(`mv-add-${this.property}`);
 			}
 
 			button.addEventListener("click", evt => {
@@ -4312,7 +3171,1248 @@ var _ = Mavo.Collection = $.Class({
 	}
 });
 
+Mavo.hooks.add("primitive-init-end", function() {
+	if (this.collection && !this.attribute) {
+		// Collection of primitives, deal with setting textContent etc without the UI interfering.
+		var swapUI = callback => {
+			var ret;
+
+			this.sneak(() => {
+				var ui = $.remove($(".mv-item-controls", this.element));
+
+				ret = callback();
+
+				$.inside(ui, this.element);
+			});
+
+			return ret;
+		};
+
+		// Intercept certain properties so that any Mavo UI inside this primitive will not be destroyed
+		["textContent", "innerHTML"].forEach(property => {
+			var descriptor = Object.getOwnPropertyDescriptor(Node.prototype, property);
+
+			Object.defineProperty(this.element, property, {
+				get: function() {
+					return swapUI(() => descriptor.get.call(this));
+				},
+
+				set: function(value) {
+					swapUI(() => descriptor.set.call(this, value));
+				}
+			});
+		});
+	}
+});
+
+Mavo.hooks.add("node-edit-end", function() {
+	if (this.collection) {
+		if (!this.itemControls) {
+			this.itemControls = $$(".mv-item-controls", this.element)
+								   .filter(el => el.closest(Mavo.selectors.item) == this.element)[0];
+
+			this.itemControls = this.itemControls || $.create({
+				className: "mv-item-controls mv-ui"
+			});
+
+			$.set(this.itemControls, {
+				contents: [
+					{
+						tag: "button",
+						title: "Delete this " + this.name,
+						className: "mv-delete",
+						events: {
+							"click": evt => this.collection.delete(this)
+						}
+					}, {
+						tag: "button",
+						title: `Add new ${this.name.replace(/s$/i, "")} ${this.bottomUp? "after" : "before"}`,
+						className: "mv-add",
+						events: {
+							"click": evt => this.collection.add(null, this.children.indexOf(item)).edit()
+						}
+					}
+				]
+			});
+		}
+
+		if (!this.itemControls.parentNode) {
+			this.element.appendChild(this.itemControls);
+		}
+	}
+});
+
+Mavo.hooks.add("node-done-end", function() {
+	if (this.collection) {
+		if (this.itemControls) {
+			this.itemControls.remove();
+		}
+	}
+});
+
+$.lazy(Mavo.Node.prototype, "closestCollection", function() {
+	if (!this.group) {
+		console.log(this.nodeType);
+	}
+	return this.collection ||
+		   this.group.collection ||
+		   (this.parentGroup? this.parentGroup.closestCollection : null);
+});
+
+$.live(Mavo.Node.prototype, "deleted", function(value) {
+	this.element.classList.toggle("mv-deleted", value);
+
+	if (value) {
+		// Soft delete, store element contents in a fragment
+		// and replace them with an undo prompt.
+		this.elementContents = document.createDocumentFragment();
+		$$(this.element.childNodes).forEach(node => {
+			this.elementContents.appendChild(node);
+		});
+
+		$.contents(this.element, [
+			{
+				tag: "button",
+				className: "mv-close mv-ui",
+				textContent: "×",
+				events: {
+					"click": function(evt) {
+						$.remove(this.parentNode);
+					}
+				}
+			},
+			"Deleted " + this.name,
+			{
+				tag: "button",
+				className: "mv-undo mv-ui",
+				textContent: "Undo",
+				events: {
+					"click": evt => this.deleted = false
+				}
+			}
+		]);
+
+		this.element.classList.remove("mv-delete-hover");
+	}
+	else if (this.deleted) {
+		// Undelete
+		this.element.textContent = "";
+		this.element.appendChild(this.elementContents);
+
+		// otherwise expressions won't update because this will still seem as deleted
+		// Alternatively, we could fire datachange with a timeout.
+		this._deleted = false;
+
+		$.fire(this.element, "mavo:datachange", {
+			unit: this.collection,
+			mavo: this.mavo,
+			action: "undelete",
+			item: this
+		});
+	}
+});
+
+/**
+ * Check if this unit is either deleted or inside a deleted group
+ */
+Mavo.Node.prototype.isDeleted = function() {
+	var ret = this.deleted;
+
+	if (this.deleted) {
+		return true;
+	}
+
+	return !!this.parentGroup && this.parentGroup.isDeleted();
+};
+
+Mavo.hooks.add("node-init-end", function(env) {
+	this.collection = env.options.collection;
+
+	if (this.collection) {
+		// This is a collection item
+		this.group = this.parentGroup = this.collection.parentGroup;
+	}
+});
+
 })(Bliss, Bliss.$);
+
+(function($, $$) {
+
+Mavo.attributes.push("mv-expressions", "mv-value", "mv-if");
+
+var _ = Mavo.Expression = $.Class({
+	constructor: function(expression) {
+		this.expression = expression;
+	},
+
+	eval: function(data) {
+		this.oldValue = this.value;
+
+		Mavo.hooks.run("expression-eval-beforeeval", this);
+
+		try {
+			if (!this.function) {
+				this.function = _.compile(this.expression);
+			}
+
+			this.value = this.function(data);
+		}
+		catch (exception) {
+			Mavo.hooks.run("expression-eval-error", {context: this, exception});
+
+			this.value = exception;
+		}
+
+		return this.value;
+	},
+
+	toString() {
+		return this.expression;
+	},
+
+	live: {
+		expression: function(value) {
+			var code = value = value.trim();
+
+			this.function = null;
+		}
+	},
+
+	static: {
+		/**
+		 * These serializers transform the AST into JS
+		 */
+		serializers: {
+			"BinaryExpression": node => `${_.serialize(node.left)} ${node.operator} ${_.serialize(node.right)}`,
+			"UnaryExpression": node => `${node.operator}${_.serialize(node.argument)}`,
+			"CallExpression": node => `${_.serialize(node.callee)}(${node.arguments.map(_.serialize).join(", ")})`,
+			"ConditionalExpression": node => `${_.serialize(node.test)}? ${_.serialize(node.consequent)} : ${_.serialize(node.alternate)}`,
+			"MemberExpression": node => `${_.serialize(node.object)}[${_.serialize(node.property)}]`,
+			"ArrayExpression": node => `[${node.elements.map(_.serialize).join(", ")}]`,
+			"Literal": node => node.raw,
+			"Identifier": node => node.name,
+			"ThisExpression": node => "this",
+			"Compound": node => node.body.map(_.serialize).join(" ")
+		},
+
+		/**
+		 * These are run before the serializers and transform the expression to support MavoScript
+		 */
+		transformations: {
+			"BinaryExpression": node => {
+				let name = Mavo.Script.getOperatorName(node.operator);
+				let details = Mavo.Script.operators[name];
+
+				// Flatten same operator calls
+				var nodeLeft = node;
+				var args = [];
+
+				do {
+					args.unshift(nodeLeft.right);
+					nodeLeft = nodeLeft.left;
+				} while (Mavo.Script.getOperatorName(nodeLeft.operator) === name);
+
+				args.unshift(nodeLeft);
+
+				if (args.length > 1) {
+					return `${name}(${args.map(_.serialize).join(", ")})`;
+				}
+			},
+			"CallExpression": node => {
+				if (node.callee.type == "Identifier" && node.callee.name == "if") {
+					node.callee.name = "iff";
+				}
+			}
+		},
+
+		serialize: node => {
+			if (_.transformations[node.type]) {
+				var ret = _.transformations[node.type](node);
+
+				if (ret !== undefined) {
+					return ret;
+				}
+			}
+
+			return _.serializers[node.type](node);
+		},
+
+		rewrite: function(code) {
+			try {
+				return _.serialize(_.parse(code));
+			}
+			catch (e) {
+				// Parsing as MavoScript failed, falling back to plain JS
+				return code;
+			}
+		},
+
+		compile: function(code) {
+			code = _.rewrite(code);
+
+			return new Function("data", `with(Mavo.Functions._Trap)
+					with(data) {
+						return ${code};
+					}`);
+		},
+
+		parse: self.jsep,
+	}
+});
+
+if (self.jsep) {
+	jsep.addBinaryOp("and", 2);
+	jsep.addBinaryOp("or", 2);
+	jsep.addBinaryOp("=", 6);
+	jsep.removeBinaryOp("===");
+}
+
+_.serializers.LogicalExpression = _.serializers.BinaryExpression;
+_.transformations.LogicalExpression = _.transformations.BinaryExpression;
+
+(function() {
+var _ = Mavo.Expression.Syntax = $.Class({
+	constructor: function(start, end) {
+		this.start = start;
+		this.end = end;
+		this.regex = RegExp(`${Mavo.escapeRegExp(start)}([\\S\\s]+?)${Mavo.escapeRegExp(end)}`, "gi");
+	},
+
+	test: function(str) {
+		this.regex.lastIndex = 0;
+
+		return this.regex.test(str);
+	},
+
+	tokenize: function(str) {
+		var match, ret = [], lastIndex = 0;
+
+		this.regex.lastIndex = 0;
+
+		while ((match = this.regex.exec(str)) !== null) {
+			// Literal before the expression
+			if (match.index > lastIndex) {
+				ret.push(str.substring(lastIndex, match.index));
+			}
+
+			lastIndex = this.regex.lastIndex;
+
+			ret.push(new Mavo.Expression(match[1]));
+		}
+
+		// Literal at the end
+		if (lastIndex < str.length) {
+			ret.push(str.substring(lastIndex));
+		}
+
+		return ret;
+	},
+
+	static: {
+		create: function(element) {
+			if (element) {
+				var syntax = element.getAttribute("mv-expressions");
+
+				if (syntax) {
+					syntax = syntax.trim();
+					return /\s/.test(syntax)? new _(...syntax.split(/\s+/)) : _.ESCAPE;
+				}
+			}
+		},
+
+		ESCAPE: -1
+	}
+});
+
+_.default = new _("[", "]");
+
+})();
+
+(function() {
+
+var _ = Mavo.Expression.Text = $.Class({
+	constructor: function(o) {
+		this.group = o.group;
+		this.node = o.node;
+		this.path = o.path;
+		this.syntax = o.syntax;
+		this.fallback = o.fallback;
+
+		if (!this.node) {
+			// No node provided, figure it out from path
+			this.node = this.path.reduce((node, index) => {
+				return node.childNodes[index];
+			}, this.group.element);
+		}
+
+		this.element = this.node;
+		this.attribute = o.attribute || null;
+
+		Mavo.hooks.run("expressiontext-init-start", this);
+
+		if (!this.expression) { // Still unhandled?
+			if (this.node.nodeType === 3) {
+				this.element = this.node.parentNode;
+
+				// If no element siblings make this.node the element, which is more robust
+				// Same if attribute, there are no attributes on a text node!
+				if (!this.node.parentNode.children.length || this.attribute) {
+					this.node = this.element;
+					this.element.normalize();
+				}
+			}
+
+			this.expression = (this.attribute? this.node.getAttribute(this.attribute) : this.node.textContent).trim();
+
+			this.template = o.template? o.template.template : this.syntax.tokenize(this.expression);
+		}
+
+		Mavo.hooks.run("expressiontext-init-end", this);
+
+		_.elements.set(this.element, [...(_.elements.get(this.element) || []), this]);
+	},
+
+	update: function(data = this.data) {
+		this.data = data;
+
+		var ret = {};
+
+		Mavo.hooks.run("expressiontext-update-start", this);
+
+		ret.value = this.value = this.template.map(expr => {
+			if (expr instanceof Mavo.Expression) {
+				var env = {context: this, expr};
+
+				Mavo.hooks.run("expressiontext-update-beforeeval", env);
+
+				env.value = env.expr.eval(data);
+
+				Mavo.hooks.run("expressiontext-update-aftereval", env);
+
+				if (env.value instanceof Error) {
+					return this.fallback !== undefined? this.fallback : env.expr.expression;
+				}
+				if (env.value === undefined || env.value === null) {
+					// Don’t print things like "undefined" or "null"
+					return "";
+				}
+
+				return env.value;
+			}
+
+			return expr;
+		});
+
+		if (!this.attribute) {
+			// Separate presentational & actual values only apply when content is variable
+			ret.presentational = this.value.map(value => {
+				if (Array.isArray(value)) {
+					return value.join(", ");
+				}
+
+				if (typeof value == "number") {
+					return Mavo.Primitive.formatNumber(value);
+				}
+
+				return value;
+			});
+
+			ret.presentational = ret.presentational.length === 1? ret.presentational[0] : ret.presentational.join("");
+		}
+
+		ret.value = ret.value.length === 1? ret.value[0] : ret.value.join("");
+
+		if (this.primitive && this.template.length === 1) {
+			if (typeof ret.value === "number") {
+				this.primitive.datatype = "number";
+			}
+			else if (typeof ret.value === "boolean") {
+				this.primitive.datatype = "boolean";
+			}
+		}
+
+		if (ret.presentational === ret.value) {
+			ret = ret.value;
+		}
+
+		if (this.primitive) {
+			this.primitive.value = ret;
+		}
+		else {
+			Mavo.Primitive.setValue(this.node, ret, {attribute: this.attribute});
+		}
+
+		Mavo.hooks.run("expressiontext-update-end", this);
+	},
+
+	static: {
+		elements: new WeakMap(),
+
+		/**
+		 * Search for Mavo.Expression.Text object(s) associated with a given element
+		 * and optionally an attribute.
+		 *
+		 * @return If one argument, array of matching Expression.Text objects.
+		 *         If two arguments, the matching Expression.Text object or null
+		 */
+		search: function(element, attribute) {
+			var all = _.elements.get(element) || [];
+
+			if (arguments.length > 1) {
+				if (!all.length) {
+					return null;
+				}
+
+				return all.filter(et => et.attribute === attribute)[0] || null;
+			}
+
+			return all;
+		}
+	}
+});
+
+})();
+
+(function() {
+
+var _ = Mavo.Expressions = $.Class({
+	constructor: function(group) {
+		if (group) {
+			this.group = group;
+			this.group.expressions = this;
+		}
+
+		this.all = []; // all Expression.Text objects in this group
+
+		Mavo.hooks.run("expressions-init-start", this);
+
+		if (this.group) {
+			var template = this.group.template;
+
+			if (template && template.expressions) {
+				// We know which expressions we have, don't traverse again
+				for (let et of template.expressions.all) {
+					this.all.push(new Mavo.Expression.Text({
+						path: et.path,
+						syntax: et.syntax,
+						attribute: et.attribute,
+						group: this.group,
+						template: et
+					}));
+				}
+			}
+			else {
+				var syntax = Mavo.Expression.Syntax.create(this.group.element.closest("[mv-expressions]")) || Mavo.Expression.Syntax.default;
+				this.traverse(this.group.element, undefined, syntax);
+			}
+		}
+
+		this.dependents = new Set();
+
+		this.active = true;
+
+		// Watch changes and update value
+		this.group.element.addEventListener("mavo:datachange", evt => this.update());
+	},
+
+	/**
+	 * Update all expressions in this group
+	 */
+	update: function callee() {
+		if (!this.active || this.group.isDeleted() || this.all.length + this.dependents.size === 0) {
+			return;
+		}
+
+		var env = { context: this, data: this.group.getRelativeData() };
+
+		Mavo.hooks.run("expressions-update-start", env);
+
+		for (let ref of this.all) {
+			ref.update(env.data);
+		}
+
+		for (let exp of this.dependents) {
+			exp.update();
+		}
+	},
+
+	extract: function(node, attribute, path, syntax) {
+		if (attribute && attribute.name == "mv-expressions") {
+			return;
+		}
+
+		if ((attribute && _.directives.indexOf(attribute.name) > -1) ||
+		    syntax.test(attribute? attribute.value : node.textContent)
+		) {
+			this.all.push(new Mavo.Expression.Text({
+				node, syntax,
+				path: (path || "").slice(1).split("/").map(i => +i),
+				attribute: attribute && attribute.name,
+				group: this.group
+			}));
+		}
+	},
+
+	// Traverse an element, including attribute nodes, text nodes and all descendants
+	traverse: function(node, path = "", syntax) {
+		if (node.nodeType === 8) {
+			// We don't want expressions to be picked up from comments!
+			// Commenting stuff out is a common debugging technique
+			return;
+		}
+
+		if (node.nodeType === 3) { // Text node
+			// Leaf node, extract references from content
+			this.extract(node, null, path, syntax);
+		}
+		// Traverse children and attributes as long as this is NOT the root of a child group
+		// (otherwise, it will be taken care of its own Expressions object)
+		else if (node == this.group.element || !Mavo.is("group", node)) {
+			syntax = Mavo.Expression.Syntax.create(node) || syntax;
+
+			if (syntax === Mavo.Expression.Syntax.ESCAPE) {
+				return;
+			}
+
+			$$(node.attributes).forEach(attribute => this.extract(node, attribute, path, syntax));
+			$$(node.childNodes).forEach((child, i) => this.traverse(child, `${path}/${i}`, syntax));
+		}
+	},
+
+	static: {
+		directives: []
+	}
+});
+
+})();
+
+Mavo.Node.prototype.getRelativeData = function(o = { store: "*", null: true }) {
+	o.unhandled = this.mavo.unhandled;
+
+	var ret = this.getData(o);
+
+	if (self.Proxy && ret && typeof ret === "object") {
+		ret = new Proxy(ret, {
+			get: (data, property) => {
+				if (property in data) {
+					return data[property];
+				}
+
+				if (property == "$index") {
+					return this.index + 1;
+				}
+
+				if (property == this.mavo.id) {
+					return data;
+				}
+
+				// Look in ancestors
+				var ret = this.walkUp(group => {
+					if (property in group.children) {
+						// TODO decouple
+						group.expressions.dependents.add(this.expressions);
+
+						return group.children[property].getRelativeData(o);
+					};
+				});
+
+				if (ret !== undefined) {
+					return ret;
+				}
+			},
+
+			has: (data, property) => {
+				if (property in data) {
+					return true;
+				}
+
+				// Property does not exist, look for it elsewhere
+				if (property == "$index" || property == this.mavo.id) {
+					return true;
+				}
+
+				// First look in ancestors
+				var ret = this.walkUp(group => {
+					if (property in group.children) {
+						return true;
+					};
+				});
+
+				if (ret !== undefined) {
+					return ret;
+				}
+
+				// Still not found, look in descendants
+				ret = this.find(property);
+
+				if (ret !== undefined) {
+					if (Array.isArray(ret)) {
+						ret = ret.map(item => item.getData(o))
+								 .filter(item => item !== null);
+					}
+					else {
+						ret = ret.getData(o);
+					}
+
+					data[property] = ret;
+
+					return true;
+				}
+			},
+
+			set: function(data, property, value) {
+				throw Error("You can’t set data via expressions.");
+			}
+		});
+	}
+
+	return ret;
+};
+
+Mavo.hooks.add("group-init-start", function() {
+	new Mavo.Expressions(this);
+});
+
+Mavo.hooks.add("primitive-init-start", function() {
+	this.expressionText = Mavo.Expression.Text.search(this.element, this.attribute);
+
+	if (this.expressionText) {
+		this.expressionText.primitive = this;
+		this.store = this.store || "none";
+		this.modes = "read";
+	}
+});
+
+Mavo.hooks.add("group-init-end", function() {
+	this.expressions.update();
+});
+
+Mavo.hooks.add("group-render-start", function() {
+	this.expressions.active = false;
+});
+
+Mavo.hooks.add("group-render-end", function() {
+	requestAnimationFrame(() => {
+		this.expressions.active = true;
+		this.expressions.update();
+	});
+});
+
+})(Bliss, Bliss.$);
+
+// mv-value plugin
+Mavo.Expressions.directives.push("mv-value");
+
+Mavo.hooks.add("expressiontext-init-start", function() {
+	if (this.attribute == "mv-value") {
+		this.attribute = Mavo.Primitive.getValueAttribute(this.element);
+		this.fallback = this.fallback || Mavo.Primitive.getValue(this.element, {attribute: this.attribute});
+		this.expression = this.element.getAttribute("mv-value");
+
+		this.template = [new Mavo.Expression(this.expression)];
+		this.expression = this.syntax.start + this.expression + this.syntax.end;
+	}
+});
+
+// mv-if plugin
+Mavo.Expressions.directives.push("mv-if");
+
+Mavo.hooks.add("expressiontext-init-start", function() {
+	if (this.attribute != "mv-if") {
+		return;
+	}
+
+	this.expression = this.element.getAttribute("mv-if");
+	this.template = [new Mavo.Expression(this.expression)];
+	this.expression = this.syntax.start + this.expression + this.syntax.end;
+
+	this.parentIf = Mavo.Expression.Text.search(this.element.parentNode.closest("[mv-if]"), "mv-if");
+
+	if (this.parentIf) {
+		this.parentIf.childIfs = (this.parentIf.childIfs || new Set()).add(this);
+	}
+});
+
+Mavo.hooks.add("expressiontext-update-end", function() {
+	if (this.attribute != "mv-if") {
+		return;
+	}
+
+	// Only apply this after the tree is built, otherwise any properties inside the if will go missing!
+	this.group.mavo.treeBuilt.then(() => {
+		var value = this.value[0];
+		var oldValue = this.oldValue && this.oldValue[0];
+
+		if (this.parentIf) {
+			var parentValue = this.parentIf.value[0];
+			this.value[0] = value = value && parentValue;
+		}
+
+		if (value === oldValue) {
+			return;
+		}
+
+		if (parentValue !== false) {
+			// If parent if was false, it wouldn't matter whether this is in the DOM or not
+			if (value) {
+				if (this.comment && this.comment.parentNode) {
+					// Is removed from the DOM and needs to get back
+					this.comment.parentNode.replaceChild(this.element, this.comment);
+				}
+			}
+			else if (this.element.parentNode) {
+				// Is in the DOM and needs to be removed
+				if (!this.comment) {
+					this.comment = document.createComment("mv-if");
+				}
+
+				this.element.parentNode.replaceChild(this.comment, this.element);
+			}
+		}
+
+		// Mark any properties inside as hidden or not
+		if (this.childProperties) {
+			for (let property of this.childProperties) {
+				property.hidden = !value;
+			}
+		}
+
+		if (this.childIfs) {
+			for (let childIf of this.childIfs) {
+				childIf.update();
+			}
+		}
+
+		this.oldValue = this.value;
+	});
+});
+
+Mavo.hooks.add("unit-isdatanull", function(env) {
+	env.result = env.result || (this.hidden && env.options.store == "*");
+});
+
+$.live(Mavo.Primitive.prototype, "hidden", function(value) {
+	if (this._hidden !== value) {
+		this._hidden = value;
+		this.dataChanged();
+	}
+});
+
+$.lazy(Mavo.Expression.Text.prototype, "childProperties", function() {
+	if (this.attribute != "mv-if") {
+		return;
+	}
+
+	var properties = $$(Mavo.selectors.property, this.element)
+					.filter(el => el.closest("[mv-if]") == this.element)
+					.map(el => Mavo.Node.get(el));
+
+	if (properties.length) {
+		// When the element is detached, datachange events from properties
+		// do not propagate up to the group so expressions do not recalculate.
+		// We must do this manually.
+		this.element.addEventListener("mavo:datachange", evt => {
+			// Cannot redispatch synchronously
+			requestAnimationFrame(() => {
+				if (!this.element.parentNode) { // still out of the DOM?
+					this.group.element.dispatchEvent(evt);
+				}
+			});
+
+		});
+	}
+
+	return properties;
+});
+
+/**
+ * Functions available inside Mavo expressions
+ */
+
+(function() {
+
+var _ = Mavo.Functions = {
+	operators: {
+		"=": "eq"
+	},
+
+	get $now() {
+		return new Date();
+	},
+
+	/*********************
+	 * Number functions
+	 *********************/
+
+	/**
+	 * Aggregate sum
+	 */
+	sum: function(array) {
+		return numbers(array, arguments).reduce((prev, current) => {
+			return +prev + (+current || 0);
+		}, 0);
+	},
+
+	/**
+	 * Average of an array of numbers
+	 */
+	average: function(array) {
+		array = numbers(array, arguments);
+
+		return array.length && _.sum(array) / array.length;
+	},
+
+	/**
+	 * Min of an array of numbers
+	 */
+	min: function(array) {
+		return Math.min(...numbers(array, arguments));
+	},
+
+	/**
+	 * Max of an array of numbers
+	 */
+	max: function(array) {
+		return Math.max(...numbers(array, arguments));
+	},
+
+	count: function(array) {
+		return Mavo.toArray(array).filter(a => a !== null && a !== false && a !== "").length;
+	},
+
+	round: function(num, decimals) {
+		if (!num || !decimals || !isFinite(num)) {
+			return Math.round(num);
+		}
+
+		return +num.toLocaleString("en-US", {
+			useGrouping: false,
+			maximumFractionDigits: decimals
+		});
+	},
+
+	iff: function(condition, iftrue, iffalse="") {
+		if (Array.isArray(condition)) {
+			return condition.map((c, i) => {
+				var ret = c? iftrue : iffalse;
+
+				if (Array.isArray(ret)) {
+					return ret[Math.min(i, ret.length - 1)];
+				}
+
+				return ret;
+			});
+		}
+
+		return condition? iftrue : iffalse;
+	},
+
+	/*********************
+	 * String functions
+	 *********************/
+
+	/**
+	 * Replace all occurences of a string with another string
+	 */
+	replace: function(haystack, needle, replacement, iterations = 1) {
+		if (Array.isArray(haystack)) {
+			return haystack.map(item => _.replace(item, needle, replacement));
+		}
+
+		// Simple string replacement
+		var needleRegex = RegExp(Mavo.escapeRegExp(needle), "g");
+		var ret = haystack, prev;
+		var counter = 0;
+
+		while (ret != prev && (counter++ < iterations)) {
+			prev = ret; // foo
+			ret = ret.replace(needleRegex, replacement); // fo
+		}
+
+		return ret;
+	},
+
+	join: function(array, glue = "") {
+		return Mavo.toArray(array).join(glue);
+	},
+
+	idify: readable => ((readable || "") + "")
+		.replace(/\s+/g, "-") // Convert whitespace to hyphens
+		.replace(/[^\w-]/g, "") // Remove weird characters
+		.toLowerCase(),
+
+	uppercase: str => (str + "").toUpperCase(),
+	lowercase: str => (str + "").toLowerCase(),
+};
+
+Mavo.Script = {
+	addUnaryOperator: function(name, o) {
+		return operand => Array.isArray(operand)? operand.map(o.scalar) : o.scalar(operand);
+	},
+
+	/**
+	 * Extend a scalar operator to arrays, or arrays and scalars
+	 * The operation between arrays is applied element-wise.
+	 * The operation operation between a scalar and an array will result in
+	 * the operation being applied between the scalar and every array element.
+	 */
+	addBinaryOperator: function(name, o) {
+		if (o.symbol) {
+			// Build map of symbols to function names for easy rewriting
+			for (let symbol of Mavo.toArray(o.symbol)) {
+				Mavo.Script.symbols[symbol] = name;
+			}
+		}
+
+		o.identity = o.identity === undefined? 0 : o.identity;
+
+		return _[name] = o.code || function(...operands) {
+			if (operands.length === 1) {
+				if (Array.isArray(operands[0])) {
+					// Operand is an array of operands, expand it out
+					operands = [...operands[0]];
+				}
+			}
+
+			var prev = o.logical? o.identity : operands[0], result;
+
+			for (let i = 1; i < operands.length; i++) {
+				let a = o.logical? operands[i - 1] : prev;
+				let b = operands[i];
+
+				if (Array.isArray(b)) {
+					if (typeof o.identity == "number") {
+						b = numbers(b);
+					}
+
+					if (Array.isArray(a)) {
+						result = [
+							...b.map((n, i) => o.scalar(a[i] === undefined? o.identity : a[i], n)),
+							...a.slice(b.length)
+						];
+					}
+					else {
+						result = b.map(n => o.scalar(a, n));
+					}
+				}
+				else {
+					// Operand is scalar
+					if (typeof o.identity == "number") {
+						b = +b;
+					}
+
+					if (Array.isArray(a)) {
+						result = a.map(n => o.scalar(n, b));
+					}
+					else {
+						result = o.scalar(a, b);
+					}
+				}
+
+				if (o.reduce) {
+					prev = o.reduce(prev, result, a, b);
+				}
+				else if (o.logical) {
+					prev = prev && result;
+				}
+				else {
+					prev = result;
+				}
+			}
+
+			return prev;
+		};
+	},
+
+	/**
+	 * Mapping of operator symbols to function name.
+	 * Populated via addOperator() and addLogicalOperator()
+	 */
+	symbols: {},
+
+	getOperatorName: op => Mavo.Script.symbols[op] || op,
+
+	/**
+	 * Operations for elements and scalars.
+	 * Operations between arrays happen element-wise.
+	 * Operations between a scalar and an array will result in the operation being performed between the scalar and every array element.
+	 * Ordered by precedence (higher to lower)
+	 * @param scalar {Function} The operation between two scalars
+	 * @param identity The operation’s identity element. Defaults to 0.
+	 */
+	operators: {
+		"not": {
+			scalar: a => a => !a
+		},
+		"multiply": {
+			scalar: (a, b) => a * b,
+			identity: 1,
+			symbol: "*"
+		},
+		"divide": {
+			scalar: (a, b) => a / b,
+			identity: 1,
+			symbol: "/"
+		},
+		"add": {
+			scalar: (a, b) => +a + +b,
+			symbol: "+"
+		},
+		"subtract": {
+			scalar: (a, b) => a - b,
+			symbol: "-"
+		},
+
+		"lte": {
+			logical: true,
+			scalar: (a, b) => {
+				[a, b] = Mavo.Script.getNumericalOperands(a, b);
+				return a <= b;
+			},
+			identity: true,
+			symbol: "<="
+		},
+		"lt": {
+			logical: true,
+			scalar: (a, b) => {
+				[a, b] = Mavo.Script.getNumericalOperands(a, b);
+				return a < b;
+			},
+			identity: true,
+			symbol: "<"
+		},
+		"gte": {
+			logical: true,
+			scalar: (a, b) => {
+				[a, b] = Mavo.Script.getNumericalOperands(a, b);
+				return a >= b;
+			},
+			identity: true,
+			symbol: ">="
+		},
+		"gt": {
+			logical: true,
+			scalar: (a, b) => {
+				[a, b] = Mavo.Script.getNumericalOperands(a, b);
+				return a > b;
+			},
+			identity: true,
+			symbol: ">"
+		},
+		"eq": {
+			logical: true,
+			scalar: (a, b) => a == b,
+			symbol: ["=", "=="],
+			identity: true
+		},
+		"neq": {
+			logical: true,
+			scalar: (a, b) => a != b,
+			symbol: ["!="],
+			identity: true
+		},
+		"and": {
+			logical: true,
+			scalar: (a, b) => !!a && !!b,
+			identity: true,
+			symbol: "&&"
+		},
+		"or": {
+			logical: true,
+			scalar: (a, b) => !!a || !!b,
+			reduce: (p, r) => p || r,
+			identity: false,
+			symbol: "||"
+		},
+		"concatenate": {
+			symbol: "&",
+			identity: "",
+			scalar: (a, b) => "" + a + b
+		}
+	},
+
+	getNumericalOperands: function(a, b) {
+		if (isNaN(a) || isNaN(b)) {
+			// Try comparing as dates
+			var da = new Date(a), db = new Date(b);
+
+			if (!isNaN(da) && !isNaN(db)) {
+				// Both valid dates
+				return [da, db];
+			}
+		}
+
+		return [a, b];
+	}
+};
+
+for (let name in Mavo.Script.operators) {
+	let details = Mavo.Script.operators[name];
+
+	if (details.scalar.length < 2) {
+		Mavo.Script.addUnaryOperator(name, details);
+	}
+	else {
+		Mavo.Script.addBinaryOperator(name, details);
+	}
+}
+
+var aliases = {
+	average: "avg",
+	iff: "iff IF",
+	subtract: "minus",
+	multiply: "mult product",
+	divide: "div",
+	lt: "lessThan smaller",
+	gt: "moreThan greater greaterThan bigger",
+	eq: "equal equality"
+};
+
+for (let name in aliases) {
+	aliases[name].split(/\s+/g).forEach(alias => _[alias] = _[name]);
+}
+
+// Make function names case insensitive
+Mavo.Functions._Trap = self.Proxy? new Proxy(_, {
+	get: (functions, property) => {
+		if (property in functions) {
+			return functions[property];
+		}
+
+		var propertyL = property.toLowerCase && property.toLowerCase();
+
+		if (propertyL && functions.hasOwnProperty(propertyL)) {
+			return functions[propertyL];
+		}
+
+		if (property in Math || propertyL in Math) {
+			return Math[property] || Math[propertyL];
+		}
+
+		if (property in self) {
+			return self[property];
+		}
+
+		// Prevent undefined at all costs
+		return property;
+	},
+
+	// Super ugly hack, but otherwise data is not
+	// the local variable it should be, but the string "data"
+	// so all property lookups fail.
+	has: (functions, property) => property != "data"
+}) : Mavo.Functions;
+
+/**
+ * Private helper methods
+ */
+function numbers(array, args) {
+	array = Array.isArray(array)? array : (args? $$(args) : [array]);
+
+	return array.filter(number => !isNaN(number) && number !== "").map(n => +n);
+}
+
+})();
 
 /*
 Copyright (c) 2009 James Padolsey.  All rights reserved.
@@ -4842,7 +4942,7 @@ var _ = Mavo.Debug = {
 
 Mavo.prototype.render = _.timed("render", Mavo.prototype.render);
 
-Mavo.selectors.debug = ".debug";
+Mavo.selectors.debug = ".mv-debug";
 
 var selector = ", .mv-debuginfo";
 
@@ -4851,10 +4951,10 @@ Stretchy.selectors.filter += selector;
 // Add element to show saved data
 Mavo.hooks.add("init-tree-after", function() {
 	if (this.root.debug) {
-		this.wrapper.classList.add("debug-saving");
+		this.element.classList.add("mv-debug-saving");
 	}
 
-	if (this.store && this.wrapper.classList.contains("debug-saving")) {
+	if (this.store && this.element.classList.contains("mv-debug-saving")) {
 		var element;
 
 		var details = $.create("details", {
@@ -4863,10 +4963,10 @@ Mavo.hooks.add("init-tree-after", function() {
 				{tag: "Summary", textContent: "Saved data"},
 				element = $.create("pre", {id: this.id + "-debug-storage"})
 			],
-			after: this.wrapper
+			after: this.element
 		});
 
-		this.wrapper.addEventListener("mavo:save", evt => {
+		this.element.addEventListener("mavo:save", evt => {
 			element.innerHTML = "";
 
 			element.appendChild(prettyPrint(evt.data));
@@ -4875,7 +4975,7 @@ Mavo.hooks.add("init-tree-after", function() {
 });
 
 Mavo.hooks.add("render-start", function({data}) {
-	if (this.backend && this.wrapper.classList.contains("debug-saving")) {
+	if (this.backend && this.element.classList.contains("mv-debug-saving")) {
 		var element = $(`#${this.id}-debug-storage`);
 
 		if (element) {
@@ -4917,14 +5017,14 @@ Mavo.hooks.add("group-init-start", function() {
 					contents: $.create("summary", {
 						textContent: "Debug"
 					}),
-					"data-expressions": "none"
+					"mv-expressions": "none"
 				})
 			})
 		});
 	}
 }, true);
 
-Mavo.hooks.add("unit-init-end", function() {
+Mavo.hooks.add("node-init-end", function() {
 	if (this.collection) {
 		this.debug = this.collection.debug;
 	}
@@ -4936,14 +5036,14 @@ Mavo.hooks.add("expressions-init-start", function() {
 
 Mavo.hooks.add("expression-eval-beforeeval", function() {
 	if (this.debug) {
-		this.debug.classList.remove("error");
+		this.debug.classList.remove("mv-error");
 	}
 });
 
 Mavo.hooks.add("expression-eval-error", function(env) {
 	if (this.debug) {
 		this.debug.innerHTML = _.friendlyError(env.exception, env.expression);
-		this.debug.classList.add("error");
+		this.debug.classList.add("mv-error");
 	}
 });
 
@@ -4990,7 +5090,7 @@ Mavo.Group.prototype.debugRow = function({element, attribute = null, tds = []}) 
 	}
 
 	var tr = $.create("tr", {
-		className: "debug-" + type.toLowerCase(),
+		className: "mv-debug-" + type.toLowerCase(),
 		contents: tds,
 		inside: this.debug
 	});
@@ -5039,7 +5139,7 @@ Mavo.hooks.add("group-init-end", function() {
 		$$(selector, this.element).forEach(element => {
 			this.debugRow({
 				element,
-				tds: ["Warning", "data-multiple without a property attribute"]
+				tds: ["Warning", "mv-multiple without a property attribute"]
 			});
 		});
 
@@ -5087,13 +5187,13 @@ Mavo.hooks.add("expressiontext-update-beforeeval", function(env) {
 		env.td = env.expr.debug;
 
 		if (env.td) {
-			env.td.classList.remove("error");
+			env.td.classList.remove("mv-error");
 		}
 	}
 });
 
 Mavo.hooks.add("expressiontext-update-aftereval", function(env) {
-	if (env.td && !env.td.classList.contains("error")) {
+	if (env.td && !env.td.classList.contains("mv-error")) {
 		var value = _.printValue(env.value);
 		env.td.textContent = env.td.title = value;
 	}
@@ -5137,9 +5237,9 @@ Mavo.Backend.register($.Class({
 				return;
 			}
 
-			this.path = (this.mavo.wrapper.getAttribute("data-dropbox-path") || "") + (new URL(this.url)).pathname.match(/[^/]*$/)[0];
+			this.path = (this.mavo.element.getAttribute("mv-dropbox-path") || "") + (new URL(this.url)).pathname.match(/[^/]*$/)[0];
 
-			this.key = this.mavo.wrapper.getAttribute("data-dropbox-key") || "fle6gsc61w5v79j";
+			this.key = this.mavo.element.getAttribute("mv-dropbox-key") || "fle6gsc61w5v79j";
 
 			this.client = new Dropbox.Client({ key: this.key });
 		})).then(() => {
@@ -5195,7 +5295,7 @@ Mavo.Backend.register($.Class({
 			// Not returning a promise here, since processes depending on login don't need to wait for this
 			this.client.getAccountInfo((error, accountInfo) => {
 				if (!error) {
-					$.fire(this.mavo.wrapper, "mavo:login", $.extend({backend: this}, accountInfo));
+					$.fire(this.mavo.element, "mavo:login", $.extend({backend: this}, accountInfo));
 				}
 			});
 		}).catch(() => {});
@@ -5206,7 +5306,7 @@ Mavo.Backend.register($.Class({
 			this.client.signOut(null, () => {
 				this.permissions.off(["edit", "add", "delete"]).on("login");
 
-				this.mavo.wrapper._.fire("mavo:logout", {backend: this});
+				this.mavo.element._.fire("mavo:logout", {backend: this});
 				resolve();
 			});
 		});
@@ -5235,7 +5335,7 @@ var _ = Mavo.Backend.register($.Class({
 	constructor: function() {
 		this.permissions.on("login");
 
-		this.key = this.mavo.wrapper.getAttribute("data-github-key") || "7e08e016048000bc594e";
+		this.key = this.mavo.element.getAttribute("mv-github-key") || "7e08e016048000bc594e";
 
 		// Extract info for username, repo, branch, filepath from URL
 		this.url = new URL(this.url, location);
@@ -5410,7 +5510,7 @@ var _ = Mavo.Backend.register($.Class({
 
 			this.permissions.off(["edit", "add", "delete", "save"]).on("login");
 
-			this.mavo.wrapper._.fire("mavo:logout", {backend: this});
+			this.mavo.element._.fire("mavo:logout", {backend: this});
 		}
 
 		return Promise.resolve();
@@ -5421,10 +5521,10 @@ var _ = Mavo.Backend.register($.Class({
 			this.user = accountInfo;
 
 			var name = accountInfo.name || accountInfo.login;
-			$.fire(this.mavo.wrapper, "mavo:login", {
+			$.fire(this.mavo.element, "mavo:login", {
 				backend: this,
 				name: `<a href="https://github.com/${accountInfo.login}" target="_blank">
-							<img class="avatar" src="${accountInfo.avatar_url}" /> ${name}
+							<img class="mv-avatar" src="${accountInfo.avatar_url}" /> ${name}
 						</a>`
 			});
 		});

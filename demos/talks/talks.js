@@ -151,7 +151,7 @@ function eventTemplate(event) {
 
 
 $$('.talks').forEach(function (list) {
-	var file = list.getAttribute('data-source') || 'talks.json',
+	var file = list.getAttribute('mv-init') || 'talks.json',
 	    xhr = new XMLHttpRequest();
 	
 	xhr.open('GET', file, false);
