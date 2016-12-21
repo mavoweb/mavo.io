@@ -22,7 +22,7 @@ html {
 	}
 }
 
-body > button.add {
+body > button.mv-add {
 	display: block;
 	padding: .3em .5em;
 	border: 0;
@@ -34,7 +34,7 @@ body > button.add {
 	cursor: pointer;
 }
 
-	body > button.add:hover {
+	body > button.mv-add:hover {
 		background: hsl(230, 10%, 35%);
 	}
 

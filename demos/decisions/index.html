@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<main mv-storage="local" class="autoedit" id="decisions">
+<main mv-storage="local" class="mv-autoedit" id="decisions">
 	<h1>
 		Decisions
 		<span>Decisions</span>
@@ -21,20 +21,20 @@
 			<h1 property="decision">Should I go to the party?</h1>
 
 			<p>
-				Answer: <span property="answer">[iff(score > 0, Yes, iff(score < 0, No, Maybe))]</span>!
-				(score: <span property="score">[sum(proWeight) - sum(conWeight)]</span>)
+				Answer: <span property="answer">[if(score > 0, Yes, if(score < 0, No, Maybe))]</span>!
+				(score: <span property="score">[sum(pro.weight) - sum(con.weight)]</span>)
 			</p>
 		</header>
 
 		<section>
 			<h2>[count(pro)] pro(s)</h2>
 			<ul>
-				<li property="pro" class="weight-[proWeight]" mv-multiple>
+				<li property="pro" class="weight-[weight]" mv-multiple mv-accepts="con">
 					<p property="argument">Fun with friends!</p>
 					<p>
 						Weight:
-						<meter property="proWeight" min="1" value="1" max="5"></meter>
-						[proWeight]
+						<meter property="weight" min="1" value="1" max="5"></meter>
+						[weight]
 					</p>
 				</li>
 			</ul>
@@ -43,12 +43,12 @@
 		<section>
 			<h2>[count(con)] con(s)</h2>
 			<ul>
-				<li property="con" class="weight-[conWeight]" mv-multiple>
+				<li property="con" class="weight-[weight]" mv-multiple mv-accepts="pro">
 					<p property="argument">I have tons of work to do.</p>
 					<p>
 						Weight:
-						<meter property="conWeight" min="1" value="1" max="5"></meter>
-						[conWeight]
+						<meter property="weight" min="1" value="1" max="5"></meter>
+						[weight]
 					</p>
 				</li>
 			</ul>

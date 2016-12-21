@@ -84,7 +84,7 @@ article {
 		bottom: -6em;
 	}
 
-button.add {
+button.mv-add {
 	display: block;
 	padding: .5em .8em;
 	background: gray;
@@ -94,6 +94,6 @@ button.add {
 	font-size: 120%;
 }
 
-button.add:hover {
+button.mv-add:hover {
 	background: deeppink;
 }

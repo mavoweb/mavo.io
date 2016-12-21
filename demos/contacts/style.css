@@ -141,7 +141,7 @@ details {
         details > section a[title="Call"]:hover {
           box-shadow: 0 -0.1rem 0 0.3rem orange; }
 
-button.mv-add.add-contact {
+button.mv-add.mv-add-contact {
   position: relative;
   display: block;
   padding: .4em .6em;
@@ -153,7 +153,7 @@ button.mv-add.add-contact {
   border-radius: .3em;
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px); }
-  button.mv-add.add-contact:hover {
+  button.mv-add.mv-add-contact:hover {
     background: rgba(255, 255, 255, 0.5); }
 
 ::-webkit-input-placeholder {
