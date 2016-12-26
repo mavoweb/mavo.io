@@ -63,11 +63,16 @@ ul {
 	font-size: 120%;
 }
 
+	li {
+		display: flex;
+		align-items: center;
+		border-bottom: 1px dashed rgba(51, 85, 153, .5);
+	}
+
 	label {
-		display: block;
+		flex: 1;
 		padding: .2em;
 		margin: .3em 0;
-		border-bottom: 1px dashed rgba(51, 85, 153, .5);
 		font-family: Marker Felt, Helvetica Neue, sans-serif;
 	}
 
@@ -146,4 +151,12 @@ body > footer {
 
 li[property=task].mv-deleted {
 	padding: .3em;
+}
+
+.mv-item-controls {
+	position: static;
+	pointer-events: auto;
+	opacity: 1;
+	mix-blend-mode: multiply;
+	border: 0;
 }
