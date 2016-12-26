@@ -1050,8 +1050,9 @@ function updateWithin(cl, element) {
 	cl = "mv-" + cl + "-within";
 	$$("." + cl).forEach(el => el.classList.remove(cl));
 
-	while (element && (element = element.parentNode) && element.classList) {
+	while (element && element.classList) {
 		element.classList.add(cl);
+		element = element.parentNode;
 	}
 };
 
@@ -1065,9 +1066,13 @@ document.addEventListener("blur", evt => {
 
 addEventListener("hashchange", evt => {
 	updateWithin("target", $(location.hash));
-}, true);
+});
 
-updateWithin("target", $(location.hash));
+document.documentElement.addEventListener("mavo:datachange", evt => {
+	// TODO debounce
+	updateWithin("target", $(location.hash));
+});
+
 updateWithin("focus", document.activeElement !== document.body? document.activeElement : null);
 
 })(Bliss, Bliss.$);
@@ -2954,12 +2959,7 @@ var _ = Mavo.Collection = $.Class({
 			this.adopt(item);
 		}
 
-		if (index in this.children) {
-			if (this.bottomUp) {
-				index++;
-			}
-		}
-		else if (index === undefined) {
+		if (index === undefined) {
 			index = this.bottomUp? 0 : this.length;
 		}
 
@@ -3261,7 +3261,7 @@ var _ = Mavo.Collection = $.Class({
 		}
 
 		if (this.template) {
-			Mavo.pushUnique(this.template.dragula.containers, this.marker.parentNode);
+			Mavo.pushUnique(this.template.getDragula().containers, this.marker.parentNode);
 			return this.dragula = this.template.dragula || this.template.getDragula();
 		}
 
@@ -3472,7 +3472,15 @@ Mavo.hooks.add("node-edit-end", function() {
 						title: `Add new ${this.name.replace(/s$/i, "")} ${this.bottomUp? "after" : "before"}`,
 						className: "mv-add",
 						events: {
-							"click": evt => this.collection.add(null, this.collection.children.indexOf(item)).edit()
+							"click": evt => {
+								var item = this.collection.add(null, this.collection.children.indexOf(this));
+
+								if (evt[Mavo.superKey]) {
+									item.render(this.data);
+								}
+
+								return item.edit();
+							}
 						}
 					}, {
 						tag: "button",
