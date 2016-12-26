@@ -10,7 +10,7 @@
 
 </head>
 
-<body mv-storage="http://github.com/leaverou" property="invoices" class="mv-autoedit">
+<body mv-storage="http://github.com/leaverou" mv-app="invoices">
 
 <header>
 	<h1>Invoice issuer</h1>
@@ -30,9 +30,11 @@
 	</div>
 </header>
 
+<a href="#" class="show-all">↩ Back to all invoices</a>
+
 <article class="invoice" property="invoice" mv-multiple id="invoice[id]" mv-order="desc">
 	<header>
-		<h1>Invoice #<span property="id" mv-default="[count(invoice) + 1]">?</span></h1>
+		<a href="#invoice[id]" title="Isolate invoice"><h1>#<span property="id" mv-default="[count(invoice) + 1]">?</span></h1></a>
 		<div class="company">
 			<img src="[companyLogo]" />
 			<div>
@@ -47,7 +49,7 @@
 	</header>
 
 	<p class="invoice-date">
-		Invoice date: <time property="date">Invoice date</time>
+		<time property="date">Invoice date</time>
 	</p>
 
 	<article class="recipient">
@@ -58,7 +60,7 @@
 		</div>
 	</article>
 
-	<section>
+	<section class="services">
 		<h1>Services provided:</h1>
 		<table>
 			<thead>
@@ -72,7 +74,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr property="services">
+				<tr property="services" mv-multiple>
 					<td property="description">
 						Description of service provided
 					</td>
