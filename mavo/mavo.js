@@ -406,10 +406,9 @@ var _ = self.Mavo = $.Class({
 					events: {
 						click: e => this.save(),
 						"mouseenter focus": e => {
-							this.element.classList.add("mv-save-hovered");
-							this.setUnsavedChanges();
+							this.element.classList.add("mv-highlight-unsaved");
 						},
-						"mouseleave blur": e => this.element.classList.remove("mv-save-hovered")
+						"mouseleave blur": e => this.element.classList.remove("mv-highlight-unsaved")
 					},
 					inside: this.ui.bar
 				});
@@ -421,12 +420,9 @@ var _ = self.Mavo = $.Class({
 					events: {
 						click: e => this.revert(),
 						"mouseenter focus": e => {
-							if (!this.unsavedChanges) {
-								this.element.classList.add("mv-revert-hovered");
-								this.setUnsavedChanges();
-							}
+							this.element.classList.add("mv-highlight-unsaved");
 						},
-						"mouseleave blur": e => this.element.classList.remove("mv-revert-hovered")
+						"mouseleave blur": e => this.element.classList.remove("mv-highlight-unsaved")
 					},
 					inside: this.ui.bar
 				});
@@ -509,6 +505,35 @@ var _ = self.Mavo = $.Class({
 		return _.toJSON(data);
 	},
 
+	error: function(message, ...log) {
+		var close = () => $.transition(error, {opacity: 0}).then($.remove);
+		var closeTimeout;
+		var error = $.create("p", {
+			className: "mv-error mv-ui",
+			contents: [
+				message,
+				{
+					tag: "button",
+					className: "mv-close mv-ui",
+					textContent: "×",
+					events: {
+						"click": close
+					}
+				}
+			],
+			events: {
+				mouseenter: e => clearTimeout(closeTimeout),
+				mouseleave: _.rr(e => closeTimeout = setTimeout(close, 5000))
+			},
+			start: this.element
+		});
+
+		// Log more info for programmers
+		if (log.length > 0) {
+			console.log("%c" + message, "color: red; font-weight: bold", ...log);
+		}
+	},
+
 	render: function(data) {
 		_.hooks.run("render-start", {context: this, data});
 
@@ -529,8 +554,7 @@ var _ = self.Mavo = $.Class({
 
 	clear: function() {
 		if (confirm("This will delete all your data. Are you sure?")) {
-			this.store(null);
-			this.root.clear();
+			this.store(null).then(() => this.root.clear());
 		}
 	},
 
@@ -538,9 +562,9 @@ var _ = self.Mavo = $.Class({
 		this.root.edit();
 
 		$.events(this.element, "mouseenter.mavo:edit mouseleave.mavo:edit", evt => {
-			if (evt.target.matches(".mv-item-controls .mv-delete")) {
+			if (evt.target.matches(".mv-item-controls *")) {
 				var item = evt.target.closest(_.selectors.item);
-				item.classList.toggle("mv-delete-hover", evt.type == "mouseenter");
+				item.classList.toggle("mv-highlight", evt.type == "mouseenter");
 			}
 
 			if (evt.target.matches(_.selectors.item)) {
@@ -616,7 +640,7 @@ var _ = self.Mavo = $.Class({
 					response = JSON.parse(response);
 				}
 				catch (e) {
-					console.log("%cJSON parse error", "color: red; font-weight: bold", response);
+					this.error("The data is corrupted.", e, response);
 					response = "";
 				}
 			}
@@ -629,9 +653,7 @@ var _ = self.Mavo = $.Class({
 					this.render("");
 				}
 				else {
-					// TODO display error to user
-					console.error(err);
-					console.log(err.stack);
+					this.error("The data could not be loaded.", err);
 				}
 			}
 		})
@@ -648,33 +670,35 @@ var _ = self.Mavo = $.Class({
 
 		this.inProgress = "Saving";
 
-		this.storage.login()
+		return this.storage.login()
 		.then(() => this.storage.put())
 		.then(file => {
-			$.fire(this.element, "mavo:save", {
-				data: file.data,
-				dataString: file.dataString
-			});
-
-			this.lastSaved = Date.now();
+			this.inProgress = false;
+			return file;
 		})
 		.catch(err => {
 			if (err) {
-				console.error(err);
-				console.log(err.stack);
+				this.error("Problem saving data", err);
 			}
-		})
-		.then(() => {
+
 			this.inProgress = false;
+			return Promise.reject(err);
 		});
 	},
 
 	save: function() {
-		this.root.save();
+		return this.store().then(file => {
+			if (file) {
+				$.fire(this.element, "mavo:save", {
+					data: file.data,
+					dataString: file.dataString
+				});
 
-		this.store();
-
-		this.unsavedChanges = false;
+				this.lastSaved = Date.now();
+				this.root.save();
+				this.unsavedChanges = false;
+			}
+		});
 	},
 
 	revert: function() {
@@ -694,7 +718,7 @@ var _ = self.Mavo = $.Class({
 			this.element.classList.toggle("mv-unsaved-changes", value);
 
 			if (this.ui && this.ui.save) {
-				this.ui.save.disabled = !value;
+				this.ui.save.classList.toggle("mv-unsaved-changes", value);
 				this.ui.revert.disabled = !value;
 			}
 		},
@@ -851,6 +875,13 @@ var _ = $.extend(Mavo, {
 		}
 	},
 
+	inViewport: element => {
+		var r = element.getBoundingClientRect();
+
+		return (0 <= r.bottom && r.bottom <= innerHeight || 0 <= r.top && r.top <= innerHeight) // vertical
+		       && (0 <= r.right && r.right <= innerWidth || 0 <= r.left && r.left <= innerWidth); // horizontal
+	},
+
 	pushUnique: (arr, item) => {
 		if (arr.indexOf(item) === -1) {
 			arr.push(item);
@@ -1001,6 +1032,14 @@ var _ = $.extend(Mavo, {
 		};
 
 		return promise;
+	},
+
+	/**
+	 * Run & Return a function
+	 */
+	rr: function(f) {
+		f();
+		return f;
 	}
 });
 
@@ -3469,14 +3508,18 @@ Mavo.hooks.add("node-edit-end", function() {
 						}
 					}, {
 						tag: "button",
-						title: `Add new ${this.name.replace(/s$/i, "")} ${this.bottomUp? "after" : "before"}`,
+						title: `Add new ${this.name.replace(/s$/i, "")} ${this.collection.bottomUp? "after" : "before"}`,
 						className: "mv-add",
 						events: {
 							"click": evt => {
-								var item = this.collection.add(null, this.collection.children.indexOf(this));
+								var item = this.collection.add(null, this.index + this.collection.bottomUp);
 
 								if (evt[Mavo.superKey]) {
 									item.render(this.data);
+								}
+
+								if (!Mavo.inViewport(item.element)) {
+									item.element.scrollIntoView({behavior: "smooth"});
 								}
 
 								return item.edit();
@@ -3548,7 +3591,7 @@ $.live(Mavo.Node.prototype, "deleted", function(value) {
 			}
 		]);
 
-		this.element.classList.remove("mv-delete-hover");
+		this.element.classList.remove("mv-highlight");
 	}
 	else if (this.deleted) {
 		// Undelete
@@ -3605,7 +3648,7 @@ var _ = Mavo.Expression = $.Class({
 			if (!this.function) {
 				this.function = _.compile(this.expression);
 			}
-			
+
 			this.value = this.function(data);
 		}
 		catch (exception) {
@@ -3623,7 +3666,7 @@ var _ = Mavo.Expression = $.Class({
 
 	live: {
 		expression: function(value) {
-			var code = value = value.trim();
+			var code = value = value;
 
 			this.function = null;
 		}
@@ -3813,7 +3856,30 @@ var _ = Mavo.Expression.Text = $.Class({
 				}
 			}
 
-			this.expression = (this.attribute? this.node.getAttribute(this.attribute) : this.node.textContent).trim();
+			if (this.attribute) {
+				this.expression = this.node.getAttribute(this.attribute).trim();
+			}
+			else {
+				// Move whitespace outside to prevent it from messing with types
+				this.node.normalize();
+
+				if (this.node.firstChild && this.node.childNodes.length === 1 && this.node.firstChild.nodeType === 3) {
+					var whitespace = this.node.firstChild.textContent.match(/^\s*|\s*$/g);
+
+					if (whitespace[1]) {
+						this.node.firstChild.splitText(this.node.firstChild.textContent.length - whitespace[1].length);
+						$.after(this.node.lastChild, this.node);
+					}
+
+					if (whitespace[0]) {
+						this.node.firstChild.splitText(whitespace[0].length);
+						this.node.parentNode.insertBefore(this.node.firstChild, this.node);
+					}
+				}
+
+				this.expression = this.node.textContent;
+			}
+
 
 			this.template = o.template? o.template.template : this.syntax.tokenize(this.expression);
 		}
@@ -5635,8 +5701,7 @@ var _ = Mavo.Backend.register($.Class({
 				return Promise.reject(err.xhr);
 			}
 			else {
-				console.error(err);
-				console.log(err.stack);
+				this.mavo.error("Something went wrong while connecting to Github", err);
 			}
 		})
 		.then(xhr => Promise.resolve(xhr.response));
@@ -5671,7 +5736,7 @@ var _ = Mavo.Backend.register($.Class({
 				content: _.btoa(file.dataString),
 				branch: this.branch,
 				sha: fileInfo.sha
-			}, "PUT");
+			}, "PUT").then(data => file);
 		}, xhr => {
 			if (xhr.status == 404) {
 				// File does not exist, create it
@@ -5681,10 +5746,11 @@ var _ = Mavo.Backend.register($.Class({
 					branch: this.branch
 				}, "PUT");
 			}
-			// TODO include time out
-		}).then(data => {
-			console.log("success");
-			return file;
+			else {
+				this.mavo.error(xhr.status? `HTTP error ${xhr.status}` : "Can’t connect to the Internet", xhr);
+			}
+
+			return null;
 		});
 	},
 

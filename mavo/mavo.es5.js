@@ -463,11 +463,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 								return _this.save();
 							},
 							"mouseenter focus": function mouseenterFocus(e) {
-								_this.element.classList.add("mv-save-hovered");
-								_this.setUnsavedChanges();
+								_this.element.classList.add("mv-highlight-unsaved");
 							},
 							"mouseleave blur": function mouseleaveBlur(e) {
-								return _this.element.classList.remove("mv-save-hovered");
+								return _this.element.classList.remove("mv-highlight-unsaved");
 							}
 						},
 						inside: _this.ui.bar
@@ -482,13 +481,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 								return _this.revert();
 							},
 							"mouseenter focus": function mouseenterFocus(e) {
-								if (!_this.unsavedChanges) {
-									_this.element.classList.add("mv-revert-hovered");
-									_this.setUnsavedChanges();
-								}
+								_this.element.classList.add("mv-highlight-unsaved");
 							},
 							"mouseleave blur": function mouseleaveBlur(e) {
-								return _this.element.classList.remove("mv-revert-hovered");
+								return _this.element.classList.remove("mv-highlight-unsaved");
 							}
 						},
 						inside: _this.ui.bar
@@ -579,6 +575,45 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			return _.toJSON(data);
 		},
 
+		error: function error(message) {
+			var close = function close() {
+				return $.transition(error, { opacity: 0 }).then($.remove);
+			};
+			var closeTimeout;
+			var error = $.create("p", {
+				className: "mv-error mv-ui",
+				contents: [message, {
+					tag: "button",
+					className: "mv-close mv-ui",
+					textContent: "×",
+					events: {
+						"click": close
+					}
+				}],
+				events: {
+					mouseenter: function mouseenter(e) {
+						return clearTimeout(closeTimeout);
+					},
+					mouseleave: _.rr(function (e) {
+						return closeTimeout = setTimeout(close, 5000);
+					})
+				},
+				start: this.element
+			});
+
+			// Log more info for programmers
+
+			for (var _len = arguments.length, log = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+				log[_key - 1] = arguments[_key];
+			}
+
+			if (log.length > 0) {
+				var _console;
+
+				(_console = console).log.apply(_console, ["%c" + message, "color: red; font-weight: bold"].concat(log));
+			}
+		},
+
 		render: function render(data) {
 			_.hooks.run("render-start", { context: this, data: data });
 
@@ -597,9 +632,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		},
 
 		clear: function clear() {
+			var _this2 = this;
+
 			if (confirm("This will delete all your data. Are you sure?")) {
-				this.store(null);
-				this.root.clear();
+				this.store(null).then(function () {
+					return _this2.root.clear();
+				});
 			}
 		},
 
@@ -607,9 +645,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			this.root.edit();
 
 			$.events(this.element, "mouseenter.mavo:edit mouseleave.mavo:edit", function (evt) {
-				if (evt.target.matches(".mv-item-controls .mv-delete")) {
+				if (evt.target.matches(".mv-item-controls *")) {
 					var item = evt.target.closest(_.selectors.item);
-					item.classList.toggle("mv-delete-hover", evt.type == "mouseenter");
+					item.classList.toggle("mv-highlight", evt.type == "mouseenter");
 				}
 
 				if (evt.target.matches(_.selectors.item)) {
@@ -666,7 +704,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
    * @return {Promise}  A promise that resolves when the data is loaded.
    */
 		load: function load() {
-			var _this2 = this;
+			var _this3 = this;
 
 			this.inProgress = "Loading";
 
@@ -676,9 +714,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				return backend.get();
 			}).catch(function (err) {
 				// Try again with source
-				if (_this2.source && backend !== _this2.source) {
-					return _this2.source.ready.then(function () {
-						return _this2.source.get();
+				if (_this3.source && backend !== _this3.source) {
+					return _this3.source.ready.then(function () {
+						return _this3.source.get();
 					});
 				}
 
@@ -688,30 +726,28 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 					try {
 						response = JSON.parse(response);
 					} catch (e) {
-						console.log("%cJSON parse error", "color: red; font-weight: bold", response);
+						_this3.error("The data is corrupted.", e, response);
 						response = "";
 					}
 				}
 
-				_this2.render(response);
+				_this3.render(response);
 			}).catch(function (err) {
 				if (err) {
 					if (err.xhr && err.xhr.status == 404) {
-						_this2.render("");
+						_this3.render("");
 					} else {
-						// TODO display error to user
-						console.error(err);
-						console.log(err.stack);
+						_this3.error("The data could not be loaded.", err);
 					}
 				}
 			}).then(function () {
-				_this2.inProgress = false;
-				$.fire(_this2.element, "mavo:load");
+				_this3.inProgress = false;
+				$.fire(_this3.element, "mavo:load");
 			});
 		},
 
 		store: function store() {
-			var _this3 = this;
+			var _this4 = this;
 
 			if (!this.storage) {
 				return;
@@ -719,31 +755,36 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 			this.inProgress = "Saving";
 
-			this.storage.login().then(function () {
-				return _this3.storage.put();
+			return this.storage.login().then(function () {
+				return _this4.storage.put();
 			}).then(function (file) {
-				$.fire(_this3.element, "mavo:save", {
-					data: file.data,
-					dataString: file.dataString
-				});
-
-				_this3.lastSaved = Date.now();
+				_this4.inProgress = false;
+				return file;
 			}).catch(function (err) {
 				if (err) {
-					console.error(err);
-					console.log(err.stack);
+					_this4.error("Problem saving data", err);
 				}
-			}).then(function () {
-				_this3.inProgress = false;
+
+				_this4.inProgress = false;
+				return Promise.reject(err);
 			});
 		},
 
 		save: function save() {
-			this.root.save();
+			var _this5 = this;
 
-			this.store();
+			return this.store().then(function (file) {
+				if (file) {
+					$.fire(_this5.element, "mavo:save", {
+						data: file.data,
+						dataString: file.dataString
+					});
 
-			this.unsavedChanges = false;
+					_this5.lastSaved = Date.now();
+					_this5.root.save();
+					_this5.unsavedChanges = false;
+				}
+			});
 		},
 
 		revert: function revert() {
@@ -763,7 +804,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				this.element.classList.toggle("mv-unsaved-changes", value);
 
 				if (this.ui && this.ui.save) {
-					this.ui.save.disabled = !value;
+					this.ui.save.classList.toggle("mv-unsaved-changes", value);
 					this.ui.revert.disabled = !value;
 				}
 			},
@@ -963,6 +1004,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			}
 		},
 
+		inViewport: function inViewport(element) {
+			var r = element.getBoundingClientRect();
+
+			return (0 <= r.bottom && r.bottom <= innerHeight || 0 <= r.top && r.top <= innerHeight) && ( // vertical
+			0 <= r.right && r.right <= innerWidth || 0 <= r.left && r.left <= innerWidth); // horizontal
+		},
+
 		pushUnique: function pushUnique(arr, item) {
 			if (arr.indexOf(item) === -1) {
 				arr.push(item);
@@ -1147,6 +1195,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			};
 
 			return promise;
+		},
+
+		/**
+   * Run & Return a function
+   */
+		rr: function rr(f) {
+			f();
+			return f;
 		}
 	});
 
@@ -3984,14 +4040,18 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 						}
 					}, {
 						tag: "button",
-						title: "Add new " + this.name.replace(/s$/i, "") + " " + (this.bottomUp ? "after" : "before"),
+						title: "Add new " + this.name.replace(/s$/i, "") + " " + (this.collection.bottomUp ? "after" : "before"),
 						className: "mv-add",
 						events: {
 							"click": function click(evt) {
-								var item = _this10.collection.add(null, _this10.collection.children.indexOf(_this10));
+								var item = _this10.collection.add(null, _this10.index + _this10.collection.bottomUp);
 
 								if (evt[Mavo.superKey]) {
 									item.render(_this10.data);
+								}
+
+								if (!Mavo.inViewport(item.element)) {
+									item.element.scrollIntoView({ behavior: "smooth" });
 								}
 
 								return item.edit();
@@ -4060,7 +4120,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				}
 			}]);
 
-			this.element.classList.remove("mv-delete-hover");
+			this.element.classList.remove("mv-highlight");
 		} else if (this.deleted) {
 			// Undelete
 			this.element.textContent = "";
@@ -4138,7 +4198,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 		live: {
 			expression: function expression(value) {
-				var code = value = value.trim();
+				var code = value = value;
 
 				this.function = null;
 			}
@@ -4347,7 +4407,28 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 						}
 					}
 
-					this.expression = (this.attribute ? this.node.getAttribute(this.attribute) : this.node.textContent).trim();
+					if (this.attribute) {
+						this.expression = this.node.getAttribute(this.attribute).trim();
+					} else {
+						// Move whitespace outside to prevent it from messing with types
+						this.node.normalize();
+
+						if (this.node.firstChild && this.node.childNodes.length === 1 && this.node.firstChild.nodeType === 3) {
+							var whitespace = this.node.firstChild.textContent.match(/^\s*|\s*$/g);
+
+							if (whitespace[1]) {
+								this.node.firstChild.splitText(this.node.firstChild.textContent.length - whitespace[1].length);
+								$.after(this.node.lastChild, this.node);
+							}
+
+							if (whitespace[0]) {
+								this.node.firstChild.splitText(whitespace[0].length);
+								this.node.parentNode.insertBefore(this.node.firstChild, this.node);
+							}
+						}
+
+						this.expression = this.node.textContent;
+					}
 
 					this.template = o.template ? o.template.template : this.syntax.tokenize(this.expression);
 				}
@@ -6357,6 +6438,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * Helper method to make a request with the Github API
    */
 		req: function req(call, data) {
+			var _this = this;
+
 			var method = arguments.length <= 2 || arguments[2] === undefined ? "GET" : arguments[2];
 			var o = arguments.length <= 3 || arguments[3] === undefined ? { method: method } : arguments[3];
 
@@ -6378,8 +6461,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				if (err && err.xhr) {
 					return Promise.reject(err.xhr);
 				} else {
-					console.error(err);
-					console.log(err.stack);
+					_this.mavo.error("Something went wrong while connecting to Github", err);
 				}
 			}).then(function (xhr) {
 				return Promise.resolve(xhr.response);
@@ -6398,7 +6480,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    * @return {Promise} A promise that resolves when the file is saved.
    */
 		put: function put() {
-			var _this = this;
+			var _this2 = this;
 
 			var file = arguments.length <= 0 || arguments[0] === undefined ? this.getFile() : arguments[0];
 
@@ -6407,48 +6489,50 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			return Promise.resolve(this.repoInfo || this.req("user/repos", {
 				name: this.repo
 			}, "POST")).then(function (repoInfo) {
-				_this.repoInfo = repoInfo;
+				_this2.repoInfo = repoInfo;
 
-				return _this.req(fileCall, {
-					ref: _this.branch
+				return _this2.req(fileCall, {
+					ref: _this2.branch
 				});
 			}).then(function (fileInfo) {
-				return _this.req(fileCall, {
+				return _this2.req(fileCall, {
 					message: "Updated " + (file.name || "file"),
 					content: _.btoa(file.dataString),
-					branch: _this.branch,
+					branch: _this2.branch,
 					sha: fileInfo.sha
-				}, "PUT");
+				}, "PUT").then(function (data) {
+					return file;
+				});
 			}, function (xhr) {
 				if (xhr.status == 404) {
 					// File does not exist, create it
-					return _this.req(fileCall, {
+					return _this2.req(fileCall, {
 						message: "Created file",
 						content: _.btoa(file.dataString),
-						branch: _this.branch
+						branch: _this2.branch
 					}, "PUT");
+				} else {
+					_this2.mavo.error(xhr.status ? "HTTP error " + xhr.status : "Can’t connect to the Internet", xhr);
 				}
-				// TODO include time out
-			}).then(function (data) {
-				console.log("success");
-				return file;
+
+				return null;
 			});
 		},
 
 		login: function login(passive) {
-			var _this2 = this;
+			var _this3 = this;
 
 			return this.ready.then(function () {
-				if (_this2.authenticated) {
+				if (_this3.authenticated) {
 					return Promise.resolve();
 				}
 
 				return new Promise(function (resolve, reject) {
 					if (passive) {
-						_this2.accessToken = localStorage["mavo:githubtoken"];
+						_this3.accessToken = localStorage["mavo:githubtoken"];
 
-						if (_this2.accessToken) {
-							resolve(_this2.accessToken);
+						if (_this3.accessToken) {
+							resolve(_this3.accessToken);
 						}
 					} else {
 						// Show window
@@ -6460,43 +6544,43 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 						popup.top = (innerHeight - popup.height) / 2 + (screen.top || screenTop);
 						popup.left = (innerWidth - popup.width) / 2 + (screen.left || screenLeft);
 
-						_this2.authPopup = open("https://github.com/login/oauth/authorize?client_id=" + _this2.key + "&scope=repo,gist&state=" + location.href, "popup", "width=" + popup.width + ",height=" + popup.height + ",left=" + popup.left + ",top=" + popup.top);
+						_this3.authPopup = open("https://github.com/login/oauth/authorize?client_id=" + _this3.key + "&scope=repo,gist&state=" + location.href, "popup", "width=" + popup.width + ",height=" + popup.height + ",left=" + popup.left + ",top=" + popup.top);
 
 						addEventListener("message", function (evt) {
-							if (evt.source === _this2.authPopup) {
-								_this2.accessToken = localStorage["mavo:githubtoken"] = evt.data;
+							if (evt.source === _this3.authPopup) {
+								_this3.accessToken = localStorage["mavo:githubtoken"] = evt.data;
 
-								if (!_this2.accessToken) {
+								if (!_this3.accessToken) {
 									reject(Error("Authentication error"));
 								}
 
-								resolve(_this2.accessToken);
+								resolve(_this3.accessToken);
 							}
 						});
 					}
 				}).then(function () {
-					return _this2.getUser();
+					return _this3.getUser();
 				}).catch(function (xhr) {
 					if (xhr.status == 401) {
 						// Unauthorized. Access token we have is invalid, discard it
-						_this2.logout();
+						_this3.logout();
 					}
 				}).then(function (u) {
-					if (_this2.user) {
-						_this2.permissions.on("logout");
+					if (_this3.user) {
+						_this3.permissions.on("logout");
 
-						return _this2.req("repos/" + _this2.username + "/" + _this2.repo).then(function (repoInfo) {
-							_this2.repoInfo = repoInfo;
+						return _this3.req("repos/" + _this3.username + "/" + _this3.repo).then(function (repoInfo) {
+							_this3.repoInfo = repoInfo;
 
 							if (repoInfo.permissions.push) {
-								_this2.permissions.on(["edit", "save"]);
+								_this3.permissions.on(["edit", "save"]);
 							}
 						}).catch(function (xhr) {
 							if (xhr.status == 404) {
 								// Repo does not exist so we can't check permissions
 								// Just check if authenticated user is the same as our URL username
-								if (_this2.user.login.toLowerCase() == _this2.username.toLowerCase()) {
-									_this2.permissions.on(["edit", "save"]);
+								if (_this3.user.login.toLowerCase() == _this3.username.toLowerCase()) {
+									_this3.permissions.on(["edit", "save"]);
 								}
 							}
 						});
@@ -6519,14 +6603,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		},
 
 		getUser: function getUser() {
-			var _this3 = this;
+			var _this4 = this;
 
 			return this.req("user").then(function (accountInfo) {
-				_this3.user = accountInfo;
+				_this4.user = accountInfo;
 
 				var name = accountInfo.name || accountInfo.login;
-				$.fire(_this3.mavo.element, "mavo:login", {
-					backend: _this3,
+				$.fire(_this4.mavo.element, "mavo:login", {
+					backend: _this4,
 					name: "<a href=\"https://github.com/" + accountInfo.login + "\" target=\"_blank\">\n\t\t\t\t\t\t\t<img class=\"mv-avatar\" src=\"" + accountInfo.avatar_url + "\" /> " + name + "\n\t\t\t\t\t\t</a>"
 				});
 			});

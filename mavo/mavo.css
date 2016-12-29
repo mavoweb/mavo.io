@@ -102,29 +102,15 @@
 
 .mv-item {
   position: relative; }
-  .mv-item.mv-delete-hover, .mv-item.mv-deleted {
+  .mv-item.mv-highlight {
+    box-shadow: 0 0 0 50vmax rgba(149, 191, 64, 0.25) inset !important; }
+  .mv-item.mv-deleted {
     box-shadow: 0 0 0 50vmax rgba(255, 0, 0, 0.2) inset !important; }
   .mv-item.mv-deleted {
     display: block; }
     .mv-item.mv-deleted button {
       display: inline-block;
       margin-left: .4em; }
-      .mv-item.mv-deleted button.mv-close {
-        all: unset;
-        float: right;
-        width: 1.1em;
-        padding-bottom: .1em;
-        border: none;
-        border-radius: 50%;
-        margin: 0 0 0 1em;
-        background: rgba(180, 0, 0, 0.6);
-        color: white;
-        font-weight: bold;
-        line-height: 1;
-        cursor: pointer;
-        text-align: center; }
-        .mv-item.mv-deleted button.mv-close:hover {
-          background: #b40000; }
   [mv-app]:not([mv-mode="edit"]) .mv-item.mv-deleted {
     display: none; }
   .mv-item.gu-mirror {
@@ -143,6 +129,22 @@
   -moz-user-select: none !important;
   -ms-user-select: none !important;
   user-select: none !important; }
+
+button.mv-close {
+  all: unset;
+  float: right;
+  width: 1.1em;
+  padding-bottom: .1em;
+  border: none;
+  border-radius: 50%;
+  margin: 0 0 0 1em;
+  background: rgba(180, 0, 0, 0.6);
+  color: white;
+  font: bold 100%/1 sans-serif;
+  cursor: pointer;
+  text-align: center; }
+  button.mv-close:hover {
+    background: #b40000; }
 
 [mv-app] [property].mv-multiline {
   white-space: pre-line; }
@@ -165,10 +167,7 @@
   content: "";
   display: inline-block; }
 
-[mv-app].mv-save-hovered [property].mv-unsaved-changes,
-[mv-app].mv-save-hovered [typeof].mv-unsaved-changes,
-[mv-app].mv-revert-hovered [property].mv-unsaved-changes,
-[mv-app].mv-revert-hovered [typeof].mv-unsaved-changes {
+[mv-app].mv-highlight-unsaved .mv-unsaved-changes {
   box-shadow: 0 0 0 50vmax rgba(64, 191, 191, 0.25) inset !important; }
 
 [mv-app]:not([mv-mode="edit"]) .mv-empty,
@@ -283,6 +282,36 @@ meter[property][mv-mode="edit"], progress[property][mv-mode="edit"] {
   .mv-ui {
     display: none !important; } }
 
+.mv-error {
+  position: fixed;
+  top: 1em;
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
+  padding: .5em 1em;
+  border-radius: .3em;
+  margin: 0;
+  box-shadow: 0 0.2em 0.2em rgba(0, 0, 0, 0.2);
+  background: rgba(255, 179, 179, 0.9);
+  color: #660000;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+  font-size: 120%;
+  animation: error-appear .5s backwards; }
+
+@keyframes error-appear {
+  from {
+    transform: translateX(-50%) translateY(-10vh);
+    opacity: 0; } }
+  .mv-error::before {
+    content: "😳 Oh noes! ";
+    color: #bf4040;
+    text-transform: uppercase;
+    font-size: 85%;
+    font-weight: bold; }
+  .mv-error + .mv-error {
+    top: 4em;
+    animation-delay: .5s; }
+
 .mv-bar {
   all: initial;
   visibility: inherit;
@@ -360,21 +389,26 @@ meter[property][mv-mode="edit"], progress[property][mv-mode="edit"] {
       top: 50%;
       transform: translate(-50%, -50%);
       color: white; }
-  .mv-bar .mv-save:enabled:hover {
+  .mv-bar .mv-save.mv-unsaved-changes {
+    text-shadow: 0 0 0.2em #66ccff, 0 0 0.3em #66ccff; }
+  .mv-bar .mv-save:hover {
     background: #40bfbf; }
   .mv-bar .mv-revert::before {
     content: "✘"; }
   .mv-bar .mv-revert:enabled:hover {
     background: #c50; }
-  .mv-bar .mv-clear::before {
-    vertical-align: -.25em;
-    width: .9em;
-    -webkit-filter: saturate(0) brightness(600%);
-    filter: saturate(0) brightness(600%); }
-  .mv-bar .mv-clear:enabled:hover {
-    background: #b00; }
-  [mv-app]:not([mv-mode="edit"]) .mv-bar .mv-clear {
-    display: none; }
+  .mv-bar .mv-clear {
+    -ms-flex-order: 9999;
+    order: 9999; }
+    .mv-bar .mv-clear::before {
+      vertical-align: -.25em;
+      width: .9em;
+      -webkit-filter: saturate(0) brightness(600%);
+      filter: saturate(0) brightness(600%); }
+    .mv-bar .mv-clear:enabled:hover {
+      background: #b00; }
+    [mv-app]:not([mv-mode="edit"]) .mv-bar .mv-clear {
+      display: none; }
   .mv-bar .mv-status {
     -ms-flex: 1;
     flex: 1;
