@@ -7,27 +7,77 @@
 
 <h2>Primer</h2>
 
-<section id="mv-storage">
+<section>
+	<h1>Using Mavo</h1>
+
+	<p>In order to use Mavo, you first need to <a href="/download">download its JS and CSS files</a> and include them in your page.
+		If you have never done this before, you could put both in the <code>&lt;head></code> section, like this:</p>
+
+	<script type="text/plain">
+		<head>
+		...
+		<link rel="stylesheet" href="mavo.css"/>
+		<script src="mavo.js">&lt;/script>
+		...
+		</head>
+	</script>
+</section>
+
+<section id="mv-app">
 	<h1>Defining a mavo app</h1>
 
-	<p>The <code>mv-storage</code> attribute has two purposes: its presence tells mavo that it should pay attention to what is inside that element
-		and its value tells mavo where to store any data.
-		The value of the <code>mv-storage</code> attribute is a valid URL or a keyword, like <code>local</code>. <a href="storage">Learn more about the different types of Mavo Storage</a></p>
+	<p>You enable Mavo functionality on an HTML structure with the <code>mv-app</code> attribute.
+		The element with that attribute is called the <strong>Mavo root</strong>.
+		The <code>mv-app</code> attribute can be used with or without a value.
+		Its value is a name for your app, which is used by Mavo in various places. The name must be unique to the page, just like an id.
+		If the element already has an id, you don't need to repeat it in the <code>mv-app</code> attribute.
+		If you don't name your application, it will automatically get a name such as mavo1, mavo2 etc based on its index in the page.
+		This means that if you rearrange your Mavos in the page, the app names will change, which is flimsy.
+		Therefore, it is <strong>strongly recommended</strong> that you name your Mavo apps.
+	</p>
 
-		<script type="text/plain">
-			<div mv-storage="local" id="mavoTest">
-				My first Mavo app!
-			</div>
-		</script>
+	<script type="text/plain">
+		<div mv-app id="mavoTest">
+			My first Mavo app!
+		</div>
+	</script>
+</section>
 
-	<p>By default, this will not do anything, until you start adding some properties. We’ll learn about properties in the next section.</p>
+<section id="mv-storage">
+	<h1>Storage</h1>
+
+	<p>The <code>mv-storage</code> attribute tells Mavo where to store any data.
+		Its value is a valid URL or a keyword, like <code>local</code>.
+	</p>
+
+	<script type="text/plain">
+		<div mv-app="storageTest" mv-storage="local">
+			My first Mavo app!
+		</div>
+	</script>
+
+	<p>What will be stored? Elements with a <code>property</code> attribute! We will learn about these in the next section.</p>
+
+	<p>Learn more: <a href="/docs/storage">Different types of Mavo Storage</a></p>
 </section>
 
 <section id="property">
 	<h1>The property attribute</h1>
 
-	<p>The <code>property</code> attribute tells mavo which elements should be editable. Its value should describe the element, similarly to a <code>id</code> or <code>class</code> attribute.
-		It can contain <strong>only</strong> letters, numbers and underscores (_).</p>
+	<p>The <code>property</code> attribute tells Mavo which elements are saved.
+		Its value should describe the element, similarly to a <code>id</code> or <code>class</code> attribute.
+
+	<section class="example">
+		<script type="text/plain">
+			<div mv-app mv-storage="local">
+				Email: <input type="email" property="email" />
+				Message: <textarea property="message">Write here and notice how the message persists after you refersh!</textarea>
+			</div>
+		</script>
+	</section>
+
+	<p>If the <code>property</code> attribute is used on elements that are not form elements, they are made editable, and Mavo generates a button
+	from switching between modes:</p>
 
 	<section class="example">
 		<script type="text/plain">
@@ -36,45 +86,7 @@
 		</script>
 	</section>
 
-	<p>If it happens to be the same as the element’s <code>id</code> or <code>class</code> attributes,
-		you don’t need to provide a value:</p>
-
-	<script type="text/plain">
-		In all of the following, the property value is "name"
-		<div property class="name">Lea Verou</div>
-		<div property id="name">Lea Verou</div>
-		<div property="name">Lea Verou</div>
-	</script>
-
-	<hr />
-
-	<p>You can put the <code>property</code> attribute on <strong>any</strong> HTML5 element, and mavo knows how to make it editable:</p>
-
-	<section class="example">
-		<script type="text/plain">
-			<meter property="rating" min="1" value="3" max="5"></meter>
-			<time property="birthday" datetime="2014-06-01"></time>
-			<img property="avatar" src="http://i.imgur.com/LPeWcag.png" />
-		</script>
-	</section>
-
-	<hr />
-
-	<p>Form elements don’t need any editing UI, since they are already editable, but are still saved:</p>
-
-	<section class="example">
-		<script type="text/plain">
-			<input property="name" value="Lea Verou"/>
-			<input property="strength" type="range" />
-			<select property="country">
-				<option value="us">United States</option>
-				<option value="gb">United Kingdom</option>
-				<option value="jp">Japan</option>
-			</select>
-		</script>
-	</section>
-
-	<p class="note">There is no “Edit” button in the example above since all its properties are form elements, which are always editable.</p>
+	<p>Learn More: <a href="/docs/properties">Properties</a></p>
 </section>
 
 <section id="mv-multiple">
@@ -126,7 +138,7 @@
 	<p>Note that in the example above, the <code>property</code> attribute on <code>&lt;article></code> does not actually make
 		the entire <code>&lt;article></code> element editable, but instead acts as a <strong>grouping element</strong>.
 		This will always happen when you use the <code>property</code> attribute on elements that contain other properties inside them.
-		Groups have many interesting characteristics when combined with expressions, which we will see next.
+		<strong>Groups</strong> have many interesting characteristics when combined with expressions, which we will see next.
 	</p>
 </section>
 
@@ -143,7 +155,7 @@
 		</script>
 	</section>
 
-	<p>We can also do math with properties, e.g. divide by a 100:</p>
+	<p>We can also do math with properties, e.g. divide by 100:</p>
 
 	<section class="example">
 		<p>Move the slider and check how both expressions are updated:</p>
@@ -174,36 +186,6 @@
 
 	<p class="note">Properties whose values are expressions are called <em>“computed properties”</em> and are <strong>not saved</strong>.</p>
 
-	<hr />
-
-	<p>If there are groups and there are properties with the same name inside and outside the group,
-		the value <strong>closest to your expression</strong> will be used, with parent groups having priority over inner groups.</p>
-
-	<section class="example scoped-expressions">
-		<h1>Example: Grouping & Expressions</h1>
-		<script type="text/plain">
-			<p>Hi, I’m [firstname] [lastname]</p> <!-- From inner group --
-
-			<div property="person">
-				<span property="firstname">Lea</span>
-				<span property="lastname">Verou</span>
-				<p>Hi, I’m [firstname] [lastname]</p>
-
-				<div property="mother">
-					<span property="firstname">Maria</span>
-					<!-- Last name from parent group --
-					<p>Hi, I’m [firstname] [lastname]</p>
-
-					<div property="mother">
-						<span property="firstname">Areti</span>
-						<!-- Last name from grandparent group --
-						<p>Hi, I’m [firstname] [lastname]</p>
-					</div>
-				</div>
-			</div>
-		</script>
-	</section>
-
 </section>
 
 <section id="functions">
@@ -220,100 +202,24 @@
 		</script>
 	</section>
 
-	<hr />
-
-	<p>Using a property with multiple values (i.e. referring to a property inside a list from outside the list) in an expression is not very useful on its own.
-		However, there are functions that help you use such lists of values in interesting ways, such as <code>count(propery)</code>, <code>sum(property)</code>, <code>average(property)</code> and <a href="mavoscript/#list-functions">more</a>.
-	</p>
-
-	<section class="example">
-		<p>Try adding and removing elements!</p>
-
-		<script type="text/plain">
-		<div property="foo">
-			<h2>My cats</h2>
-			<ul>
-				<li property="cat" mv-multiple>
-					<div property="name">Vector</div>
-					<div property="age">10</div>
-					<!-- Note that expression inside list item refers to the value in the current item -->
-					<p>Age in 2 years: [age + 2]</p>
-				</li>
-			</ul>
-
-			<h2>My cats’ ages</h2>
-			<ul>
-				<li>All cat ages: [age]</li>
-				<li>Number of cats: [count(cat)]</li>
-				<li>Number of cats with age: [count(age)]</li>
-				<li>Average cat age: [average(age)]</li> <!-- avg(age) also works -->
-				<li>Sum of all ages (why? because we can): [SUM(age)]</li> <!-- caps don’t matter -->
-				<li>Number of cats over 5 years old: [count(age > 5)]</li>
-			</ul>
-		</div>
-		</script>
-		<script type="application/json">{"foo": {
-	"cat": [
-		{
-			"name": "Vector",
-			"age": 10
-		},
-		{
-			"name": "Jean"
-		},
-		{
-			"name": "Pixel",
-			"age": 6
-		},
-		{
-			"name": "Adam Catlace",
-			"age": 2.5
-		},
-		{
-			"name": "Eva"
-		},
-		{
-			"name": "Chlebis",
-			"age": 8
-		}
-	]
-}}</script>
-	</section>
-
-	<p>Note that if your expression is inside a list item, any properties inside that item will refer to their current values,
-	whereas if your expression is outside the collection, you will get all values.</p>
-
-	<hr />
-
-	<p>You can also do math or comparisons with lists. For example, <code>[sum(age + 5)]</code> will add 5 to every age and then sum the result.
-		You can use either symbols (e.g. <code>+</code>, <code>*</code>, <code>></code>, <code>==</code>) etc to perform these operations, or <a href="mavoscript/#math-functions">their function counterparts</a>:
-	</p>
-
-	<hr />
-
-	<p>You can use the <code>iff(condition, ifyes, ifno)</code> function to print out different text depending on a condition.</p>
-
-	<section class="example movie">
-		<script type="text/plain">
-			<style>
-				.movie .bad { background: #fee; }
-				.movie .ok { background: #ffe; }
-				.movie .good { background: #efd; }
-			</style>
-
-			<div mv-storage class="[iff(rating < 3, bad, iff(rating > 3, good, ok))]">
-				<label>Rating:
-					<input property="rating" type="range" min="1" max="5" />
-				</label>
-
-				<p style="display: [iff(rating == 1, block,  none)]">Wow, you hated that movie!</p>
-				<p style="display: [iff(rating > 3, block,  none)]">Glad you liked it!</p>
-			</div>
-		</script>
-	</section>
-
 	<p class="note">If what you’re printing contains characters other than letters, numbers and underscores,
 		you will need to use quotes around it, just like in CSS <code>font-family</code> or HTML attributes.</p>
+
+	<hr />
+
+	<p>Expressions become very powerful when combined with lists. Try adding and removing items in the list below:</p>
+
+	<section class="example">
+		<h1>Example: Simple list</h1>
+		<script type="text/plain">
+			[count(hobby)] hobbies:
+			<ul>
+				<li property="hobby" mv-multiple>Eating</li>
+			</ul>
+		</script>
+	</section>
+
+	<p>Learn More: <a href="/docs/expressions">Expressions</a>, <a href="/docs/mavoscript">MavoScript</a></p>
 </section>
 
 <section id="debugging">

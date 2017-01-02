@@ -1,0 +1,163 @@
+@@include('_head-docs.html', {
+	"title": "Expressions"
+})
+<body class="language-markup">
+
+@@include('_header.html')
+
+<h2>Expressions</h2>
+
+<section>
+	<p>
+		Expressions let you present the current value of properties in other elements and perform simple computations.
+	</p>
+</section>
+
+<section>
+	<h1>Using Expressions</h1>
+
+	<p>By default, Mavo expressions are delineated by square brackets, e.g. <code>[5 + 5]</code>.
+		We explored many different syntaxes, and resulted in that as having the best readability.
+		However, if you are concerned about potential false positives, you can change that with the <code>mv-expressions</code> attribute.
+		For example, to switch to a double curly brace syntax (common with many templating systems), you can use <code>mv-expressions="{{ }}"</code>.
+	</p>
+
+	<p>To disable expressions in an element and its descendants altogether, use <code>mv-expressions="none"</code>.</p>
+</section>
+
+<section>
+	<h1>Syntax</h1>
+
+	<p>Mavo expressions are similar to JavaScript, but much simpler. You can read more about the expression language <a href="/docs/mavoscript">here</a>.
+</section>
+
+<section>
+	<h1>Expressions and groups</h1>
+
+	<p>If there are groups and there are properties with the same name inside and outside the group,
+		the value <strong>closest to your expression</strong> will be used, with parent groups having priority over inner groups.</p>
+
+	<section class="example scoped-expressions">
+		<h1>Example: Grouping & Expressions</h1>
+		<script type="text/plain">
+			<p>Hi, I’m [firstname] [lastname]</p> <!-- From inner group --
+
+			<div property="person">
+				<span property="firstname">Lea</span>
+				<span property="lastname">Verou</span>
+				<p>Hi, I’m [firstname] [lastname]</p>
+
+				<div property="mother">
+					<span property="firstname">Maria</span>
+					<!-- Last name from parent group --
+					<p>Hi, I’m [firstname] [lastname]</p>
+
+					<div property="mother">
+						<span property="firstname">Areti</span>
+						<!-- Last name from grandparent group --
+						<p>Hi, I’m [firstname] [lastname]</p>
+					</div>
+				</div>
+			</div>
+		</script>
+	</section>
+</section>
+
+<section>
+	<h1>Expressions and lists</h1>
+
+	<p>Using a property with multiple values (i.e. referring to a property inside a list from outside the list) in an expression is not very useful on its own.
+		However, there are functions that help you use such lists of values in interesting ways, such as <code>count(propery)</code>, <code>sum(property)</code>, <code>average(property)</code> and <a href="mavoscript/#list-functions">more</a>.
+	</p>
+
+	<section class="example">
+		<p>Try adding and removing elements!</p>
+
+		<script type="text/plain">
+		<div property="foo">
+			<h2>My cats</h2>
+			<ul>
+				<li property="cat" mv-multiple>
+					<div property="name">Vector</div>
+					<div property="age">10</div>
+					<!-- Note that expression inside list item refers to the value in the current item -->
+					<p>Age in 2 years: [age + 2]</p>
+				</li>
+			</ul>
+
+			<h2>My cats’ ages</h2>
+			<ul>
+				<li>All cat ages: [age]</li>
+				<li>Number of cats: [count(cat)]</li>
+				<li>Number of cats with age: [count(age)]</li>
+				<li>Average cat age: [average(age)]</li> <!-- avg(age) also works -->
+				<li>Sum of all ages (why? because we can): [SUM(age)]</li> <!-- caps don’t matter -->
+				<li>Number of cats over 5 years old: [count(age > 5)]</li>
+			</ul>
+		</div>
+		</script>
+		<script type="application/json">{"foo": {
+	"cat": [
+		{
+			"name": "Vector",
+			"age": 10
+		},
+		{
+			"name": "Jean"
+		},
+		{
+			"name": "Pixel",
+			"age": 6
+		},
+		{
+			"name": "Adam Catlace",
+			"age": 2.5
+		},
+		{
+			"name": "Eva"
+		},
+		{
+			"name": "Chlebis",
+			"age": 8
+		}
+	]
+}}</script>
+	</section>
+
+	<p>Note that if your expression is inside a list item, any properties inside that item will refer to their current values,
+	whereas if your expression is outside the collection, you will get all values.</p>
+
+	<hr />
+
+	<p>You can also do math or comparisons with lists. For example, <code>[sum(age + 5)]</code> will add 5 to every age and then sum the result.
+		You can use either symbols (e.g. <code>+</code>, <code>*</code>, <code>></code>, <code>==</code>) etc to perform these operations, or <a href="mavoscript/#math-functions">their function counterparts</a>:
+	</p>
+
+	<hr />
+
+	<p>You can use the <code>iff(condition, ifyes, ifno)</code> function to print out different text depending on a condition.</p>
+
+	<section class="example movie">
+		<script type="text/plain">
+			<style>
+				.movie .bad { background: #fee; }
+				.movie .ok { background: #ffe; }
+				.movie .good { background: #efd; }
+			</style>
+
+			<div mv-storage class="[iff(rating < 3, bad, iff(rating > 3, good, ok))]">
+				<label>Rating:
+					<input property="rating" type="range" min="1" max="5" />
+				</label>
+
+				<p style="display: [iff(rating == 1, block,  none)]">Wow, you hated that movie!</p>
+				<p style="display: [iff(rating > 3, block,  none)]">Glad you liked it!</p>
+			</div>
+		</script>
+	</section>
+</section>
+
+@@include('_footer-docs.html')
+
+</body>
+</html>

@@ -27,30 +27,12 @@
 </section>
 
 <section>
-	<h1>Naming your application</h1>
-
-	<p>
-		It’s <strong>strongly recommended</strong> to name your application, for many reasons, such as storage, referring to properties in your Mavo from another Mavo, and many more.
-		If you don't name your application, it will automatically get an id based on its index in the page, such as <code>mavo1</code>, <code>mavo2</code> etc.
-		As you can imagine, this is flimsy: You don't want to lose your data if you just rearrange your Mavos in the page or add more Mavo-enabled pages in the same website!
-		You can name your application via any of the following attributes.
-		If more than one of the following are present, this is also the order they are checked in.
-	</p>
-
-	<ul>
-		<li><code>mv-app</code></li>
-		<li><code>property</code></li>
-		<li><code>itemprop</code></li>
-		<li><code>id</code></li>
-		<li><code>class</code> (Only the first class is used)</li>
-	</ul>
-</section>
-
-<section>
 	<h1>Disabling storage</h1>
 
 	<p>
-		If your application does not need to store any data, you can use <code>mv-storage="none"</code>, or the <code>mv-app</code> attribute with no <code>mv-storage</code> attribute.
+		To disable storage, just don't include an <code>mv-storage</code> attribute, or specify <code>mv-storage="none"</code>.
+		You could also disable storage on a per-property basis, by specifying <code>mv-storage="none"</code> on individual properties.
+		This is useful when you don't need a property's value to be saved, e.g. for properties used for filtering data.
 	</p>
 </section>
 

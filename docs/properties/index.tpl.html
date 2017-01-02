@@ -1,0 +1,82 @@
+@@include('_head-docs.html', {
+	"title": "Properties"
+})
+<body class="language-markup">
+
+@@include('_header.html')
+
+<h2>Storage</h2>
+
+<section>
+	<p>
+		The <code>property</code> attribute tells Mavo which elements are important, e.g. are saved, editable, used in expressions, or all three.
+		Elements with this attribute are often referred to as <em>properties</em> or <em>property elements</em>.
+	</p>
+</section>
+
+<section>
+	<h1>Property name rules</h1>
+
+	<p>Its value should describe the element, similarly to a <code>id</code> or <code>class</code> attribute. It can contain <strong>only</strong> letters, numbers and underscores (_).
+		If it happens to be the same as the element’s <code>id</code> or <code>class</code> attributes,
+		you don’t need to provide a value:</p>
+
+	<script type="text/plain">
+		In all of the following, the property value is "name"
+		<div property class="name">Lea Verou</div>
+		<div property id="name">Lea Verou</div>
+		<div property="name">Lea Verou</div>
+	</script>
+
+	<p>If you need inspiration for names, you could look at <a href="http://schema.org">schema.org</a>.</p>
+</section>
+
+<section>
+	<h1>Editing</h1>
+
+	<p>If the <code>property</code> attribute is used on elements that are not form elements, they are made editable, and Mavo generates a button
+	from switching between modes:</p>
+
+	<section class="example">
+		<script type="text/plain">
+			<span property="firstName">Lea</span> <span property="last_name">Verou</span>
+			<span>- I don’t have a property attribute, so I’m not editable.</span>
+		</script>
+	</section>
+
+	<hr />
+
+	<p>You can put the <code>property</code> attribute on <strong>any</strong> HTML5 element, and mavo knows how to make it editable:</p>
+
+	<section class="example">
+		<script type="text/plain">
+			<meter property="rating" min="1" value="3" max="5"></meter>
+			<time property="birthday" datetime="2014-06-01">1 Jun 2014</time>
+			<img property="avatar" src="http://i.imgur.com/LPeWcag.png" />
+		</script>
+	</section>
+</section>
+
+<section>
+	<h1>The mv-attribute attribute</h1>
+
+	<p>Mavo automatically assumes that the data each property element holds is stored either as its content or in a "primary" attribute, different per element type.
+		Most of the time this works great, and you don't have to think about it. However, sometimes this heuristic will fail.
+		In those cases, you can correct Mavo's prediction by using the <code>mv-attribute</code> attribute.
+		Its value is either the name of the attribute that holds data, or <code>null</code> for no attribute (element contents).</p>
+
+	<p>For example, an <code>&lt;a></code> element's primary data attribute is <code>href</code>.
+		However, sometimes you want to make the content editable instead, and even reference it in the <code>href</code> attribute via an expression.
+		You can use the <code>mv-attribute</code> for that:</p>
+
+	<section class="example">
+		<script type="text/plain">
+			<a href="mailto:[email]" property="email" mv-attribute="null">lea@mavo.io</a>
+		</script>
+	</section>
+</section>
+
+@@include('_footer-docs.html')
+
+</body>
+</html>
