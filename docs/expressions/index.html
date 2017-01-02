@@ -234,9 +234,19 @@
 		You can use either symbols (e.g. <code>+</code>, <code>*</code>, <code>></code>, <code>==</code>) etc to perform these operations, or <a href="mavoscript/#math-functions">their function counterparts</a>.
 	</p>
 
-	<hr />
+</section>
+<section>
+	<h1>Conditionals: if() and the mv-if attribute</h1>
 
-	<p>You can use the <code>if(condition, ifyes, ifno)</code> function to print out different text depending on a condition.</p>
+	<p>You can use the <code>if(condition, ifyes, ifno)</code> function to print out different text depending on a condition.
+	The second parameter is optional: If you omit it, nothing will be printed out if the condition is false.</p>
+
+	<p>
+		The <code>if()</code> function is very powerful, but can be confusing when all you want is to toggle content.
+		For this, you can also use the <code>mv-if</code> attribute to hide or show content based on the value of an expression.
+		Just like <code>mv-value</code>, <code>mv-if</code> does not require braces or other syntax.
+		Besides readability, <code>mv-if</code> has another benefit: elements hidden with it are completely removed from the page, not just hidden.</p>
+	</p>
 
 	<section class="example movie">
 		<script type="text/plain">
@@ -251,8 +261,8 @@
 					<input property="rating" type="range" min="1" max="5" />
 				</label>
 
-				<p style="display: [if(rating == 1, block,  none)]">Wow, you hated that movie!</p>
-				<p style="display: [if(rating > 3, block,  none)]">Glad you liked it!</p>
+				<p mv-if="rating = 1">Wow, you hated that movie!</p>
+				<p mv-if="rating > 3">Glad you liked it!</p>
 			</div>
 		</script>
 	</section>
