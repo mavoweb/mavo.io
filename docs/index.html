@@ -80,17 +80,17 @@
 	<p>The <code>property</code> attribute tells Mavo which elements are saved.
 		Its value should describe the element, similarly to a <code>id</code> or <code>class</code> attribute.
 
-	<section class="example">
+	<section class="example commentform">
 		<script type="text/plain">
-			<div mv-app mv-storage="local">
-				Email: <input type="email" property="email" />
-				Message: <textarea property="message">Write here and notice how the message persists after you refersh!</textarea>
+			<div mv-app="commentform" mv-storage="local">
+				<label>Email: <input type="email" property="email" /></label>
+				<label>Message: <textarea property="message">Write here and notice how the message persists after you refresh!</textarea></label>
 			</div>
 		</script>
 	</section>
 
 	<p>If the <code>property</code> attribute is used on elements that are not form elements, they are made editable, and Mavo generates a button
-	from switching between modes:</p>
+	for switching between modes, saving and reverting:</p>
 
 	<section class="example">
 		<script type="text/plain">

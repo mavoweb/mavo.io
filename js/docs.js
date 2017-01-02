@@ -23,10 +23,10 @@ $$(".example").forEach((example, i) => {
 
 	data.id = data.id || "data-" + example.id;
 
-	var mavoRoot = $("[mv-storage]", container) || container;
+	var mavoRoot = $("[mv-app], [mv-storage]", container) || container;
 
 	mavoRoot.classList.add("debug-saving");
-	mavoRoot.setAttribute("mv-storage", "#" + data.id);
+	mavoRoot.setAttribute("mv-storage", mavoRoot.getAttribute("mv-storage") || "#" + data.id);
 });
 
 // ???

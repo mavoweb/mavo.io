@@ -5,6 +5,8 @@ body > header + h2 {
 }
 
 .example {
+	margin-bottom: 1em;
+	
 	& > h1 {
 		color: $green;
 	}
@@ -53,6 +55,29 @@ body > header + h2 {
 
 		div[class] {
 			padding: 2em;
+		}
+	}
+
+	&.commentform {
+		label {
+			display: block;
+		}
+
+		label:first-of-type {
+			display: flex;
+			margin-bottom: 1em;
+
+			input {
+				flex: 1;
+			}
+		}
+
+		textarea {
+			display: block;
+			box-sizing: border-box;
+			width: 100%;
+			padding: .3em;
+			font: inherit;
 		}
 	}
 
