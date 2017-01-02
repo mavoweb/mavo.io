@@ -94,13 +94,14 @@ pre {
     background: transparent; }
 
 :not(pre) > code {
-  padding: .2em .4em;
-  border-radius: .25em; }
+  background: transparent;
+  font-weight: bold;
+  color: #505662; }
 
 body > section > hr {
   height: .5em;
   width: 5em;
-  margin: 1.5em 0 1em;
+  margin: 1.5rem 0 1rem;
   background: #ff0080;
   border: none; }
 
@@ -125,7 +126,7 @@ body > footer {
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 1em; }
+  padding: 1rem; }
 
 body > header {
   position: relative;

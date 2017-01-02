@@ -127,6 +127,26 @@ body > header + h2 {
     font-size: 120%;
     font-weight: bold; }
 
+body > section:first-of-type:not([id]) {
+  font-size: 200%; }
+  body > section:first-of-type:not([id]) p:first-child {
+    margin-top: 0; }
+  body > section:first-of-type:not([id]) p:last-child {
+    margin-bottom: 0; }
+  body > section:first-of-type:not([id]) p::before {
+    content: "In a nutshell";
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding: .25em .5em .2em;
+    margin-left: -.3em;
+    margin-right: .3em;
+    border-radius: .3em;
+    background: #abb0ba;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 55%; }
+
 body > section table {
   table-layout: fixed;
   border-spacing: 0;
@@ -136,8 +156,6 @@ body > section table {
   body > section table td {
     padding: .1em .5em;
     border: 1px solid rgba(0, 0, 0, 0.1); }
-  body > section table td:first-child code {
-    background: transparent; }
 
 .note, .tip {
   border-left: 0.5em solid #66c7f7;

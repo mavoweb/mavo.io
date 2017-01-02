@@ -76,14 +76,15 @@ pre, code {
 	}
 
 	:not(pre) > code {
-		padding: .2em .4em;
-		border-radius: .25em;
+		background: transparent;
+		font-weight: bold;
+		color: hsl(220,10%,35%);
 	}
 
 body > section > hr {
 	height: .5em;
 	width: 5em;
-	margin: 1.5em 0 1em;
+	margin: 1.5rem 0 1rem;
 	background: $magenta;
 	border: none;
 }
@@ -102,7 +103,7 @@ body > footer {
 	flex-flow: column;
 	align-items: center;
 	justify-content: center;
-	padding: 1em;
+	padding: 1rem;
 }
 
 body > header {

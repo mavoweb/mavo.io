@@ -10,9 +10,64 @@
 <section>
 	<p>
 		<em>MavoScript</em> is Mavo's simple expression language, used in Mavo expressions.
-		It's based on a subset of JavaScript, with a few simplifications to make it easy to use even by people with no JavaScript knowledge.
+	</p>
+</section>
+
+<section>
+	<h1>MavoScript vs JavaScript</h1>
+
+	<p>
+		MavoScript is based on a subset of JavaScript, with a few simplifications to make it easy to use even by people with no JavaScript knowledge.
 		If a Mavo expression is more advanced than MavoScript, it is automatically parsed as JavaScript, allowing experienced HTML authors to do more with Mavo expressions.
 	</p>
+
+	<p>For those who know JavaScript, these are a few key differences:</p>
+
+	<table>
+		<thead>
+			<tr>
+				<th>JavaScript</th>
+				<th>MavoScript</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Math and logical operations with arrays produce nonsensical results</td>
+				<td>Array math & logical operations works element-wise. Operations between an array and a scalar are performed on every array element.
+				This is why things like <code>count(rating > 3)</code> work in MavoScript, but wouldn't in JS.</td>
+			</tr>
+			<tr>
+				<td>All strings have to be quoted</td>
+				<td>Strings that only consist of letters, numbers, and underscores don't need quotes.</td>
+			</tr>
+			<tr>
+				<td><code>==</code> operator for equality</td>
+				<td><code>=</code> operator for equality</td>
+			</tr>
+			<tr>
+				<td><code>&&</code> operator for logical and</td>
+				<td><code>and</code> operator for logical and</td>
+			</tr>
+			<tr>
+				<td><code>&&</code> operator for logical or</td>
+				<td><code>or</code> operator for logical or</td>
+			</tr>
+			<tr>
+				<td><code>if</code> is a control structure</td>
+				<td><code>if()</code> is a function</td>
+			</tr>
+			<tr>
+				<td><code>a + b</code> might be addition or concatenation depending on types</td>
+				<td><code>a + b</code> is always addition, <code>a & b</code> is concatenation</td>
+			</tr>
+			<tr>
+				<td>Things like <code>3 > 2 > 1</code> return unexpected results (<code>false in this case</code>)</td>
+				<td>Every operator can have multiple operands, including <code>></code>, so <code>3 > 2 > 1</code> has the same result as in math (<code>true</code>)</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p class="tip">Since MavoScript does not support comments, an easy way to force JS mode is a <code>/* js */</code> comment in the start or end of the expression.</p>
 </section>
 
 <section id="list-functions">
