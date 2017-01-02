@@ -18,11 +18,11 @@
 	<h1>Property name rules</h1>
 
 	<p>Its value should describe the element, similarly to a <code>id</code> or <code>class</code> attribute. It can contain <strong>only</strong> letters, numbers and underscores (_).
-		If it happens to be the same as the element’s <code>id</code> or <code>class</code> attributes,
-		you don’t need to provide a value:</p>
+		If it happens to be the same as the element’s <code>id</code> or <code>class</code> attributes, you don’t need to provide a value.
+		For example, the following are all equivalent:
+	</p>
 
 	<script type="text/plain">
-		In all of the following, the property value is "name"
 		<div property class="name">Lea Verou</div>
 		<div property id="name">Lea Verou</div>
 		<div property="name">Lea Verou</div>
@@ -35,7 +35,7 @@
 	<h1>Editing</h1>
 
 	<p>If the <code>property</code> attribute is used on elements that are not form elements, they are made editable, and Mavo generates a button
-	from switching between modes:</p>
+	for switching between modes:</p>
 
 	<section class="example">
 		<script type="text/plain">
@@ -55,6 +55,8 @@
 			<img property="avatar" src="http://i.imgur.com/LPeWcag.png" />
 		</script>
 	</section>
+
+	<p>Mavo can also be taught about new element types with different ways to be edited (e.g. rich text), via <a href="/plugins">plugins</a>.</p>
 </section>
 
 <section>

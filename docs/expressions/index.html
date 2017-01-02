@@ -32,8 +32,31 @@
 	<p>By default, Mavo expressions are delineated by square brackets, e.g. <code>[5 + 5]</code>.
 		We explored many different syntaxes, and resulted in that as having the best readability.
 		However, if you are concerned about potential false positives, you can change that with the <code>mv-expressions</code> attribute.
-		For example, to switch to a double curly brace syntax (common with many templating systems), you can use <code>mv-expressions="{{ }}"</code>.
+		For example, to switch to a double curly brace syntax (common in many other systems), you can use <code>mv-expressions="{{ }}"</code>.
 	</p>
+
+	<p>If you are concerned about the expression content being shown while the page loads, you can use the <code>mv-value</code> attribute instead, and provide a fallback as content.</p>
+
+	<section class="example">
+		<h1>Example: Using mv-value</h1>
+		<script type="text/plain">
+			<p>Slider value: <span mv-value="strength">0</span>/100</p>
+			<input type="range" property="strength" />
+		</script>
+	</section>
+
+	<p class="note"><code>mv-value</code> does not require braces or whatever other syntax you have defined, and including them could result in unpredictable behavior.</p>
+
+	<p>If your expression contains a mistake, the expression itself will be shown instead of a result.
+		If you’re using <code>mv-value</code> however, its fallback content will be shown instead.</p>
+
+	<section class="example">
+		<h1>Example: Incorrect expressions</h1>
+		<script type="text/plain">
+			[5 +]
+			<div mv-value="5 +">Fallback</div>
+		</script>
+	</section>
 
 	<p>To disable expressions in an element and its descendants altogether, use <code>mv-expressions="none"</code>.</p>
 </section>
@@ -42,6 +65,71 @@
 	<h1>Syntax</h1>
 
 	<p>Mavo expressions are similar to JavaScript, but much simpler. You can read more about the expression language <a href="/docs/mavoscript">here</a>.
+	Do not worry if you are more experienced: Mavo expressions can also be made to contain arbitrary JavaScript!</p>
+</section>
+
+<section>
+	<h1>Basics</h1>
+
+	<p>You can dynamically refer to the value of any property you have defined, anywhere, by putting its name inside brackets (like this: <code>[propertyName]</code>).</p>
+
+	<section class="example">
+		<p>Move the slider and check how both expressions are updated:</p>
+		<script type="text/plain">
+			<p>Slider value: [strength]/100</p>
+			<input type="range" property="strength" title="[strength]%" />
+		</script>
+	</section>
+
+	<p>We can also do math with properties, e.g. divide by 100:</p>
+
+	<section class="example">
+		<p>Move the slider and check how both expressions are updated:</p>
+		<script type="text/plain">
+			<p>Slider value: [strength/100]</p>
+			<input type="range" property="strength" title="[strength]%" />
+		</script>
+	</section>
+
+	<p>If you set a <code>property</code> attribute on an element containing an expression, you can use that property in other expressions too, regardless of whether they come before or after the element.</p>
+
+	<section class="example color-picker">
+		<p>Making a bare-bones HSL color picker with Mavo expressions:</p>
+		<script type="text/plain">
+			<div style="background-color: [color];">
+				<input type="range" property="hue" max="360" />
+				<input type="range" property="saturation" />
+				<input type="range" property="lightness" />
+
+				<input property="color" value="hsl([hue], [saturation]%, [lightness]%)" readonly />
+			</div>
+		</script>
+	</section>
+
+	<p class="tip">If you’re just using an element to hold an intermediate result so you can refer to it, we recommend using
+		<code>&lt;meta property="propertyName" content="[expression]" /></code> which is hidden, both semantically and visually.
+	</p>
+
+	<p class="note">Properties whose values are expressions are called <em>“computed properties”</em> and are <strong>not saved</strong>.</p>
+
+</section>
+
+<section id="functions">
+	<h1>Expression functions</h1>
+
+	<p>References and simple arithmetic are useful, but not always enough.
+		For this purpose, Mavo defines a number of <a href="/docs/mavoscript/#math-functions">common math functions</a> you can use inside expressions, such as:
+		<code>pow(base, exponent)</code>, <code>round(number, decimals)</code>, <code>sqrt(number)</code> and <a href="/docs/mavoscript/#math-functions">many more</a>.</p>
+
+	<section class="example pow">
+		<script type="text/plain">
+			<input property="base" type="number" value="2" />
+			<input property="exponent" type="number" value="3" /> = [pow(base, exponent)]
+		</script>
+	</section>
+
+	<p class="note">If what you’re printing contains characters other than letters, numbers and underscores,
+		you will need to use quotes around it, just like in CSS <code>font-family</code> or HTML attributes.</p>
 </section>
 
 <section>
@@ -53,7 +141,7 @@
 	<section class="example scoped-expressions">
 		<h1>Example: Grouping & Expressions</h1>
 		<script type="text/plain">
-			<p>Hi, I’m [firstname] [lastname]</p> <!-- From inner group --
+			<p>Hi, I’m [firstname] [lastname]</p> <!-- From inner group -->
 
 			<div property="person">
 				<span property="firstname">Lea</span>
@@ -62,12 +150,12 @@
 
 				<div property="mother">
 					<span property="firstname">Maria</span>
-					<!-- Last name from parent group --
+					<!-- Last name from parent group -->
 					<p>Hi, I’m [firstname] [lastname]</p>
 
 					<div property="mother">
 						<span property="firstname">Areti</span>
-						<!-- Last name from grandparent group --
+						<!-- Last name from grandparent group -->
 						<p>Hi, I’m [firstname] [lastname]</p>
 					</div>
 				</div>
@@ -143,12 +231,12 @@
 	<hr />
 
 	<p>You can also do math or comparisons with lists. For example, <code>[sum(age + 5)]</code> will add 5 to every age and then sum the result.
-		You can use either symbols (e.g. <code>+</code>, <code>*</code>, <code>></code>, <code>==</code>) etc to perform these operations, or <a href="mavoscript/#math-functions">their function counterparts</a>:
+		You can use either symbols (e.g. <code>+</code>, <code>*</code>, <code>></code>, <code>==</code>) etc to perform these operations, or <a href="mavoscript/#math-functions">their function counterparts</a>.
 	</p>
 
 	<hr />
 
-	<p>You can use the <code>iff(condition, ifyes, ifno)</code> function to print out different text depending on a condition.</p>
+	<p>You can use the <code>if(condition, ifyes, ifno)</code> function to print out different text depending on a condition.</p>
 
 	<section class="example movie">
 		<script type="text/plain">
@@ -158,13 +246,13 @@
 				.movie .good { background: #efd; }
 			</style>
 
-			<div mv-storage class="[iff(rating < 3, bad, iff(rating > 3, good, ok))]">
+			<div mv-storage class="[if(rating < 3, bad, if(rating > 3, good, ok))]">
 				<label>Rating:
 					<input property="rating" type="range" min="1" max="5" />
 				</label>
 
-				<p style="display: [iff(rating == 1, block,  none)]">Wow, you hated that movie!</p>
-				<p style="display: [iff(rating > 3, block,  none)]">Glad you liked it!</p>
+				<p style="display: [if(rating == 1, block,  none)]">Wow, you hated that movie!</p>
+				<p style="display: [if(rating > 3, block,  none)]">Glad you liked it!</p>
 			</div>
 		</script>
 	</section>

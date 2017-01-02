@@ -57,7 +57,7 @@
 </section>
 
 <section id="mv-storage">
-	<h1>Storage</h1>
+	<h1>Storage: The mv-storage attribute</h1>
 
 	<p>The <code>mv-storage</code> attribute tells Mavo where to store any data.
 		Its value is a valid URL or a keyword, like <code>local</code>.
@@ -71,7 +71,7 @@
 
 	<p>What will be stored? Elements with a <code>property</code> attribute! We will learn about these in the next section.</p>
 
-	<p>Learn more: <a href="/docs/storage">Different types of Mavo Storage</a></p>
+	<p class="learn-more">Learn more: <a href="/docs/storage">Different types of Mavo Storage</a></p>
 </section>
 
 <section id="property">
@@ -89,7 +89,7 @@
 		</script>
 	</section>
 
-	<p>If the <code>property</code> attribute is used on elements that are not form elements, they are made editable, and Mavo generates a button
+	<p>If the <code>property</code> attribute is used on elements that are not form elements, they are made editable, and Mavo generates (customizable) controls
 	for switching between modes, saving and reverting:</p>
 
 	<section class="example">
@@ -99,7 +99,7 @@
 		</script>
 	</section>
 
-	<p>Learn More: <a href="/docs/properties">Properties</a></p>
+	<p class="learn-more">Learn More: <a href="/docs/properties">Properties</a></p>
 </section>
 
 <section id="mv-multiple">
@@ -178,7 +178,7 @@
 		</script>
 	</section>
 
-	<p>If you set a <code>property</code> attribute on an element with an expression, then you can use that property in other attributes too.</p>
+	<p>If you set a <code>property</code> attribute on an element containing an expression, you can use that property in other expressions too, regardless of whether they come before or after the element.</p>
 
 	<section class="example color-picker">
 		<p>Making a bare-bones HSL color picker with Mavo expressions:</p>
@@ -193,30 +193,7 @@
 		</script>
 	</section>
 
-	<p class="tip">If you’re just using an element to hold an intermediate result so you can refer to it, we recommend using
-		<code>&lt;meta property="propertyName" content="[expression]" /></code> which is hidden, both semantically and visually.
-	</p>
-
-	<p class="note">Properties whose values are expressions are called <em>“computed properties”</em> and are <strong>not saved</strong>.</p>
-
-</section>
-
-<section id="functions">
-	<h1>Expression functions</h1>
-
-	<p>References and simple arithmetic are useful, but not always enough.
-		For this purpose, Mavo defines a number of <a href="/docs/mavoscript/#math-functions">common math functions</a> you can use inside expressions, such as:
-		<code>pow(base, exponent)</code>, <code>round(number, decimals)</code>, <code>sqrt(number)</code> and many more.</p>
-
-	<section class="example pow">
-		<script type="text/plain">
-			<input property="base" type="number" value="2" />
-			<input property="exponent" type="number" value="3" /> = [pow(base, exponent)]
-		</script>
-	</section>
-
-	<p class="note">If what you’re printing contains characters other than letters, numbers and underscores,
-		you will need to use quotes around it, just like in CSS <code>font-family</code> or HTML attributes.</p>
+	<p>There is also <a href="/docs/mavoscript/#math-functions">a number of math functions</a> you can use, for more complicated tasks, akin to spreadsheets.</p>
 
 	<hr />
 
@@ -232,7 +209,7 @@
 		</script>
 	</section>
 
-	<p>Learn More: <a href="/docs/expressions">Expressions</a>, <a href="/docs/mavoscript">MavoScript</a></p>
+	<p class="learn-more">Learn More: <a href="/docs/expressions">Expressions</a>, <a href="/docs/mavoscript">MavoScript</a></p>
 </section>
 
 <section id="debugging">
@@ -261,10 +238,18 @@
 	</section>
 </section>
 
-<section id="summary">
-	<h1><a href="attributes">Attribute index</a></h1>
+<section id="learn-more">
+	<h1>Learn More</h1>
 
-	For a complete list of all attributes and classes you can use to build a Mavo app and links to their relevant documentation, check out the <a href="attributes">Attribute Index</a>.
+	<p>Intrigued? This is just the tip of the iceberg. You can dive deeper by reading more about each Mavo aspect below:</p>
+
+	<ul>
+		<li><a href="/docs/properties">Properties</a></li>
+		<li><a href="/docs/storage">Storage</a></li>
+		<li><a href="/docs/expressions">Expressions</a></li>
+		<li><a href="/docs/mavoscriot">MavoScript</a></li>
+		<li><a href="/docs/attributes">Attribute Index</a></li>
+	</ul>
 </section>
 
 <footer>
