@@ -12,6 +12,12 @@ section[mv-app="demos"] {
 			max-width: 20rem;
 			margin: 1rem auto;
 
+			h1 {
+				margin: .3em 0;
+				font-family: $heading-font;
+				font-size: 150%;
+			}
+
 			video {
 				display: block;
 				max-width: 100%;

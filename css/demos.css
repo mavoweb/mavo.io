@@ -38,6 +38,10 @@ section[mv-app="demos"] > div {
     vertical-align: top;
     max-width: 20rem;
     margin: 1rem auto; }
+    section[mv-app="demos"] > div article h1 {
+      margin: .3em 0;
+      font-family: Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
+      font-size: 150%; }
     section[mv-app="demos"] > div article video {
       display: block;
       max-width: 100%;
