@@ -157,18 +157,6 @@ body > section table {
     padding: .1em .5em;
     border: 1px solid rgba(0, 0, 0, 0.1); }
 
-.note, .tip {
-  border-left: 0.5em solid #66c7f7;
-  padding-left: .5em;
-  margin-left: -1em; }
-  .note::before, .tip::before {
-    content: "Note: ";
-    font-weight: bold;
-    color: #25aff4; }
-
-.tip::before {
-  content: "Tip: "; }
-
 .unimplemented {
   text-decoration: line-through;
   -webkit-text-decoration-style: dashed;

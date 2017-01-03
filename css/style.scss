@@ -211,3 +211,22 @@ body > footer {
 		}
 	}
 }
+
+
+.note, .tip {
+	border-left: .5em solid mix(white, $blue, 30%);
+	padding-left: .5em;
+	margin-left: -1em;
+
+	&::before {
+		content: "Note: ";
+		font-weight: bold;
+		color: $blue;
+	}
+}
+
+.tip {
+	&::before {
+		content: "Tip: ";
+	}
+}

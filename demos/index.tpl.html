@@ -4,8 +4,18 @@
 @@include('_header.html')
 <h2>Demos</h2>
 
-<section>
-	<ul>
+<section mv-app="demos" mv-init="demos.json">
+	<div>
+		<article property="demo" mv-multiple>
+			<a href="/demos/[id]">
+				<video src="/videos/[id].mp4" preload="metadata" loop tabindex="0"></video>
+				<h1 property="name"></h1>
+			</a>
+			<meta property="id">
+		</article>
+	</div>
+
+	<!-- <ul>
 		<li><a href="todo">To-do list</a> [<a href="todo/?store=local">Local</a>] [<a href="todo/?store=https://www.dropbox.com/s/u5a60mtsqfwcxwk/todo.json?dl=0">Dropbox</a>]</li>
 		<li><a href="mortgage">Mortgage calculator</a></li>
 		<li><a href="color-picker">Colour picker</a></li>
@@ -17,9 +27,9 @@
 		<li><a href="contacts">Contact manager</a></li>
 		<li><a href="invoice">Invoicing system</a></li>
 		<li><a href="svgpath">SVG Path editor</a></li>
-	</ul>
+	</ul> -->
 
-	<p><strong>Tip:</strong> Add <code>?debug</code> to the URL to view in debug mode!</p>
+	<p class="tip">Add <code>?debug</code> to the URL to view in debug mode!</p>
 </section>
 
 <section>
@@ -28,7 +38,22 @@
 		<li><a href="http://lea.verou.me/speaking/">Speaking | Lea Verou</a></li>
 		<li><a href="http://svgees.us/talks.html">Chris Lilley: Talks</a></li>
 	</ul>
+	<p>Made a cool Mavo app? We'd love to see it and feature it here, please <a href="http://github.com/leaverou/mavo/issues">get in touch</a>!</p>
 </section>
+
+<script src="/mavo/mavo.js"></script>
+<script>
+$.events(document.body, "mouseenter mouseleave focus blur", function(evt) {
+	if (evt.target.matches && evt.target.matches("article")) {
+		var video = $("video", evt.target);
+
+		if (video && !video.error) {
+			var play = evt.type === "mouseenter" || evt.type === "focus";
+			video[play? "play" : "pause"]();
+		}
+	}
+}, true);
+</script>
 
 @@include('_footer.html')
 

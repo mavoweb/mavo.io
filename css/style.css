@@ -222,4 +222,16 @@ body > footer {
     body > footer a.logo img {
       height: 100%; }
 
+.note, .tip {
+  border-left: 0.5em solid #66c7f7;
+  padding-left: .5em;
+  margin-left: -1em; }
+  .note::before, .tip::before {
+    content: "Note: ";
+    font-weight: bold;
+    color: #25aff4; }
+
+.tip::before {
+  content: "Tip: "; }
+
 /*# sourceMappingURL=style.css.map */

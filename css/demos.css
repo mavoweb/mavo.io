@@ -1,0 +1,47 @@
+@charset "UTF-8";
+@font-face {
+  font-family: 'Libre Bodoni';
+  src: url("fonts/LibreBodoniBold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Libre Bodoni';
+  src: url("/assets/fonts/libre-bodoni/0f49c646c8f12a9dbd4730215d10a2a8/629d903227943776cbe3783d8cc1e84b/LibreBodoniBoldItalic.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic; }
+
+@font-face {
+  font-family: 'Libre Bodoni';
+  src: url("/assets/fonts/libre-bodoni/0f49c646c8f12a9dbd4730215d10a2a8/bb68fe30ffd78ce5863852f076341165/LibreBodoniItalic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic; }
+
+@font-face {
+  font-family: 'Libre Bodoni';
+  src: url("fonts/LibreBodoniRegular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+
+section[mv-app="demos"] > div {
+  width: 65rem;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between; }
+  section[mv-app="demos"] > div article {
+    vertical-align: top;
+    max-width: 20rem;
+    margin: 1rem auto; }
+    section[mv-app="demos"] > div article video {
+      display: block;
+      max-width: 100%;
+      height: 12.5rem;
+      background: #e3e5e8 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 160 100" opacity=".5">\a 			<text x="50" y="60" font-size="350%">📽</text>\a 			<text x="20" y="80" font-size="75%" font-weight="bold" font-family="sans-serif">Preview coming soon</text>\a 		</svg>') center no-repeat; }
+
+/*# sourceMappingURL=demos.css.map */
