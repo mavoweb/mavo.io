@@ -3712,6 +3712,7 @@ var _ = Mavo.Expression = $.Class({
 			this.value = this.function(data);
 		}
 		catch (exception) {
+			console.log(exception);
 			Mavo.hooks.run("expression-eval-error", {context: this, exception});
 
 			this.value = exception;
@@ -3769,7 +3770,7 @@ var _ = Mavo.Expression = $.Class({
 			"UnaryExpression": node => `${node.operator}${_.serialize(node.argument)}`,
 			"CallExpression": node => `${_.serialize(node.callee)}(${node.arguments.map(_.serialize).join(", ")})`,
 			"ConditionalExpression": node => `${_.serialize(node.test)}? ${_.serialize(node.consequent)} : ${_.serialize(node.alternate)}`,
-			"MemberExpression": node => `${_.serialize(node.object)}["${node.property.name || node.property.value}"]`,
+			"MemberExpression": node => `get(${_.serialize(node.object)}, "${node.property.name || node.property.value}")`,
 			"ArrayExpression": node => `[${node.elements.map(_.serialize).join(", ")}]`,
 			"Literal": node => node.raw,
 			"Identifier": node => node.name,
@@ -4292,6 +4293,14 @@ if (self.Proxy) {
 						return data[property] = this.closestCollection? this.closestCollection.getData(env.options) : [env.data];
 					}
 
+					if (property == "$next" || property == "$previous") {
+						if (this.closestCollection) {
+							return data[property] = this.closestCollection.getData(env.options)[this.index + (property == "$next"? 1 : -1)];
+						}
+
+						return data[property] = null;
+					}
+
 					if (property == this.mavo.id) {
 						return data[property] = this.mavo.root.getData(env.options);
 					}
@@ -4524,6 +4533,13 @@ var _ = Mavo.Functions = {
 		}
 
 		return null;
+	},
+
+	/**
+	 * Get a property of an object. Used by the . operator to prevent TypeErrors
+	 */
+	get: function(obj, property) {
+		return obj && obj[property] !== undefined? obj[property] : null;
 	},
 
 	/*********************
