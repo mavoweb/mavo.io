@@ -212,6 +212,16 @@ body > footer {
 	}
 }
 
+.notice {
+	padding: .5em 1em;
+	border-radius: .3em;
+	background: mix(white, $blue, 80%);
+	width: auto;
+
+	a {
+		font-weight: bold;
+	}
+}
 
 .note, .tip {
 	border-left: .5em solid mix(white, $blue, 30%);

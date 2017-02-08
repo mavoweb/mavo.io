@@ -222,6 +222,14 @@ body > footer {
     body > footer a.logo img {
       height: 100%; }
 
+.notice {
+  padding: .5em 1em;
+  border-radius: .3em;
+  background: #d3effd;
+  width: auto; }
+  .notice a {
+    font-weight: bold; }
+
 .note, .tip {
   border-left: 0.5em solid #66c7f7;
   padding-left: .5em;

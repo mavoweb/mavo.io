@@ -4,30 +4,21 @@
 @@include('_header.html')
 <h2>Demos</h2>
 
-<section mv-app="demos" mv-init="demos.json">
+<section mv-app="demos" mv-storage="https://github.com/LeaVerou/leaverou.github.io/demos.json">
+	<meta property="tagFilter" content="[urlOption('tag')]">
+	<p class="notice" mv-if="tagFilter">
+		Some demos are hidden. <a href="?">Show All.</a>
+	</p>
 	<div>
-		<article property="demo" mv-multiple>
+		<article property="demo" mv-multiple mv-if="!tagFilter or count(tag = tagFilter) > 0">
 			<a href="/demos/[id]">
 				<video src="/videos/[id].mp4" preload="metadata" loop tabindex="0"></video>
 				<h1 property="name"></h1>
 			</a>
+			<a href="?tag=[tag]" property="tag" mv-attribute="null" mv-multiple></a>
 			<meta property="id">
 		</article>
 	</div>
-
-	<!-- <ul>
-		<li><a href="todo">To-do list</a> [<a href="todo/?store=local">Local</a>] [<a href="todo/?store=https://www.dropbox.com/s/u5a60mtsqfwcxwk/todo.json?dl=0">Dropbox</a>]</li>
-		<li><a href="mortgage">Mortgage calculator</a></li>
-		<li><a href="color-picker">Colour picker</a></li>
-		<li><a href="decisions">Decisions (pro & con lists)</a></li>
-		<li><a href="foodie">Foodie log</a></li>
-		<li><a href="cheques">Personal chequebook</a></li>
-		<li><a href="logo">Interactive logo (Chrome only)</a></li>
-		<li><a href="talks">Talks list</a></li>
-		<li><a href="contacts">Contact manager</a></li>
-		<li><a href="invoice">Invoicing system</a></li>
-		<li><a href="svgpath">SVG Path editor</a></li>
-	</ul> -->
 
 	<p class="tip">Add <code>?debug</code> to the URL to view in debug mode!</p>
 </section>

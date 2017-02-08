@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="style.css">
 
 </head>
-<body mv-app="svgpath" mv-storage="local" class="mv-autoedit">
+<body mv-app="svgpath" mv-storage="local">
 
 <h1>SVG &lt;path> helper</h1>
 <div class="mv-bar"></div>
@@ -24,7 +24,7 @@
 		Path segments
 		<details>
 			<summary>path code</summary>
-			<textarea property="path">[join(segment, ' ')]</textarea>
+			<textarea property="path">[join(pathsummary, ' ')]</textarea>
 		</details>
 	</h1>
 
@@ -93,7 +93,7 @@
 			</label>
 		</div>
 
-		<meta property="summary" content="[if(absolute, uppercase(type), type)] [arcFlags] [x] [y]">
+		<meta property="pathsummary" content="[if(absolute, uppercase(type), type)] [arcFlags] [x] [y]">
 	</article>
 
 </section>
