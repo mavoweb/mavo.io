@@ -3,21 +3,23 @@
 <head>
 
 <meta charset="UTF-8">
-<title>SVG &lt;path> helper</title>
+<title>SVG &lt;path> builder</title>
 <link rel="stylesheet" href="../../mavo/mavo.css">
 <link rel="stylesheet" href="style.css">
 
 </head>
 <body mv-app="svgpath" mv-storage="local">
 
-<h1>SVG &lt;path> helper</h1>
-<div class="mv-bar"></div>
+<header>
+	<h1>SVG &lt;path> builder</h1>
 
-<section>
-	Coordinate system:
-	<input type="number" property="width" value="100" /> &times;
-	<input type="number" property="height" value="100" />
-</section>
+	<section>
+		Coordinate system:
+		<input type="number" property="width" value="100" /> &times;
+		<input type="number" property="height" value="100" />
+	</section>
+</header>
+
 <main>
 <section class="editor">
 	<h1>
@@ -27,74 +29,75 @@
 			<textarea property="path">[join(pathsummary, ' ')]</textarea>
 		</details>
 	</h1>
+	<div>
+		<article property="segment" data-segtype="[type]" class="[if(absolute, 'absolute')]" mv-multiple mv-mode="edit">
+			<h1>
+				<select property="type">
+					<option value="m">Move</option>
+					<option value="l">Line</option>
+					<option value="h">Horizontal Line</option>
+					<option value="v">Vertical Line</option>
+					<option value="a">Arc</option>
+					<option value="s">Smooth Bézier curve</option>
+					<option value="c">Bézier curve</option>
+					<option value="t">Smooth Quadratic Bézier</option>
+					<option value="q">Quadratic Bézier</option>
+					<option value="z">Close path</option>
+				</select>
 
-	<article property="segment" data-segtype="[type]" class="[if(absolute, 'absolute')]" mv-multiple mv-mode="edit">
-		<h1>
-			<select property="type">
-				<option value="m">Move</option>
-				<option value="l">Line</option>
-				<option value="h">Horizontal Line</option>
-				<option value="v">Vertical Line</option>
-				<option value="a">Arc</option>
-				<option value="s">Smooth Bézier curve</option>
-				<option value="c">Bézier curve</option>
-				<option value="t">Smooth Quadratic Bézier</option>
-				<option value="q">Quadratic Bézier</option>
-				<option value="z">Close path</option>
-			</select>
+				<label mv-if="type != v and type != z">
+					X <input type="number" property="x" value="0" />
+				</label>
 
-			<label mv-if="type != v and type != z">
-				X <input type="number" property="x" value="0" />
-			</label>
+				<label mv-if="type != h and type != z">
+					Y <input type="number" property="y" value="0" />
+				</label>
 
-			<label mv-if="type != h and type != z">
-				Y <input type="number" property="y" value="0" />
-			</label>
+				<label>
+					<input type="checkbox" property="absolute">
+					Absolute
+				</label>
 
-			<label>
-				<input type="checkbox" property="absolute">
-				Absolute
-			</label>
+				<div class="mv-item-controls"></div>
+			</h1>
 
-			<div class="mv-item-controls"></div>
-		</h1>
+			<div mv-if="type = a">
+				<label>
+					rx: <input type="number" property="rx" value="0" />
+				</label>
+				<label>
+					ry: <input type="number" property="ry" mv-default="[rx]" />
+				</label>
+				<label>
+					X Axis rotation: <input type="number" property="axisRotation" value="0" />
+				</label>
+				<label>
+					<input type="checkbox" property="largeArc">
+					Large Arc?
+				</label>
+				<label>
+					<input type="checkbox" property="sweep">
+					Sweep?
+				</label>
+				<meta property="arcFlags" content="[rx] [ry] [axisRotation] [largeArc + 0] [sweep + 0]">
+			</div>
 
-		<div mv-if="type = a">
-			<label>
-				rx: <input type="number" property="rx" value="0" />
-			</label>
-			<label>
-				ry: <input type="number" property="ry" mv-default="[rx]" />
-			</label>
-			<label>
-				X Axis rotation: <input type="number" property="axisRotation" value="0" />
-			</label>
-			<label>
-				<input type="checkbox" property="largeArc">
-				Large Arc?
-			</label>
-			<label>
-				<input type="checkbox" property="sweep">
-				Sweep?
-			</label>
-			<meta property="arcFlags" content="[rx] [ry] [axisRotation] [largeArc + 0] [sweep + 0]">
-		</div>
+			<div mv-if="type = c or type = s or type = q">
+				<label mv-if="type = c or type = q">
+					<span mv-if="type = c">First</span> Control Point:
+					<input type="number" property="x1" value="0" />
+					<input type="number" property="y1" value="0" />
+				</label>
+				<label mv-if="type = c">
+					Second Control Point:
+					<input type="number" property="x2" value="0" />
+					<input type="number" property="y2" value="0" />
+				</label>
+			</div>
 
-		<div mv-if="type = c or type = s or type = q">
-			<label mv-if="type = c or type = q">
-				<span mv-if="type = c">First</span> Control Point:
-				<input type="number" property="x1" value="0" />
-				<input type="number" property="y1" value="0" />
-			</label>
-			<label mv-if="type = c">
-				Second Control Point:
-				<input type="number" property="x2" value="0" />
-				<input type="number" property="y2" value="0" />
-			</label>
-		</div>
-
-		<meta property="pathsummary" content="[if(absolute, uppercase(type), type)] [arcFlags] [x] [y]">
-	</article>
+			<meta property="pathsummary" content="[if(absolute, uppercase(type), type)] [arcFlags] [x] [y]">
+		</article>
+	</div>
 
 </section>
 <section class="preview">
@@ -107,7 +110,7 @@
 		<a href='[svgfile]' download="path.svg" target="_blank">⏬ Download</a>
 	</h1>
 
-	<svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 [width] [height]" style="background-size: [width/10]% [height/10]%">
+	<svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 [width] [height]" preserveAspectRatio="xMinYMin">
 		<path d="[path]" stroke="black" fill="yellow" />
 	</svg>
 </section>

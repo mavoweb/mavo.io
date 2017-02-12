@@ -1,11 +1,41 @@
 body {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column;
+  -ms-flex-flow: column;
+  flex-flow: column;
+  margin: 0;
+  height: 100vh;
   font: 100%/1.5 sans-serif; }
   body > h1 {
     text-align: center;
     font-weight: 300;
     font-size: 350%; }
 
+body > header {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: .5em;
+  background: #737b8c;
+  color: white; }
+  body > header h1 {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    margin: 0;
+    font-size: 130%;
+    line-height: 1;
+    letter-spacing: -.05em; }
+
 main {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex; }
@@ -18,16 +48,59 @@ main > section {
     font-weight: 300;
     font-size: 200%; }
 
-main > section > svg {
-  max-height: 90vh;
-  max-width: 100%; }
+.editor {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column;
+  -ms-flex-flow: column;
+  flex-flow: column;
+  padding: 0 1em 1em; }
+  .editor > h1 details {
+    font-size: 1rem; }
+    .editor > h1 details ::-webkit-details-marker {
+      display: none; }
+    .editor > h1 details summary {
+      display: inline-block; }
+    .editor > h1 details summary::before {
+      content: "Show "; }
+    .editor > h1 details:not([open]) {
+      display: inline-block; }
+    .editor > h1 details[open] summary::before {
+      content: "Hide "; }
+  .editor > h1 textarea {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    font: 100% Consolas, Monaco, monospace;
+    white-space: normal; }
+  .editor > div {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    overflow: auto; }
+  .editor .mv-add-segment {
+    font-size: 130%;
+    font-weight: bold;
+    letter-spacing: -.05em; }
 
-svg {
-  display: block;
-  overflow: visible; }
-
-svg * {
-  transform-box: fill-box; }
+.preview {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column;
+  -ms-flex-flow: column;
+  flex-flow: column; }
+  .preview svg {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    background: linear-gradient(#ddd 1px, transparent 1px), linear-gradient(to right, #ddd 1px, transparent 1px);
+    background-size: 5vw 5vw;
+    display: block;
+    overflow: visible; }
+    .preview svg * {
+      transform-box: fill-box; }
 
 [property=segment] {
   --color: #737b8c;
@@ -122,10 +195,8 @@ input {
   padding: .1em .4em;
   font: inherit; }
 
-svg {
-  margin-left: 1em;
-  background: linear-gradient(#ddd 1px, transparent 1px), linear-gradient(to right, #ddd 1px, transparent 1px);
-  background-size: 50px 50px; }
+button {
+  cursor: pointer; }
 
 .editor > h1 details summary, .preview h1 a {
   padding: .4em .8em;
@@ -139,25 +210,5 @@ svg {
   font-weight: 300; }
   .editor > h1 details summary:hover, .preview h1 a:hover, .editor > h1 details summary:focus, .preview h1 a:focus {
     background: #737b8c; }
-
-.editor > h1 details {
-  font-size: 1rem; }
-  .editor > h1 details ::-webkit-details-marker {
-    display: none; }
-  .editor > h1 details summary {
-    display: inline-block; }
-  .editor > h1 details summary::before {
-    content: "Show "; }
-  .editor > h1 details:not([open]) {
-    display: inline-block; }
-  .editor > h1 details[open] summary::before {
-    content: "Hide "; }
-
-.editor > h1 textarea {
-  display: block;
-  box-sizing: border-box;
-  width: 100%;
-  font: 100% Consolas, Monaco, monospace;
-  white-space: normal; }
 
 /*# sourceMappingURL=style.css.map */

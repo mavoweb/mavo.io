@@ -1,4 +1,8 @@
 body {
+	display: flex;
+	flex-flow: column;
+	margin: 0;
+	height: 100vh;
 	font: 100%/1.5 sans-serif;
 
 	& > h1 {
@@ -8,7 +12,24 @@ body {
 	}
 }
 
+body > header {
+	display: flex;
+	align-items: center;
+	padding: .5em;
+	background: hsl(220, 10%, 50%);
+	color: white;
+
+	h1 {
+		flex: 1;
+		margin: 0;
+		font-size: 130%;
+		line-height: 1;
+		letter-spacing: -.05em;
+	}
+}
+
 main {
+	flex: 1;
 	display: flex;
 }
 
@@ -21,18 +42,79 @@ main > section {
 	}
 }
 
-main > section > svg {
-	max-height: 90vh;
-	max-width: 100%;
+.editor {
+	display: flex;
+	flex-flow: column;
+	padding: 0 1em 1em;
+
+	& > h1 {
+		details {
+			font-size: 1rem;
+
+			::-webkit-details-marker {
+				display: none;
+			}
+
+			summary {
+				display: inline-block;
+				@extend %button;
+			}
+
+			summary::before {
+				content: "Show ";
+			}
+
+			&:not([open]) {
+				display: inline-block;
+			}
+
+			&[open] summary::before {
+				content: "Hide "
+			}
+		}
+
+		textarea {
+			display: block;
+			box-sizing: border-box;
+			width: 100%;
+			font: 100% Consolas, Monaco, monospace;
+			white-space: normal;
+		}
+	}
+
+	& > div {
+		flex: 1;
+		overflow: auto;
+	}
+
+	.mv-add-segment {
+		font-size: 130%;
+		font-weight: bold;
+		letter-spacing: -.05em;
+	}
 }
 
-svg {
-	display: block;
-	overflow: visible;
-}
+.preview {
+	display: flex;
+	flex-flow: column;
 
-svg * {
-	transform-box: fill-box;
+	h1 {
+		a {
+			@extend %button;
+		}
+	}
+
+	svg {
+		flex: 1;
+		background: linear-gradient(#ddd 1px, transparent 1px), linear-gradient(to right, #ddd 1px, transparent 1px);
+		background-size: 5vw 5vw;
+		display: block;
+		overflow: visible;
+
+		* {
+			transform-box: fill-box;
+		}
+	}
 }
 
 [property=segment] {
@@ -158,10 +240,8 @@ input {
 	font: inherit;
 }
 
-svg {
-	margin-left: 1em;
-	background: linear-gradient(#ddd 1px, transparent 1px), linear-gradient(to right, #ddd 1px, transparent 1px);
-	background-size: 50px 50px;
+button {
+	cursor: pointer;
 }
 
 %button {
@@ -177,50 +257,5 @@ svg {
 
 	&:hover, &:focus {
 		background: hsl(220, 10%, 50%);
-	}
-}
-
-.editor {
-	& > h1 {
-		details {
-			font-size: 1rem;
-
-			::-webkit-details-marker {
-				display: none;
-			}
-
-			summary {
-				display: inline-block;
-				@extend %button;
-			}
-
-			summary::before {
-				content: "Show ";
-			}
-
-			&:not([open]) {
-				display: inline-block;
-			}
-
-			&[open] summary::before {
-				content: "Hide "
-			}
-		}
-
-		textarea {
-			display: block;
-			box-sizing: border-box;
-			width: 100%;
-			font: 100% Consolas, Monaco, monospace;
-			white-space: normal;
-		}
-	}
-}
-
-.preview {
-	h1 {
-		a {
-			@extend %button;
-		}
 	}
 }
