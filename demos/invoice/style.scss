@@ -65,8 +65,14 @@ article.invoice {
 	background: white;
 }
 
+button {
+	cursor: pointer;
+}
+
 button.mv-add-invoice {
 	font-size: 150%;
+	margin-bottom: .5em;
+	border: 0;
 }
 
 @media print {
@@ -125,7 +131,7 @@ address {
 	white-space: pre-line;
 }
 
-.show-all {
+.show-all, button.mv-add-invoice {
 	display: block;
 	width: fit-content;
 	padding: .5em 1em;
@@ -266,6 +272,18 @@ body:not(.mv-target-within) {
 		display: flex;
 		width: 66em;
 		margin: 2px auto;
+
+		&.mv-deleted {
+			padding: 1em;
+			box-sizing: border-box;
+			margin-bottom: .5em;
+			margin-top: .5em;
+
+			.mv-close {
+				margin-right: .5em;
+				width: 1.4em;
+			}
+		}
 
 		header .company, .recipient h1, .services h1, thead, tbody, tfoot td:first-child, .mv-add-services {
 			display: none;

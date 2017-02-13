@@ -26,6 +26,12 @@ body > header {
 		line-height: 1;
 		letter-spacing: -.05em;
 	}
+
+	input[type=number] {
+		background: hsla(0,0%,100%,.3);
+		border-color: hsla(0,0%,100%,.5);
+		color: white;
+	}
 }
 
 main {
@@ -68,8 +74,12 @@ main > section {
 				display: inline-block;
 			}
 
-			&[open] summary::before {
-				content: "Hide "
+			&[open] summary {
+				margin-bottom: .5em;
+
+				&::before {
+					content: "Hide "
+				}
 			}
 		}
 

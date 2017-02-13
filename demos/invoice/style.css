@@ -51,8 +51,13 @@ article.invoice {
   width: 43em;
   background: white; }
 
+button {
+  cursor: pointer; }
+
 button.mv-add-invoice {
-  font-size: 150%; }
+  font-size: 150%;
+  margin-bottom: .5em;
+  border: 0; }
 
 @media print {
   body > header {
@@ -97,7 +102,7 @@ header > address > h2 {
 address {
   white-space: pre-line; }
 
-.show-all {
+.show-all, button.mv-add-invoice {
   display: block;
   width: -webkit-fit-content;
   width: -moz-fit-content;
@@ -108,9 +113,9 @@ address {
   background: white;
   font: bold 120%/1 heading-font; }
   @media print {
-    .show-all {
+    .show-all, button.mv-add-invoice {
       display: none; } }
-  .show-all:hover {
+  .show-all:hover, button.mv-add-invoice:hover {
     text-decoration: none;
     background: #f06;
     color: white; }
@@ -199,6 +204,14 @@ body:not(.mv-target-within) article.invoice {
   display: flex;
   width: 66em;
   margin: 2px auto; }
+  body:not(.mv-target-within) article.invoice.mv-deleted {
+    padding: 1em;
+    box-sizing: border-box;
+    margin-bottom: .5em;
+    margin-top: .5em; }
+    body:not(.mv-target-within) article.invoice.mv-deleted .mv-close {
+      margin-right: .5em;
+      width: 1.4em; }
   body:not(.mv-target-within) article.invoice header .company, body:not(.mv-target-within) article.invoice .recipient h1, body:not(.mv-target-within) article.invoice .services h1, body:not(.mv-target-within) article.invoice thead, body:not(.mv-target-within) article.invoice tbody, body:not(.mv-target-within) article.invoice tfoot td:first-child, body:not(.mv-target-within) article.invoice .mv-add-services {
     display: none; }
   body:not(.mv-target-within) article.invoice header > a, body:not(.mv-target-within) article.invoice .invoice-date, body:not(.mv-target-within) article.invoice .recipient {

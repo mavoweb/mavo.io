@@ -31,6 +31,10 @@ body > header {
     font-size: 130%;
     line-height: 1;
     letter-spacing: -.05em; }
+  body > header input[type=number] {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white; }
 
 main {
   -webkit-flex: 1;
@@ -66,8 +70,10 @@ main > section {
       content: "Show "; }
     .editor > h1 details:not([open]) {
       display: inline-block; }
-    .editor > h1 details[open] summary::before {
-      content: "Hide "; }
+    .editor > h1 details[open] summary {
+      margin-bottom: .5em; }
+      .editor > h1 details[open] summary::before {
+        content: "Hide "; }
   .editor > h1 textarea {
     display: block;
     box-sizing: border-box;
