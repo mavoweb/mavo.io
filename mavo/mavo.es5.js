@@ -1803,6 +1803,15 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			return this.property ? [].concat(_toConsumableArray(path), [this.property]) : path;
 		},
 
+		/**
+   * Runs after the constructor is done (including the constructor of the inheriting class), synchronously
+   */
+		postInit: function postInit() {
+			if (this.modes == "edit") {
+				this.edit();
+			}
+		},
+
 		getData: function getData() {
 			var o = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
@@ -2119,6 +2128,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			var vocabElement = (this.isRoot ? this.element.closest("[vocab]") : null) || this.element;
 			this.vocab = vocabElement.getAttribute("vocab");
 
+			this.postInit();
+
 			Mavo.hooks.run("group-init-end", this);
 		},
 
@@ -2396,6 +2407,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 					_this.value = _this.getValue();
 				}
 			});
+
+			this.postInit();
 
 			Mavo.hooks.run("primitive-init-end", this);
 		},
@@ -3350,6 +3363,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				this.itemTemplate = item.template || item;
 			}
 
+			this.postInit();
+
 			Mavo.hooks.run("collection-init-end", this);
 		},
 
@@ -3374,10 +3389,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				for (var _iterator = this.children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 					item = _step.value;
 
-					if (!item.deleted) {
+					if (!item.deleted || o.null) {
 						var itemData = item.getData(env.options);
 
-						if (itemData) {
+						if (itemData || o.null) {
 							env.data.push(itemData);
 						}
 					}
@@ -3447,15 +3462,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				this.adopt(item);
 			}
 
-			if (index === undefined) {
-				index = this.bottomUp ? 0 : this.length;
-			}
-
 			if (this.mutable) {
 				// Add it to the DOM, or fix its place
-				var nextItem = this.children[index];
+				var rel = index === undefined ? this.marker : this.children[index];
+				$[this.bottomUp ? "after" : "before"](item.element, rel);
 
-				item.element._.before(nextItem && nextItem.element || this.marker);
+				if (index === undefined) {
+					index = this.bottomUp ? 0 : this.length;
+				}
 			}
 
 			var env = { context: this, item: item };
@@ -3633,18 +3647,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			if (this.mutable) {
 				// Insert the add button if it's not already in the DOM
 				if (!this.addButton.parentNode) {
-					if (this.bottomUp) {
-						this.addButton._.before($.value(this.children[0], "element") || this.marker);
-					} else {
-						var tag = this.element.tagName.toLowerCase();
-						var containerSelector = Mavo.selectors.container[tag];
-
-						if (containerSelector) {
-							var after = this.marker.parentNode.closest(containerSelector);
-						}
-
-						this.addButton._.after(after && after.parentNode ? after : this.marker);
-					}
+					var tag = this.element.tagName.toLowerCase();
+					var containerSelector = Mavo.selectors.container[tag];
+					var rel = containerSelector ? this.marker.parentNode.closest(containerSelector) : this.marker;
+					$[this.bottomUp ? "before" : "after"](this.addButton, rel);
 				}
 
 				// Set up drag & drop
@@ -3826,7 +3832,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 					Mavo.hooks.run("collection-add-end", env);
 				});
 
-				this.marker.parentNode.insertBefore(fragment, this.marker);
+				$[this.bottomUp ? "after" : "before"](fragment, this.marker);
 			}
 		},
 
@@ -4087,7 +4093,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		var _this10 = this;
 
 		if (this.collection) {
-
 			if (!this.itemControls) {
 				this.itemControls = $$(".mv-item-controls", this.element).filter(function (el) {
 					return el.closest(Mavo.selectors.multiple) == _this10.element;
@@ -4135,7 +4140,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			}
 
 			if (!this.itemControls.parentNode) {
-				this.element.appendChild(this.itemControls);
+				if (this.itemControlsComment) {
+					this.itemControlsComment.parentNode.replaceChild(this.itemControls, this.itemControlsComment);
+				} else {
+					this.element.appendChild(this.itemControls);
+				}
 			}
 		}
 	});
@@ -4143,7 +4152,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 	Mavo.hooks.add("node-done-end", function () {
 		if (this.collection) {
 			if (this.itemControls) {
-				this.itemControls.remove();
+				this.itemControlsComment = this.itemControlsComment || document.createComment("item controls");
+				this.itemControls.parentNode.replaceChild(this.itemControlsComment, this.itemControls);
 			}
 		}
 	});
@@ -4631,6 +4641,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			if (this.primitive) {
 				this.primitive.value = ret;
 			} else {
+				ret = ret.presentational || ret;
 				Mavo.Primitive.setValue(this.node, ret, { attribute: this.attribute });
 			}
 
@@ -6908,3 +6919,4 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		}
 	}));
 })(Bliss);
+//# sourceMappingURL=maps/mavo.es5.js.map

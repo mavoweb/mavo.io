@@ -52,11 +52,12 @@ body > header {
 			background: white;
 			letter-spacing: normal;
 
-			&:hover {
+			&:hover,
+			&:active {
 				background: hsla(0,0%,100%,.4);
 			}
 
-			&:not(:hover) {
+			&:not(:hover):not(:active) {
 				color: hsl(220, 10%, 50%);
 			}
 		}

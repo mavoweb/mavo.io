@@ -52,9 +52,9 @@ body > header {
       font-weight: 300;
       background: white;
       letter-spacing: normal; }
-      body > header h1 a:hover {
+      body > header h1 a:hover, body > header h1 a:active {
         background: rgba(255, 255, 255, 0.4); }
-      body > header h1 a:not(:hover) {
+      body > header h1 a:not(:hover):not(:active) {
         color: #737b8c; }
   body > header input[type=number] {
     background: rgba(255, 255, 255, 0.3);

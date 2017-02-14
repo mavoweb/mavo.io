@@ -1548,6 +1548,15 @@ var _ = Mavo.Node = $.Class({
 		return this.property? [...path, this.property] : path;
 	},
 
+	/**
+	 * Runs after the constructor is done (including the constructor of the inheriting class), synchronously
+	 */
+	postInit: function() {
+		if (this.modes == "edit") {
+			this.edit();
+		}
+	},
+
 	getData: function(o = {}) {
 		if (this.isDataNull(o)) {
 			return null;
@@ -1826,6 +1835,8 @@ var _ = Mavo.Group = $.Class({
 		var vocabElement = (this.isRoot? this.element.closest("[vocab]") : null) || this.element;
 		this.vocab = vocabElement.getAttribute("vocab");
 
+		this.postInit();
+
 		Mavo.hooks.run("group-init-end", this);
 	},
 
@@ -2072,6 +2083,8 @@ var _ = Mavo.Primitive = $.Class({
 				this.value = this.getValue();
 			}
 		});
+
+		this.postInit();
 
 		Mavo.hooks.run("primitive-init-end", this);
 	},
@@ -2987,6 +3000,8 @@ var _ = Mavo.Collection = $.Class({
 			this.itemTemplate = item.template || item;
 		}
 
+		this.postInit();
+
 		Mavo.hooks.run("collection-init-end", this);
 	},
 
@@ -3002,10 +3017,10 @@ var _ = Mavo.Collection = $.Class({
 		};
 
 		for (item of this.children) {
-			if (!item.deleted) {
+			if (!item.deleted || o.null) {
 				let itemData = item.getData(env.options);
 
-				if (itemData) {
+				if (itemData || o.null) {
 					env.data.push(itemData);
 				}
 			}
@@ -3060,15 +3075,14 @@ var _ = Mavo.Collection = $.Class({
 			this.adopt(item);
 		}
 
-		if (index === undefined) {
-			index = this.bottomUp? 0 : this.length;
-		}
-
 		if (this.mutable) {
 			// Add it to the DOM, or fix its place
-			var nextItem = this.children[index];
+			var rel = index === undefined? this.marker : this.children[index];
+			$[this.bottomUp? "after" : "before"](item.element, rel);
 
-			item.element._.before(nextItem && nextItem.element || this.marker);
+			if (index === undefined) {
+				index = this.bottomUp? 0 : this.length;
+			}
 		}
 
 		var env = {context: this, item};
@@ -3189,19 +3203,10 @@ var _ = Mavo.Collection = $.Class({
 		if (this.mutable) {
 			// Insert the add button if it's not already in the DOM
 			if (!this.addButton.parentNode) {
-				if (this.bottomUp) {
-					this.addButton._.before($.value(this.children[0], "element") || this.marker);
-				}
-				else {
-					var tag = this.element.tagName.toLowerCase();
-					var containerSelector = Mavo.selectors.container[tag];
-
-					if (containerSelector) {
-						var after = this.marker.parentNode.closest(containerSelector);
-					}
-
-					this.addButton._.after(after && after.parentNode? after : this.marker);
-				}
+				var tag = this.element.tagName.toLowerCase();
+				var containerSelector = Mavo.selectors.container[tag];
+				var rel = containerSelector? this.marker.parentNode.closest(containerSelector) : this.marker;
+				$[this.bottomUp? "before" : "after"](this.addButton, rel);
 			}
 
 			// Set up drag & drop
@@ -3316,7 +3321,7 @@ var _ = Mavo.Collection = $.Class({
 				Mavo.hooks.run("collection-add-end", env);
 			});
 
-			this.marker.parentNode.insertBefore(fragment, this.marker);
+			$[this.bottomUp? "after" : "before"](fragment, this.marker);
 		}
 	},
 
@@ -3552,7 +3557,6 @@ Mavo.hooks.add("primitive-init-end", function() {
 
 Mavo.hooks.add("node-edit-end", function() {
 	if (this.collection) {
-
 		if (!this.itemControls) {
 			this.itemControls = $$(".mv-item-controls", this.element)
 								   .filter(el => el.closest(Mavo.selectors.multiple) == this.element)[0];
@@ -3599,7 +3603,12 @@ Mavo.hooks.add("node-edit-end", function() {
 		}
 
 		if (!this.itemControls.parentNode) {
-			this.element.appendChild(this.itemControls);
+			if (this.itemControlsComment) {
+				this.itemControlsComment.parentNode.replaceChild(this.itemControls, this.itemControlsComment);
+			}
+			else {
+				this.element.appendChild(this.itemControls);
+			}
 		}
 	}
 });
@@ -3607,7 +3616,8 @@ Mavo.hooks.add("node-edit-end", function() {
 Mavo.hooks.add("node-done-end", function() {
 	if (this.collection) {
 		if (this.itemControls) {
-			this.itemControls.remove();
+			this.itemControlsComment = this.itemControlsComment || document.createComment("item controls");
+			this.itemControls.parentNode.replaceChild(this.itemControlsComment, this.itemControls);
 		}
 	}
 });
@@ -4066,6 +4076,7 @@ var _ = Mavo.ExpressionText = $.Class({
 			this.primitive.value = ret;
 		}
 		else {
+			ret = ret.presentational || ret;
 			Mavo.Primitive.setValue(this.node, ret, {attribute: this.attribute});
 		}
 
