@@ -1,3 +1,19 @@
+body > header h1 a, .editor > h1 details summary {
+  display: inline-block;
+  vertical-align: bottom;
+  padding: .4em .8em;
+  border-radius: .3em;
+  margin: 0 .3em;
+  cursor: pointer;
+  background: rgba(115, 123, 140, 0.7);
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: .8rem;
+  font-weight: 300; }
+  body > header h1 a:hover, .editor > h1 details summary:hover, body > header h1 a:focus, .editor > h1 details summary:focus {
+    background: #737b8c; }
+
 body {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -31,6 +47,15 @@ body > header {
     font-size: 130%;
     line-height: 1;
     letter-spacing: -.05em; }
+    body > header h1 a {
+      padding: .5em .6em .3em;
+      font-weight: 300;
+      background: white;
+      letter-spacing: normal; }
+      body > header h1 a:hover {
+        background: rgba(255, 255, 255, 0.4); }
+      body > header h1 a:not(:hover) {
+        color: #737b8c; }
   body > header input[type=number] {
     background: rgba(255, 255, 255, 0.3);
     border-color: rgba(255, 255, 255, 0.5);
@@ -44,13 +69,9 @@ main {
   display: -ms-flexbox;
   display: flex; }
 
-main > section {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1; }
-  main > section > h1 {
-    font-weight: 300;
-    font-size: 200%; }
+main > section > h1 {
+  font-weight: 300;
+  font-size: 200%; }
 
 .editor {
   display: -webkit-flex;
@@ -59,13 +80,14 @@ main > section {
   -webkit-flex-flow: column;
   -ms-flex-flow: column;
   flex-flow: column;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
   padding: 0 1em 1em; }
   .editor > h1 details {
     font-size: 1rem; }
     .editor > h1 details ::-webkit-details-marker {
       display: none; }
-    .editor > h1 details summary {
-      display: inline-block; }
     .editor > h1 details summary::before {
       content: "Show "; }
     .editor > h1 details:not([open]) {
@@ -96,15 +118,24 @@ main > section {
   display: flex;
   -webkit-flex-flow: column;
   -ms-flex-flow: column;
-  flex-flow: column; }
+  flex-flow: column;
+  width: 50vw; }
   .preview svg {
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1;
-    background: linear-gradient(#ddd 1px, transparent 1px), linear-gradient(to right, #ddd 1px, transparent 1px);
-    background-size: 5vw 5vw;
+    background: #e6e6e6;
     display: block;
     overflow: visible; }
+    .preview svg path {
+      stroke: black;
+      fill: yellow; }
+    .preview svg circle {
+      fill: red; }
+    .preview svg pattern {
+      stroke: black;
+      stroke-width: 2px;
+      stroke-opacity: .15; }
     .preview svg * {
       transform-box: fill-box; }
 
@@ -203,18 +234,5 @@ input {
 
 button {
   cursor: pointer; }
-
-.editor > h1 details summary, .preview h1 a {
-  padding: .4em .8em;
-  border-radius: .3em;
-  cursor: pointer;
-  background: rgba(115, 123, 140, 0.7);
-  color: white;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-size: .8rem;
-  font-weight: 300; }
-  .editor > h1 details summary:hover, .preview h1 a:hover, .editor > h1 details summary:focus, .preview h1 a:focus {
-    background: #737b8c; }
 
 /*# sourceMappingURL=style.css.map */

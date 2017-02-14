@@ -1,3 +1,22 @@
+%button {
+	display: inline-block;
+	vertical-align: bottom;
+	padding: .4em .8em;
+	border-radius: .3em;
+	margin: 0 .3em;
+	cursor: pointer;
+	background: hsla(220, 10%, 50%, .7);
+	color: white;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: .8rem;
+	font-weight: 300;
+
+	&:hover, &:focus {
+		background: hsl(220, 10%, 50%);
+	}
+}
+
 body {
 	display: flex;
 	flex-flow: column;
@@ -25,6 +44,22 @@ body > header {
 		font-size: 130%;
 		line-height: 1;
 		letter-spacing: -.05em;
+
+		a {
+			@extend %button;
+			padding: .5em .6em .3em;
+			font-weight: 300;
+			background: white;
+			letter-spacing: normal;
+
+			&:hover {
+				background: hsla(0,0%,100%,.4);
+			}
+
+			&:not(:hover) {
+				color: hsl(220, 10%, 50%);
+			}
+		}
 	}
 
 	input[type=number] {
@@ -40,8 +75,6 @@ main {
 }
 
 main > section {
-	flex: 1;
-
 	& > h1 {
 		font-weight: 300;
 		font-size: 200%;
@@ -51,6 +84,7 @@ main > section {
 .editor {
 	display: flex;
 	flex-flow: column;
+	flex: 1;
 	padding: 0 1em 1em;
 
 	& > h1 {
@@ -62,7 +96,6 @@ main > section {
 			}
 
 			summary {
-				display: inline-block;
 				@extend %button;
 			}
 
@@ -107,19 +140,32 @@ main > section {
 .preview {
 	display: flex;
 	flex-flow: column;
-
-	h1 {
-		a {
-			@extend %button;
-		}
-	}
+	width: 50vw;
 
 	svg {
 		flex: 1;
-		background: linear-gradient(#ddd 1px, transparent 1px), linear-gradient(to right, #ddd 1px, transparent 1px);
-		background-size: 5vw 5vw;
+		background: hsl(0,0%,90%);
 		display: block;
 		overflow: visible;
+
+		rect {
+
+		}
+
+		path {
+			stroke: black;
+			fill: yellow;
+		}
+
+		circle {
+			fill: red;
+		}
+
+		pattern {
+			stroke: black;
+			stroke-width: 2px;
+			stroke-opacity: .15;
+		}
 
 		* {
 			transform-box: fill-box;
@@ -252,20 +298,4 @@ input {
 
 button {
 	cursor: pointer;
-}
-
-%button {
-	padding: .4em .8em;
-	border-radius: .3em;
-	cursor: pointer;
-	background: hsla(220, 10%, 50%, .7);
-	color: white;
-	text-decoration: none;
-	text-transform: uppercase;
-	font-size: .8rem;
-	font-weight: 300;
-
-	&:hover, &:focus {
-		background: hsl(220, 10%, 50%);
-	}
 }
