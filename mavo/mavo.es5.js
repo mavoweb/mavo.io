@@ -283,6 +283,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 			this.unhandled = this.element.classList.contains("mv-keep-unhandled");
 			this.autoEdit = this.element.classList.contains("mv-autoedit");
+			this.autoSave = this.element.classList.contains("mv-autosave");
 
 			if (this.index == 1) {
 				this.storage = _.Functions.urlOption("store");
@@ -421,7 +422,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 			// Is there any control that requires an edit button?
 			this.needsEdit = this.some(function (obj) {
-				return obj.modes == "read edit" || obj.modes === undefined;
+				return !obj.modes && obj.mode == "read";
 			});
 
 			this.setUnsavedChanges(false);
@@ -442,85 +443,45 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				_this.element.setAttribute("mv-permissions", permissions.join(" "));
 			});
 
-			this.permissions.can(["edit", "add", "delete"], function () {
-				_this.ui.edit = $.create("button", {
-					className: "mv-edit",
-					textContent: "Edit",
-					onclick: function onclick(e) {
-						return _this.editing ? _this.done() : _this.edit();
-					},
-					inside: _this.ui.bar
-				});
-
-				if (_this.autoEdit) {
-					_this.ui.edit.click();
-				}
-			}, function () {
-				// cannot
-				$.remove(_this.ui.edit);
-
-				if (_this.editing) {
-					_this.done();
-				}
-			});
-
 			if (this.needsEdit) {
-				this.permissions.can("save", function () {
-					_this.ui.save = $.create("button", {
-						className: "mv-save",
-						textContent: "Save",
-						events: {
-							click: function click(e) {
-								return _this.save();
-							},
-							"mouseenter focus": function mouseenterFocus(e) {
-								_this.element.classList.add("mv-highlight-unsaved");
-							},
-							"mouseleave blur": function mouseleaveBlur(e) {
-								return _this.element.classList.remove("mv-highlight-unsaved");
-							}
+				this.permissions.can(["edit", "add", "delete"], function () {
+					_this.ui.edit = $.create("button", {
+						className: "mv-edit",
+						textContent: "Edit",
+						onclick: function onclick(e) {
+							return _this.editing ? _this.done() : _this.edit();
 						},
 						inside: _this.ui.bar
 					});
 
-					_this.ui.revert = $.create("button", {
-						className: "mv-revert",
-						textContent: "Revert",
-						disabled: true,
-						events: {
-							click: function click(e) {
-								return _this.revert();
-							},
-							"mouseenter focus": function mouseenterFocus(e) {
-								_this.element.classList.add("mv-highlight-unsaved");
-							},
-							"mouseleave blur": function mouseleaveBlur(e) {
-								return _this.element.classList.remove("mv-highlight-unsaved");
-							}
-						},
-						inside: _this.ui.bar
-					});
+					if (_this.autoEdit) {
+						_this.ui.edit.click();
+					}
 				}, function () {
-					$.remove([_this.ui.save, _this.ui.revert]);
-					_this.ui.save = _this.ui.revert = null;
+					// cannot
+					$.remove(_this.ui.edit);
+
+					if (_this.editing) {
+						_this.done();
+					}
 				});
 			}
 
-			this.permissions.can("delete", function () {
-				_this.ui.clear = $.create("button", {
-					className: "mv-clear",
-					textContent: "Clear",
-					onclick: function onclick(e) {
-						return _this.clear();
-					}
+			if (this.storage) {
+				this.permissions.can("delete", function () {
+					_this.ui.clear = $.create("button", {
+						className: "mv-clear",
+						textContent: "Clear",
+						onclick: function onclick(e) {
+							return _this.clear();
+						}
+					});
+
+					_this.ui.bar.appendChild(_this.ui.clear);
+				}, function () {
+					$.remove(_this.ui.clear);
 				});
-
-				_this.ui.bar.appendChild(_this.ui.clear);
-			});
-
-			this.permissions.cannot(["delete", "edit"], function () {
-				$.remove(_this.ui.clear);
-			});
+			}
 
 			if (this.storage || this.source) {
 				// Fetch existing data
@@ -540,28 +501,69 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				$.fire(this.element, "mavo:load");
 			}
 
-			if (!this.needsEdit) {
-				// If there's no edit mode, we must save immediately when properties change
-				this.element.addEventListener("mavo:load", function (evt) {
-					var debouncedSave = _.debounce(function () {
-						_this.save();
-					}, 3000);
-
-					var callback = function callback(evt) {
-						if (evt.node.saved) {
-							debouncedSave();
+			this.permissions.can("save", function () {
+				_this.ui.save = $.create("button", {
+					className: "mv-save",
+					textContent: "Save",
+					events: {
+						click: function click(e) {
+							return _this.save();
+						},
+						"mouseenter focus": function mouseenterFocus(e) {
+							_this.element.classList.add("mv-highlight-unsaved");
+						},
+						"mouseleave blur": function mouseleaveBlur(e) {
+							return _this.element.classList.remove("mv-highlight-unsaved");
 						}
-					};
+					},
+					inside: _this.ui.bar
+				});
 
-					requestAnimationFrame(function () {
-						_this.permissions.can("save", function () {
-							_this.element.addEventListener("mavo:datachange", callback);
-						}, function () {
-							_this.element.removeEventListener("mavo:datachange", callback);
+				if (_this.autoSave) {
+					_this.element.addEventListener("mavo:load.mavo:autosave", function (evt) {
+						var debouncedSave = _.debounce(function () {
+							_this.save();
+						}, 3000);
+
+						var callback = function callback(evt) {
+							if (evt.node.saved) {
+								debouncedSave();
+							}
+						};
+
+						requestAnimationFrame(function () {
+							_this.permissions.can("save", function () {
+								_this.element.addEventListener("mavo:datachange.mavo:autosave", callback);
+							}, function () {
+								_this.element.removeEventListener("mavo:datachange.mavo:autosave", callback);
+							});
 						});
 					});
-				});
-			}
+				} else {
+					// Revert is pointless if autosaving, there's not enough time between saves to click it
+					_this.ui.revert = $.create("button", {
+						className: "mv-revert",
+						textContent: "Revert",
+						disabled: true,
+						events: {
+							click: function click(e) {
+								return _this.revert();
+							},
+							"mouseenter focus": function mouseenterFocus(e) {
+								_this.element.classList.add("mv-highlight-unsaved");
+							},
+							"mouseleave blur": function mouseleaveBlur(e) {
+								return _this.element.classList.remove("mv-highlight-unsaved");
+							}
+						},
+						inside: _this.ui.bar
+					});
+				}
+			}, function () {
+				$.remove([_this.ui.save, _this.ui.revert]);
+				_this.ui.save = _this.ui.revert = null;
+				_this.element.removeEventListener(".mavo:autosave");
+			});
 
 			Mavo.hooks.run("init-end", this);
 		},
@@ -828,14 +830,19 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			unsavedChanges: function unsavedChanges(value) {
 				this.element.classList.toggle("mv-unsaved-changes", value);
 
-				if (this.ui && this.ui.save) {
-					this.ui.save.classList.toggle("mv-unsaved-changes", value);
-					this.ui.revert.disabled = !value;
+				if (this.ui) {
+					if (this.ui.save) {
+						this.ui.save.classList.toggle("mv-unsaved-changes", value);
+					}
+
+					if (this.ui.revert) {
+						this.ui.revert.disabled = !value;
+					}
 				}
 			},
 
 			needsEdit: function needsEdit(value) {
-				$.toggleAttribute(this.ui.bar, "hidden", "", !value);
+				$.remove(this.ui.edit);
 			}
 		},
 
@@ -1754,6 +1761,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			}
 
 			this.mavo = mavo;
+			this.group = this.parentGroup = env.options.group;
 
 			if (!this.fromTemplate("property", "type", "modes")) {
 				this.property = _.getProperty(element);
@@ -1768,8 +1776,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			});
 
 			this.mode = this.modes || "read";
-
-			this.group = this.parentGroup = env.options.group;
 
 			Mavo.hooks.run("node-init-end", env);
 		},

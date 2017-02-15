@@ -10,7 +10,8 @@
 	text-decoration: none;
 	text-transform: uppercase;
 	font-size: .8rem;
-	font-weight: 300;
+	line-height: 1.25;
+	font-weight: bold;
 
 	&:hover, &:focus {
 		background: hsl(220, 10%, 50%);
@@ -38,6 +39,22 @@ body > header {
 	background: hsl(220, 10%, 50%);
 	color: white;
 
+	.mv-bar {
+		display: inline;
+
+		.mv-revert::before {
+			content: "❌ ";
+		}
+
+		.mv-save::before {
+			content: "💾 ";
+		}
+
+		.mv-clear::before {
+			content: "🗑️ ";
+		}
+	}
+
 	h1 {
 		flex: 1;
 		margin: 0;
@@ -45,10 +62,10 @@ body > header {
 		line-height: 1;
 		letter-spacing: -.05em;
 
-		a {
+		a, button {
 			@extend %button;
 			padding: .5em .6em .3em;
-			font-weight: 300;
+			border: 0;
 			background: white;
 			letter-spacing: normal;
 

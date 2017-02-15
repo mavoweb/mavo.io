@@ -234,6 +234,7 @@ var _ = self.Mavo = $.Class({
 
 		this.unhandled = this.element.classList.contains("mv-keep-unhandled");
 		this.autoEdit = this.element.classList.contains("mv-autoedit");
+		this.autoSave = this.element.classList.contains("mv-autosave");
 
 		if (this.index == 1) {
 			this.storage = _.Functions.urlOption("store");
@@ -372,7 +373,7 @@ var _ = self.Mavo = $.Class({
 		Mavo.hooks.run("init-tree-after", this);
 
 		// Is there any control that requires an edit button?
-		this.needsEdit = this.some(obj => obj.modes == "read edit" || obj.modes === undefined);
+		this.needsEdit = this.some(obj => !obj.modes && obj.mode == "read");
 
 		this.setUnsavedChanges(false);
 
@@ -387,72 +388,40 @@ var _ = self.Mavo = $.Class({
 			this.element.setAttribute("mv-permissions", permissions.join(" "));
 		});
 
-		this.permissions.can(["edit", "add", "delete"], () => {
-			this.ui.edit = $.create("button", {
-				className: "mv-edit",
-				textContent: "Edit",
-				onclick: e => this.editing? this.done() : this.edit(),
-				inside: this.ui.bar
-			});
-
-			if (this.autoEdit) {
-				this.ui.edit.click();
-			}
-		}, () => { // cannot
-			$.remove(this.ui.edit);
-
-			if (this.editing) {
-				this.done();
-			}
-		});
-
 		if (this.needsEdit) {
-			this.permissions.can("save", () => {
-				this.ui.save = $.create("button", {
-					className: "mv-save",
-					textContent: "Save",
-					events: {
-						click: e => this.save(),
-						"mouseenter focus": e => {
-							this.element.classList.add("mv-highlight-unsaved");
-						},
-						"mouseleave blur": e => this.element.classList.remove("mv-highlight-unsaved")
-					},
+			this.permissions.can(["edit", "add", "delete"], () => {
+				this.ui.edit = $.create("button", {
+					className: "mv-edit",
+					textContent: "Edit",
+					onclick: e => this.editing? this.done() : this.edit(),
 					inside: this.ui.bar
 				});
 
-				this.ui.revert = $.create("button", {
-					className: "mv-revert",
-					textContent: "Revert",
-					disabled: true,
-					events: {
-						click: e => this.revert(),
-						"mouseenter focus": e => {
-							this.element.classList.add("mv-highlight-unsaved");
-						},
-						"mouseleave blur": e => this.element.classList.remove("mv-highlight-unsaved")
-					},
-					inside: this.ui.bar
-				});
-			}, () => {
-				$.remove([this.ui.save, this.ui.revert]);
-				this.ui.save = this.ui.revert = null;
+				if (this.autoEdit) {
+					this.ui.edit.click();
+				}
+			}, () => { // cannot
+				$.remove(this.ui.edit);
+
+				if (this.editing) {
+					this.done();
+				}
 			});
 		}
 
-		this.permissions.can("delete", () => {
-			this.ui.clear = $.create("button", {
-				className: "mv-clear",
-				textContent: "Clear",
-				onclick: e => this.clear()
+		if (this.storage) {
+			this.permissions.can("delete", () => {
+				this.ui.clear = $.create("button", {
+					className: "mv-clear",
+					textContent: "Clear",
+					onclick: e => this.clear()
+				});
+
+				this.ui.bar.appendChild(this.ui.clear);
+			}, () => {
+				$.remove(this.ui.clear);
 			});
-
-			this.ui.bar.appendChild(this.ui.clear);
-		});
-
-		this.permissions.cannot(["delete", "edit"], () => {
-			$.remove(this.ui.clear);
-		});
+		}
 
 		if (this.storage || this.source) {
 			// Fetch existing data
@@ -469,28 +438,63 @@ var _ = self.Mavo = $.Class({
 			$.fire(this.element, "mavo:load");
 		}
 
-		if (!this.needsEdit) {
-			// If there's no edit mode, we must save immediately when properties change
-			this.element.addEventListener("mavo:load", evt => {
-				var debouncedSave = _.debounce(() => {
-					this.save();
-				}, 3000);
+		this.permissions.can("save", () => {
+			this.ui.save = $.create("button", {
+				className: "mv-save",
+				textContent: "Save",
+				events: {
+					click: e => this.save(),
+					"mouseenter focus": e => {
+						this.element.classList.add("mv-highlight-unsaved");
+					},
+					"mouseleave blur": e => this.element.classList.remove("mv-highlight-unsaved")
+				},
+				inside: this.ui.bar
+			});
 
-				var callback = evt => {
-					if (evt.node.saved) {
-						debouncedSave();
-					}
-				};
+			if (this.autoSave) {
+				this.element.addEventListener("mavo:load.mavo:autosave", evt => {
+					var debouncedSave = _.debounce(() => {
+						this.save();
+					}, 3000);
 
-				requestAnimationFrame(() => {
-					this.permissions.can("save", () => {
-						this.element.addEventListener("mavo:datachange", callback);
-					}, () => {
-						this.element.removeEventListener("mavo:datachange", callback);
+					var callback = evt => {
+						if (evt.node.saved) {
+							debouncedSave();
+						}
+					};
+
+					requestAnimationFrame(() => {
+						this.permissions.can("save", () => {
+							this.element.addEventListener("mavo:datachange.mavo:autosave", callback);
+						}, () => {
+							this.element.removeEventListener("mavo:datachange.mavo:autosave", callback);
+						});
 					});
 				});
-			});
-		}
+			}
+			else {
+				// Revert is pointless if autosaving, there's not enough time between saves to click it
+				this.ui.revert = $.create("button", {
+					className: "mv-revert",
+					textContent: "Revert",
+					disabled: true,
+					events: {
+						click: e => this.revert(),
+						"mouseenter focus": e => {
+							this.element.classList.add("mv-highlight-unsaved");
+						},
+						"mouseleave blur": e => this.element.classList.remove("mv-highlight-unsaved")
+					},
+					inside: this.ui.bar
+				});
+			}
+
+		}, () => {
+			$.remove([this.ui.save, this.ui.revert]);
+			this.ui.save = this.ui.revert = null;
+			this.element.removeEventListener(".mavo:autosave")
+		});
 
 		Mavo.hooks.run("init-end", this);
 	},
@@ -738,14 +742,19 @@ var _ = self.Mavo = $.Class({
 		unsavedChanges: function(value) {
 			this.element.classList.toggle("mv-unsaved-changes", value);
 
-			if (this.ui && this.ui.save) {
-				this.ui.save.classList.toggle("mv-unsaved-changes", value);
-				this.ui.revert.disabled = !value;
+			if (this.ui) {
+				if (this.ui.save) {
+					this.ui.save.classList.toggle("mv-unsaved-changes", value);
+				}
+
+				if (this.ui.revert) {
+					this.ui.revert.disabled = !value;
+				}
 			}
 		},
 
 		needsEdit: function(value) {
-			$.toggleAttribute(this.ui.bar, "hidden", "", !value);
+			$.remove(this.ui.edit);
 		}
 	},
 
@@ -1499,6 +1508,7 @@ var _ = Mavo.Node = $.Class({
 		}
 
 		this.mavo = mavo;
+		this.group = this.parentGroup = env.options.group;
 
 		if (!this.fromTemplate("property", "type", "modes")) {
 			this.property = _.getProperty(element);
@@ -1513,8 +1523,6 @@ var _ = Mavo.Node = $.Class({
 		});
 
 		this.mode = this.modes || "read";
-
-		this.group = this.parentGroup = env.options.group;
 
 		Mavo.hooks.run("node-init-end", env);
 	},

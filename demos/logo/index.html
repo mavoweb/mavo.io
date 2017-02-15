@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="style.css">
 
 </head>
-<body mv-app="logo" class="mv-autoedit">
+<body mv-app="logo" mv-mode="edit">
 
 <fieldset>
 	<legend>Geometry</legend>
@@ -26,7 +26,7 @@
 		<input type="range" property="size" min="1" value="80"> [size]%
 	</label>
 
-	<meta property="height" content="50" class="computed">
+	<meta property="height" content="50" mv-mode="read">
 </fieldset>
 
 <meta property="charwidth" content="[2 * height * tan(angle * PI/180) + thickness]">
@@ -64,7 +64,7 @@
 	<use xlink:href="#logo"></use>
 </svg>
 
-<script src="../../mavo/mavo.es5.js"></script>
+<script src="../../mavo/mavo.js"></script>
 
 </body>
 </html>

@@ -124,3 +124,7 @@ input[property=color] {
 	width: 100% !important;
 	font: 150% Consolas, Monaco, monospace;
 }
+
+.mv-bar.mv-ui {
+	display: none;
+}
