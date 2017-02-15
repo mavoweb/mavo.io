@@ -1,9 +1,22 @@
-@@include('_head-docs.html', {
-	"title": "Attributes & Classes Index"
-})
+<!DOCTYPE html>
+<html lang="en" class="docs">
+<head>
+	<meta charset="UTF-8">
+	<title>Index of all attributes & classes - Mavo Documentation</title>
+	<link rel="stylesheet" href="/mavo/mavo.css" />
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel='stylesheet' href='/css/docs.css'>
+</head>
+
+
 <body class="language-markup">
 
-@@include('_header.html')
+<header>
+	<h1 class="logo">
+		<a href="/"><img src="/logo.svg" alt="Mavo"></a>
+	</h1>
+</header>
+
 
 <h2>Attributes & Classes</h2>
 <style>
@@ -48,7 +61,7 @@ td:nth-child(2):empty::before {
 			<tr>
 				<td><code>property</code></td>
 				<td>Names elements that will be saved, edited, or used in expressions. Elements with this attribute are called <strong>Properties</strong>.</td>
-				<td><a href="/docs/primer">Primer</a></td>
+				<td><a href="/docs/properties">Properties</a></td>
 			</tr>
 			<tr>
 				<td><code>typeof</code></td>
@@ -85,7 +98,7 @@ td:nth-child(2):empty::before {
 				<td><code>mv-attribute</code></td>
 				<td>Properties and elements with <code>mv-value</code></td>
 				<td>Customize which attribute data goes into on this element. For the element content, specify <code>"null"</code>.</td>
-				<td></td>
+				<td><a href="/docs/properties">Properties</a></td>
 			</tr>
 			<tr>
 				<td><code>mv-init</code></td>
@@ -97,7 +110,7 @@ td:nth-child(2):empty::before {
 				<td><code>mv-default</code></td>
 				<td>Properties</td>
 				<td>Sets the default value. If no value, the default value becomes the property content.</td>
-				<td></td>
+				<td><a href="/docs/properties">Properties</a></td>
 			</tr>
 			<tr>
 				<td><code>mv-order</code></td>
@@ -115,25 +128,13 @@ td:nth-child(2):empty::before {
 				<td><code>mv-value</code></td>
 				<td></td>
 				<td>Set an element's content to the result of an expression.</td>
-				<td></td>
+				<td><a href="/docs/expressions">Expressions</a></td>
 			</tr>
 			<tr>
 				<td><code>mv-if</code></td>
 				<td></td>
 				<td>Remove an element from the DOM if the expression doesn't match and re-add it when it does.</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td><code>mv-edit</code></td>
-				<td>Properties</td>
-				<td>Customize how an element is edited by linking to another element, anywhere in the page.</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td><code>mv-edit-*</code></td>
-				<td>Properties</td>
-				<td>Any attributes set that way will be copied over to the property's editor.</td>
-				<td></td>
+				<td><a href="/docs/expressions">Expressions</a></td>
 			</tr>
 			<tr>
 				<td><code>mv-accepts</code></td>
@@ -141,12 +142,30 @@ td:nth-child(2):empty::before {
 				<td>Property names (space separated) of other collections that can move items to this one.</td>
 				<td></td>
 			</tr>
+			<tr>
+				<td><code>mv-edit</code></td>
+				<td>Properties</td>
+				<td>Customize how an element is edited by linking to another element, anywhere in the page.</td>
+				<td><a href="/docs/properties">Properties</a></td>
+			</tr>
+			<tr>
+				<td><code>mv-edit-*</code></td>
+				<td>Properties</td>
+				<td>Any attributes set that way will be copied over to the property's editor.</td>
+				<td><a href="/docs/properties">Properties</a></td>
+			</tr>
+			<tr>
+				<td><code>mv-mode</code></td>
+				<td>Properties</td>
+				<td>Make properties read-only or edit-only or use as a style hook to style properties differently depending on their edit state.</td>
+				<td><a href="/docs/properties">Properties</a></td>
+			</tr>
 		</tbody>
 	</table>
 </section>
 
 <section>
-	<h1>Author classes</h1>
+	<h1>Classes</h1>
 	<p>In addition to attributes, you can also use these classes to customize the behavior of your Mavo app.</p>
 
 	<table>
@@ -160,13 +179,19 @@ td:nth-child(2):empty::before {
 		</thead>
 		<tbody>
 			<tr>
-				<td><code>autoedit</code></td>
+				<td><code>mv-autoedit</code></td>
 				<td>Mavo wrapper</td>
-				<td>Mavo will start in edit mode (no need to click the Edit button). Useful for apps that are almost always in edit mode, such as a to-do list.</td>
+				<td>Mavo will start in edit mode (no need to click the Edit button). Useful for apps that are almost always in edit mode, but still need a read mode (if read mode is not needed at all, use <code>mv-mode</code> instead).</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td><code>debug</code></td>
+				<td><code>mv-autosave</code></td>
+				<td>Mavo wrapper</td>
+				<td>If this class is present, Mavo will automatically save every time the data changes, throttled to 3 seconds (future versions of Mavo may allow customizing this time). The Save button will still be present in the Mavo bar.</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>mv-debug</code></td>
 				<td>Mavo wrapper or any group</td>
 				<td></td>
 				<td></td>
@@ -176,9 +201,8 @@ td:nth-child(2):empty::before {
 </section>
 
 <section>
-	<h1>Generated attributes & classes</h1>
-	<p>You can use these attributes and classes in your CSS to customize your Mavo app.
-		Classes are listed with a dot (<code>.</code>) before their name.</p>
+	<h1>Generated attributes</h1>
+	<p>These attributes are applied by Mavo on certain elements. You may find them useful for styling or debugging.</p>
 
 	<table>
 		<thead>
@@ -191,61 +215,80 @@ td:nth-child(2):empty::before {
 		</thead>
 		<tbody>
 			<tr>
-				<td><code>.mv-wrapper</code></td>
-				<td>Mavo wrapper</td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
 				<td><code>mv-progress</code></td>
 				<td>Mavo wrapper</td>
 				<td>Only set when an event is in progress. Its value reflects what event, e.g. <code>"Saving"</code> or <code>"Loading"</code>.</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td><code>data-clicked</code></td>
+				<td><code>mv-clicked</code></td>
 				<td>Properties that are <code>&lt;button></code> elements</td>
 				<td>The number of times the button has been clicked.</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td><code>.mv-ui</code></td>
+				<td><code>mv-permissions</code></td>
+				<td>Mavo wrapper</td>
+				<td>Space-separated list of permissions (read, edit, add, delete, login, logout, save)</td>
+				<td></td>
+			</tr>
+			<!-- tr>td>code^td*3 -->
+		</tbody>
+	</table>
+</section>
+
+<section>
+	<h1>Generated classes</h1>
+	<p>These classes are applied by Mavo on certain elements. You may find them useful for styling or debugging.</p>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>On</th>
+				<th>Purpose</th>
+				<th>Read more</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><code>mv-ui</code></td>
 				<td>Any (usually generated) controls for triggering Mavo-related actions</td>
 				<td></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td><code>.mv-item</code></td>
-				<td>Collection items</td>
-				<td>Deleted but not saved items have the class <code>.deleted</code>.</td>
+				<td><code>mv-deleted</code></td>
+				<td>Deleted collection items</td>
+				<td>Applied on items that have been deleted but the deletion is not persisted yet.</td>
 				<td></td>
 			</tr>
 			<tr>
-				<td><code>.mv-item-controls</code></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td><code>.mv-highlight</code></td>
+				<td><code>mv-item-controls</code></td>
 				<td></td>
 				<td></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td><code>.mv-bar</code></td>
+				<td><code>mv-highlight</code></td>
 				<td></td>
 				<td></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td><code>.mv-editor</code></td>
+				<td><code>mv-bar</code></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><code>mv-editor</code></td>
 				<td>Element used for editing a property</td>
 				<td></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td><code>.mv-popup</code></td>
+				<td><code>mv-popup</code></td>
 				<td>Generated popup for editing an attribute.</td>
 				<td></td>
 				<td></td>
@@ -255,7 +298,26 @@ td:nth-child(2):empty::before {
 	</table>
 </section>
 
-@@include('_footer-docs.html')
+<footer>
+	<div>
+		<p>
+			Made with &hearts; by <a href="http://lea.verou.me">Lea Verou</a> and <a href="https://github.com/LeaVerou/mavo/graphs/contributors">contributors</a>
+			&bull; <a href="https://twitter.com/mavohtml">@mavohtml on 🐦 Twitter</a>
+			&bull; <a href="https://github.com/leaverou/mavo">Github</a>
+		</p>
+		<p>This work was supported in part by a collaborative grant from the <a href="http://www.wistron.com/">Wistron Corporation</a>.</p>
+	</div>
+
+
+	<a href="http://mit.edu" class="logo"><img src="/img/logo-mit.svg" alt="MIT" /></a>
+	<a href="http://csail.mit.edu" class="logo"><img src="/img/logo-csail.svg" alt="CSAIL" /></a>
+</footer>
+
+
+<script src="/mavo/mavo.js"></script>
+<script src="/js/docs.js"></script>
+<script src="/js/prism.js"></script>
+
 
 </body>
 </html>

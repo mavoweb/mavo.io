@@ -78,6 +78,15 @@
 	</section>
 </section>
 
+<section>
+	<h1>The mv-mode attribute</h1>
+	<p>Possible values: <code>edit</code> or <code>read</code>.
+		The purpose of this attribute is twofold: If set by you on a property, this property (and any descendant properties that don't have their own <code>mv-mode</code> attribute) become read-only or edit-only, regardless of whether the Mavo app is in edit mode or not.
+		This is useful for creating "constants": Properties that are saved but not edited. It's also useful for properties (or entire apps, if you use <code>mv-mode</code> on the Mavo wrapper) that don't make sense in read mode.
+		This attribute is also used by Mavo: properties that are being edited have <code>mv-mode="edit"</code>. This means you can use the CSS selector <code>[mv-mode="edit"]</code> to style properties differently when they are being edited.
+	</p>
+</section>
+
 @@include('_footer-docs.html')
 
 </body>
