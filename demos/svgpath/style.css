@@ -226,7 +226,8 @@ select[property="type"] {
   color: white;
   font: inherit;
   font-size: 120%;
-  font-weight: 200; }
+  font-weight: 200;
+  width: 10em; }
 
 label {
   display: inline-block; }
