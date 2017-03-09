@@ -12,6 +12,23 @@ $mono-font: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 // Layout
 $content-width: 900px;
 
+// Sass variables to CSS variables
+:root {
+	// Colors
+	--color-magenta: $magenta;
+	--color-blue: $blue;
+	--color-green: $green;
+	--color-orange: $orange;
+
+	// Fonts
+	--font-body: $body-font;
+	--font-heading: $heading-font;
+	--font-mono: $mono-font;
+
+	// Layout
+	--content-width: $content-width;
+}
+
 @font-face {
 	font-family: 'Libre Bodoni';
 	src: url('fonts/LibreBodoniBold.ttf') format('truetype');
