@@ -1,0 +1,79 @@
+{
+	"demo": [
+		{
+			"name": "To-Do List",
+			"tag": [
+				"Remote"
+			],
+			"id": "todo"
+		},
+		{
+			"name": "Mortgage Calculator",
+			"tag": [],
+			"id": "mortgage"
+		},
+		{
+			"name": "Color picker",
+			"tag": [],
+			"id": "color-picker"
+		},
+		{
+			"name": "Decisions (pros & cons)",
+			"tag": [
+				"Hierarchy"
+			],
+			"id": "decisions"
+		},
+		{
+			"name": "Restaurant visit log",
+			"tag": [
+				"Hierarchy"
+			],
+			"id": "foodie"
+		},
+		{
+			"name": "Interactive Mavo logo",
+			"tag": [
+				"SVG"
+			],
+			"id": "logo"
+		},
+		{
+			"name": "Talks list",
+			"tag": [
+				"Hierarchy",
+				"Remote"
+			],
+			"id": "talks"
+		},
+		{
+			"name": "Invoicing system",
+			"tag": [
+				"Hierarchy",
+				"Isolate item",
+				"Remote"
+			],
+			"id": "invoice"
+		},
+		{
+			"name": "SVG Path builder",
+			"tag": [
+				"SVG",
+				"mv-if"
+			],
+			"id": "svgpath"
+		},
+		{
+			"name": "Contact manager",
+			"tag": [
+				"Hierarchy"
+			],
+			"id": "contacts"
+		},
+		{
+			"name": "Personal chequebook",
+			"tag": [],
+			"id": "cheques"
+		}
+	]
+}
