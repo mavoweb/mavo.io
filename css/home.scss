@@ -66,3 +66,38 @@ body > header {
 		}
 	}
 }
+
+#pros {
+	flex-flow: row wrap;
+	align-items: flex-start;
+	padding: 0 calc(50vw - 450px - 1em);
+
+	article {
+		width: $content-width / 2;
+		padding: .5em;
+
+		h1 {
+			margin: 0;
+			color: $magenta;
+			font: bold 150%/1 $heading-font;
+
+			&::before {
+				content: "✓";
+				display: inline-block;
+				vertical-align: text-bottom;
+				margin-right: .3em;
+				width: 1em;
+				background: $magenta;
+				color: white;
+				border-radius: 50%;
+				text-align: center;
+				font-size: 135%;
+				line-height: 1;
+			}
+		}
+
+		a {
+			font-weight: bold;
+		}
+	}
+}

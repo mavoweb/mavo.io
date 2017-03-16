@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root {
   --color-magenta: #ff0080;
   --color-blue: #25aff4;
@@ -85,5 +86,36 @@ body > header {
       body > header .promo .button:hover {
         background: #82cf17;
         color: white; }
+
+#pros {
+  -webkit-flex-flow: row wrap;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  -ms-grid-row-align: flex-start;
+  align-items: flex-start;
+  padding: 0 calc(50vw - 450px - 1em); }
+  #pros article {
+    width: 450px;
+    padding: .5em; }
+    #pros article h1 {
+      margin: 0;
+      color: #ff0080;
+      font: bold 150%/1 Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif; }
+      #pros article h1::before {
+        content: "✓";
+        display: inline-block;
+        vertical-align: text-bottom;
+        margin-right: .3em;
+        width: 1em;
+        background: #ff0080;
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        font-size: 135%;
+        line-height: 1; }
+    #pros article a {
+      font-weight: bold; }
 
 /*# sourceMappingURL=home.css.map */
