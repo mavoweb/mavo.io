@@ -75,27 +75,29 @@
     color: #c80000; }
     .mv-item-controls.mv-ui .mv-delete::before {
       display: block; }
-    .mv-item-controls.mv-ui .mv-delete:hover {
+    .mv-item-controls.mv-ui .mv-delete:hover, .mv-item-controls.mv-ui .mv-delete:focus {
       background-color: #c80000;
       color: white; }
-      .mv-item-controls.mv-ui .mv-delete:hover::before {
+      .mv-item-controls.mv-ui .mv-delete:hover::before, .mv-item-controls.mv-ui .mv-delete:focus::before {
         -webkit-filter: saturate(0) brightness(600%);
         filter: saturate(0) brightness(600%); }
   .mv-item-controls.mv-ui .mv-add {
     color: #81b814; }
     .mv-item-controls.mv-ui .mv-add::before {
       content: "✚"; }
-    .mv-item-controls.mv-ui .mv-add:hover {
+    .mv-item-controls.mv-ui .mv-add:hover, .mv-item-controls.mv-ui .mv-add:focus {
       background-color: #81b814;
       color: white; }
   .mv-item-controls.mv-ui .mv-drag-handle {
-    cursor: -webkit-grab;
-    cursor: grab; }
-    .mv-item-controls.mv-ui .mv-drag-handle:active {
+    cursor: move; }
+    .mv-item-controls.mv-ui .mv-drag-handle:active, .mv-item-controls.mv-ui .mv-drag-handle:focus {
       cursor: -webkit-grabbing;
       cursor: grabbing; }
     .mv-item-controls.mv-ui .mv-drag-handle::before {
       content: "≡"; }
+    .mv-item-controls.mv-ui .mv-drag-handle:hover, .mv-item-controls.mv-ui .mv-drag-handle:focus {
+      background-color: #4d4d4d;
+      color: white; }
   [mv-app]:not([mv-permissions~="delete"]) .mv-item-controls.mv-ui .mv-delete,
   [mv-app]:not([mv-permissions~="add"]) .mv-item-controls.mv-ui .mv-add {
     display: none; }
@@ -299,7 +301,8 @@ p.mv-error {
   color: #660000;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
   font-size: 120%;
-  animation: error-appear .5s backwards; }
+  animation: error-appear .5s backwards;
+  cursor: pointer; }
 
 @keyframes error-appear {
   from {
@@ -351,7 +354,9 @@ p.mv-error {
   .mv-bar.mv-ui > button,
   .mv-bar.mv-ui > .mv-button {
     padding: .3em .6em .4em;
-    border: 0; }
+    border: 0;
+    white-space: nowrap;
+    text-align: center; }
     .mv-bar.mv-ui > button::before,
     .mv-bar.mv-ui > .mv-button::before {
       display: inline-block;
@@ -368,6 +373,8 @@ p.mv-error {
     display: inline-block;
     vertical-align: -.1em;
     max-height: 1em; }
+  .mv-bar.mv-ui .mv-login::after {
+    content: " to " var(--mv-backend); }
   .mv-bar.mv-ui .mv-edit::before {
     content: "✎"; }
   [mv-app][mv-mode="edit"] .mv-bar.mv-ui .mv-edit {
@@ -390,7 +397,7 @@ p.mv-error {
         top: 50%;
         transform: translate(-50%, -50%);
         color: white; }
-    .mv-bar.mv-ui .mv-save.mv-unsaved-changes {
+    .mv-bar.mv-ui .mv-save.mv-unsaved-changes, .mv-bar.mv-ui .mv-save.mv-unsaved-changes::before {
       text-shadow: 0 0 0.2em #66ccff, 0 0 0.3em #66ccff; }
     .mv-bar.mv-ui .mv-save:hover {
       background: #40bfbf; }
@@ -426,169 +433,28 @@ p.mv-error {
       .mv-bar.mv-ui .mv-status .mv-logout:active {
         background: transparent;
         box-shadow: 0 1px .1em black inset; }
+  [mv-permissions~="logout"] .mv-bar.mv-ui .mv-status::before {
+    content: "Logged in to " var(--mv-backend) " as "; }
+  .mv-bar.mv-ui.mv-compact .mv-status::before {
+    content: ""; }
+  .mv-bar.mv-ui.mv-compact .mv-status,
+  .mv-bar.mv-ui.mv-compact .mv-status .mv-logout::after {
+    content: " from " var(--mv-backend); }
+  .mv-bar.mv-ui.mv-compact > button,
+  .mv-bar.mv-ui.mv-compact > .mv-button:not(.mv-login) {
+    width: 1em;
+    letter-spacing: -.5em;
+    color: transparent; }
+  .mv-bar.mv-ui.mv-compact .mv-save.mv-unsaved-changes {
+    text-shadow: none; }
+  .mv-bar.mv-ui.mv-tiny {
+    padding: 0 .5em;
+    background-image: linear-gradient(transparent, rgba(38, 38, 38, 0.5));
+    background-size: auto; }
+    .mv-bar.mv-ui.mv-tiny .mv-status .mv-logout::after {
+      content: initial; }
 
-.mv-debuginfo {
-  all: initial;
-  font: 80% "Helvetica Neue", sans-serif;
-  display: block;
-  border: 1em solid transparent; }
-  .mv-debuginfo:not([open]) {
-    width: -webkit-fit-content;
-    width: -moz-fit-content;
-    width: fit-content; }
-    .mv-debuginfo:not([open]) > summary {
-      background: rgba(128, 128, 128, 0.4);
-      background-clip: padding-box; }
-  .mv-debuginfo > summary {
-    display: block;
-    cursor: pointer;
-    padding: .3em .4em;
-    transition: .4s background;
-    border-radius: .3em; }
-  .mv-debuginfo > table {
-    display: table;
-    border: 0;
-    width: 100%;
-    box-sizing: border-box;
-    table-layout: fixed;
-    border-spacing: 0;
-    background: rgba(0, 0, 0, 0.7);
-    box-shadow: 0 0 .4em black inset;
-    color: white; }
-    .mv-debuginfo > table thead {
-      background: rgba(0, 0, 0, 0.5); }
-    .mv-debuginfo > table tbody tr:nth-child(odd) {
-      background: rgba(0, 0, 0, 0.15); }
-    .mv-debuginfo > table th {
-      text-align: left;
-      padding: .5em; }
-      .mv-debuginfo > table th:nth-child(1) {
-        width: 1em; }
-      .mv-debuginfo > table th:nth-child(2) {
-        width: 40%; }
-      .mv-debuginfo > table th:nth-child(3) {
-        width: 30%; }
-      .mv-debuginfo > table th:nth-child(4) {
-        width: 30%; }
-    .mv-debuginfo > table td {
-      padding: .3em .7em;
-      vertical-align: top;
-      line-height: 1.7;
-      font-family: Consolas, Monaco, monospace;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap; }
-      .mv-debuginfo > table td:nth-child(1) {
-        padding: .5em;
-        overflow: visible; }
-        .mv-debuginfo > table td:nth-child(1)::before {
-          display: block;
-          border-radius: .3em;
-          background: #538cc6;
-          color: white;
-          text-align: center;
-          font: bold 80%/1.5 "Helvetica Neue", sans-serif; }
-      .mv-debuginfo > table td:nth-child(2) {
-        position: relative;
-        padding: 0 .7em;
-        white-space: nowrap;
-        vertical-align: middle;
-        overflow: visible; }
-        .mv-debuginfo > table td:nth-child(2) textarea {
-          all: unset;
-          position: absolute;
-          top: 0;
-          left: 0;
-          padding: .3em .7em;
-          width: 100%;
-          box-sizing: border-box; }
-          .mv-debuginfo > table td:nth-child(2) textarea:not(:focus) {
-            max-height: 2.2em;
-            max-width: 100% !important;
-            overflow: hidden; }
-            .mv-debuginfo > table td:nth-child(2) textarea:not(:focus):hover {
-              background: #333; }
-          .mv-debuginfo > table td:nth-child(2) textarea:focus {
-            resize: horizontal;
-            z-index: 10;
-            background: #222;
-            box-shadow: 1px 1px 0.3em rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 0, 0, 0.5) inset; }
-      .mv-debuginfo > table td:nth-child(4) {
-        width: 30%;
-        cursor: help; }
-        .mv-debuginfo > table td:nth-child(4):hover {
-          background: rgba(255, 247, 0, 0.3); }
-    .mv-debuginfo > table tr.mv-debug-property td:nth-child(1)::before {
-      content: "P"; }
-    .mv-debuginfo > table tr.mv-debug-property,
-    .mv-debuginfo > table tr.mv-debug-property td:nth-child(2) {
-      overflow: hidden; }
-    .mv-debuginfo > table tr.mv-debug-expression td:nth-child(1)::before {
-      content: "=";
-      background: #e6801a; }
-    .mv-debuginfo > table tr.mv-debug-warning td:nth-child(1)::before {
-      content: "!";
-      background: #f2330d; }
-    .mv-debuginfo > table tr.mv-debug-warning td:nth-child(2) {
-      overflow: hidden;
-      font-family: "Helvetica Neue", sans-serif;
-      color: #f88;
-      font-weight: bold; }
-    .mv-debuginfo > table .mv-error {
-      color: #f88;
-      font-weight: normal;
-      font-family: "Helvetica Neue", sans-serif; }
-      .mv-debuginfo > table .mv-error .type {
-        display: block;
-        font-size: 80%;
-        font-weight: bold;
-        line-height: inherit; }
-        .mv-debuginfo > table .mv-error .type::after {
-          content: "😳";
-          display: inline-block;
-          vertical-align: middle;
-          margin-left: .3em;
-          font: 150%/.8 sans-serif; }
-
-.mv-debug-storage {
-  display: block;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  margin: 1em 0;
-  text-align: left;
-  font-size: 80%; }
-  .mv-debug-storage summary {
-    cursor: pointer;
-    padding: .4em .5em; }
-  .mv-debug-storage pre {
-    padding: .6em;
-    font: 100%/1.5 Consolas, Monaco, monospace;
-    -moz-tab-size: 4;
-    tab-size: 4;
-    overflow: auto; }
-    .mv-debug-storage pre:empty::before {
-      content: "(Empty)";
-      font-style: italic;
-      opacity: .5; }
-  .mv-debug-storage table {
-    border-collapse: collapse;
-    width: 100%; }
-    .mv-debug-storage table th, .mv-debug-storage table td {
-      padding: .4em;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      vertical-align: top; }
-    .mv-debug-storage table td {
-      white-space: nowrap; }
-    .mv-debug-storage table,
-    .mv-debug-storage table th {
-      text-align: left; }
-    .mv-debug-storage table thead th {
-      font-family: "Helvetica Neue", sans-serif; }
-    .mv-debug-storage table.list > thead th {
-      background: #6DBD2A; }
-    .mv-debug-storage table.object > thead th {
-      background: #1F96CF; }
-    .mv-debug-storage table.date > thead th {
-      background: #A725D8; }
+[mv-app][mv-bar="none"] .mv-bar {
+  display: none; }
 
 /*# sourceMappingURL=maps/mavo.css.map */

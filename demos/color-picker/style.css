@@ -126,5 +126,5 @@ input[property=color] {
 }
 
 .mv-bar.mv-ui {
-	display: none;
+	xdisplay: none;
 }

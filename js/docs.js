@@ -17,16 +17,10 @@ $$(".example").forEach((example, i) => {
 		after: code
 	});
 
-	var data = $("script[type='application/json']", example) || $.create("script", {
-		type: "application/json",
-	});
-
-	data.id = data.id || "data-" + example.id;
-
 	var mavoRoot = $("[mv-app], [mv-storage]", container) || container;
 
 	mavoRoot.classList.add("debug-saving");
-	mavoRoot.setAttribute("mv-storage", mavoRoot.getAttribute("mv-storage") || "#" + data.id);
+	mavoRoot.setAttribute("mv-storage", mavoRoot.getAttribute("mv-storage") || "local");
 });
 
 // ???
@@ -34,13 +28,22 @@ $$('a[href^="#"]:empty').forEach(function (a) {
 	a.textContent = a.getAttribute("href").slice(1);
 });
 
-// Give every section an id
+// Give every section an id and make its heading a link
 $$("body > section h1").forEach(function (h1) {
 	var section = h1.parentNode;
+	var text = h1.textContent;
 
 	if (!section.id) {
-		section.id = h1.textContent.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
+		section.id = text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "");
 	}
+
+	h1.textContent = "";
+
+	$.create("a", {
+		href: "#" + section.id,
+		textContent: text,
+		inside: h1
+	});
 });
 
 // Build Table Of Contents for current page

@@ -1,5 +1,9 @@
 @import "../css/vars";
 
+h1 > a {
+	color: inherit;
+}
+
 body > header + h2 {
 	background: $green;
 }
@@ -14,7 +18,7 @@ body > header + h2 {
 	&.color-picker .example-container {
 		padding: 0;
 
-		div[style] {
+		& > div:last-of-type {
 			padding: 2em;
 		}
 
@@ -161,7 +165,8 @@ body > header + h2 {
 	}
 }
 
-body > section:first-of-type:not([id]) {
+body > section:first-of-type:not([id]),
+body > section#intro {
 	font-size: 200%;
 
 	p:first-child {
@@ -253,6 +258,19 @@ body > section table {
 	a {
 		display: block;
 		margin: .3em 0;
+	}
+}
+
+.learn-more {
+	font-weight: bold;
+	margin-bottom: 0;
+
+	a::before {
+		content: "▸ Learn more about ";
+	}
+
+	& + & {
+		margin-top: 0;
 	}
 }
 

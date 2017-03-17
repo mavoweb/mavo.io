@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root {
   --color-magenta: #ff0080;
   --color-blue: #25aff4;
@@ -32,6 +33,9 @@
   font-weight: normal;
   font-style: normal; }
 
+h1 > a {
+  color: inherit; }
+
 body > header + h2 {
   background: #82cf17; }
 
@@ -41,7 +45,7 @@ body > header + h2 {
     color: #82cf17; }
   .example.color-picker .example-container {
     padding: 0; }
-    .example.color-picker .example-container div[style] {
+    .example.color-picker .example-container > div:last-of-type {
       padding: 2em; }
     .example.color-picker .example-container input {
       display: block; }
@@ -137,13 +141,17 @@ body > header + h2 {
     font-size: 120%;
     font-weight: bold; }
 
-body > section:first-of-type:not([id]) {
+body > section:first-of-type:not([id]),
+body > section#intro {
   font-size: 200%; }
-  body > section:first-of-type:not([id]) p:first-child {
+  body > section:first-of-type:not([id]) p:first-child,
+  body > section#intro p:first-child {
     margin-top: 0; }
-  body > section:first-of-type:not([id]) p:last-child {
+  body > section:first-of-type:not([id]) p:last-child,
+  body > section#intro p:last-child {
     margin-bottom: 0; }
-  body > section:first-of-type:not([id]) p::before {
+  body > section:first-of-type:not([id]) p::before,
+  body > section#intro p::before {
     content: "In a nutshell";
     display: inline-block;
     vertical-align: text-bottom;
@@ -204,6 +212,14 @@ body > section table {
   #toc a {
     display: block;
     margin: .3em 0; }
+
+.learn-more {
+  font-weight: bold;
+  margin-bottom: 0; }
+  .learn-more a::before {
+    content: "▸ Learn more about "; }
+  .learn-more + .learn-more {
+    margin-top: 0; }
 
 /**
  * Syntax highlighting
