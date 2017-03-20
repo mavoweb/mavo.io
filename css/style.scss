@@ -27,11 +27,13 @@ body {
 	font: 300 106%/1.5 $body-font;
 	font-kerning: auto;
 	hyphens: auto;
+	counter-reset: figure;
 }
 
 a {
 	color: $blue;
 	text-decoration: none;
+	font-weight: bold;
 
 	&:hover {
 		text-decoration: underline;
@@ -238,5 +240,23 @@ body > footer {
 .tip {
 	&::before {
 		content: "Tip: ";
+	}
+}
+
+figure {
+	counter-increment: figure;
+
+	img, video {
+		max-width: 100%;
+	}
+
+	figcaption {
+		font-style: italic;
+
+		&::before {
+			content: "Figure " counter(figure) " ";
+			font-weight: bold;
+			font-style: normal;
+		}
 	}
 }

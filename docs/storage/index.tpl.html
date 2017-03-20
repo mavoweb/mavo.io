@@ -19,7 +19,7 @@
 	<p>
 		To disable storage, just don't include an <code>mv-storage</code> attribute, or specify <code>mv-storage="none"</code>.
 		You could also disable storage on a per-property basis, by specifying <code>mv-storage="none"</code> on individual properties.
-		This is useful when you don't need a property's value to be saved, e.g. for properties used for filtering data.
+		This is useful when you don't need a property's value to be saved. Properties whose values are specified via expressions have <code>mv-storage="none"</code> by default.
 	</p>
 </section>
 
@@ -37,19 +37,28 @@
 <section>
 	<h1>Github</h1>
 
-	<p>
+	<figure>
+		<video src="/videos/gh-auth.mp4" controls></video>
+		<figcaption>Mavo takes care of authentication when using Github as your storage backend.</figcaption>
+	</figure>
+
+	<p>The Github backend provides remote storage, which is useful if you need to share data with other people.
 		Mavo will provide login controls and will not allow any edits until the viewer has logged in and has commit permissions.
 		If the file and/or repo does not exist, Mavo will create it upon saving.
-		The value of the `mv-storage` attribute can take almost any Github file URL, as well as some more fuzzy ones:
+		The value of the <code>mv-storage</code> attribute can take almost any Github file URL, as well as some more fuzzy ones.
 	</p>
 
-	<dl>
-		<dt><code>https://github.com/[username]</code></dt>
-		<dd>This is perfect for people who want to use Github as a storage backend but are not familiar with it, since all it requires is signing up to get a username.
-			Mavo will create a default repository of <em>mv-data</em> and will store data in a file called <em>[mavo-id].json</em></dd>
+	<p>
+		<strong>You don’t need to understand how Github works to use it for storing your data.</strong>
+		If you don’t know what a repo or a branch is, do not worry. Just sign up for a <a href="http://github.com">Github</a> account, and specify <code>https://github.com/[username]</code> as the value of the <code>mv-storage</code> attribute.
+		Mavo will automatically create an <code>mv-data</code> repo for you and a file to store your data named <code>[appname].json</code> where <code>[appname]</code> is the <a href="/docs/primer/#mv-app">name of your app</a>.
+	</p>
 
+	<p>If you <em>do</em> understand how Github works, you can specify where your data should be stored with more precision:</p>
+
+	<dl>
 		<dt><code>https://github.com/[username]/[reponame]</code></dt>
-		<dd>Mavo will create a file called [mavo id].json in that repository.</dd>
+		<dd>Mavo will create a file called <code>[appname].json</code> in that repository.</dd>
 
 		<dt><code>https://github.com/[username]/[reponame]/[filename]</code></dt>
 		<dd>Mavo will assume a default branch of <code>master</code></dd>
@@ -57,34 +66,62 @@
 		<dt><code>https://github.com/[username]/[reponame]/blob/[branch]/[filename]</code></dt>
 		<dd>The URL Github gives you when using its file browser. As specific as it gets, Mavo makes no assumptions.</dd>
 
-		<dt><code>https://[username].github.io/[reponame]/[filename]</code></dt>
-		<dd>Github Pages URL. Try to avoid these, as Mavo has to make some assumptions about what is the repo name, branch name, and filename, which could be wrong.</dd>
-
 		<dt><code>https://raw.githubusercontent.com/[username]/[reponame]/[branch]/[filename]</code></dt>
 		<dd>The URL that shows when you click the button <em>Raw</em> from the Github file browser.</dd>
 	</dl>
 
 	<p class="note">Note that <em>[filename]</em> above could include a path, e.g. <code>foo/bar/baz.json</code>.</p>
+
+	<p>Github Pages URLs (<code>https://[username].github.io/[reponame]/[filename]</code>) are not supported, because it’s impossible for Mavo to figure out where to save the data just from the Github Pages URL.</p>
 </section>
 
-<section>
+<!-- <section>
 	<h1>Dropbox</h1>
 	<p>TODO</p>
-</section>
+</section> -->
 
 <section>
 	<h1>HTML element</h1>
-	<p>TODO</p>
+	<p>To store data in another HTML element in the page, use an <code>mv-storage</code> value of <code>#[elementid]</code> where <code>[elementid]</code> is the id of the element you want to use to store data in.</p>
+
+	<section class="example">
+		<script type="text/plain">
+<pre id="data">{
+	"firstName": "Lea",
+	"lastName": "Verou"
+}</pre>
+<div mv-app="elementStorage" mv-storage="#data">
+	<span property="firstName">David</span>
+	<span property="lastName">Karger</span>
+</div>
+		</script>
+	</section>
+
+	<p class="warning">Note that unless you take extra steps to persist the content of that element, <strong>the data will be lost after a page refresh</strong>.
+		This storage adapter is mainly useful for debugging purposes or to combine Mavo with other libraries.</p>
 </section>
 
 <section>
-	<h1>mv-init attribute</h1>
-	<p>TODO</p>
+	<h1>Reading from a different data source</h1>
+	<p>Sometimes you want to load data from one place and save to a different place, for a variety of reasons.
+		If this is what you want, Mavo has you covered!
+		Just use the <code>mv-source</code> attribute to specify where the data will be read <strong>from</strong> and the <code>mv-storage</code> attribute to specify where the data will be stored.
+		Note that if you use both <code>mv-source</code> and <code>mv-storage</code>, only login controls for the latter will be shown in the Mavo bar.
+	</p>
 </section>
 
 <section>
-	<h1>Changing mv-storage and mv-init via the URL</h1>
-	<p>TODO</p>
+	<h1>Providing initial data</h1>
+	<p>Sometimes you want to store your application’s data in the local store or another initially empty storage, but you want the app to start with some data already in place, <em>iff its storage is empty</em>.
+	For this purpose, you can use the <code>mv-init</code> attribute. It will be used just like the <code>mv-source</code> attribute above, but only <strong>if no data has been stored yet</strong>.</p>
+</section>
+
+<section>
+	<h1>Changing mv-storage, mv-source, and mv-init via the URL</h1>
+	<p>You can change the storage location of any Mavo app via the URL.
+		This way, you can reuse the same Mavo app to edit multiple sets of data with the same general format or even reuse someone else’s Mavo app to store your own data in your own preferred location.
+		
+	</p>
 </section>
 
 @@include('_footer-docs.html')

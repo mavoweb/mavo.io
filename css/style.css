@@ -62,11 +62,13 @@ body {
   font-kerning: auto;
   -webkit-hyphens: auto;
   -ms-hyphens: auto;
-  hyphens: auto; }
+  hyphens: auto;
+  counter-reset: figure; }
 
 a {
   color: #25aff4;
-  text-decoration: none; }
+  text-decoration: none;
+  font-weight: bold; }
   a:hover {
     text-decoration: underline; }
 
@@ -251,5 +253,16 @@ body > footer {
 
 .tip::before {
   content: "Tip: "; }
+
+figure {
+  counter-increment: figure; }
+  figure img, figure video {
+    max-width: 100%; }
+  figure figcaption {
+    font-style: italic; }
+    figure figcaption::before {
+      content: "Figure " counter(figure) " ";
+      font-weight: bold;
+      font-style: normal; }
 
 /*# sourceMappingURL=style.css.map */
