@@ -85,7 +85,7 @@ thead th:first-child {
 				<th>Attribute</th>
 				<th>On</th>
 				<th style="width: 48%;">Purpose</th>
-				<th style="width: 6em">Read more</th>
+				<th style="width: 6.5em">Read more</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -94,6 +94,12 @@ thead th:first-child {
 				<td>Properties, elements with <code>mv-value</code></td>
 				<td>Override the defaults for which attribute holds the data for this element. For no attribute (element contnet), specify <code>"null"</code>.</td>
 				<td><a href="/docs/properties">Properties</a></td>
+			</tr>
+			<tr>
+				<td><code>mv-source</code></td>
+				<td>Mavo root</td>
+				<td>If specified, it is used instead of <code>mv-storage</code> for loading data. Useful when you want to read from one location and write to a different location. Same values as <code>mv-storage</code>.</td>
+				<td><a href="/docs/storage">Storage</a></td>
 			</tr>
 			<tr>
 				<td><code>mv-init</code></td>
