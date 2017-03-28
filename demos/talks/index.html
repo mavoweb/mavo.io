@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<main class="talks" mv-storage="https://github.com/leaverou/leaverou.github.io/data.json" mv-init="talks-subset.json">
+<main mv-app class="talks" mv-storage="https://github.com/leaverou/leaverou.github.io/data.json" mv-init="talks-subset.json">
 	<h1>[count(talk)] sessions at [count(event)] events ([count(upcoming)] events upcoming)</h1>
 	<article mv-multiple property="event" mv-order="desc">
 		<meta property="upcoming" content="[date > $now]" />
@@ -46,16 +46,10 @@
 	</article>
 </main>
 
-<!-- <div hidden mv-init="http://leaverou.github.io/countries.json" class="mv-app mv-keep-unhandled">
+<div hidden mv-app mv-init="http://leaverou.github.io/countries.json">
 	<select id="countries">
 		<option value="[code]" property="country" mv-multiple typeof>[name]</option>
 	</select>
-</div> -->
-
-<div hidden>
-<select id="countries">
-	<option value="" property="country" mv-multiple="" typeof="Item" class="mv-item">Online</option><option value="us" property="country" mv-multiple="" typeof="Item" class="mv-item">United States</option><option value="gb" property="country" mv-multiple="" typeof="Item" class="mv-item">United Kingdom</option><option value="au" property="country" mv-multiple="" typeof="Item" class="mv-item">Australia</option><option value="at" property="country" mv-multiple="" typeof="Item" class="mv-item">Austria</option><option value="be" property="country" mv-multiple="" typeof="Item" class="mv-item">Belgium</option><option value="br" property="country" mv-multiple="" typeof="Item" class="mv-item">Brazil</option><option value="ca" property="country" mv-multiple="" typeof="Item" class="mv-item">Canada</option><option value="cl" property="country" mv-multiple="" typeof="Item" class="mv-item">Chile</option><option value="cz" property="country" mv-multiple="" typeof="Item" class="mv-item">Czech Republic</option><option value="fi" property="country" mv-multiple="" typeof="Item" class="mv-item">Finland</option><option value="fr" property="country" mv-multiple="" typeof="Item" class="mv-item">France</option><option value="de" property="country" mv-multiple="" typeof="Item" class="mv-item">Germany</option><option value="el" property="country" mv-multiple="" typeof="Item" class="mv-item">Greece</option><option value="in" property="country" mv-multiple="" typeof="Item" class="mv-item">India</option><option value="it" property="country" mv-multiple="" typeof="Item" class="mv-item">Italy</option><option value="il" property="country" mv-multiple="" typeof="Item" class="mv-item">Israel</option><option value="nz" property="country" mv-multiple="" typeof="Item" class="mv-item">New Zealand</option><option value="pl" property="country" mv-multiple="" typeof="Item" class="mv-item">Poland</option><option value="pt" property="country" mv-multiple="" typeof="Item" class="mv-item">Portugal</option><option value="nl" property="country" mv-multiple="" typeof="Item" class="mv-item">The Netherlands</option><option value="no" property="country" mv-multiple="" typeof="Item" class="mv-item">Norway</option><option value="ph" property="country" mv-multiple="" typeof="Item" class="mv-item">Philippines</option><option value="ru" property="country" mv-multiple="" typeof="Item" class="mv-item">Russia</option><option value="scotland" property="country" mv-multiple="" typeof="Item" class="mv-item">Scotland</option><option value="sg" property="country" mv-multiple="" typeof="Item" class="mv-item">Singapore</option><option value="es" property="country" mv-multiple="" typeof="Item" class="mv-item">Spain</option><option value="se" property="country" mv-multiple="" typeof="Item" class="mv-item">Sweden</option><option value="ch" property="country" mv-multiple="" typeof="Item" class="mv-item">Switzerland</option><!--mv-marker-->
-</select>
 </div>
 
 <footer>By <a href="http://lea.verou.me">Lea Verou</a>. Flag icons made by <a href="http://www.famfamfam.com/lab/icons/flags/">Mark James</a> and are in the public domain.</footer>

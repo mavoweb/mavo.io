@@ -36,7 +36,7 @@
 		</article>
 	</div>
 
-	<p class="tip">Add <code>?debug</code> to the URL to view in debug mode!</p>
+	<p class="tip">Use <code>?storage=<em>your_path</em></code> in the URL of any of these demos to change its data source! <a href="/docs/storage/#url-params">Learn More</a></p>
 </section>
 
 <section>
@@ -49,6 +49,7 @@
 </section>
 
 <script>
+// Javascript to play videos on hover
 $.events(document.body, "mouseenter mouseleave focus blur", function(evt) {
 	if (evt.target.matches && evt.target.matches("article")) {
 		var video = $("video", evt.target);

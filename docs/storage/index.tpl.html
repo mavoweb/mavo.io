@@ -9,7 +9,7 @@
 
 <section>
 	<p>
-		The <code>mv-storage</code> attribute tells Mavo where any saved data will be stored.
+		The <code>mv-storage</code> attribute tells Mavo where to store data, and <code>mv-source</code> where to read it from, if different.
 	</p>
 </section>
 
@@ -116,12 +116,18 @@
 	For this purpose, you can use the <code>mv-init</code> attribute. It will be used just like the <code>mv-source</code> attribute above, but only <strong>if no data has been stored yet</strong>.</p>
 </section>
 
-<section>
+<section id="url-params">
 	<h1>Changing mv-storage, mv-source, and mv-init via the URL</h1>
-	<p>You can change the storage location of any Mavo app via the URL.
+
+	<p>
+		You can change the storage location of any Mavo app via the URL.
 		This way, you can reuse the same Mavo app to edit multiple sets of data with the same general format or even reuse someone else’s Mavo app to store your own data in your own preferred location!
 		If there is only one Mavo app on the page (or if the one you are interested in is first), you use the <code>storage</code>, <code>source</code>, and <code>init</code> URL parameters.
 		For example, here is <a href="/demos/todo?storage=local">the To-Do list from the demos with a local data store</a>.
+	</p>
+	<p>
+		While the <code>storage</code>, <code>source</code>, and <code>init</code> URL parameters only work for the first Mavo app on the page, you can use <code>[appname]-storage</code>, <code>[appname]-source</code>, and <code>[appname]-init</code> for any Mavo app, regardless of its placement on the page.
+		For example, here is <a href="/demos/todo?todo-storage=local">the local To-Do list again</a>, using URL parameters that include the app name.
 	</p>
 </section>
 

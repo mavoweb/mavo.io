@@ -21,6 +21,7 @@ $$(".example").forEach((example, i) => {
 
 	mavoRoot.classList.add("debug-saving");
 	mavoRoot.setAttribute("mv-storage", mavoRoot.getAttribute("mv-storage") || "local");
+	mavoRoot.setAttribute("mv-app", mavoRoot.getAttribute("mv-app") || "");
 });
 
 // ???
@@ -29,7 +30,7 @@ $$('a[href^="#"]:empty').forEach(function (a) {
 });
 
 // Give every section an id and make its heading a link
-$$("body > section h1").forEach(function (h1) {
+$$("body > section > h1, body > section section > h1").forEach(function (h1) {
 	var section = h1.parentNode;
 	var text = h1.textContent;
 

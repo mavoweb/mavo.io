@@ -213,7 +213,8 @@ var _ = self.Mavo = $.Class({
 		this.element = element;
 
 		// Index among other mavos in the page, 1 is first
-		this.index = _.all.push(this);
+		this.index = _.length + 1;
+		Object.defineProperty(_.all, this.index - 1, {value: this});
 
 		// Convert any data-mv-* attributes to mv-*
 		var dataMv = _.attributes.map(attribute => `[data-${attribute}]`);
@@ -228,7 +229,15 @@ var _ = self.Mavo = $.Class({
 		}
 
 		// Assign a unique (for the page) id to this mavo instance
-		_.allIds.push(this.id = Mavo.getAttribute(this.element, "mv-app", "id") || `mavo${this.index}`);
+		this.id = Mavo.getAttribute(this.element, "mv-app", "id") || `mavo${this.index}`;
+
+		if (this.id in _.all) {
+			// Duplicate app name
+			for (var i=2; this.id + i in _.all; i++) {}
+			this.id = this.id + i;
+		}
+
+		_.all[this.id] = this;
 		this.element.setAttribute("mv-app", this.id);
 
 		// Should we start in edit mode?
@@ -276,115 +285,97 @@ var _ = self.Mavo = $.Class({
 			inside: this.ui.bar
 		});
 
+		this.permissions = new Mavo.Permissions();
+
+		var backendTypes = ["source", "storage", "init"]; // order is significant!
+
 		// Figure out backends for storage, data reads, and initialization respectively
-		for (let role of ["storage", "source", "init"]) {
-			if (this.index == 1) {
-				this[role] = _.Functions.urlOption(role);
-			}
-
-			if (!this[role]) {
-				this[role] =  _.Functions.urlOption(`${this.id}_${role}`) || this.element.getAttribute("mv-" + role) || null;
-			}
-
-			if (this[role]) {
-				// We have a string, convert to a backend object
-				this[role] = this[role].trim();
-				this[role] = this[role] == "none"? null : _.Backend.create(this[role], {
-					mavo: this,
-					format: this.element.getAttribute("mv-format-" + role) || this.element.getAttribute("mv-format")
-				});
-			}
+		for (let role of backendTypes) {
+			this.updateBackend(role);
 		}
 
-		if (!this.storage && !this.source && this.init) {
-			// If init is present with no storage and no source, init is equivalent to source
-			this.source = this.init;
-			this.init = null;
-		}
+		this.authControls = {};
 
-		for (let role of ["storage", "source", "init"]) {
-			if (this[role]) {
-				this.primaryBackend = this[role];
-				this.permissions = this[role].permissions;
-				break;
-			}
-		}
+		this.backendObserver = new Mavo.Observer(this.element, backendTypes.map(role => "mv-" + role), records => {
+			var changed = {};
 
-		this.permissions = this.permissions || new Mavo.Permissions();
+			var roles = records.map(record => {
+				var role = record.attributeName.replace(/^mv-/, "");
+				changed[role] = this.updateBackend(role);
 
-		if (this.primaryBackend)  {
-			// Reflect backend permissions in global permissions
-			this.authControls = {};
-
-			$.style(this.ui.bar, {
-				"--mv-backend": `"${this.primaryBackend.id}"`
+				return role;
 			});
 
-			this.permissions.can("login", () => {
-				// #login authenticates if only 1 mavo on the page, or if the first.
-				// Otherwise, we have to generate a slightly more complex hash
-				this.loginHash = "#login" + (Mavo.all[0] === this? "" : "-" + this.id);
+			// Do we need to re-load data?
+			if (changed.source) {  // if source changes, always reload
+				this.load();
+			}
+			else if (!this.source) {
+				if (changed.storage || changed.init && !this.root.data) {
+					this.load();
+				}
+			}
+		});
 
-				this.authControls.login = $.create({
-					tag: "a",
-					href: this.loginHash,
-					textContent: "Login",
-					title: "Login",
-					className: "mv-login mv-button",
-					events: {
-						click: evt => {
-							evt.preventDefault();
-							this.primaryBackend.login();
-						}
-					},
-					after: $(".mv-status", this.ui.bar)
-				});
+		this.permissions.can("login", () => {
+			// #login authenticates if only 1 mavo on the page, or if the first.
+			// Otherwise, we have to generate a slightly more complex hash
+			this.loginHash = "#login" + (Mavo.all[0] === this? "" : "-" + this.id);
 
-				// We also support a hash to trigger login, in case the user doesn't want visible login UI
-				var login;
-				(login = () => {
-					if (location.hash === this.loginHash) {
-						// This just does location.hash = "" without getting a pointless # at the end of the URL
-						history.replaceState(null, document.title, new URL("", location) + "");
+			this.authControls.login = $.create({
+				tag: "a",
+				href: this.loginHash,
+				textContent: "Login",
+				title: "Login",
+				className: "mv-login mv-button",
+				events: {
+					click: evt => {
+						evt.preventDefault();
 						this.primaryBackend.login();
 					}
-				})();
-				window.addEventListener("hashchange.mavo", login);
-			}, () => {
-				$.remove(this.authControls.login);
-				this.element._.unbind("hashchange.mavo");
+				},
+				after: $(".mv-status", this.ui.bar)
 			});
 
-			// Update login status
-			this.element.addEventListener("mavo:login.mavo", evt => {
-				if (evt.backend == this.primaryBackend) { // ignore logins from secondary backends
-					var status = $(".mv-status", this.ui.bar);
-					status.innerHTML = "";
-					$.set(status, {
-						contents: [
-							{tag: "strong", innerHTML: evt.name},
-							{
-								tag: "button",
-								textContent: "Logout",
-								className: "mv-logout",
-								events: {
-									click: e => evt.backend.logout()
-								},
-							}
-						]
-					});
+			// We also support a URL param to trigger login, in case the user doesn't want visible login UI
+			if (Mavo.Functions.urlOption("login") !== null) {
+				this.primaryBackend.login();
+			}
+		}, () => {
+			$.remove(this.authControls.login);
+		});
 
-					// If last time we rendered we got nothing, maybe now we'll have better luck?
-					if (!this.root.data && !this.unsavedChanges) {
-						this.load();
-					}
+		// Update login status
+		this.element.addEventListener("mavo:login.mavo", evt => {
+			if (evt.backend == this.primaryBackend) { // ignore logins from secondary backends
+				var status = $(".mv-status", this.ui.bar);
+				status.innerHTML = "";
+				$.set(status, {
+					contents: [
+						{tag: "strong", innerHTML: evt.name},
+						{
+							tag: "button",
+							textContent: "Logout",
+							className: "mv-logout",
+							events: {
+								click: e => evt.backend.logout()
+							},
+						}
+					]
+				});
+
+				// If last time we rendered we got nothing, maybe now we'll have better luck?
+				if (!this.root.data && !this.unsavedChanges) {
+					this.load();
 				}
-			});
+			}
+		});
 
-			this.element.addEventListener("mavo:logout.mavo", evt => {
+		this.element.addEventListener("mavo:logout.mavo", evt => {
+			if (evt.backend == this.primaryBackend) { // ignore logouts from secondary backends
 				$(".mv-status", this.ui.bar).textContent = "";
-			});
-		}
+			}
+		});
 
 		// Prevent editing properties inside <summary> to open and close the summary (fix bug #82)
 		if ($("summary [property]:not([typeof])")) {
@@ -401,6 +392,9 @@ var _ = self.Mavo = $.Class({
 		this.setUnsavedChanges(false);
 
 		this.permissions.onchange(({action, value}) => {
+			if (action === undefined) {
+				console.trace();
+			}
 			var permissions = this.element.getAttribute("mv-permissions") || "";
 			permissions = permissions.trim().split(/\s+/).filter(a => a != action);
 
@@ -467,28 +461,24 @@ var _ = self.Mavo = $.Class({
 			});
 		}
 
-		if (this.storage) {
-			this.permissions.can("delete", () => {
-				this.ui.clear = $.create("button", {
-					className: "mv-clear",
-					textContent: "Clear",
-					title: "Clear"
-				});
-
-				this.ui.bar.appendChild(this.ui.clear);
-			}, () => {
-				$.remove(this.ui.clear);
+		this.permissions.can("delete", () => {
+			this.ui.clear = $.create("button", {
+				className: "mv-clear",
+				textContent: "Clear",
+				title: "Clear"
 			});
-		}
+
+			this.ui.bar.appendChild(this.ui.clear);
+		}, () => {
+			$.remove(this.ui.clear);
+		});
 
 		if (this.storage || this.source) {
 			// Fetch existing data
 			this.permissions.can("read", () => this.load());
 		}
 		else {
-			// No storage
-			this.permissions.on(["read", "edit"]);
-
+			// No storage or source
 			$.fire(this.element, "mavo:load");
 		}
 
@@ -638,8 +628,12 @@ var _ = self.Mavo = $.Class({
 
 		$.events(this.element, "mouseenter.mavo:edit mouseleave.mavo:edit", evt => {
 			if (evt.target.matches(".mv-item-controls *")) {
-				var item = Mavo.data(evt.target.closest(".mv-item-controls"), "item");
-				item.classList.toggle("mv-highlight", evt.type == "mouseenter");
+				var itemControls = evt.target.closest(".mv-item-controls");
+				var item = Mavo.data(itemControls, "item");
+
+				if (item && item.element) {
+					item.element.classList.toggle("mv-highlight", evt.type == "mouseenter");
+				}
 			}
 
 			if (evt.target.matches(_.selectors.multiple)) {
@@ -691,14 +685,73 @@ var _ = self.Mavo = $.Class({
 	},
 
 	/**
+	 * Update the backend for a given role
+	 * @return {Boolean} true if a change occurred, false otherwise
+	 */
+	updateBackend: function(role) {
+		var previous = this[role], backend;
+
+		if (this.index == 1) {
+			backend = _.Functions.urlOption(role);
+		}
+
+		if (!backend) {
+			backend =  _.Functions.urlOption(`${this.id}-${role}`) || this.element.getAttribute("mv-" + role) || null;
+		}
+
+		if (backend) {
+			backend = backend.trim();
+
+			if (backend == "none") {
+				backend = null;
+			}
+		}
+
+		if (backend && (!previous || !previous.equals(backend))) {
+			// We have a string, convert to a backend object if different than existing
+			this[role] = backend = _.Backend.create(backend, {
+				mavo: this,
+				format: this.element.getAttribute("mv-format-" + role) || this.element.getAttribute("mv-format")
+			});
+		}
+		else if (!backend) {
+			// We had a backend and now we will un-have it
+			this[role] = null;
+		}
+
+		var changed = backend? !backend.equals(previous) : !!previous;
+
+		if (changed) {
+			// A change occured
+			if (!this.storage && !this.source && this.init) {
+				// If init is present with no storage and no source, init is equivalent to source
+				this.source = this.init;
+				this.init = null;
+			}
+
+			var permissions = this.storage? this.storage.permissions : new Mavo.Permissions({edit: true, save: false});
+			permissions.parent = this.source && this.source.permissions;
+			this.permissions.parent = permissions;
+
+			this.primaryBackend = this.storage || this.source;
+		}
+
+		return changed;
+	},
+
+	/**
 	 * load - Fetch data from source and render it.
 	 *
 	 * @return {Promise}  A promise that resolves when the data is loaded.
 	 */
 	load: function() {
-		this.inProgress = "Loading";
-
 		var backend = this.source || this.storage;
+
+		if (!backend) {
+			return;
+		}
+
+		this.inProgress = "Loading";
 
 		return backend.ready.then(() => backend.load())
 		.catch(err => {
@@ -807,31 +860,70 @@ var _ = self.Mavo = $.Class({
 
 		needsEdit: function(value) {
 			$.remove(this.ui.edit);
+		},
+
+		storage: function(value) {
+			if (value !== this._storage && !value) {
+				var permissions = new Mavo.Permissions({edit: true, save: false});
+				permissions.parent = this.permissions.parent;
+				this.permissions.parent = permissions;
+			}
+		},
+
+		primaryBackend: function(value) {
+			value = value || null;
+
+			if (value != this._primaryBackend) {
+				if (value)  {
+					this.ui.bar.style.setProperty("--mv-backend", `"${value.id}"`);
+				}
+				else {
+					this.ui.bar.style.removeProperty("--mv-backend");
+				}
+
+				return value;
+			}
 		}
 	},
 
 	static: {
-		all: [],
+		all: {},
 
-		allIds: [],
+		get length() {
+			return Object.keys(_.all).length;
+		},
 
 		get: function(id) {
-			for (let mavo of _.all) {
-				if (mavo.id === id) {
-					return mavo;
+			if (id instanceof Element) {
+				// Get by element
+				for (var name in _.all) {
+					if (_.all[name].element == id) {
+						return _.all[name];
+					}
 				}
+
+				return null;
 			}
 
-			return null;
+			var name = typeof id === "number"? Object.keys(_.all)[id] : id;
+
+			return _.all[name] || null;
 		},
 
 		superKey: navigator.platform.indexOf("Mac") === 0? "metaKey" : "ctrlKey",
 
-		init: function(container) {
-			return $$(_.selectors.init, container || document)
-				.filter(element => element == document.documentElement || !element.parentNode.closest(_.selectors.init))
+		ready: Promise.all([
+			$.ready(),
+			$.include(Array.from && window.Intl && document.documentElement.closest, "https://cdn.polyfill.io/v2/polyfill.min.js?features=blissfuljs,Intl.~locale.en")
+		]),
+
+		init: function(container = document) {
+			return $$(_.selectors.init, container)
+				.filter(element => !_.get(element)) // not already inited
 				.map(element => new _(element));
 		},
+
+		plugins: {},
 
 		plugin: function(o) {
 			_.hooks.add(o.hooks);
@@ -839,6 +931,10 @@ var _ = self.Mavo = $.Class({
 			for (let Class in o.extend) {
 				let def = Class == "Mavo"? _ : _[Class];
 				$.Class(def, o.extend[Class]);
+			}
+
+			if (o.name) {
+				_.plugins[o.name] = o;
 			}
 		},
 
@@ -854,7 +950,7 @@ var _ = self.Mavo = $.Class({
 {
 
 let s = _.selectors = {
-	init: ".mv-app, [mv-app], [data-mv-app], [mv-storage], [data-mv-storage]",
+	init: ".mv-app, [mv-app], [data-mv-app]",
 	property: "[property], [itemprop]",
 	specificProperty: name => `[property=${name}], [itemprop=${name}]`,
 	group: "[typeof], [itemscope], [itemtype], [mv-group]",
@@ -890,13 +986,8 @@ $.extend(_.selectors, {
 
 }
 
-// Init mavo
-Promise.all([
-	$.ready(),
-	$.include(Array.from && window.Intl && document.documentElement.closest, "https://cdn.polyfill.io/v2/polyfill.min.js?features=blissfuljs,Intl.~locale.en")
-])
-.catch(err => console.error(err))
-.then(() => Mavo.init());
+// Init mavo. Async to give other scripts a chance to modify stuff.
+requestAnimationFrame(() => _.ready.catch(console.error).then(() => Mavo.init()));
 
 Stretchy.selectors.filter = ".mv-editor:not([property])";
 
@@ -965,13 +1056,65 @@ var _ = $.extend(Mavo, {
 	 */
 	getStyle: (element, property) => element && getComputedStyle(element).getPropertyValue(property).trim(),
 
-	data: (element, name, value) => {
-		if (value === undefined) {
+	/**
+	 * Get/set data on an element
+	 */
+	data: function(element, name, value) {
+		if (arguments.length == 2) {
 			return $.value(element, "_", "data", "mavo", name);
 		}
 		else {
-			element._.data.mavo = element._.mavo || {};
-			element._.data.mavo[name] = value;
+			element._.data.mavo = element._.data.mavo || {};
+			return element._.data.mavo[name] = value;
+		}
+	},
+
+	/**
+	 * Revocably add/remove elements from the DOM
+	 */
+	revocably: {
+		add: function(element) {
+			var comment = _.revocably.isRemoved(element);
+
+			if (comment) {
+				comment.parentNode.replaceChild(element, comment);
+			}
+
+			return comment;
+		},
+
+		remove: function(element, commentText) {
+			if (!element) {
+				return;
+			}
+
+			var comment = _.data(element, "commentstub");
+
+			if (!comment) {
+				commentText = commentText || element.id || element.className || element.nodeName;
+				comment = _.data(element, "commentstub", document.createComment(commentText));
+			}
+
+			if (element.parentNode) {
+				// In DOM, remove
+				element.parentNode.replaceChild(comment, element);
+			}
+
+			return comment;
+		},
+
+		isRemoved: function(element) {
+			if (!element || element.parentNode) {
+				return false;
+			}
+
+			var comment = _.data(element, "commentstub");
+
+			if (comment && comment.parentNode) {
+				return comment;
+			}
+
+			return false;
 		}
 	},
 
@@ -983,7 +1126,7 @@ var _ = $.extend(Mavo, {
 	},
 
 	scrollIntoViewIfNeeded: element => {
-		if (!Mavo.inViewport(element)) {
+		if (element && !Mavo.inViewport(element)) {
 			element.scrollIntoView({behavior: "smooth"});
 		}
 	},
@@ -1032,7 +1175,7 @@ var _ = $.extend(Mavo, {
 			// No throttling
 			return fn;
 		}
-		
+
 		var timer = null, code;
 
 		return function () {
@@ -1066,7 +1209,7 @@ var _ = $.extend(Mavo, {
 			if (attribute) {
 				$.extend(this.options, {
 					attributes: true,
-					attributeFilter: this.attribute == "all"? undefined : [this.attribute],
+					attributeFilter: this.attribute == "all"? undefined : Mavo.toArray(this.attribute),
 					attributeOldValue: !!o.oldValue
 				});
 			}
@@ -1239,10 +1382,12 @@ updateWithin("focus", document.activeElement !== document.body? document.activeE
 var _ = Mavo.Permissions = $.Class({
 	constructor: function(o) {
 		this.triggers = [];
+		this.hooks = new $.Hooks();
+
+		// If we don’t do this, there is no way to retrieve this from inside parentChanged
+		this.parentChanged = _.prototype.parentChanged.bind(this);
 
 		this.set(o);
-
-		this.hooks = new $.Hooks();
 	},
 
 	// Set multiple permissions at once
@@ -1284,14 +1429,6 @@ var _ = Mavo.Permissions = $.Class({
 		this.observe(actions, false, callback);
 	},
 
-	// Like this.can(), but returns a promise
-	// Useful for things that you want to do only once
-	when: function(actions) {
-		return new Promise((resolve, reject) => {
-			this.can(actions, resolve, reject);
-		});
-	},
-
 	// Schedule a callback for when a set of permissions changes value
 	observe: function(actions, value, callback) {
 		actions = Mavo.toArray(actions);
@@ -1317,15 +1454,26 @@ var _ = Mavo.Permissions = $.Class({
 
 	// Monitor all changes
 	onchange: function(callback) {
+		// Future changes
 		this.hooks.add("change", callback);
 
+		// Fire for current values
 		for (let action of _.actions) {
-			callback.call(this, {
-				action,
-				value: this[action],
-				permissions: this
-			});
+			callback.call(this, {action, value: this[action]});
 		}
+	},
+
+	parentChanged: function(o = {}) {
+		var localValue = this["_" + o.action];
+
+		if (localValue !== undefined || o.from == o.value) {
+			// We have a local value so we don’t care about parent changes OR nothing changed
+			return;
+		}
+
+		this.fireTriggers(o.action);
+
+		this.hooks.run("change", $.extend({context: this}, o));
 	},
 
 	// A single permission changed value
@@ -1342,8 +1490,13 @@ var _ = Mavo.Permissions = $.Class({
 		// need to set it manually, otherwise it still has its previous value
 		this["_" + action] = value;
 
-		// TODO add classes to element
-		this.triggers.forEach(trigger => {
+		this.fireTriggers(action);
+
+		this.hooks.run("change", {action, value, from, context: this});
+	},
+
+	fireTriggers: function(action) {
+		for (let trigger of this.triggers) {
 			var match = this.is(trigger.actions, trigger.value);
 
 			if (trigger.active && trigger.actions.indexOf(action) > -1 && match) {
@@ -1357,9 +1510,7 @@ var _ = Mavo.Permissions = $.Class({
 				// if a and b are set to true one after the other
 				trigger.active = true;
 			}
-		});
-
-		this.hooks.run("change", {action, value, permissions: this});
+		}
 	},
 
 	or: function(permissions) {
@@ -1368,6 +1519,37 @@ var _ = Mavo.Permissions = $.Class({
 		}
 
 		return this;
+	},
+
+	live: {
+		parent: function(parent) {
+			var oldParent = this._parent;
+
+			if (oldParent == parent) {
+				return;
+			}
+
+			this._parent = parent;
+
+			// Remove previous trigger, if any
+			if (oldParent) {
+				Mavo.delete(oldParent.hooks.change, this.parentChanged);
+			}
+
+			// What changes does this cause? Fire triggers for them
+			for (let action of _.actions) {
+				this.parentChanged({
+					action,
+					value: parent? parent[action] : undefined,
+					from: oldParent? oldParent[action] : undefined
+				});
+			}
+
+			if (parent) {
+				// Add new trigger
+				parent.onchange(this.parentChanged);
+			}
+		}
 	},
 
 	static: {
@@ -1380,12 +1562,23 @@ var _ = Mavo.Permissions = $.Class({
 				return;
 			}
 
-			$.live(_.prototype, action, function(able, previous) {
-				if (setter) {
-					setter.call(this, able, previous);
-				}
+			$.live(_.prototype, action, {
+				get: function() {
+					var ret = this["_" + action];
 
-				this.changed(action, able, previous);
+					if (ret === undefined && this.parent) {
+						return this.parent[action];
+					}
+
+					return ret;
+				},
+				set: function(able, previous) {
+					if (setter) {
+						setter.call(this, able, previous);
+					}
+
+					this.changed(action, able, previous);
+				}
 			});
 
 			_.actions.push(action);
@@ -1428,8 +1621,8 @@ _.register(["add", "delete"], function(can) {
  */
 var _ = Mavo.Backend = $.Class({
 	constructor: function(url, o = {}) {
-		this.raw = url;
-		this.url = new URL(this.raw, location);
+		this.source = url;
+		this.url = new URL(this.source, location);
 		this.mavo = o.mavo;
 		this.format = Mavo.Formats.create(o.format, this);
 
@@ -1476,6 +1669,10 @@ var _ = Mavo.Backend = $.Class({
 		return `${this.id} (${this.url})`;
 	},
 
+	equals: function(backend) {
+		return backend === this || (backend && this.id == backend.id && this.source == backend.source);
+	},
+
 	static: {
 		// Return the appropriate backend(s) for this url
 		create: function(url, o) {
@@ -1507,9 +1704,9 @@ _.register($.Class({
 	constructor: function () {
 		this.permissions.on(["read", "edit", "save"]);
 
-		this.element = $(this.raw) || $.create("script", {
+		this.element = $(this.source) || $.create("script", {
 			type: "application/json",
-			id: this.raw.slice(1),
+			id: this.source.slice(1),
 			inside: document.body
 		});
 	},
@@ -1599,7 +1796,7 @@ var base = _.Base = $.Class({
 		extensions: [],
 		dependencies: [],
 		ready: function() {
-			return Promise.all(this.dependencies.map(d => $.include(d.test, d.url)));
+			return Promise.all(this.dependencies.map(d => $.include(d.test(), d.url)));
 		}
 	}
 });
@@ -1641,11 +1838,11 @@ var csv = _.CSV = $.Class({
 			skipEmptyLines: true
 		},
 		dependencies: [{
-			test: self.Papa,
+			test: () => self.Papa,
 			url: "https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.4/papaparse.min.js"
 		}],
 		ready: base.ready,
-		parse: (serialized, me) => csv.ready(() => {
+		parse: (serialized, me) => csv.ready().then(() => {
 			var data = Papa.parse(serialized, csv.defaultOptions);
 			var property = me? me.property : "content";
 
@@ -1663,8 +1860,8 @@ var csv = _.CSV = $.Class({
 				[property]: data.data
 			};
 		}),
-		
-		stringify: (serialized, me) => csv.ready(() => {
+
+		stringify: (serialized, me) => csv.ready().then(() => {
 			var property = me? me.property : "content";
 			var options = me? me.options : csv.defaultOptions;
 			return Papa.unparse(data[property], options);
@@ -1692,7 +1889,7 @@ Object.defineProperty(_, "create", {
 		}
 
 		if (!format) {
-			var url = backend.url? backend.url.pathname : backend.raw;
+			var url = backend.url? backend.url.pathname : backend.source;
 			var extension = (url.match(/\.\w+$/) || [])[0] || ".json";
 			var Format = _.JSON;
 
@@ -2749,7 +2946,9 @@ var _ = Mavo.Primitive = $.Class({
 
 		if (data === undefined) {
 			// New property has been added to the schema and nobody has saved since
-			this.value = this.closestCollection? this.default : this.templateValue;
+			if (this.modes != "read") {
+				this.value = this.closestCollection? this.default : this.templateValue;
+			}
 		}
 		else {
 			this.value = data;
@@ -3358,6 +3557,36 @@ _.register({
 		changeEvents: "click"
 	},
 
+	"input[type=radio]": {
+		default: true,
+		attribute: "checked",
+		modes: "read",
+		getValue: element => {
+			if (element.form) {
+				return element.form[element.name].value;
+			}
+
+			var checked = $(`input[type=radio][name="${element.name}"]:checked`);
+			return checked && checked.value;
+		},
+		setValue: (element, value) => {
+			if (element.form) {
+				element.form[element.name].value = value;
+				return;
+			}
+
+			var toCheck = $(`input[type=radio][name="${element.name}"][value="${value}"]`);
+			$.properties(toCheck, {checked: true});
+		},
+		init: function(element) {
+			this.mavo.element.addEventListener("change", evt => {
+				if (evt.target.name == element.name) {
+					this.value = this.getValue();
+				}
+			});
+		}
+	},
+
 	"button, .counter": {
 		default: true,
 		attribute: "mv-clicked",
@@ -3844,10 +4073,7 @@ var _ = Mavo.Collection = $.Class({
 		}
 
 		if (!item.itemControls.parentNode) {
-			if ($.value(item, "itemControlsComment", "parentNode")) {
-				item.itemControlsComment.parentNode.replaceChild(item.itemControls, item.itemControlsComment);
-			}
-			else {
+			if (!Mavo.revocably.add(item.itemControls)) {
 				if (item instanceof Mavo.Primitive && !item.attribute) {
 					item.itemControls.classList.add("mv-adjacent");
 					$.after(item.itemControls, item.element);
@@ -3897,15 +4123,7 @@ var _ = Mavo.Collection = $.Class({
 				this.addButton.remove();
 			}
 
-			this.propagate(item => {
-				if (item.itemControls) {
-					item.itemControlsComment = item.itemControlsComment || document.createComment("item controls");
-
-					if (item.itemControls.parentNode) {
-						item.itemControls.parentNode.replaceChild(item.itemControlsComment, item.itemControls);
-					}
-				}
-			});
+			this.propagate(item => Mavo.revocably.remove(item.itemControls));
 		}
 	},
 
@@ -4260,10 +4478,6 @@ var _ = Mavo.Expression = $.Class({
 			if (Mavo.hasIntersection(collection.properties, this.identifiers)) {
 				return true;
 			}
-		}
-
-		if (Mavo.hasIntersection(Mavo.allIds, this.identifiers)) {
-			return true; // contains a Mavo id
 		}
 
 		return false;
@@ -4657,13 +4871,13 @@ var _ = Mavo.Expressions = $.Class({
 			this.expressions = [];
 
 			// Watch changes and update value
-			this.mavo.element.addEventListener("mavo:datachange", evt => {
+			document.documentElement.addEventListener("mavo:datachange", evt => {
 				if (!this.active) {
 					return;
 				}
 
 				if (evt.action == "propertychange" && evt.node.closestCollection) {
-					// Throttle propertychange events in collections
+					// Throttle propertychange events in collections and events from other Mavos
 					if (!this.scheduled.has(evt.property)) {
 						setTimeout(() => {
 							this.scheduled.delete(evt.property);
@@ -4846,10 +5060,6 @@ Mavo.hooks.add({
 						return null;
 					}
 
-					if (property == this.mavo.id) {
-						return data[property] = this.mavo.root.getData(env.options);
-					}
-
 					if (this instanceof Mavo.Group && property == this.property && this.collection) {
 						return data[property] = env.data;
 					}
@@ -4878,6 +5088,11 @@ Mavo.hooks.add({
 						data[property] = ret;
 
 						return true;
+					}
+
+					// Does it reference another Mavo?
+					if (property in Mavo.all) {
+						return data[property] = Mavo.all[property].root.getData(env.options);
 					}
 
 					return false;
@@ -4973,18 +5188,12 @@ Mavo.Expressions.directive("mv-if", {
 
 				if (parentValue !== false) { // If parent if was false, it wouldn't matter whether this is in the DOM or not
 					if (value) {
-						if (this.comment && this.comment.parentNode) {
-							// Is removed from the DOM and needs to get back
-							this.comment.parentNode.replaceChild(this.element, this.comment);
-						}
+						// Is removed from the DOM and needs to get back
+						Mavo.revocably.add(this.element);
 					}
 					else if (this.element.parentNode) {
 						// Is in the DOM and needs to be removed
-						if (!this.comment) {
-							this.comment = document.createComment("mv-if");
-						}
-
-						this.element.parentNode.replaceChild(this.comment, this.element);
+						Mavo.revocably.remove(this.element, "mv-if");
 					}
 				}
 
