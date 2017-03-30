@@ -7151,7 +7151,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 								if (xhr.status == 404) {
 									// Repo does not exist so we can't check permissions
 									// Just check if authenticated user is the same as our URL username
-									if (_this4.user.login.toLowerCase() == _this4.username.toLowerCase()) {
+									if (_this4.user.username.toLowerCase() == _this4.username.toLowerCase()) {
 										_this4.permissions.on(["edit", "save"]);
 									}
 								}

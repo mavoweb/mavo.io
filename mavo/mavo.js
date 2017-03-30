@@ -6145,7 +6145,7 @@ var _ = Mavo.Backend.register($.Class({
 								if (xhr.status == 404) {
 									// Repo does not exist so we can't check permissions
 									// Just check if authenticated user is the same as our URL username
-									if (this.user.login.toLowerCase() == this.username.toLowerCase()) {
+									if (this.user.username.toLowerCase() == this.username.toLowerCase()) {
 										this.permissions.on(["edit", "save"]);
 									}
 								}
