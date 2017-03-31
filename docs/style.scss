@@ -274,6 +274,33 @@ body > section table {
 	}
 }
 
+table.attributes {
+	td:nth-last-child(2) {
+		background: hsl(80, 100%, 80%);
+		color: hsl(80, 100%, 30%);
+		text-align: center;
+		vertical-align: middle;
+
+		&.semi {
+			font-size: 65%;
+			font-weight: bold;
+			text-transform: uppercase;
+
+			background: hsl(50, 100%, 80%);
+			color: hsl(50, 100%, 35%);
+		}
+
+		&:empty {
+			background: hsl(0, 100%, 93%);
+			color: hsl(0, 60%, 60%);
+
+			&::before {
+				content: "✘";
+			}
+		}
+	}
+}
+
 /**
  * Syntax highlighting
  */

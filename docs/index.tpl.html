@@ -16,7 +16,7 @@ td:nth-child(2):empty::before {
 }
 
 thead th:first-child {
-	width: 20%;
+	width: 18%;
 }
 </style>
 
@@ -32,13 +32,15 @@ thead th:first-child {
 
 <section>
 	<h1>Core attributes</h1>
-	<p>These attributes are crucial, most Mavo apps need them and elements with them are special.</p>
+	<p>These attributes are crucial, most Mavo apps need them and elements with them are special.
+		The <em>Live?</em> column refers to whether Mavo will react to changes to this attribute (e.g. via <a href="/docs/expressions">expressions</a>).</p>
 
-	<table>
+	<table class="attributes">
 		<thead>
 			<tr>
 				<th>Attribute</th>
-				<th style="width: 72%;">Purpose</th>
+				<th style="width: 65%;">Purpose</th>
+				<th>Live?</th>
 				<th style="width: 6em">Read more</th>
 			</tr>
 		</thead>
@@ -46,16 +48,20 @@ thead th:first-child {
 			<tr>
 				<td><code>mv-app</code></td>
 				<td>Allows you to assign an id to your app, which is used in a number of places. The element with this attribute is called the <strong>Mavo root</strong>.</td>
+				<td></td>
 				<td><a href="/docs/primer/#mv-app">Primer</a></td>
 			</tr>
 			<tr>
 				<td><code>mv-storage</code></td>
 				<td>Tells Mavo where data is stored. It’s used on the Mavo root with any of the accepted values or optionally on individual properties to prevent them from being stored (<code>mv-storage="none"</code>).</td>
+				<td>✓</td>
 				<td><a href="/docs/storage">Storage</a></td>
 			</tr>
 			<tr>
 				<td><code>property</code></td>
-				<td>Names elements that will be saved, edited, or used in expressions. Elements with this attribute are called <strong>Properties</strong>.</td>
+				<td>Names elements that will be saved, edited, or used in <a href="/docs/expressions">expressions</a>. Elements with this attribute are called <strong>Properties</strong>.</td>
+
+				<td></td>
 				<td><a href="/docs/properties">Properties</a></td>
 			</tr>
 			<tr>
@@ -63,11 +69,15 @@ thead th:first-child {
 				<td>The value of this property element is not an attribute or its text content, but the union of the values of the properties inside it.
 					This is almost always inferred from the structure of your properties and added automatically, but you can use it to force an element to be a group, or to declare the type of the group (e.g. <code>typeof="Person"</code>) for better semantic value.
 					Elements with this attribute are called <strong>groups</strong>.</td>
+
+				<td></td>
 				<td><a href="/docs/primer">Primer</a></td>
 			</tr>
 			<tr>
 				<td><code>mv-multiple</code></td>
 				<td>Makes elements repeatable. Only has meaning on property elements. Elements with this attribute are called <strong>Collections</strong>.</td>
+
+				<td></td>
 				<td><a href="/docs/primer">Primer</a></td>
 			</tr>
 
@@ -77,14 +87,17 @@ thead th:first-child {
 
 <section>
 	<h1>Other attributes</h1>
-	<p>These are attributes you can use to further customize your Mavo app.</p>
+	<p>These are attributes you can use to further customize your Mavo app.
+		The <em>Live?</em> column refers to whether Mavo will react to changes to this attribute (e.g. via <a href="/docs/expressions">expressions</a>).
+	</p>
 
-	<table>
+	<table class="attributes">
 		<thead>
 			<tr>
 				<th>Attribute</th>
 				<th>On</th>
 				<th style="width: 48%;">Purpose</th>
+				<th>Live?</th>
 				<th style="width: 6.5em">Read more</th>
 			</tr>
 		</thead>
@@ -93,48 +106,63 @@ thead th:first-child {
 				<td><code>mv-attribute</code></td>
 				<td>Properties, elements with <code>mv-value</code></td>
 				<td>Override the defaults for which attribute holds the data for this element. For no attribute (element contnet), specify <code>"null"</code>.</td>
+				<td></td>
 				<td><a href="/docs/properties">Properties</a></td>
+
 			</tr>
 			<tr>
 				<td><code>mv-source</code></td>
 				<td>Mavo root</td>
 				<td>If specified, it is used instead of <code>mv-storage</code> for loading data. Useful when you want to read from one location and write to a different location. Same values as <code>mv-storage</code>.</td>
+				<td>✓</td>
 				<td><a href="/docs/storage">Storage</a></td>
+
 			</tr>
 			<tr>
 				<td><code>mv-init</code></td>
 				<td>Mavo root</td>
 				<td>If no data is stored, <code>mv-init</code> will be used to load initial data. Same values as <code>mv-storage</code>.</td>
+				<td>✓</td>
 				<td><a href="/docs/storage">Storage</a></td>
+
 			</tr>
 			<tr>
 				<td><code>mv-default</code></td>
 				<td>Properties</td>
 				<td>Sets the default value. If no value, the default value becomes the property content.</td>
+				<td>✓</td>
 				<td><a href="/docs/properties">Properties</a></td>
+
 			</tr>
 			<tr>
 				<td><code>mv-order</code></td>
 				<td>Collections</td>
 				<td>Values: <code>desc</code> or <code>asc</code>. Controls the order that new items are added to collections.</td>
 				<td></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td><code>mv-expressions</code></td>
 				<td></td>
-				<td>Change the expression syntax or disable expressions altogether.</td>
+				<td>Change the expression syntax or disable <a href="/docs/expressions">expressions</a> altogether.</td>
+				<td></td>
 				<td><a href="/docs/mavoscript">MavoScript</a></td>
+
 			</tr>
 			<tr>
 				<td><code>mv-value</code></td>
 				<td></td>
-				<td>Set an element's content to the result of an expression.</td>
+				<td>Set an element's content to the result of an <a href="/docs/expressions">expression</a>.</td>
+
+				<td class="semi" title="Any value is interpreted as an expression">Expressions Only</td>
 				<td><a href="/docs/expressions">Expressions</a></td>
 			</tr>
 			<tr>
 				<td><code>mv-if</code></td>
 				<td></td>
 				<td>Remove an element from the DOM if the expression doesn't match and re-add it when it does.</td>
+
+				<td class="semi" title="Any value is interpreted as an expression">Expressions only</td>
 				<td><a href="/docs/expressions">Expressions</a></td>
 			</tr>
 			<tr>
@@ -142,47 +170,59 @@ thead th:first-child {
 				<td>Collections</td>
 				<td>Property names (space separated) of other collections that can move items to this one.</td>
 				<td></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td><code>mv-edit</code></td>
 				<td>Properties</td>
 				<td>Customize how an element is edited by linking to another element, anywhere in the page.</td>
+
+				<td class="semi">Start only</td>
 				<td><a href="/docs/properties">Properties</a></td>
 			</tr>
 			<tr>
 				<td><code>mv-edit-*</code></td>
 				<td>Properties</td>
 				<td>Any attributes set that way will be copied over to the property's editor.</td>
+
+				<td class="semi">Start only</td>
 				<td><a href="/docs/properties">Properties</a></td>
 			</tr>
 			<tr>
 				<td><code>mv-mode</code></td>
 				<td></td>
 				<td>Make properties read-only or edit-only or use as a style hook to style properties differently depending on their edit state.</td>
+
+				<td>✓</td>
 				<td><a href="/docs/properties">Properties</a></td>
 			</tr>
 			<tr>
 				<td><code>mv-path</code></td>
 				<td>Properties</td>
 				<td>Render and edit only a subset of the stored data.</td>
+				<td class="semi">Start only</td>
 				<td></td>
 			</tr>
 			<tr>
 				<td><code>mv-format</code></td>
 				<td>Mavo root</td>
 				<td>Render and edit only a subset of the remote data, by providing a (slash-separated) path to the data it handles.</td>
+
+				<td class="semi">Start only</td>
 				<td></td>
 			</tr>
 			<tr>
 				<td><code>mv-autosave</code></td>
 				<td>Mavo root</td>
 				<td>Save automatically when the data changes. Its value is the number of seconds to throttle saving, or 0 for no throttling (save immediately). The default throttling delay is 3 seconds, used when the attribute is specified without a value. Unless throttling is disabled, The Save button will still be present in the Mavo bar.</td>
+				<td class="semi">Start only</td>
 				<td></td>
 			</tr>
 			<tr>
 				<td><code>mv-bar</code></td>
 				<td>Mavo root</td>
 				<td>Control which buttons may appear in the toolbar and in what order, or <code>"none"</code> to hide toolbar completely. Default value is <code>"status edit save clear login logout"</code>. Plugins can extend the list of available controls.</td>
+				<td></td>
 				<td></td>
 			</tr>
 		</tbody>

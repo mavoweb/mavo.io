@@ -221,6 +221,23 @@ body > section table {
   .learn-more + .learn-more {
     margin-top: 0; }
 
+table.attributes td:nth-last-child(2) {
+  background: #ddff99;
+  color: #669900;
+  text-align: center;
+  vertical-align: middle; }
+  table.attributes td:nth-last-child(2).semi {
+    font-size: 65%;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: #ffee99;
+    color: #b39500; }
+  table.attributes td:nth-last-child(2):empty {
+    background: #ffdbdb;
+    color: #d65c5c; }
+    table.attributes td:nth-last-child(2):empty::before {
+      content: "✘"; }
+
 /**
  * Syntax highlighting
  */
