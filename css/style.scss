@@ -112,37 +112,19 @@ body > header {
 	position: relative;
 	z-index: 1;
 	display: flex;
-	padding: .8em 1em .6em;
+	padding: .8em 1em;
 	justify-content: space-between;
 	flex-flow: row;
 	clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%);
 	background: #222;
 	color: white;
 
-	nav {
-		display: flex;
-		font-weight: 700;
-
-		a {
-			display: block;
-			padding: 0 1em;
-			border-radius: 2em;
-			line-height: 2;
-
-			&:hover {
-				background: white;
-				color: black;
-				mix-blend-mode: screen;
-				text-decoration: none;
-			}
-		}
-	}
-
 	.logo {
 		margin: 0;
 
 		img {
-			height: 2rem;
+			display: block;
+			height: 2.2rem;
 		}
 	}
 
@@ -156,6 +138,54 @@ body > header {
 		font-size: 250%;
 		font-weight: 200;
 		line-height: 1;
+	}
+}
+
+body > header nav {
+	display: flex;
+	font-weight: 700;
+	margin-bottom: 1.5em;
+
+	a {
+		display: block;
+		padding: 0 1em;
+		border-radius: 2em;
+		line-height: 2;
+		color: white;
+
+		&:hover {
+			background: white;
+			color: black;
+			mix-blend-mode: screen;
+			text-decoration: none;
+		}
+	}
+
+	a.soon {
+		cursor: not-allowed;
+
+		&:not(:hover):not(:focus) {
+			color: hsla(0, 0%, 100%, .7);
+		}
+
+		&::after {
+			content: "Soon";
+			display: inline-block;
+			vertical-align: middle;
+			padding: .4em .5em .3em;
+			margin-left: .5em;
+			border-radius: .3em;
+			background: $orange;
+			color: white;
+			text-transform: uppercase;
+			font-size: 60%;
+			line-height: 1;
+		}
+	}
+
+	html:not(.home) & {
+		transform: rotate(-1deg);
+		transform-origin: right;
 	}
 }
 

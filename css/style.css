@@ -146,7 +146,7 @@ body > header {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  padding: .8em 1em .6em;
+  padding: .8em 1em;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
@@ -157,25 +157,11 @@ body > header {
   clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%);
   background: #222;
   color: white; }
-  body > header nav {
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    font-weight: 700; }
-    body > header nav a {
-      display: block;
-      padding: 0 1em;
-      border-radius: 2em;
-      line-height: 2; }
-      body > header nav a:hover {
-        background: white;
-        color: black;
-        mix-blend-mode: screen;
-        text-decoration: none; }
   body > header .logo {
     margin: 0; }
     body > header .logo img {
-      height: 2rem; }
+      display: block;
+      height: 2.2rem; }
   body > header + h2 {
     padding: 1.5em 1em .5em;
     margin-top: -1.5em;
@@ -187,6 +173,45 @@ body > header {
     font-size: 250%;
     font-weight: 200;
     line-height: 1; }
+
+body > header nav {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  font-weight: 700;
+  margin-bottom: 1.5em; }
+  body > header nav a {
+    display: block;
+    padding: 0 1em;
+    border-radius: 2em;
+    line-height: 2;
+    color: white; }
+    body > header nav a:hover {
+      background: white;
+      color: black;
+      mix-blend-mode: screen;
+      text-decoration: none; }
+  body > header nav a.soon {
+    cursor: not-allowed; }
+    body > header nav a.soon:not(:hover):not(:focus) {
+      color: rgba(255, 255, 255, 0.7); }
+    body > header nav a.soon::after {
+      content: "Soon";
+      display: inline-block;
+      vertical-align: middle;
+      padding: .4em .5em .3em;
+      margin-left: .5em;
+      border-radius: .3em;
+      background: #ff9500;
+      color: white;
+      text-transform: uppercase;
+      font-size: 60%;
+      line-height: 1; }
+  html:not(.home) body > header nav {
+    -webkit-transform: rotate(-1deg);
+    transform: rotate(-1deg);
+    -webkit-transform-origin: right;
+    transform-origin: right; }
 
 body > section {
   -webkit-flex: 1;
