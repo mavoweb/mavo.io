@@ -97,10 +97,25 @@
 	<p>Github Pages URLs (<code>https://[username].github.io/[reponame]/[filename]</code>) are not supported, because it’s impossible for Mavo to figure out where to save the data just from the Github Pages URL.</p>
 </section>
 
-<!-- <section>
+<section>
 	<h1>Dropbox</h1>
-	<p>TODO</p>
-</section> -->
+	<p>
+		The <a href="https://dropbox.com">Dropbox</a> backend also provides remote storage, and may be useful for people without a Github account.
+		Just like the Github backend, it takes care of authentication, and only provides editing and saving controls to users that have appropriate permissions.
+	</p>
+
+	<p>Unlike with Github, Mavo cannot create the file for you if it does not exist.
+		To start using it, you need to create an empty file with a <code>.json</code> extension, and add it to your Dropbox.
+		Then, in the Dropbox application, click "Share" and copy the link it gives you (you may need to click "Copy Link" to get to it).
+		It will look like <code>https://www.dropbox.com/s/5fsvey23bi0v8lf/myfile.json?dl=0</code>.
+		This link is what you will use in the <code>mv-storage</code> attribute:</p>
+
+	<script type="text/plain" class="language-markup">
+		<div mv-app mv-storage="https://www.dropbox.com/s/5fsvey23bi0v8lf/myfile.json?dl=0">
+			...
+		</div>
+	</script>
+</section>
 
 <section>
 	<h1>HTML element</h1>
