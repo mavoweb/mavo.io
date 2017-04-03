@@ -9,30 +9,6 @@
   --font-mono: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   --content-width: 900px; }
 
-@font-face {
-  font-family: 'Libre Bodoni';
-  src: url("fonts/LibreBodoniBold.ttf") format("truetype");
-  font-weight: bold;
-  font-style: normal; }
-
-@font-face {
-  font-family: 'Libre Bodoni';
-  src: url("/assets/fonts/libre-bodoni/0f49c646c8f12a9dbd4730215d10a2a8/629d903227943776cbe3783d8cc1e84b/LibreBodoniBoldItalic.ttf") format("truetype");
-  font-weight: bold;
-  font-style: italic; }
-
-@font-face {
-  font-family: 'Libre Bodoni';
-  src: url("/assets/fonts/libre-bodoni/0f49c646c8f12a9dbd4730215d10a2a8/bb68fe30ffd78ce5863852f076341165/LibreBodoniItalic.ttf") format("truetype");
-  font-weight: normal;
-  font-style: italic; }
-
-@font-face {
-  font-family: 'Libre Bodoni';
-  src: url("fonts/LibreBodoniRegular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal; }
-
 h1 > a {
   color: inherit; }
 
@@ -237,68 +213,5 @@ table.attributes td:nth-last-child(2) {
     color: #d65c5c; }
     table.attributes td:nth-last-child(2):empty::before {
       content: "✘"; }
-
-/**
- * Syntax highlighting
- */
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-  color: slategray; }
-
-.token.punctuation {
-  color: #999; }
-
-.namespace {
-  opacity: .7; }
-
-.token.property,
-.token.tag,
-.token.boolean,
-.token.number,
-.token.constant,
-.token.symbol,
-.token.deleted {
-  color: #ff0080; }
-
-.token.selector,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin,
-.token.inserted {
-  color: #75ba15; }
-
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string {
-  color: #a67f59;
-  background: rgba(255, 255, 255, 0.5); }
-
-.token.atrule,
-.token.attr-value,
-.token.keyword {
-  color: #25aff4; }
-
-.token.function {
-  color: #DD4A68; }
-
-.token.regex,
-.token.important,
-.token.variable {
-  color: #e90; }
-
-.token.important,
-.token.bold {
-  font-weight: bold; }
-
-.token.italic {
-  font-style: italic; }
-
-.token.entity {
-  cursor: help; }
 
 /*# sourceMappingURL=style.css.map */

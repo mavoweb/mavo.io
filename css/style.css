@@ -1,14 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900");
-:root {
-  --color-magenta: #ff0080;
-  --color-blue: #25aff4;
-  --color-green: #82cf17;
-  --color-orange: #ff9500;
-  --font-body: Roboto, "Helvetica Neue", sans-serif;
-  --font-heading: Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
-  --font-mono: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-  --content-width: 900px; }
-
 @font-face {
   font-family: 'Libre Bodoni';
   src: url("fonts/LibreBodoniBold.ttf") format("truetype");
@@ -32,6 +22,16 @@
   src: url("fonts/LibreBodoniRegular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal; }
+
+:root {
+  --color-magenta: #ff0080;
+  --color-blue: #25aff4;
+  --color-green: #82cf17;
+  --color-orange: #ff9500;
+  --font-body: Roboto, "Helvetica Neue", sans-serif;
+  --font-heading: Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
+  --font-mono: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  --content-width: 900px; }
 
 .flat-button {
   display: inline-block;
@@ -289,5 +289,68 @@ figure {
       content: "Figure " counter(figure) " ";
       font-weight: bold;
       font-style: normal; }
+
+/**
+ * Syntax highlighting
+ */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: slategray; }
+
+.token.punctuation {
+  color: #999; }
+
+.namespace {
+  opacity: .7; }
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #ff0080; }
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #75ba15; }
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #a67f59;
+  background: rgba(255, 255, 255, 0.5); }
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #25aff4; }
+
+.token.function {
+  color: #DD4A68; }
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #e90; }
+
+.token.important,
+.token.bold {
+  font-weight: bold; }
+
+.token.italic {
+  font-style: italic; }
+
+.token.entity {
+  cursor: help; }
 
 /*# sourceMappingURL=style.css.map */

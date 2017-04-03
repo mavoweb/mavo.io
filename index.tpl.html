@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en" class="home">
-<head>
+@@include('_head.html', {
+	"rootclass": "home",
+	"title": "Mavo: A revolutionary new way to create Web applications",
+	"includes": "<link rel='stylesheet' href='style.css'>"
+})
 
-<meta charset="UTF-8">
-<title>Mavo: A revolutionary new way to create Web applications</title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="style.css">
-<link rel="icon" href="favicon.ico">
-
-</head>
 <body>
 
 <header>
@@ -53,6 +48,27 @@
 		<h1>Free and Open Source</h1>
 		<p>We created Mavo because we thought that creating Web applications should be easier than it is today. Monetization is not among our priorities.</p>
 	</article>
+</section>
+
+<section class="language-markup">
+	<h1>Mavo at a glance</h1>
+	<p>Create a simple to-do list with Mavo:</p>
+
+	<section class="example">
+		<script type="text/plain">
+			<div mv-app="todo" mv-storage="local" mv-autosave="0" class="mv-autoedit">
+				<strong>[count(done)]</strong> done out of <strong>[count(task)]</strong> total
+				<ul>
+					<li property="task" mv-multiple>
+						<label>
+							<input property="done" type="checkbox" />
+							<span property="taskTitle">Do stuff</span>
+						</label>
+					</li>
+				</ul>
+			</div>
+		</script>
+	</section>
 </section>
 
 @@include('_footer.html')

@@ -9,30 +9,6 @@
   --font-mono: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   --content-width: 900px; }
 
-@font-face {
-  font-family: 'Libre Bodoni';
-  src: url("fonts/LibreBodoniBold.ttf") format("truetype");
-  font-weight: bold;
-  font-style: normal; }
-
-@font-face {
-  font-family: 'Libre Bodoni';
-  src: url("/assets/fonts/libre-bodoni/0f49c646c8f12a9dbd4730215d10a2a8/629d903227943776cbe3783d8cc1e84b/LibreBodoniBoldItalic.ttf") format("truetype");
-  font-weight: bold;
-  font-style: italic; }
-
-@font-face {
-  font-family: 'Libre Bodoni';
-  src: url("/assets/fonts/libre-bodoni/0f49c646c8f12a9dbd4730215d10a2a8/bb68fe30ffd78ce5863852f076341165/LibreBodoniItalic.ttf") format("truetype");
-  font-weight: normal;
-  font-style: italic; }
-
-@font-face {
-  font-family: 'Libre Bodoni';
-  src: url("fonts/LibreBodoniRegular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal; }
-
 body > header {
   display: block;
   text-align: center;
