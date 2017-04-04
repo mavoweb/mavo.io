@@ -69,10 +69,25 @@ body > header {
 	}
 }
 
+#what {
+	ul {
+		font-size: 150%;
+		hyphens: none;
+	}
+
+	a {
+		font-weight: 400;
+	}
+}
+
 #pros {
+	$background: lighten($blue, 15%);
+	background: $background;
 	flex-flow: row wrap;
 	align-items: flex-start;
-	padding: 0 calc(50vw - 450px - 1em);
+	padding: 5em calc(50vw - 450px - 1em) 6em;
+	clip-path: polygon(0% 0%, 100% 4em, 100% calc(100% - 7em), 0% 100%);
+	font-weight: 400;
 
 	article {
 		width: $content-width / 2;
@@ -80,7 +95,7 @@ body > header {
 
 		h1 {
 			margin: 0;
-			color: $magenta;
+			color: white;
 			font: bold 150%/1 $heading-font;
 
 			&::before {
@@ -89,8 +104,8 @@ body > header {
 				vertical-align: text-bottom;
 				margin-right: .3em;
 				width: 1em;
-				background: $magenta;
-				color: white;
+				background: white;
+				color: $background;
 				border-radius: 50%;
 				text-align: center;
 				font-size: 135%;
@@ -98,8 +113,14 @@ body > header {
 			}
 		}
 
+		a, strong {
+			font-weight: 900;
+		}
+
 		a {
-			font-weight: bold;
+			color: inherit;
+			text-decoration: underline;
+			text-decoration-color: hsla(0,0%,0%,.3);
 		}
 	}
 }

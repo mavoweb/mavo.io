@@ -101,8 +101,14 @@
 	<section class="example commentform side-by-side">
 		<script type="text/plain">
 			<div mv-app="commentform" mv-storage="local" mv-autosave>
-				<label>Email: <input type="email" property="email" value="foo@bar.com" /></label>
-				<label>Message: <textarea property="message">Edit the form and notice how the values persist after you refresh!</textarea></label>
+				<label>
+					Email:
+					<input type="email" property="email" value="foo@bar.com" />
+				</label>
+				<label>
+					Message:
+					<textarea property="message">Edit the form and notice how the values persist after you refresh!</textarea>
+				</label>
 			</div>
 		</script>
 	</section>
@@ -112,8 +118,11 @@
 
 	<section class="example side-by-side">
 		<script type="text/plain">
-			<span property="firstName">Lea</span> <span property="last_name">Verou</span>
-			<span>- I don’t have a property attribute, so I’m not editable.</span>
+			<div mv-app="nameDemo" mv-storage="local">
+				Name:
+				<span property="firstName">Lea</span>
+				<span property="last_name">Verou</span>
+			</div>
 		</script>
 	</section>
 
@@ -161,7 +170,8 @@
 		<script type="text/plain">
 			<article property="pet" mv-multiple>
 				<h1 property="name">Adam Catlace</h1>
-				Born on <time property="birthday" datetime="2014-06-01">1 Jun 2014</time>
+				Born on
+				<time property="birthday" datetime="2014-06-01">1 Jun 2014</time>
 			</article>
 		</script>
 	</section>
