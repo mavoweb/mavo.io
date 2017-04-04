@@ -48,6 +48,23 @@
     background: var(--color);
     color: var(--background); }
 
+.call-to-action.button {
+  display: block;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: auto;
+  padding: .5em 1em .4em;
+  border-radius: .3em;
+  background: #82cf17;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: bold; }
+  .call-to-action.button:hover, .call-to-action.button:focus {
+    background: #ff0080; }
+
 body {
   display: -webkit-flex;
   display: -ms-flexbox;

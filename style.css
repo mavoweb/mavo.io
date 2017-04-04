@@ -43,25 +43,13 @@ body > header {
       -ms-hyphens: manual;
       hyphens: manual;
       font-weight: 500; }
-    body > header .promo .button {
-      display: block;
-      width: -webkit-fit-content;
-      width: -moz-fit-content;
-      width: fit-content;
-      margin: auto;
-      padding: .5em 1em .4em;
-      border-radius: .3em;
-      text-align: center;
-      text-transform: uppercase;
-      text-decoration: none;
-      font-weight: bold; }
-      body > header .promo .button:not(:hover) {
-        background: white;
-        color: black;
-        mix-blend-mode: screen; }
-      body > header .promo .button:hover {
-        background: #82cf17;
-        color: white; }
+    body > header .promo .button:not(:hover) {
+      background: white;
+      color: black;
+      mix-blend-mode: screen; }
+    body > header .promo .button:hover {
+      background: #82cf17;
+      color: white; }
 
 #what ul {
   font-size: 150%;

@@ -48,6 +48,25 @@
 	}
 }
 
+.call-to-action.button {
+	display: block;
+	width: fit-content;
+	margin: auto;
+	padding: .5em 1em .4em;
+	border-radius: .3em;
+	background: $green;
+	color: white;
+	text-align: center;
+	text-transform: uppercase;
+	text-decoration: none;
+	font-weight: bold;
+
+	&:hover,
+	&:focus {
+		background: $magenta;
+	}
+}
+
 body {
 	display: flex;
 	flex-flow: column;

@@ -45,16 +45,6 @@ body > header {
 		}
 
 		.button {
-			display: block;
-			width: fit-content;
-			margin: auto;
-			padding: .5em 1em .4em;
-			border-radius: .3em;
-			text-align: center;
-			text-transform: uppercase;
-			text-decoration: none;
-			font-weight: bold;
-
 			&:not(:hover) {
 				background: white;
 				color: black;
