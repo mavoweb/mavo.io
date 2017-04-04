@@ -1,11 +1,11 @@
 // Create the live examples
-$$(".example").forEach((example, i) => {
+$$(".example:not(.manual)").forEach((example, i) => {
 	example.id = example.id || "example" + (i + 1);
 
 	if (!$("h1", example)) {
 		$.create("h1", {
 			textContent: "Example",
-			start: example
+			start: $("header", example) || example
 		});
 	}
 

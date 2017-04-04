@@ -15,99 +15,83 @@ h1 > a {
 body > header + h2 {
   background: #82cf17; }
 
-.example {
-  margin-bottom: 1em; }
-  .example > h1 {
-    color: #82cf17; }
-  .example.color-picker .example-container {
-    padding: 0; }
-    .example.color-picker .example-container > div:last-of-type {
-      padding: 2em; }
-    .example.color-picker .example-container input {
-      display: block; }
-  .example.scoped-expressions .example-container [typeof] {
-    padding: 1em;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    background: rgba(0, 0, 0, 0.05);
-    margin: 1em; }
-  .example.pow .example-container {
-    font-size: 300%; }
-    .example.pow .example-container input {
-      background: rgba(0, 0, 0, 0.05);
-      border: none; }
-    .example.pow .example-container input {
-      text-align: center; }
-    .example.pow .example-container [property="exponent"] {
-      font-size: 60%;
-      vertical-align: top; }
-  .example.movie .example-container {
-    padding: 0; }
-    .example.movie .example-container div[class] {
-      padding: 2em; }
-  .example.commentform label {
+.example.color-picker .example-container {
+  padding: 0; }
+  .example.color-picker .example-container > div:last-of-type {
+    padding: 2em; }
+  .example.color-picker .example-container input {
     display: block; }
-  .example.commentform label:first-of-type {
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
+
+.example.scoped-expressions .example-container [typeof] {
+  padding: 1em;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.05);
+  margin: 1em; }
+
+.example.pow .example-container {
+  font-size: 300%; }
+  .example.pow .example-container input {
+    background: rgba(0, 0, 0, 0.05);
+    border: none; }
+  .example.pow .example-container input {
+    text-align: center; }
+  .example.pow .example-container [property="exponent"] {
+    font-size: 60%;
+    vertical-align: top; }
+
+.example.movie .example-container {
+  padding: 0; }
+  .example.movie .example-container div[class] {
+    padding: 2em; }
+
+.example.commentform label {
+  display: block; }
+
+.example.commentform label:first-of-type {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 1em; }
+  .example.commentform label:first-of-type input {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1; }
+
+.example.commentform textarea {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: .3em;
+  font: inherit; }
+
+.example .mv-debug-storage {
+  margin: 0;
+  background: rgba(0, 0, 0, 0.06);
+  color: black .example .mv-debug-storage; }
+  .example .mv-debug-storage :not(:last-child) {
     margin-bottom: 1em; }
-    .example.commentform label:first-of-type input {
-      -webkit-flex: 1;
-      -ms-flex: 1;
-      flex: 1; }
-  .example.commentform textarea {
+  .example .mv-debug-storage summary {
     display: block;
-    box-sizing: border-box;
-    width: 100%;
-    padding: .3em;
-    font: inherit; }
-  .example .example-container {
-    position: relative;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    padding: 2.5em 2em 2em;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    margin: 1em 0 0; }
-    .example .example-container input[type="number"] {
-      font-size: 150%;
-      max-width: 2em; }
-    .example .example-container [mv-multiple] {
-      padding: .5em;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      margin: .5em 0; }
-      .example .example-container [mv-multiple] h1 {
-        margin-top: 0; }
-    @media print {
-      .example .example-container {
-        display: none; } }
-  .example .mv-debug-storage {
+    padding: .3em .8em;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    font-size: 75%;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none; }
+    .example .mv-debug-storage summary:hover, .example .mv-debug-storage summary:focus {
+      background: rgba(0, 0, 0, 0.6); }
+  .example .mv-debug-storage pre {
+    background: none;
     margin: 0;
-    background: rgba(0, 0, 0, 0.06);
-    color: black .example .mv-debug-storage; }
-    .example .mv-debug-storage :not(:last-child) {
-      margin-bottom: 1em; }
-    .example .mv-debug-storage summary {
-      display: block;
-      padding: .3em .8em;
-      background: rgba(0, 0, 0, 0.3);
-      color: white;
-      font-size: 75%;
-      font-weight: bold;
-      cursor: pointer;
-      outline: none; }
-      .example .mv-debug-storage summary:hover, .example .mv-debug-storage summary:focus {
-        background: rgba(0, 0, 0, 0.6); }
-    .example .mv-debug-storage pre {
-      background: none;
-      margin: 0;
-      color: black; }
-      .example .mv-debug-storage pre th {
-        color: white; }
-      .example .mv-debug-storage pre th, .example .mv-debug-storage pre td {
-        border-color: rgba(0, 0, 0, 0.1); }
-    @media print {
-      .example .mv-debug-storage {
-        display: none; } }
+    color: black; }
+    .example .mv-debug-storage pre th {
+      color: white; }
+    .example .mv-debug-storage pre th, .example .mv-debug-storage pre td {
+      border-color: rgba(0, 0, 0, 0.1); }
+  @media print {
+    .example .mv-debug-storage {
+      display: none; } }
 
 #summary {
   -webkit-column-break-inside: avoid;

@@ -26,7 +26,7 @@
 	</div>
 
 	<div class="promo">
-		<strong class="tagline">A revolutionary new way to create on the Web</strong>
+		<strong class="tagline">A revolutionary new way to create Web applications</strong>
 		<p>Mavo helps you turn your static HTML into reactive web applications without a single line of programming code and no server backend.
 			<br />Developed in <a href="http://csail.mit.edu">MIT CSAIL</a> and led by <a href="http://lea.verou.me">Lea Verou</a>.
 		</p>
@@ -63,24 +63,43 @@
 	</article>
 </section>
 
-<section class="language-markup">
+<section class="language-markup" id="at-a-glance">
 	<h1>Mavo at a glance</h1>
-	<p>Create a simple to-do list with Mavo:</p>
 
-	<section class="example">
+	<!-- <h2>Editable portfolio</h2> -->
+
+	<h2>Simple shopping list</h2>
+	<p>Click Edit to modify the items, Save to save your changes.</p>
+
+	<section class="manual example side-by-side">
 		<script type="text/plain">
-			<div mv-app="todo" mv-storage="local" mv-autosave="0" class="mv-autoedit">
-				<strong>[count(done)]</strong> done out of <strong>[count(task)]</strong> total
+			<h1>Shopping list</h1>
+			<section mv-app="todo" mv-storage="local">
+				Bought [count(bought)] of [count(product)] products
 				<ul>
-					<li property="task" mv-multiple>
+					<li property="product" mv-multiple>
 						<label>
-							<input property="done" type="checkbox" />
-							<span property="taskTitle">Do stuff</span>
+							<input property="bought" type="checkbox" />
+							<span property="name">Garlic</span>
 						</label>
 					</li>
 				</ul>
-			</div>
+			</section>
 		</script>
+		<div class="example-container">
+			<section mv-app="todo" mv-storage="local">
+				<h1>Shopping list</h1>
+				Bought [count(bought)] of [count(product)] products
+				<ul>
+					<li property="product" mv-multiple>
+						<label>
+							<input property="bought" type="checkbox" />
+							<span property="name">Garlic</span>
+						</label>
+					</li>
+				</ul>
+			</section>
+		</div>
 	</section>
 </section>
 

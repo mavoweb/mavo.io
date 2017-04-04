@@ -1,3 +1,4 @@
+// Sitewide CSS
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
 @font-face {
 	font-family: 'Libre Bodoni';
@@ -89,9 +90,8 @@ pre, code {
 		padding: 1em 1.5em;
 		margin: .5em -1.5em;
 		overflow: auto;
-		background: hsl(40, 100%, 97%);
-		box-shadow: 0 0 10em hsl(35, 100%, 90%) inset;
-
+		background: hsl(200, 20%, 98%);
+		background: linear-gradient(to bottom, hsl(200, 20%, 97%) 50%, hsl(200, 20%, 96%) 0) 0 0 / 3em 3em content-box border-box;
 		clip-path: polygon(0 0, 100% .5em, calc(100% - .5em) calc(100% - 1em), 0 100%);
 
 		@supports not (clip-path: polygon(0 0)) {
@@ -220,6 +220,11 @@ body > header nav {
 body > section {
 	flex: 1;
 
+	h1, h2 {
+		font-family: $heading-font;
+		font-weight: bold;
+	}
+
 	& > h1 {
 		font: bold 200% $heading-font;
 		color: $orange;
@@ -315,6 +320,72 @@ figure {
 			content: "Figure " counter(figure) " ";
 			font-weight: bold;
 			font-style: normal;
+		}
+	}
+}
+
+.example {
+	margin-bottom: 1em;
+
+	& > h1,
+	& > header > h1 {
+		color: $magenta;
+		font-size: 150%;
+	}
+
+	.example-container {
+		position: relative;
+		transform: scale(1);
+		padding: 2.5em 2em 2em;
+		border: 1px solid rgba(0,0,0,.3);
+		margin: 1em 0 0;
+
+		input[type="number"] {
+			font-size: 150%;
+			max-width: 2em;
+		}
+
+		[mv-multiple] {
+			padding: .5em;
+			border: 1px solid rgba(0,0,0,.1);
+			margin: .5em 0;
+
+			h1 {
+				margin-top: 0;
+			}
+		}
+	}
+
+	@media (min-width: 700px) {
+		&.side-by-side {
+			display: flex;
+			flex-flow: row wrap;
+			position: relative;
+
+			& > h1,
+			& > header {
+				margin: 0;
+				flex: none;
+				width: 100%;
+				margin-bottom: .5em;
+			}
+
+			& > * {
+				flex: 1;
+			}
+
+			pre {
+				clip-path: none;
+				margin: 0 1em 0 0;
+				flex: 2;
+				border: 1px solid rgba(0,0,0,.05);
+				border-radius: .3em;
+				font-size: 88%;
+			}
+
+			.example-container {
+				margin: 0;
+			}
 		}
 	}
 }

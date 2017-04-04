@@ -1,5 +1,7 @@
 @import "css/vars";
 
+// Styles specific to homepage
+
 body > header {
 	display: block;
 	text-align: center;
@@ -98,6 +100,52 @@ body > header {
 
 		a {
 			font-weight: bold;
+		}
+	}
+}
+
+.manual.example {
+	[mv-app="todo"] {
+		h1 {
+			margin: 0;
+			color: hsl(200, 20%, 50%);
+			font: bold 200% Helvetica Neue, sans-serif;
+			letter-spacing: -.04em;
+		}
+
+		ul {
+			padding: 0;
+		}
+
+		li {
+			padding: .5em;
+		}
+
+		li:not(.mv-deleted) {
+			display: flex;
+			background: hsl(200, 20%, 97%);
+
+			&:nth-child(odd) {
+				background: hsl(200, 20%, 94%);
+			}
+		}
+
+		:checked + span {
+			font-style: italic;
+			text-decoration: line-through;
+			color: gray;
+		}
+
+		label {
+			flex: 1;
+		}
+
+		.mv-item-controls.mv-ui {
+			position: static;
+			pointer-events: auto;
+			opacity: 1;
+			mix-blend-mode: multiply;
+			border: 0;
 		}
 	}
 }

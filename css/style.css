@@ -95,8 +95,8 @@ pre {
   padding: 1em 1.5em;
   margin: .5em -1.5em;
   overflow: auto;
-  background: floralwhite;
-  box-shadow: 0 0 10em #ffeacc inset;
+  background: #f9fafb;
+  background: linear-gradient(to bottom, #f6f8f9 50%, #f3f5f7 0) 0 0/3em 3em content-box border-box;
   -webkit-clip-path: polygon(0 0, 100% 0.5em, calc(100% - .5em) calc(100% - 1em), 0 100%);
   clip-path: polygon(0 0, 100% 0.5em, calc(100% - .5em) calc(100% - 1em), 0 100%); }
   @supports not ((-webkit-clip-path: polygon(0 0)) or (clip-path: polygon(0 0))) {
@@ -217,6 +217,9 @@ body > section {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1; }
+  body > section h1, body > section h2 {
+    font-family: Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
+    font-weight: bold; }
   body > section > h1 {
     font: bold 200% Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
     color: #ff9500; }
@@ -289,6 +292,62 @@ figure {
       content: "Figure " counter(figure) " ";
       font-weight: bold;
       font-style: normal; }
+
+.example {
+  margin-bottom: 1em; }
+  .example > h1,
+  .example > header > h1 {
+    color: #ff0080;
+    font-size: 150%; }
+  .example .example-container {
+    position: relative;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    padding: 2.5em 2em 2em;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    margin: 1em 0 0; }
+    .example .example-container input[type="number"] {
+      font-size: 150%;
+      max-width: 2em; }
+    .example .example-container [mv-multiple] {
+      padding: .5em;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      margin: .5em 0; }
+      .example .example-container [mv-multiple] h1 {
+        margin-top: 0; }
+  @media (min-width: 700px) {
+    .example.side-by-side {
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-flow: row wrap;
+      -ms-flex-flow: row wrap;
+      flex-flow: row wrap;
+      position: relative; }
+      .example.side-by-side > h1,
+      .example.side-by-side > header {
+        margin: 0;
+        -webkit-flex: none;
+        -ms-flex: none;
+        flex: none;
+        width: 100%;
+        margin-bottom: .5em; }
+      .example.side-by-side > * {
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1; }
+      .example.side-by-side pre {
+        -webkit-clip-path: none;
+        clip-path: none;
+        margin: 0 1em 0 0;
+        -webkit-flex: 2;
+        -ms-flex: 2;
+        flex: 2;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        border-radius: .3em;
+        font-size: 88%; }
+      .example.side-by-side .example-container {
+        margin: 0; } }
 
 /**
  * Syntax highlighting

@@ -153,7 +153,7 @@ li[property=task].mv-deleted {
 	padding: .3em;
 }
 
-.mv-item-controls {
+.mv-item-controls.mv-ui {
 	position: static;
 	pointer-events: auto;
 	opacity: 1;

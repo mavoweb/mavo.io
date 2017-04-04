@@ -94,4 +94,41 @@ body > header {
     #pros article a {
       font-weight: bold; }
 
+.manual.example [mv-app="todo"] h1 {
+  margin: 0;
+  color: #668899;
+  font: bold 200% Helvetica Neue, sans-serif;
+  letter-spacing: -.04em; }
+
+.manual.example [mv-app="todo"] ul {
+  padding: 0; }
+
+.manual.example [mv-app="todo"] li {
+  padding: .5em; }
+
+.manual.example [mv-app="todo"] li:not(.mv-deleted) {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background: #f6f8f9; }
+  .manual.example [mv-app="todo"] li:not(.mv-deleted):nth-child(odd) {
+    background: #edf1f3; }
+
+.manual.example [mv-app="todo"] :checked + span {
+  font-style: italic;
+  text-decoration: line-through;
+  color: gray; }
+
+.manual.example [mv-app="todo"] label {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1; }
+
+.manual.example [mv-app="todo"] .mv-item-controls.mv-ui {
+  position: static;
+  pointer-events: auto;
+  opacity: 1;
+  mix-blend-mode: multiply;
+  border: 0; }
+
 /*# sourceMappingURL=style.css.map */
