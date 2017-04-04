@@ -81,7 +81,8 @@ body > header {
 
 	article {
 		width: $content-width / 2;
-		padding: .5em;
+		box-sizing: border-box;
+		padding: .4em;
 
 		h1 {
 			margin: 0;

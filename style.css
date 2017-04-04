@@ -75,7 +75,8 @@ body > header {
   font-weight: 400; }
   #pros article {
     width: 450px;
-    padding: .5em; }
+    box-sizing: border-box;
+    padding: .4em; }
     #pros article h1 {
       margin: 0;
       color: white;
