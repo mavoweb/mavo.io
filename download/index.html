@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" class="download">
+<head>
+	<meta charset="UTF-8">
+	<title>Download Mavo</title>
+	<link rel="stylesheet" href="/mavo/mavo.css" />
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="icon" href="/favicon.ico">
+	<link rel='stylesheet' href='/download/style.css'>
+</head>
+
+<body>
+
+<header>
+	<h1 class="logo">
+		<a href="/"><img src="/logo.svg" alt="Mavo"></a>
+	</h1>
+	<nav>
+	<a href="/docs/primer">Get started</a>
+	<a href="/docs">Docs</a>
+	<a href="/demos">Demos</a>
+	<a href="#" class="soon">Plugins</a>
+	<a href="#" class="soon">Github</a>
+</nav>
+
+</header>
+
+<h2>Download</h2>
+
+<section mv-app="download" mv-bar="none">
+	<p class="notice">Feel free to experiment but please don’t tweet about Mavo until we launch to the public in April 2017.</p>
+
+	<p>You need to include both Mavo’s CSS file and JS file. To select the appropriate files, please answer the following questions:</p>
+
+	<div class="questions">
+		<article>
+			<h1>Is it possible that you may want to read the code in the JavaScript file?</h1>
+			<label>
+				<input type="radio" property name="minify" value="">
+				Yes, give me something readable <em>+ 65% filesize</em>
+			</label>
+			<label>
+				<input type="radio" name="minify" value="min">
+				No, give me something compressed
+			</label>
+		</article>
+		<article>
+			<h1>What kind of browser support do you need?</h1>
+			<label>
+				<input type="radio" property name="transpile" value="">
+				Modern browsers only
+			</label>
+			<label>
+				<input type="radio" name="transpile" value="es5">
+				Slightly older browsers <em>+ 20% filesize</em>
+			</label>
+		</article>
+	</div>
+
+	<meta property="filename" content="mavo[if(transpile, '.' & transpile)][if(minify, '.' & minify)].js">
+
+	<p>Paste the following code in your page’s <code>&lt;head></code> section:</p>
+	<pre class="language-markup"><code>
+		&lt;script src="<a href="/mavo/[filename]" download>http://mavo.io/mavo/[filename]</a>">&lt;/script>
+		&lt;link rel="stylesheet" href="<a href="/mavo/mavo.css" download>http://mavo.io/mavo/mavo.css</a>">
+	</code></pre>
+
+</section>
+
+<footer>
+	<div>
+		<p>
+			Made with &hearts; by <a href="http://lea.verou.me">Lea Verou</a> and <a href="https://github.com/LeaVerou/mavo/graphs/contributors">contributors</a>
+			&bull; <a href="https://twitter.com/mavohtml">@mavohtml on 🐦 Twitter</a>
+			&bull; <a href="https://github.com/leaverou/mavo">Github</a>
+		</p>
+		<p>This work was supported in part by a collaborative grant from the <a href="http://www.wistron.com/">Wistron Corporation</a>.</p>
+	</div>
+
+
+	<a href="http://mit.edu" class="logo"><img src="/img/logo-mit.svg" alt="MIT" /></a>
+	<a href="http://csail.mit.edu" class="logo"><img src="/img/logo-csail.svg" alt="CSAIL" /></a>
+</footer>
+
+<script src="/mavo/mavo.js"></script>
+<script src="/js/prism.js"></script>
+<script src="/js/sitewide.js"></script>
+
+
+</body>
+</html>

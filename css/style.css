@@ -310,6 +310,16 @@ figure {
       font-weight: bold;
       font-style: normal; }
 
+body > section table {
+  table-layout: fixed;
+  border-spacing: 0;
+  border-collapse: collapse; }
+  body > section table th, body > section table td {
+    text-align: left; }
+  body > section table td {
+    padding: .1em .5em;
+    border: 1px solid rgba(0, 0, 0, 0.1); }
+
 .example {
   margin-bottom: 1em; }
   .example > h1,

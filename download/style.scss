@@ -1,0 +1,25 @@
+.questions {
+	display: flex;
+
+	& > article {
+		flex: 1;
+		border: 1px solid rgba(0,0,0,.2);
+		padding: 1em;
+		margin: .5em;
+		margin-left: 0;
+	}
+
+	h1 {
+		margin: 0 0 .5em;
+	}
+
+	label {
+		display: block;
+
+		em {
+			font-size: 75%;
+			font-weight: bold;
+			color: hsl(0, 50%, 50%);
+		}
+	}
+}

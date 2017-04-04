@@ -1,0 +1,22 @@
+.questions {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+  .questions > article {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 1em;
+    margin: .5em;
+    margin-left: 0; }
+  .questions h1 {
+    margin: 0 0 .5em; }
+  .questions label {
+    display: block; }
+    .questions label em {
+      font-size: 75%;
+      font-weight: bold;
+      color: #bf4040; }
+
+/*# sourceMappingURL=style.css.map */
