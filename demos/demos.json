@@ -42,7 +42,7 @@
 			"name": "Talks list",
 			"tag": [
 				"Hierarchy",
-				"Remote"
+				"Github"
 			],
 			"id": "talks"
 		},
@@ -51,7 +51,7 @@
 			"tag": [
 				"Hierarchy",
 				"Isolate item",
-				"Remote"
+				"Github"
 			],
 			"id": "invoice"
 		},
