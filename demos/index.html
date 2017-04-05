@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="/css/style.css">
 	<link rel="icon" href="/favicon.ico">
 	<link rel='stylesheet' href='/demos/style.css'>
+	<script src="/mavo/mavo.js"></script>
 </head>
 
 
@@ -29,7 +30,7 @@
 <h2>Demos</h2>
 
 <section mv-app="demos" mv-storage="https://github.com/LeaVerou/mavo.io/demos/demos.json" mv-source="http://mavo.io/demos/demos.json">
-	<meta property="tagFilter" content="[urlOption('tag')]">
+	<meta property="tagFilter" content="[$url.tag]">
 	<p class="notice" mv-if="tagFilter">
 		Some demos are hidden. <a href="?">Show All.</a>
 	</p>
@@ -85,7 +86,6 @@ $.events(document.body, "mouseenter mouseleave focus blur", function(evt) {
 	<a href="http://csail.mit.edu" class="logo"><img src="/img/logo-csail.svg" alt="CSAIL" /></a>
 </footer>
 
-<script src="/mavo/mavo.js"></script>
 <script src="/js/prism.js"></script>
 <script src="/js/sitewide.js"></script>
 

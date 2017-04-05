@@ -43,9 +43,16 @@
 	</figure>
 
 	<p>The Github backend provides remote storage, which is useful if you need to share data with other people.
-		Mavo will provide login controls and will not allow any edits until the viewer has logged in and has commit permissions.
+		Mavo will provide login controls and will not allow any edits until the viewer has logged in.
 		If the file and/or repo does not exist, Mavo will create it upon saving.
-		The value of the <code>mv-storage</code> attribute can take almost any Github file URL, as well as some more fuzzy ones.
+	</p>
+
+	<p>
+		If the logged in user <strong>does have commit permission</strong> (i.e. is either the creator of the repo or added as a collaborator), saving will directly save back to Github.
+		If the logged in user <strong>does not have commit permissions</strong>, the data will be stored in their own profile and they will be prompted to send an <em>"edit suggestion"</em> to the original owner of the data.
+		Editing suggestions are sent as <a href="https://help.github.com/articles/about-pull-requests/">pull requests</a>, with a link to view the new data in the Mavo app (by using the <a href="#url-params"><code>storage</code> URL parameter described below</a>).
+		Currently reviewing the changes between the new and old data (i.e. the <em>diff</em>) requires the ability to read JSON (unless you’re using a different format for your data).
+		Future Mavo versions may introduce a graphical way for this as well.
 	</p>
 
 	<p>
