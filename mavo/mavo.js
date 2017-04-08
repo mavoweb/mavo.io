@@ -3856,6 +3856,7 @@ Object.defineProperties(_, {
 	"register": {
 		value: function(selector, o) {
 			if (typeof arguments[0] === "object") {
+				// Multiple definitions
 				for (let s in arguments[0]) {
 					_.register(s, arguments[0][s]);
 				}
@@ -3890,31 +3891,33 @@ Object.defineProperties(_, {
 		value: function(element, attribute, datatype) {
 			var matches = [];
 
-			selectorloop: for (var selector in _) {
-				if (element.matches(selector)) {
-					var all = _[selector];
+			selectorloop: for (var id in _) {
+				for (var o of _[id]) {
+					// Passes attribute test?
+					var attributeMatches = attribute === undefined && o.default || attribute === o.attribute;
 
-					for (var o of all) {
-						// Passes attribute test?
-						var attributeMatches = attribute === undefined && o.default || attribute === o.attribute;
-
-						if (!attributeMatches) {
-							continue;
-						}
-
-						// Passes datatype test?
-						if (datatype !== undefined && datatype !== "string" && datatype !== o.datatype) {
-							continue;
-						}
-
-						// Passes arbitrary test?
-						if (o.test && !o.test(element, attribute, datatype)) {
-							continue;
-						}
-
-						// All tests have passed
-						matches.push(o);
+					if (!attributeMatches) {
+						continue;
 					}
+
+					// Passes datatype test?
+					if (datatype !== undefined && datatype !== "string" && datatype !== o.datatype) {
+						continue;
+					}
+
+					// Passes selector test?
+					var selector = o.selector || id;
+					if (!element.matches(selector)) {
+						continue;
+					}
+
+					// Passes arbitrary test?
+					if (o.test && !o.test(element, attribute, datatype)) {
+						continue;
+					}
+
+					// All tests have passed
+					matches.push(o);
 				}
 			}
 
@@ -3955,8 +3958,9 @@ _.register({
 		},
 	],
 
-	"img, video, audio": {
+	"media": {
 		default: true,
+		selector: "img, video, audio",
 		attribute: "src",
 		editor: {
 			"tag": "input",
@@ -3981,8 +3985,8 @@ _.register({
 	},
 
 	"select, input": {
-		attribute: "value",
 		default: true,
+		attribute: "value",
 		modes: "read",
 		changeEvents: "input change"
 	},
@@ -4112,8 +4116,9 @@ _.register({
 		attribute: "content"
 	},
 
-	"p, div, li, dt, dd, h1, h2, h3, h4, h5, h6, article, section, address": {
+	"block": {
 		default: true,
+		selector: "p, div, li, dt, dd, h1, h2, h3, h4, h5, h6, article, section, address",
 		editor: function() {
 			var display = getComputedStyle(this.element).display;
 			var tag = display.indexOf("inline") === 0? "input" : "textarea";

@@ -4492,6 +4492,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		"register": {
 			value: function value(selector, o) {
 				if (_typeof(arguments[0]) === "object") {
+					// Multiple definitions
 					for (var s in arguments[0]) {
 						_.register(s, arguments[0][s]);
 					}
@@ -4568,50 +4569,52 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			value: function value(element, attribute, datatype) {
 				var matches = [];
 
-				selectorloop: for (var selector in _) {
-					if (element.matches(selector)) {
-						var all = _[selector];
+				selectorloop: for (var id in _) {
+					var _iteratorNormalCompletion3 = true;
+					var _didIteratorError3 = false;
+					var _iteratorError3 = undefined;
 
-						var _iteratorNormalCompletion3 = true;
-						var _didIteratorError3 = false;
-						var _iteratorError3 = undefined;
+					try {
+						for (var _iterator3 = _[id][Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+							var o = _step3.value;
 
-						try {
-							for (var _iterator3 = all[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-								var o = _step3.value;
+							// Passes attribute test?
+							var attributeMatches = attribute === undefined && o.default || attribute === o.attribute;
 
-								// Passes attribute test?
-								var attributeMatches = attribute === undefined && o.default || attribute === o.attribute;
-
-								if (!attributeMatches) {
-									continue;
-								}
-
-								// Passes datatype test?
-								if (datatype !== undefined && datatype !== "string" && datatype !== o.datatype) {
-									continue;
-								}
-
-								// Passes arbitrary test?
-								if (o.test && !o.test(element, attribute, datatype)) {
-									continue;
-								}
-
-								// All tests have passed
-								matches.push(o);
+							if (!attributeMatches) {
+								continue;
 							}
-						} catch (err) {
-							_didIteratorError3 = true;
-							_iteratorError3 = err;
+
+							// Passes datatype test?
+							if (datatype !== undefined && datatype !== "string" && datatype !== o.datatype) {
+								continue;
+							}
+
+							// Passes selector test?
+							var selector = o.selector || id;
+							if (!element.matches(selector)) {
+								continue;
+							}
+
+							// Passes arbitrary test?
+							if (o.test && !o.test(element, attribute, datatype)) {
+								continue;
+							}
+
+							// All tests have passed
+							matches.push(o);
+						}
+					} catch (err) {
+						_didIteratorError3 = true;
+						_iteratorError3 = err;
+					} finally {
+						try {
+							if (!_iteratorNormalCompletion3 && _iterator3.return) {
+								_iterator3.return();
+							}
 						} finally {
-							try {
-								if (!_iteratorNormalCompletion3 && _iterator3.return) {
-									_iterator3.return();
-								}
-							} finally {
-								if (_didIteratorError3) {
-									throw _iteratorError3;
-								}
+							if (_didIteratorError3) {
+								throw _iteratorError3;
 							}
 						}
 					}
@@ -4654,8 +4657,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			datatype: "number"
 		}],
 
-		"img, video, audio": {
+		"media": {
 			default: true,
+			selector: "img, video, audio",
 			attribute: "src",
 			editor: {
 				"tag": "input",
@@ -4680,8 +4684,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		},
 
 		"select, input": {
-			attribute: "value",
 			default: true,
+			attribute: "value",
 			modes: "read",
 			changeEvents: "input change"
 		},
@@ -4825,8 +4829,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			attribute: "content"
 		},
 
-		"p, div, li, dt, dd, h1, h2, h3, h4, h5, h6, article, section, address": {
+		"block": {
 			default: true,
+			selector: "p, div, li, dt, dd, h1, h2, h3, h4, h5, h6, article, section, address",
 			editor: function editor() {
 				var display = getComputedStyle(this.element).display;
 				var tag = display.indexOf("inline") === 0 ? "input" : "textarea";
