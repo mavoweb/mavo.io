@@ -896,6 +896,10 @@ var _ = $.extend(Mavo, {
 		return JSON.stringify(data, null, "\t");
 	},
 
+	/**
+	 * Array utlities
+	 */
+
 	// If the passed value is not an array, convert to an array
 	toArray: arr => {
 		return arr === undefined? [] : Array.isArray(arr)? arr : [arr];
@@ -909,6 +913,10 @@ var _ = $.extend(Mavo, {
 		}
 	},
 
+	/**
+	 * Do two arrays have a non-empty intersection?
+	 * @return {Boolean}
+	 */
 	hasIntersection: (arr1, arr2) => arr1 && arr2 && !arr1.every(el => arr2.indexOf(el) == -1),
 
 	// Recursively flatten a multi-dimensional array
@@ -919,6 +927,17 @@ var _ = $.extend(Mavo, {
 
 		return arr.reduce((prev, c) => _.toArray(prev).concat(_.flatten(c)), []);
 	},
+
+	// Push an item to an array iff it's not already in there
+	pushUnique: (arr, item) => {
+		if (arr.indexOf(item) === -1) {
+			arr.push(item);
+		}
+	},
+
+	/**
+	 * DOM element utilities
+	 */
 
 	is: function(thing, ...elements) {
 		for (let element of elements) {
@@ -1014,11 +1033,24 @@ var _ = $.extend(Mavo, {
 		}
 	},
 
-	pushUnique: (arr, item) => {
-		if (arr.indexOf(item) === -1) {
-			arr.push(item);
+	/**
+	 * Get the value of an attribute, with fallback attributes in priority order.
+	 */
+	getAttribute: function(element, ...attributes) {
+		for (let i=0, attribute; attribute = attributes[i]; i++) {
+			let value = element.getAttribute(attribute);
+
+			if (value) {
+				return value;
+			}
 		}
+
+		return null;
 	},
+
+	/**
+	 * Object utilities
+	 */
 
 	subset: function(obj, path, value) {
 		if (arguments.length == 3) {
@@ -1057,18 +1089,28 @@ var _ = $.extend(Mavo, {
 	},
 
 	/**
-	 * Get the value of an attribute, with fallback attributes in priority order.
+	 * Deep clone an object. Only supports object literals, arrays, and primitives
 	 */
-	getAttribute: function(element, ...attributes) {
-		for (let i=0, attribute; attribute = attributes[i]; i++) {
-			let value = element.getAttribute(attribute);
+	clone: function(o) {
+		if (typeof o !== "object" || o === null) {
+			// Primitive
+			return o;
+		}
 
-			if (value) {
-				return value;
+		if (Array.isArray(o)) {
+			return o.slice().map(_.clone);
+		}
+
+		// Object
+		var clone = {};
+
+		for (let property in o) {
+			if (o.hasOwnProperty(property)) {
+				clone[property] = _.clone(o[property]);
 			}
 		}
 
-		return null;
+		return clone;
 	},
 
 	// Credit: https://remysharp.com/2010/07/21/throttling-function-calls
@@ -1477,7 +1519,7 @@ var _ = Mavo.UI.Bar = $.Class({
 			}
 		}
 
-		if (this.order.length) {
+		if (this.order.length && !this.element.classList.contains("mv-compact")) {
 			this.resize();
 
 			if (self.ResizeObserver) {
@@ -1503,12 +1545,18 @@ var _ = Mavo.UI.Bar = $.Class({
 	},
 
 	resize: function() {
+		if (!this.targetHeight) {
+			// We don't have a correct measurement for target height, abort
+			this.targetHeight = this.element.offsetHeight;
+			return;
+		}
+
 		this.resizeObserver && this.resizeObserver.disconnect();
 
 		this.element.classList.remove("mv-compact", "mv-tiny");
 
 		// Exceeded single row?
-		if (this.element.offsetHeight > this.targetHeight * 1.2) {
+		if (this.element.offsetHeight > this.targetHeight * 1.5) {
 			this.element.classList.add("mv-compact");
 
 			if (this.element.offsetHeight > this.targetHeight * 1.2) {
@@ -1561,7 +1609,7 @@ var _ = Mavo.UI.Bar = $.Class({
 				prepare: function() {
 					var backend = this.primaryBackend;
 
-					if (backend && this.permissions.parent == backend.permissions && backend.user) {
+					if (backend && backend.user) {
 						var user = backend.user;
 						var html = user.name || "";
 
@@ -1964,8 +2012,10 @@ var _ = Mavo.Backend = $.Class({
 	},
 
 	get: function() {
-		return $.fetch(this.url.href)
-		        .then(xhr => Promise.resolve(xhr.responseText), () => Promise.resolve(null));
+		var url = new URL(this.url);
+		url.searchParams.set("timestamp", Date.now()); // ensure fresh copy
+
+		return $.fetch(this.url.href).then(xhr => Promise.resolve(xhr.responseText), () => Promise.resolve(null));
 	},
 
 	load: function() {
@@ -2267,7 +2317,7 @@ var text = _.Text = $.Class({
 	},
 
 	static: {
-		extensions: [".txt", ".md", ".markdown"],
+		extensions: [".txt"],
 		parse: (serialized, me) => Promise.resolve({[me? me.property : "content"]: serialized}),
 		stringify: (data, me) => Promise.resolve(data[me? me.property : "content"])
 	}
@@ -2576,6 +2626,7 @@ var _ = Mavo.Node = $.Class({
 	},
 
 	render: function(data) {
+		this.oldData = this.data;
 		this.data = data;
 
 		data = Mavo.subset(data, this.inPath);
@@ -2901,25 +2952,26 @@ var _ = Mavo.Group = $.Class({
 		};
 
 		if (env.data !== undefined) {
+			// Super method returned something
 			return env.data;
 		}
 
-		env.data = {};
+		env.data = this.data? Mavo.clone(Mavo.subset(this.data, this.inPath)) : {};
 
-		this.propagate(obj => {
-			if ((obj.saved || env.options.live) && !(obj.property in env.data)) {
-				var data = obj.getData(o);
+		for (let property in this.children) {
+			let obj = this.children[property];
+
+			if (obj.saved || env.options.live) {
+				let data = obj.getData(o);
 
 				if (data !== null || env.options.live) {
 					env.data[obj.property] = data;
 				}
 			}
-		});
-
-		$.extend(env.data, this.unhandled);
+		}
 
 		if (!env.options.live) {
-			// JSON-LD stuff
+			// Add JSON-LD stuff to stored data
 			if (this.type && this.type != _.DEFAULT_TYPE) {
 				env.data["@type"] = this.type;
 			}
@@ -2928,6 +2980,7 @@ var _ = Mavo.Group = $.Class({
 				env.data["@context"] = this.vocab;
 			}
 
+			// If storing, use the rendered data too
 			env.data = Mavo.subset(this.data, this.inPath, env.data);
 		}
 
@@ -2984,18 +3037,21 @@ var _ = Mavo.Group = $.Class({
 		// TODO what if it was a primitive and now it's a group?
 		// In that case, render the this.children[this.property] with it
 
-		var oldUnhandled = this.unhandled;
-		this.unhandled = $.extend({}, data, property => !(property in this.children));
-
 		this.propagate(obj => {
 			obj.render(data[obj.property]);
 		});
 
-		for (let property in this.unhandled) {
-			let value = this.unhandled[property];
+		// Fire datachange events for properties not in the template,
+		// since nothing else will and they can still be referenced in expressions
+		var oldData = Mavo.subset(this.oldData, this.inPath);
 
-			if (typeof value != "object" && (!oldUnhandled || oldUnhandled[property] != value)) {
-				this.dataChanged("propertychange", {property});
+		for (let property in data) {
+			if (!(property in this.children)) {
+				let value = data[property];
+
+				if (typeof value != "object" && (!oldData || oldData[property] != value)) {
+					this.dataChanged("propertychange", {property});
+				}
 			}
 		}
 	},
@@ -3854,7 +3910,7 @@ var _ = Mavo.Elements = {};
 
 Object.defineProperties(_, {
 	"register": {
-		value: function(selector, o) {
+		value: function(id, o) {
 			if (typeof arguments[0] === "object") {
 				// Multiple definitions
 				for (let s in arguments[0]) {
@@ -3872,8 +3928,11 @@ Object.defineProperties(_, {
 				for (attribute of config.attribute) {
 					let o = $.extend({}, config);
 					o.attribute = attribute;
-					_[selector] = _[selector] || [];
-					_[selector].push(o);
+					o.selector = o.selector || id;
+					o.id = id;
+
+					_[id] = _[id] || [];
+					_[id].push(o);
 				}
 			}
 
@@ -4270,26 +4329,30 @@ var _ = Mavo.Collection = $.Class({
 			data: []
 		};
 
-		var count = 0; // count of non-null items
-
 		for (item of this.children) {
-			if (!item.deleted || o.null) {
+			if (!item.deleted || env.options.live) {
 				let itemData = item.getData(env.options);
 
-				if (itemData || o.null) {
+				if (itemData || env.options.live) {
 					env.data.push(itemData);
-					count += !!itemData;
 				}
 			}
 		}
 
-		if (this.unhandled) {
-			env.data = this.unhandled.before.concat(env.data, this.unhandled.after);
-		}
+		if (!this.mutable) {
+			// If immutable, drop nulls
 
-		if (!this.mutable && count == 1) {
-			// See https://github.com/LeaVerou/mavo/issues/50#issuecomment-266079652
-			env.data = env.data.filter(d => !!d)[0];
+			env.data = env.data.filter(item => item !== null);
+
+			if (env.options.live && env.data.length === 1) {
+				// If immutable with only 1 item, return the item
+				// See https://github.com/LeaVerou/mavo/issues/50#issuecomment-266079652
+				env.data = env.data[0];
+			}
+			else if (this.data && !env.options.live) {
+				var rendered = Mavo.subset(this.data, this.inPath);
+				env.data = env.data.concat(rendered.slice(env.data.length));
+			}
 		}
 
 		Mavo.hooks.run("node-getdata-end", env);
@@ -4631,8 +4694,6 @@ var _ = Mavo.Collection = $.Class({
 	propagated: ["save"],
 
 	dataRender: function(data) {
-		this.unhandled = {before: [], after: []};
-
 		if (!data) {
 			return;
 		}
@@ -4641,10 +4702,6 @@ var _ = Mavo.Collection = $.Class({
 
 		if (!this.mutable) {
 			this.children.forEach((item, i) => item.render(data && data[i]));
-
-			if (data) {
-				this.unhandled.after = data.slice(this.length);
-			}
 		}
 		else {
 			// First render on existing items
@@ -5724,10 +5781,6 @@ var _ = Mavo.Functions = {
 		"=": "eq"
 	},
 
-	get $now() {
-		return new Date();
-	},
-
 	// Read-only syntactic sugar for URL stuff
 	$url: (function() {
 		var ret = {};
@@ -5879,6 +5932,37 @@ var _ = Mavo.Functions = {
 
 	uppercase: str => (str + "").toUpperCase(),
 	lowercase: str => (str + "").toLowerCase(),
+
+	/*********************
+	 * Date functions
+	 *********************/
+
+	get $now() {
+		return new Date();
+	},
+
+	year: getDateComponent("year"),
+	month: getDateComponent("month"),
+	day: getDateComponent("day"),
+	weekday: getDateComponent("weekday"),
+	hour: getDateComponent("hour"),
+	hour12: getDateComponent("hour", "numeric", {hour12:true}),
+	minute: getDateComponent("minute"),
+	second: getDateComponent("second"),
+
+	date: date => {
+		return `${_.year(date)}-${_.month(date).twodigit}-${_.day(date).twodigit}`;
+	},
+	time: date => {
+		return `${_.hour(date).twodigit}:${_.minute(date).twodigit}:${_.second(date).twodigit}`;
+	},
+
+	minutes: seconds => Math.floor(Math.abs(seconds) / 60),
+	hours: seconds => Math.floor(Math.abs(seconds) / 3600),
+	days: seconds => Math.floor(Math.abs(seconds) / 86400),
+	weeks: seconds => Math.floor(Math.abs(seconds) / 604800),
+	months: seconds => Math.floor(Math.abs(seconds) / (30.4368 * 86400)),
+	years: seconds => Math.floor(Math.abs(seconds) / (30.4368 * 86400 * 12)),
 };
 
 Mavo.Script = {
@@ -5931,18 +6015,11 @@ Mavo.Script = {
 						result = b.map(n => o.scalar(a, n));
 					}
 				}
+				else if (Array.isArray(a)) {
+					result = a.map(n => o.scalar(n, b));
+				}
 				else {
-					// Operand is scalar
-					if (typeof o.identity == "number") {
-						b = +b;
-					}
-
-					if (Array.isArray(a)) {
-						result = a.map(n => o.scalar(n, b));
-					}
-					else {
-						result = o.scalar(a, b);
-					}
+					result = o.scalar(a, b);
 				}
 
 				if (o.reduce) {
@@ -5995,7 +6072,17 @@ Mavo.Script = {
 			symbol: "+"
 		},
 		"subtract": {
-			scalar: (a, b) => a - b,
+			scalar: (a, b) => {
+				if (isNaN(a) || isNaN(b)) {
+					var dateA = toDate(a), dateB = toDate(b);
+
+					if (dateA && dateB) {
+						return (dateA - dateB)/1000;
+					}
+				}
+
+				return a - b;
+			},
 			symbol: "-"
 		},
 		"mod": {
@@ -6075,9 +6162,9 @@ Mavo.Script = {
 	getNumericalOperands: function(a, b) {
 		if (isNaN(a) || isNaN(b)) {
 			// Try comparing as dates
-			var da = new Date(a), db = new Date(b);
+			var da = toDate(a), db = toDate(b);
 
-			if (!isNaN(da) && !isNaN(db)) {
+			if (da && db) {
 				// Both valid dates
 				return [da, db];
 			}
@@ -6151,6 +6238,68 @@ function numbers(array, args) {
 	array = Array.isArray(array)? array : (args? $$(args) : [array]);
 
 	return array.filter(number => !isNaN(number) && number !== "").map(n => +n);
+}
+
+function toDate(date) {
+	if (!date) {
+		return null;
+	}
+
+	if ($.type(date) === "string" && date.indexOf(":") === -1) {
+		// Dates without a time are parsed as UTC, we want local timezone
+		date += " 00:00:00";
+	}
+
+	date = new Date(date);
+
+	if (isNaN(date)) {
+		return null;
+	}
+
+	return date;
+}
+
+function getDateComponent(component, option = "numeric", o) {
+	var locale = document.documentElement.lang || "en-GB";
+
+	return function(date, format = option) {
+		date = toDate(date);
+
+		if (!date) {
+			return "";
+		}
+
+		var options = $.extend({
+			[component]: format,
+			hour12: false
+		}, o);
+
+		if (component == "weekday" && format == "numeric") {
+			ret = date.getDay() || 7;
+		}
+		else {
+			var ret = date.toLocaleString(locale, options);
+		}
+
+		if (format == "numeric" && !isNaN(ret)) {
+			ret = new Number(ret);
+
+			if (component == "month" || component == "weekday") {
+				options[component] = "long";
+				ret.name = date.toLocaleString(locale, options);
+
+				options[component] = "short";
+				ret.shortname = date.toLocaleString(locale, options);
+			}
+
+			if (component != "weekday") {
+				options[component] = "2-digit";
+				ret.twodigit = date.toLocaleString(locale, options);
+			}
+		}
+
+		return ret;
+	};
 }
 
 })();

@@ -13,63 +13,6 @@
 	</p>
 </section>
 
-<section>
-	<h1>MavoScript vs JavaScript</h1>
-
-	<p>
-		MavoScript is based on a subset of JavaScript, with a few simplifications to make it easy to use even by people with no JavaScript knowledge.
-		If a Mavo expression is more advanced than MavoScript, it is automatically parsed as JavaScript, allowing experienced HTML authors to do more with Mavo expressions.
-	</p>
-
-	<p>For those who know JavaScript, these are a few key differences:</p>
-
-	<table>
-		<thead>
-			<tr>
-				<th>JavaScript</th>
-				<th>MavoScript</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>Math and logical operations with arrays produce nonsensical results</td>
-				<td>Array math & logical operations works element-wise. Operations between an array and a scalar are performed on every array element.
-				This is why things like <code>count(rating > 3)</code> work in MavoScript, but wouldn't in JS.</td>
-			</tr>
-			<tr>
-				<td>All strings have to be quoted</td>
-				<td>Strings that only consist of letters, numbers, and underscores don't need quotes.</td>
-			</tr>
-			<tr>
-				<td><code>==</code> operator for equality</td>
-				<td><code>=</code> operator for equality</td>
-			</tr>
-			<tr>
-				<td><code>&&</code> operator for logical and</td>
-				<td><code>and</code> operator for logical and</td>
-			</tr>
-			<tr>
-				<td><code>&&</code> operator for logical or</td>
-				<td><code>or</code> operator for logical or</td>
-			</tr>
-			<tr>
-				<td><code>if</code> is a control structure</td>
-				<td><code>if()</code> is a function</td>
-			</tr>
-			<tr>
-				<td><code>a + b</code> might be addition or concatenation depending on types</td>
-				<td><code>a + b</code> is always addition, <code>a & b</code> is concatenation</td>
-			</tr>
-			<tr>
-				<td>Things like <code>3 > 2 > 1</code> return unexpected results (<code>false in this case</code>)</td>
-				<td>Every operator can have multiple operands, including <code>></code>, so <code>3 > 2 > 1</code> has the same result as in math (<code>true</code>)</td>
-			</tr>
-		</tbody>
-	</table>
-
-	<p class="tip">Since MavoScript does not support comments, an easy way to force JS mode is a <code>/* js */</code> comment in the start or end of the expression.</p>
-</section>
-
 <section id="list-functions">
 	<h1>List Functions</h1>
 	<p>The following functions are useful with properties that have multiple values, i.e. are on or inside a <code>mv-multiple</code> element.</p>
@@ -200,6 +143,148 @@
 </section>
 
 <section>
+	<h1>Date and Time functions</h1>
+
+	<p>The following examples assume you have defined a <code>&lt;time property="date"></code> property in your Mavo whose current value is June 13th, 1986 at 8:30:05pm.</p>
+
+	<table>
+		<thead>
+			<tr>
+				<th style="width: 40%">Example</th>
+				<th style="width: 12%">Result</th>
+				<th>What it does</th>
+			</tr>
+		</thead>
+		<tr>
+			<td><code>year(date)</code></td>
+			<td>1986</td>
+			<td>Returns the year of a date as a 4 digit number.</td>
+		</tr>
+		<tr>
+			<td><code>month(date)</code></td>
+			<td>6</td>
+			<td>Returns the month of a date, as a 1-2 digit number from 1 to 12.</td>
+		</tr>
+		<tr>
+			<td><code>weekday(date)</code></td>
+			<td>5</td>
+			<td>Returns the day of the week, as a number from 1 to 7. 1 is Monday, 7 is Sunday.</td>
+		</tr>
+		<tr>
+			<td><code>day(date)</code></td>
+			<td>13</td>
+			<td>Returns the day of the month, as a 1-2 digit number from 1 to 31.</td>
+		</tr>
+		<tr>
+			<td><code>hour(date)</code></td>
+			<td>20</td>
+			<td>Returns the hour part of the date, as a number in a 24-hour format.</td>
+		</tr>
+		<tr>
+			<td><code>hour12(date)</code></td>
+			<td>8 PM</td>
+			<td>Returns the hour part of the date in a 12-hour format. The exact AM/PM wording will depend on the language of your document.</td>
+		</tr>
+		<tr>
+			<td><code>minute(date)</code></td>
+			<td>30</td>
+			<td>Returns the minute part of the date, as a 1-2 digit number.</td>
+		</tr>
+		<tr>
+			<td><code>second(date)</code></td>
+			<td>5</td>
+			<td>Returns the second part of the date, as a 1-2 digit number.</td>
+		</tr>
+		<tr>
+			<td><code>date(date)</code></td>
+			<td>1986-06-13</td>
+			<td>Returns the date part only (without any time information), in ISO format.</td>
+		</tr>
+		<tr>
+			<td><code>time(date)</code></td>
+			<td>20:30:05</td>
+			<td>Returns the time part of the date only, in ISO format.</td>
+		</tr>
+		<tr>
+			<td><code>minutes('1986-06-13 21:40:45' - date)</code></td>
+			<td>71</td>
+			<td>Converts a number of seconds to a number of minutes, rounded to the lowest integer.
+				In this example, it gives us the number of minutes between the two dates, because subtracting two dates gives us the number of seconds between them.</td>
+		</tr>
+		<tr>
+			<td><code>hours('1986-06-13 21:40:45' - date)</code></td>
+			<td>1</td>
+			<td>Converts a number of seconds to a number of hours, rounded to the lowest integer.
+				In this example, it gives us the number of hours between the two dates, because subtracting two dates gives us the number of seconds between them.</td>
+		</tr>
+		<tr>
+			<td><code>days('1986-06-10 21:40:45' - date)</code></td>
+			<td>2</td>
+			<td>Converts a number of seconds to a number of days, rounded to the lowest integer.
+				In this example, it gives us the number of days between the two dates, because subtracting two dates gives us the number of seconds between them.</td>
+		</tr>
+		<tr>
+			<td><code>weeks('1986-06-01 21:40:45' - date)</code></td>
+			<td>1</td>
+			<td>Converts a number of seconds to a number of weeks, rounded to the lowest integer.
+				In this example, it gives us the number of weeks between the two dates, because subtracting two dates gives us the number of seconds between them.</td>
+		</tr>
+		<tr>
+			<td><code>months('1986-01-01' - date)</code></td>
+			<td>5</td>
+			<td>Converts a number of seconds to a number of months, rounded to the lowest integer.
+				In this example, it gives us the number of months between the two dates, because subtracting two dates gives us the number of seconds between them.</td>
+		</tr>
+		<tr>
+			<td><code>years('1980-06-14' - date)</code></td>
+			<td>5</td>
+			<td>Converts a number of seconds to a number of years, rounded to the lowest integer.
+				In this example, it gives us the number of years between the two dates, because subtracting two dates gives us the number of seconds between them.</td>
+		</tr>
+	</table>
+
+	<p>Most of the functions for extracting date components (month, weekday, etc) also support alternative forms, which you can access by using the dot notation: <code>name</code>, <code>shortname</code>, and <code>twodigit</code>.
+		Some of these depend on the document language, declared via the <code>lang</code> attribute (the following examples assume <code>lang="en-GB"</code>).
+
+	<table>
+		<thead>
+			<tr>
+				<th style="width: 40%">Example</th>
+				<th style="width: 12%">Result</th>
+				<th>What it does</th>
+			</tr>
+		</thead>
+		<tr>
+			<td><code>weekday(date).name</code></td>
+			<td>Friday</td>
+			<td>Returns the day of the week of a date, with its full name.</td>
+		</tr>
+		<tr>
+			<td><code>weekday(date).shortname</code></td>
+			<td>Fri</td>
+			<td>Returns the day of the week of a date, as its shortened full name.</td>
+		</tr>
+		<tr>
+			<td><code>month(date).twodigit</code></td>
+			<td>06</td>
+			<td>Returns the month of a date, as a two digit number.</td>
+		</tr>
+		<tr>
+			<td><code>month(date).name</code></td>
+			<td>June</td>
+			<td>Returns the month of a date, as its full name.</td>
+		</tr>
+		<tr>
+			<td><code>year(date).twodigit</code></td>
+			<td>86</td>
+			<td>Returns the year of a date, as a two digit number.</td>
+		</tr>
+	</table>
+
+	<p>These are just a few examples, most date component functions support multiple formats.</p>
+</section>
+
+<section>
 	<h1>Other Functions</h1>
 
 	<table>
@@ -223,6 +308,67 @@
 			</tr>
 		</tbody>
 	</table>
+</section>
+
+<section>
+	<h1>MavoScript vs JavaScript</h1>
+
+	<p>
+		MavoScript is based on a subset of JavaScript, with a few simplifications to make it easy to use even by people with no JavaScript knowledge.
+		If a Mavo expression is more advanced than MavoScript, it is automatically parsed as JavaScript, allowing experienced web developers to do more with Mavo expressions.
+	</p>
+
+	<p>For those who know JavaScript, these are a few key differences:</p>
+
+	<table>
+		<thead>
+			<tr>
+				<th>JavaScript</th>
+				<th>MavoScript</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Math and logical operations with arrays produce nonsensical results</td>
+				<td>Array math & logical operations works element-wise. Operations between an array and a scalar are performed on every array element.
+				This is why things like <code>count(rating > 3)</code> work in MavoScript, but wouldn't in JS.</td>
+			</tr>
+			<tr>
+				<td>All strings have to be quoted</td>
+				<td>Strings that only consist of letters, numbers, and underscores don't need quotes.</td>
+			</tr>
+			<tr>
+				<td><code>==</code> operator for equality</td>
+				<td><code>=</code> operator for equality</td>
+			</tr>
+			<tr>
+				<td><code>&&</code> operator for logical and</td>
+				<td><code>and</code> operator for logical and</td>
+			</tr>
+			<tr>
+				<td><code>&&</code> operator for logical or</td>
+				<td><code>or</code> operator for logical or</td>
+			</tr>
+			<tr>
+				<td><code>if</code> is a control structure</td>
+				<td><code>if()</code> is a function</td>
+			</tr>
+			<tr>
+				<td><code>a + b</code> might be addition or concatenation depending on types</td>
+				<td><code>a + b</code> is always addition, <code>a & b</code> is concatenation</td>
+			</tr>
+			<tr>
+				<td>Things like <code>3 > 2 > 1</code> return unexpected results (<code>false in this case</code>)</td>
+				<td>Every operator can have multiple operands, including <code>></code>, so <code>3 > 2 > 1</code> has the same result as in math (<code>true</code>)</td>
+			</tr>
+			<tr>
+				<td><code>foo.bar.baz</code> will throw an error if either <code>foo</code> or <code>foo.bar</code> don’t exist.</td>
+				<td>If either <code>foo</code> or <code>foo.bar</code> don’t exist, <code>foo.bar.baz</code> will just return <code>""</code>.</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p class="tip">Since MavoScript does not support comments, an easy way to force JS mode is a <code>/* js */</code> comment in the start or end of the expression.</p>
 </section>
 
 @@include('_footer-docs.html')

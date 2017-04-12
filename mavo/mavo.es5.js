@@ -1077,6 +1077,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			return JSON.stringify(data, null, "\t");
 		},
 
+		/**
+   * Array utlities
+   */
+
 		// If the passed value is not an array, convert to an array
 		toArray: function toArray(arr) {
 			return arr === undefined ? [] : Array.isArray(arr) ? arr : [arr];
@@ -1090,6 +1094,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			}
 		},
 
+		/**
+   * Do two arrays have a non-empty intersection?
+   * @return {Boolean}
+   */
 		hasIntersection: function hasIntersection(arr1, arr2) {
 			return arr1 && arr2 && !arr1.every(function (el) {
 				return arr2.indexOf(el) == -1;
@@ -1106,6 +1114,17 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				return _.toArray(prev).concat(_.flatten(c));
 			}, []);
 		},
+
+		// Push an item to an array iff it's not already in there
+		pushUnique: function pushUnique(arr, item) {
+			if (arr.indexOf(item) === -1) {
+				arr.push(item);
+			}
+		},
+
+		/**
+   * DOM element utilities
+   */
 
 		is: function is(thing) {
 			for (var _len = arguments.length, elements = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -1226,11 +1245,28 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			}
 		},
 
-		pushUnique: function pushUnique(arr, item) {
-			if (arr.indexOf(item) === -1) {
-				arr.push(item);
+		/**
+   * Get the value of an attribute, with fallback attributes in priority order.
+   */
+		getAttribute: function getAttribute(element) {
+			for (var _len2 = arguments.length, attributes = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+				attributes[_key2 - 1] = arguments[_key2];
 			}
+
+			for (var i = 0, attribute; attribute = attributes[i]; i++) {
+				var value = element.getAttribute(attribute);
+
+				if (value) {
+					return value;
+				}
+			}
+
+			return null;
 		},
+
+		/**
+   * Object utilities
+   */
 
 		subset: function subset(obj, path, value) {
 			if (arguments.length == 3) {
@@ -1267,22 +1303,28 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		},
 
 		/**
-   * Get the value of an attribute, with fallback attributes in priority order.
+   * Deep clone an object. Only supports object literals, arrays, and primitives
    */
-		getAttribute: function getAttribute(element) {
-			for (var _len2 = arguments.length, attributes = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-				attributes[_key2 - 1] = arguments[_key2];
+		clone: function clone(o) {
+			if ((typeof o === "undefined" ? "undefined" : _typeof(o)) !== "object" || o === null) {
+				// Primitive
+				return o;
 			}
 
-			for (var i = 0, attribute; attribute = attributes[i]; i++) {
-				var value = element.getAttribute(attribute);
+			if (Array.isArray(o)) {
+				return o.slice().map(_.clone);
+			}
 
-				if (value) {
-					return value;
+			// Object
+			var clone = {};
+
+			for (var property in o) {
+				if (o.hasOwnProperty(property)) {
+					clone[property] = _.clone(o[property]);
 				}
 			}
 
-			return null;
+			return clone;
 		},
 
 		// Credit: https://remysharp.com/2010/07/21/throttling-function-calls
@@ -1799,7 +1841,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				}
 			}
 
-			if (this.order.length) {
+			if (this.order.length && !this.element.classList.contains("mv-compact")) {
 				this.resize();
 
 				if (self.ResizeObserver) {
@@ -1823,12 +1865,18 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		},
 
 		resize: function resize() {
+			if (!this.targetHeight) {
+				// We don't have a correct measurement for target height, abort
+				this.targetHeight = this.element.offsetHeight;
+				return;
+			}
+
 			this.resizeObserver && this.resizeObserver.disconnect();
 
 			this.element.classList.remove("mv-compact", "mv-tiny");
 
 			// Exceeded single row?
-			if (this.element.offsetHeight > this.targetHeight * 1.2) {
+			if (this.element.offsetHeight > this.targetHeight * 1.5) {
 				this.element.classList.add("mv-compact");
 
 				if (this.element.offsetHeight > this.targetHeight * 1.2) {
@@ -1881,7 +1929,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 					prepare: function prepare() {
 						var backend = this.primaryBackend;
 
-						if (backend && this.permissions.parent == backend.permissions && backend.user) {
+						if (backend && backend.user) {
 							var user = backend.user;
 							var html = user.name || "";
 
@@ -2425,6 +2473,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		},
 
 		get: function get() {
+			var url = new URL(this.url);
+			url.searchParams.set("timestamp", Date.now()); // ensure fresh copy
+
 			return $.fetch(this.url.href).then(function (xhr) {
 				return Promise.resolve(xhr.responseText);
 			}, function () {
@@ -2774,7 +2825,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 		},
 
 		static: {
-			extensions: [".txt", ".md", ".markdown"],
+			extensions: [".txt"],
 			parse: function parse(serialized, me) {
 				return Promise.resolve(_defineProperty({}, me ? me.property : "content", serialized));
 			},
@@ -3126,6 +3177,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		},
 
 		render: function render(data) {
+			this.oldData = this.data;
 			this.data = data;
 
 			data = Mavo.subset(data, this.inPath);
@@ -3471,25 +3523,26 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			};
 
 			if (env.data !== undefined) {
+				// Super method returned something
 				return env.data;
 			}
 
-			env.data = {};
+			env.data = this.data ? Mavo.clone(Mavo.subset(this.data, this.inPath)) : {};
 
-			this.propagate(function (obj) {
-				if ((obj.saved || env.options.live) && !(obj.property in env.data)) {
+			for (var property in this.children) {
+				var obj = this.children[property];
+
+				if (obj.saved || env.options.live) {
 					var data = obj.getData(o);
 
 					if (data !== null || env.options.live) {
 						env.data[obj.property] = data;
 					}
 				}
-			});
-
-			$.extend(env.data, this.unhandled);
+			}
 
 			if (!env.options.live) {
-				// JSON-LD stuff
+				// Add JSON-LD stuff to stored data
 				if (this.type && this.type != _.DEFAULT_TYPE) {
 					env.data["@type"] = this.type;
 				}
@@ -3498,6 +3551,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 					env.data["@context"] = this.vocab;
 				}
 
+				// If storing, use the rendered data too
 				env.data = Mavo.subset(this.data, this.inPath, env.data);
 			}
 
@@ -3548,8 +3602,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 		// Do not call directly, call this.render() instead
 		dataRender: function dataRender(data) {
-			var _this3 = this;
-
 			if (!data) {
 				return;
 			}
@@ -3557,20 +3609,21 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			// TODO what if it was a primitive and now it's a group?
 			// In that case, render the this.children[this.property] with it
 
-			var oldUnhandled = this.unhandled;
-			this.unhandled = $.extend({}, data, function (property) {
-				return !(property in _this3.children);
-			});
-
 			this.propagate(function (obj) {
 				obj.render(data[obj.property]);
 			});
 
-			for (var property in this.unhandled) {
-				var value = this.unhandled[property];
+			// Fire datachange events for properties not in the template,
+			// since nothing else will and they can still be referenced in expressions
+			var oldData = Mavo.subset(this.oldData, this.inPath);
 
-				if ((typeof value === "undefined" ? "undefined" : _typeof(value)) != "object" && (!oldUnhandled || oldUnhandled[property] != value)) {
-					this.dataChanged("propertychange", { property: property });
+			for (var property in data) {
+				if (!(property in this.children)) {
+					var value = data[property];
+
+					if ((typeof value === "undefined" ? "undefined" : _typeof(value)) != "object" && (!oldData || oldData[property] != value)) {
+						this.dataChanged("propertychange", { property: property });
+					}
 				}
 			}
 		},
@@ -4490,7 +4543,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	Object.defineProperties(_, {
 		"register": {
-			value: function value(selector, o) {
+			value: function value(id, o) {
 				if (_typeof(arguments[0]) === "object") {
 					// Multiple definitions
 					for (var s in arguments[0]) {
@@ -4522,8 +4575,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 								var _o = $.extend({}, config);
 								_o.attribute = attribute;
-								_[selector] = _[selector] || [];
-								_[selector].push(_o);
+								_o.selector = _o.selector || id;
+								_o.id = id;
+
+								_[id] = _[id] || [];
+								_[id].push(_o);
 							}
 						} catch (err) {
 							_didIteratorError2 = true;
@@ -4985,8 +5041,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				data: []
 			};
 
-			var count = 0; // count of non-null items
-
 			var _iteratorNormalCompletion = true;
 			var _didIteratorError = false;
 			var _iteratorError = undefined;
@@ -4995,12 +5049,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				for (var _iterator = this.children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 					item = _step.value;
 
-					if (!item.deleted || o.null) {
+					if (!item.deleted || env.options.live) {
 						var itemData = item.getData(env.options);
 
-						if (itemData || o.null) {
+						if (itemData || env.options.live) {
 							env.data.push(itemData);
-							count += !!itemData;
 						}
 					}
 				}
@@ -5019,15 +5072,21 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				}
 			}
 
-			if (this.unhandled) {
-				env.data = this.unhandled.before.concat(env.data, this.unhandled.after);
-			}
+			if (!this.mutable) {
+				// If immutable, drop nulls
 
-			if (!this.mutable && count == 1) {
-				// See https://github.com/LeaVerou/mavo/issues/50#issuecomment-266079652
-				env.data = env.data.filter(function (d) {
-					return !!d;
-				})[0];
+				env.data = env.data.filter(function (item) {
+					return item !== null;
+				});
+
+				if (env.options.live && env.data.length === 1) {
+					// If immutable with only 1 item, return the item
+					// See https://github.com/LeaVerou/mavo/issues/50#issuecomment-266079652
+					env.data = env.data[0];
+				} else if (this.data && !env.options.live) {
+					var rendered = Mavo.subset(this.data, this.inPath);
+					env.data = env.data.concat(rendered.slice(env.data.length));
+				}
 			}
 
 			Mavo.hooks.run("node-getdata-end", env);
@@ -5457,8 +5516,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		dataRender: function dataRender(data) {
 			var _this6 = this;
 
-			this.unhandled = { before: [], after: [] };
-
 			if (!data) {
 				return;
 			}
@@ -5469,10 +5526,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				this.children.forEach(function (item, i) {
 					return item.render(data && data[i]);
 				});
-
-				if (data) {
-					this.unhandled.after = data.slice(this.length);
-				}
 			} else {
 				// First render on existing items
 				for (var i = 0; i < this.children.length; i++) {
@@ -6691,6 +6744,8 @@ Mavo.Expressions.directive("mv-value", {
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 /**
@@ -6702,10 +6757,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 	var _ = Mavo.Functions = {
 		operators: {
 			"=": "eq"
-		},
-
-		get $now() {
-			return new Date();
 		},
 
 		// Read-only syntactic sugar for URL stuff
@@ -6907,6 +6958,49 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		},
 		lowercase: function lowercase(str) {
 			return (str + "").toLowerCase();
+		},
+
+		/*********************
+   * Date functions
+   *********************/
+
+		get $now() {
+			return new Date();
+		},
+
+		year: getDateComponent("year"),
+		month: getDateComponent("month"),
+		day: getDateComponent("day"),
+		weekday: getDateComponent("weekday"),
+		hour: getDateComponent("hour"),
+		hour12: getDateComponent("hour", "numeric", { hour12: true }),
+		minute: getDateComponent("minute"),
+		second: getDateComponent("second"),
+
+		date: function date(_date) {
+			return _.year(_date) + "-" + _.month(_date).twodigit + "-" + _.day(_date).twodigit;
+		},
+		time: function time(date) {
+			return _.hour(date).twodigit + ":" + _.minute(date).twodigit + ":" + _.second(date).twodigit;
+		},
+
+		minutes: function minutes(seconds) {
+			return Math.floor(Math.abs(seconds) / 60);
+		},
+		hours: function hours(seconds) {
+			return Math.floor(Math.abs(seconds) / 3600);
+		},
+		days: function days(seconds) {
+			return Math.floor(Math.abs(seconds) / 86400);
+		},
+		weeks: function weeks(seconds) {
+			return Math.floor(Math.abs(seconds) / 604800);
+		},
+		months: function months(seconds) {
+			return Math.floor(Math.abs(seconds) / (30.4368 * 86400));
+		},
+		years: function years(seconds) {
+			return Math.floor(Math.abs(seconds) / (30.4368 * 86400 * 12));
 		}
 	};
 
@@ -6987,19 +7081,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 								return o.scalar(a, n);
 							});
 						}
+					} else if (Array.isArray(a)) {
+						result = a.map(function (n) {
+							return o.scalar(n, b);
+						});
 					} else {
-						// Operand is scalar
-						if (typeof o.identity == "number") {
-							b = +b;
-						}
-
-						if (Array.isArray(a)) {
-							result = a.map(function (n) {
-								return o.scalar(n, b);
-							});
-						} else {
-							result = o.scalar(a, b);
-						}
+						result = o.scalar(a, b);
 					}
 
 					if (o.reduce) {
@@ -7067,6 +7154,15 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			},
 			"subtract": {
 				scalar: function scalar(a, b) {
+					if (isNaN(a) || isNaN(b)) {
+						var dateA = toDate(a),
+						    dateB = toDate(b);
+
+						if (dateA && dateB) {
+							return (dateA - dateB) / 1000;
+						}
+					}
+
 					return a - b;
 				},
 				symbol: "-"
@@ -7188,10 +7284,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		getNumericalOperands: function getNumericalOperands(a, b) {
 			if (isNaN(a) || isNaN(b)) {
 				// Try comparing as dates
-				var da = new Date(a),
-				    db = new Date(b);
+				var da = toDate(a),
+				    db = toDate(b);
 
-				if (!isNaN(da) && !isNaN(db)) {
+				if (da && db) {
 					// Both valid dates
 					return [da, db];
 				}
@@ -7276,6 +7372,71 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		}).map(function (n) {
 			return +n;
 		});
+	}
+
+	function toDate(date) {
+		if (!date) {
+			return null;
+		}
+
+		if ($.type(date) === "string" && date.indexOf(":") === -1) {
+			// Dates without a time are parsed as UTC, we want local timezone
+			date += " 00:00:00";
+		}
+
+		date = new Date(date);
+
+		if (isNaN(date)) {
+			return null;
+		}
+
+		return date;
+	}
+
+	function getDateComponent(component) {
+		var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "numeric";
+		var o = arguments[2];
+
+		var locale = document.documentElement.lang || "en-GB";
+
+		return function (date) {
+			var _$$extend;
+
+			var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : option;
+
+			date = toDate(date);
+
+			if (!date) {
+				return "";
+			}
+
+			var options = $.extend((_$$extend = {}, _defineProperty(_$$extend, component, format), _defineProperty(_$$extend, "hour12", false), _$$extend), o);
+
+			if (component == "weekday" && format == "numeric") {
+				ret = date.getDay() || 7;
+			} else {
+				var ret = date.toLocaleString(locale, options);
+			}
+
+			if (format == "numeric" && !isNaN(ret)) {
+				ret = new Number(ret);
+
+				if (component == "month" || component == "weekday") {
+					options[component] = "long";
+					ret.name = date.toLocaleString(locale, options);
+
+					options[component] = "short";
+					ret.shortname = date.toLocaleString(locale, options);
+				}
+
+				if (component != "weekday") {
+					options[component] = "2-digit";
+					ret.twodigit = date.toLocaleString(locale, options);
+				}
+			}
+
+			return ret;
+		};
 	}
 })();
 "use strict";

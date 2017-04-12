@@ -114,6 +114,7 @@ thead th:first-child {
 	<h1>Other attributes</h1>
 	<p>These are attributes you can use to further customize your Mavo app.
 		The <em>Live?</em> column refers to whether Mavo will react to changes to this attribute (e.g. via <a href="/docs/expressions">expressions</a>).
+		<strong>“Initially”</strong> means that you can use expressions to set the value of that attribute until Mavo uses it, but it will not respond to future changes to the attribute.
 	</p>
 
 	<table class="attributes">
@@ -202,7 +203,7 @@ thead th:first-child {
 				<td>Properties</td>
 				<td>Customize how an element is edited by linking to another element, anywhere in the page.</td>
 
-				<td class="semi">Start only</td>
+				<td class="semi">Initially</td>
 				<td><a href="/docs/properties">Properties</a></td>
 			</tr>
 			<tr>
@@ -210,7 +211,7 @@ thead th:first-child {
 				<td>Properties</td>
 				<td>Any attributes set that way will be copied over to the property's editor.</td>
 
-				<td class="semi">Start only</td>
+				<td class="semi">Initially</td>
 				<td><a href="/docs/properties">Properties</a></td>
 			</tr>
 			<tr>
@@ -225,7 +226,7 @@ thead th:first-child {
 				<td><code>mv-path</code></td>
 				<td>Properties</td>
 				<td>Render and edit only a subset of the stored data.</td>
-				<td class="semi">Start only</td>
+				<td class="semi">Initially</td>
 				<td></td>
 			</tr>
 			<tr>
@@ -233,14 +234,14 @@ thead th:first-child {
 				<td>Mavo root</td>
 				<td>Render and edit only a subset of the remote data, by providing a (slash-separated) path to the data it handles.</td>
 
-				<td class="semi">Start only</td>
+				<td class="semi">Initially</td>
 				<td></td>
 			</tr>
 			<tr>
 				<td><code>mv-autosave</code></td>
 				<td>Mavo root</td>
 				<td>Save automatically when the data changes. Its value is the number of seconds to throttle saving, or 0 for no throttling (save immediately). The default throttling delay is 3 seconds, used when the attribute is specified without a value. Unless throttling is disabled, The Save button will still be present in the Mavo bar.</td>
-				<td class="semi">Start only</td>
+				<td class="semi">Initially</td>
 				<td></td>
 			</tr>
 			<tr>
@@ -385,11 +386,28 @@ thead th:first-child {
 	</table>
 </section>
 
+<section>
+	<h1>Learn More</h1>
+
+	<p>Mavo is not only about attributes and classes. To learn more about other aspects of Mavo, visit some of the other pages in this documentation:</p>
+
+	<ul class="index">
+	<li><a href="/docs/primer">Primer</a></li>
+	<li><a href="/docs/properties">Properties</a></li>
+	<li><a href="/docs/storage">Storage</a></li>
+	<li><a href="/docs/expressions">Expressions</a></li>
+	<li><a href="/docs/mavoscript">MavoScript</a></li>
+	<li><a href="/docs/ui">UI Customization</a></li>
+	<li><a href="/docs">Index of all Mavo attributes and classes</a></li>
+</ul>
+
+</section>
+
 <footer>
 	<div>
 		<p>
 			Made with &hearts; by <a href="http://lea.verou.me">Lea Verou</a> and <a href="https://github.com/LeaVerou/mavo/graphs/contributors">contributors</a>
-			&bull; <a href="https://twitter.com/mavohtml">@mavohtml on 🐦 Twitter</a>
+			&bull; 🐦 Tweet to <a href="https://twitter.com/mavoweb">@mavoweb</a>
 			&bull; <a href="https://github.com/leaverou/mavo">Github</a>
 		</p>
 		<p>This work was supported in part by a collaborative grant from the <a href="http://www.wistron.com/">Wistron Corporation</a>.</p>
