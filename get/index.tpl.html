@@ -1,7 +1,7 @@
 @@include('_head.html', {
 	"rootclass": "download",
 	"title": "Download Mavo",
-	"includes": "<link rel='stylesheet' href='/download/style.css'>"
+	"includes": "<link rel='stylesheet' href='/get/style.css'>"
 })
 <body>
 
@@ -15,9 +15,9 @@
 
 	<div class="questions">
 		<article>
-			<h1>Is it possible that you may want to read the code in the JavaScript file?</h1>
+			<h1>Will you read the code in the JavaScript file?</h1>
 			<label>
-				<input type="radio" property name="minify" value="">
+				<input type="radio" property name="minify" value="" checked>
 				Yes, give me something readable <em>+ 65% filesize</em>
 			</label>
 			<label>
@@ -26,9 +26,9 @@
 			</label>
 		</article>
 		<article>
-			<h1>What kind of browser support do you need?</h1>
+			<h1>What browser support do you need?</h1>
 			<label>
-				<input type="radio" property name="transpile" value="">
+				<input type="radio" property name="transpile" value="" checked>
 				Modern browsers only
 			</label>
 			<label>
@@ -36,13 +36,26 @@
 				Slightly older browsers <em>+ 20% filesize</em>
 			</label>
 		</article>
+		<article>
+			<h1>Feeling adventurous?</h1>
+			<label>
+				<input type="radio" property name="path" value="https://dev.mavo.io/dist">
+				Yes, give me the absolute latest version <em>may have bugs!</em>
+			</label>
+			<label>
+				<input type="radio" name="path" value="https://mavo.io/mavo" checked>
+				No, give me the latest stable version
+			</label>
+		</article>
 	</div>
 
 	<meta property="filename" content="mavo[if(transpile, '.' & transpile)][if(minify, '.' & minify)].js">
 
 	<p>Now copy and paste the following code in your page’s <code>&lt;head></code> section, or click on the links below to download these files locally:</p>
-	<pre class="language-foo"><code>&lt;script src="<a href="/mavo/[filename]" download>http://mavo.io/mavo/[filename]</a>">&lt;/script>
-&lt;link rel="stylesheet" href="<a href="/mavo/mavo.css" download>http://mavo.io/mavo/mavo.css</a>"></code></pre>
+	<pre class="language-foo"><code>&lt;script src="<a href="[path]/[filename]" download>[path]/[filename]</a>">&lt;/script>
+&lt;link rel="stylesheet" href="<a href="[path]/mavo.css" download>[path]/mavo.css</a>"></code></pre>
+
+	<p class="tip">This page is also a Mavo! View source!</p>
 
 </section>
 

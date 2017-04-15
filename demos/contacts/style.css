@@ -56,7 +56,6 @@ details {
       left: -1px;
       z-index: -1;
       background: url(img/rolodex.jpg) #c4c1ba top fixed;
-      -webkit-filter: blur(6px);
       filter: blur(6px);
       overflow: hidden; }
     details > summary img {
@@ -92,7 +91,6 @@ details {
     details > section > section:not(:last-child) {
       border-bottom: 1px solid rgba(0, 0, 0, 0.15); }
     details > section article {
-      display: -webkit-flex;
       display: -ms-flexbox;
       display: flex;
       padding: .8em 1em; }
@@ -103,7 +101,6 @@ details {
         font-size: 80%;
         line-height: 1.875; }
       details > section article span:nth-of-type(2) {
-        -webkit-flex: 1;
         -ms-flex: 1;
         flex: 1; }
     details > section button.mv-add {
@@ -157,9 +154,6 @@ button.mv-add.mv-add-contact {
     background: rgba(255, 255, 255, 0.5); }
 
 ::-webkit-input-placeholder {
-  color: rgba(0, 0, 0, 0.6); }
-
-::-moz-placeholder {
   color: rgba(0, 0, 0, 0.6); }
 
 :-ms-input-placeholder {

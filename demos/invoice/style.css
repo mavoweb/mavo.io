@@ -77,25 +77,21 @@ header > address > h2 {
     font-weight: bold; }
 
 .recipient {
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex; }
   .recipient > div {
     text-align: right;
-    -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1; }
   .recipient h2 {
     font-size: 120%; }
 
 .company {
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex; }
   .company > img {
     margin-right: 1em; }
   .company > div {
-    -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1; }
 
@@ -142,16 +138,13 @@ body.mv-target-within article.invoice {
       opacity: .3;
       font-size: 700%;
       white-space: nowrap;
-      -webkit-transform: translate(-7.7em, 1em) rotate(-90deg);
       transform: translate(-7.7em, 1em) rotate(-90deg);
-      -webkit-transform-origin: top right;
       transform-origin: top right; }
       body.mv-target-within article.invoice > header h1::before {
         content: "Invoice "; }
       @media print {
         body.mv-target-within article.invoice > header h1 {
           opacity: .5;
-          -webkit-transform: translate(-6.7em, 0.3em) rotate(-90deg);
           transform: translate(-6.7em, 0.3em) rotate(-90deg); } }
   body.mv-target-within article.invoice section, body.mv-target-within article.invoice article {
     margin: 3em 0 2em; }
@@ -199,7 +192,6 @@ body:not(.mv-target-within) .show-all {
   display: none; }
 
 body:not(.mv-target-within) article.invoice {
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   width: 66em;
@@ -231,7 +223,6 @@ body:not(.mv-target-within) article.invoice {
   body:not(.mv-target-within) article.invoice .invoice-date {
     width: 10em; }
   body:not(.mv-target-within) article.invoice .recipient {
-    -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1; }
   body:not(.mv-target-within) article.invoice .services {

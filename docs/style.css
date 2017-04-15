@@ -48,12 +48,10 @@ body > header + h2 {
   display: block; }
 
 .example.commentform label:first-of-type {
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   margin-bottom: 1em; }
   .example.commentform label:first-of-type input {
-    -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1; }
 
@@ -94,7 +92,6 @@ body > header + h2 {
       display: none; } }
 
 #summary {
-  -webkit-column-break-inside: avoid;
   page-break-inside: avoid;
   break-inside: avoid; }
   #summary dt {

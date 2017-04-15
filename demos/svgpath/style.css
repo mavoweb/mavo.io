@@ -17,10 +17,8 @@ body > header h1 a, body > header h1 button, .editor > h1 details summary {
     background: #737b8c; }
 
 body {
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: column;
   -ms-flex-flow: column;
   flex-flow: column;
   margin: 0;
@@ -32,10 +30,8 @@ body {
     font-size: 350%; }
 
 body > header {
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
   padding: .5em;
@@ -50,7 +46,6 @@ body > header {
     body > header .mv-bar .mv-clear::before {
       content: "🗑️ "; }
   body > header h1 {
-    -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1;
     margin: 0;
@@ -72,10 +67,8 @@ body > header {
     color: white; }
 
 main {
-  -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex; }
 
@@ -84,13 +77,10 @@ main > section > h1 {
   font-size: 200%; }
 
 .editor {
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: column;
   -ms-flex-flow: column;
   flex-flow: column;
-  -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   padding: 0 1em 1em; }
@@ -113,7 +103,6 @@ main > section > h1 {
     font: 100% Consolas, Monaco, monospace;
     white-space: normal; }
   .editor > div {
-    -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1;
     overflow: auto; }
@@ -123,15 +112,12 @@ main > section > h1 {
     letter-spacing: -.05em; }
 
 .preview {
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: column;
   -ms-flex-flow: column;
   flex-flow: column;
   width: 50vw; }
   .preview svg {
-    -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1;
     background: #e6e6e6;
@@ -164,10 +150,8 @@ main > section > h1 {
     [property=segment] .mv-item-controls:not(:hover):not(:focus) {
       mix-blend-mode: multiply; }
   [property=segment] h1 {
-    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
     padding: .5em;
