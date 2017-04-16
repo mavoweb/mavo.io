@@ -198,25 +198,26 @@ body > header nav {
       color: black;
       mix-blend-mode: screen;
       text-decoration: none; }
-  body > header nav a.soon {
-    cursor: not-allowed; }
-    body > header nav a.soon:not(:hover):not(:focus) {
-      color: rgba(255, 255, 255, 0.7); }
-    body > header nav a.soon::after {
-      content: "Soon";
-      display: inline-block;
-      vertical-align: middle;
-      padding: .4em .5em .3em;
-      margin-left: .5em;
-      border-radius: .3em;
-      background: #ff9500;
-      color: white;
-      text-transform: uppercase;
-      font-size: 60%;
-      line-height: 1; }
   html:not(.home) body > header nav {
     transform: rotate(-1deg);
     transform-origin: right; }
+
+a.soon {
+  cursor: not-allowed; }
+  a.soon:not(:hover):not(:focus) {
+    color: rgba(255, 255, 255, 0.7); }
+  a.soon::after {
+    content: "Soon";
+    display: inline-block;
+    vertical-align: middle;
+    padding: .4em .5em .3em;
+    margin-left: .5em;
+    border-radius: .3em;
+    background: #ff9500;
+    color: white;
+    text-transform: uppercase;
+    font-size: 60%;
+    line-height: 1; }
 
 body > section {
   -ms-flex: 1;
@@ -240,6 +241,8 @@ body > footer {
   display: flex;
   -ms-flex-flow: row wrap;
   flex-flow: row wrap;
+  -ms-flex-align: start;
+  align-items: flex-start;
   padding: 3em 1em 1em;
   padding: 3em calc(50% - 450px) 1em;
   background: #e9eaed;
@@ -247,10 +250,23 @@ body > footer {
   font-size: 80%;
   -webkit-clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%);
   clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%); }
-  body > footer > div {
+  body > footer p:first-child {
+    width: 100%;
+    font-size: 150%; }
+  body > footer > article {
     -ms-flex: 1;
     flex: 1;
     margin: 0 1em 0 .5em; }
+    body > footer > article > h1 {
+      font-size: 100%;
+      text-transform: uppercase;
+      opacity: .4; }
+    body > footer > article:first-of-type {
+      -ms-flex: 2;
+      flex: 2; }
+      body > footer > article:first-of-type ul {
+        -moz-columns: 2;
+        columns: 2; }
   body > footer p {
     margin: .5em; }
   body > footer a {
@@ -258,10 +274,20 @@ body > footer {
     font-weight: bold;
     color: rgba(0, 0, 0, 0.7); }
   body > footer a.logo {
-    height: 3em;
-    margin: 0 .5em; }
+    height: 5em;
+    margin: 0 .5em;
+    -ms-flex-item-align: center;
+    -ms-grid-row-align: center;
+    align-self: center; }
     body > footer a.logo img {
       height: 100%; }
+  body > footer ul {
+    padding: 0;
+    margin: 0;
+    list-style: none; }
+    body > footer ul a {
+      display: block;
+      padding: .3em 0; }
 
 .notice {
   padding: .5em 1em;
@@ -353,6 +379,32 @@ body > section table {
         font-size: 88%; }
       .example.side-by-side .example-container {
         margin: 0; } }
+
+body > section:first-of-type:not([id]),
+body > section#intro {
+  font-size: 200%;
+  -webkit-hyphens: manual;
+  -ms-hyphens: manual;
+  hyphens: manual; }
+  body > section:first-of-type:not([id]) p:first-child,
+  body > section#intro p:first-child {
+    margin-top: 0; }
+  body > section:first-of-type:not([id]) p:last-child,
+  body > section#intro p:last-child {
+    margin-bottom: 0; }
+  body > section:first-of-type:not([id]) p::before,
+  body > section#intro p::before {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding: .25em .5em .2em;
+    margin-left: -.3em;
+    margin-right: .3em;
+    border-radius: .3em;
+    background: #abb0ba;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 55%; }
 
 /**
  * Syntax highlighting

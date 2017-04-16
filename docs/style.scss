@@ -134,30 +134,8 @@ body > header + h2 {
 
 body > section:first-of-type:not([id]),
 body > section#intro {
-	font-size: 200%;
-
-	p:first-child {
-		margin-top: 0;
-	}
-
-	p:last-child {
-		margin-bottom: 0;
-	}
-
 	p::before {
 		content: "In a nutshell";
-		display: inline-block;
-		vertical-align: text-bottom;
-		padding: .25em .5em .2em;
-		margin-left: -.3em;
-		margin-right: .3em;
-		border-radius: .3em;
-		background: hsl(220, 10%, 70%);
-		color: white;
-		text-transform: uppercase;
-		font-weight: bold;
-		font-size: 55%;
-
 	}
 }
 

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" class="faq">
+<head>
+	<meta charset="UTF-8">
+	<title>Frequently Asked Questions</title>
+	<link rel="stylesheet" href="/mavo/mavo.css" />
+	<link rel="stylesheet" href="../css/style.css" />
+	<link rel="icon" href="/favicon.ico">
+
+	
+
+	<script src="/mavo/mavo.js"></script>
+</head>
+
+<body>
+
+<header>
+	<h1 class="logo">
+		<a href="/"><img src="../logo.svg" alt="Mavo"></a>
+	</h1>
+	<nav>
+	<a href="/docs/primer">Get started</a>
+	<a href="/docs">Docs</a>
+	<a href="/demos">Demos</a>
+	<a href="/faq">FAQ</a>
+	<a href="https://plugins.mavo.io">Plugins</a>
+	<a href="/get">Get Mavo</a>
+</nav>
+
+</header>
+
+<h2>FAQ</h2>
+
+<section id="attribute-names">
+	<h1>Why are you not using data-* attributes?</h1>
+
+	<p>We love standards, and we struggled with this one a lot. Originally, Mavo was using <code>data-</code> attributes.
+		However, we use a lot of attributes, so just using a <code>data-</code> prefix meant our attributes would likely collide with attributes from libraries that may be included on the same page or even <code>data-</code> attributes that the page author has defined for styling purposes.
+		Also, if we are just using a <code>data-</code> prefix, it's not obvious which attributes are Mavo's and which ones are not.
+		We <em>could</em> use a <code>data-mv-</code> prefix, but that is very verbose and would make Mavo code harder to read since half of it would be the same attribute prefix repeated over and over.
+		So, we chose <code>mv-</code> whose only drawback is theoretical purity: it causes absolutely no problems with anything, but as of right now, it will not pass HTML validation.
+		<a href="https://github.com/whatwg/html/issues/2271" target="_blank">And even that may be changing</a>.
+	</p>
+
+	<p><strong>We do support <code>data-mv-</code> versions of all our <code>mv-</code> attributes, but they are static</strong>: they are converted to <code>mv-</code> attributes when Mavo starts and never read back.
+	However, they work fine for most cases, and they can help you pass an HTML validator, if required.</p>
+
+	<p>Lastly, we designed Mavo to prototype a future where HTML can be used to create web applications.
+		Our vision is that one day, some or all of its functionality will be supported natively by browsers, and then it's attribute prefix will certainly not be <code>data-</code>.
+	</p>
+</section>
+
+<section id="seo">
+	<h1>What about search engines?</h1>
+
+	<p>Despite what you may have been told, <strong>Google <em>does</em> index dynamically generated content</strong>. Here is a sample of articles about this:</p>
+
+	<ul>
+		<li><a href="https://webmasters.googleblog.com/2014/05/understanding-web-pages-better.html">Understanding web pages better (Official Google blog)</a></li>
+		<li><a href="https://centrical.com/test/google-json-ld-and-javascript-crawling-and-indexing-test.html">Does Google crawl dynamic content?</a></li>
+		<li><a href="http://searchengineland.com/tested-googlebot-crawls-javascript-heres-learned-220157">We Tested How Googlebot Crawls Javascript And Here’s What We Learned</a></li>
+		<li><a href="https://www.seroundtable.com/google-on-crawling-javascript-sites-progressive-web-apps-21737.html">Google Gives Update On Crawling JavaScript Sites & Progressive Web Apps</a></li>
+	</ul>
+
+	<p>Other search engines are likely to follow suit, if they haven’t done so already.</p>
+</section>
+
+<footer>
+	<p>
+		Made with &hearts; by <a href="http://lea.verou.me">Lea Verou</a> and <a href="https://github.com/LeaVerou/mavo/graphs/contributors">contributors</a>
+	</p>
+	<article>
+		<h1>Explore</h1>
+
+		<ul>
+			<li><a href="/docs/primer">Get started</a></li>
+			<li><a href="/docs">Docs</a></li>
+			<li><a href="/demos">Demos</a></li>
+			<li><a href="/faq">FAQ</a></li>
+			<li><a href="https://plugins.mavo.io">Plugins</a></li>
+			<li><a href="/get">Get Mavo</a></li>
+			<li><a href="https://test.mavo.io">Testsuite</a></li>
+			<li><a href="/credits">Credits</a></li>
+		</ul>
+	</article>
+	<article>
+		<h1>Social Mavo</h1>
+
+		<ul>
+			<li><a href="https://twitter.com/mavoweb">Follow @mavoweb on Twitter</a></li>
+			<li><a href="https://gitter.im/mavoweb">Chat with us on Gitter</a></li>
+			<li><a href="https://github.com/leaverou/mavo">Github</a></li>
+		</ul>
+	</article>
+
+	<a href="http://mit.edu" class="logo"><img src="../img/logo-mit.svg" alt="MIT" /></a>
+	<a href="http://csail.mit.edu" class="logo"><img src="../img/logo-csail.svg" alt="CSAIL" /></a>
+</footer>
+
+
+<script src="../js/prism.js"></script>
+<script src="../js/sitewide.js"></script>
+
+
+</body>
+</html>

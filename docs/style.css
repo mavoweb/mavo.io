@@ -98,29 +98,9 @@ body > header + h2 {
     font-size: 120%;
     font-weight: bold; }
 
-body > section:first-of-type:not([id]),
-body > section#intro {
-  font-size: 200%; }
-  body > section:first-of-type:not([id]) p:first-child,
-  body > section#intro p:first-child {
-    margin-top: 0; }
-  body > section:first-of-type:not([id]) p:last-child,
-  body > section#intro p:last-child {
-    margin-bottom: 0; }
-  body > section:first-of-type:not([id]) p::before,
-  body > section#intro p::before {
-    content: "In a nutshell";
-    display: inline-block;
-    vertical-align: text-bottom;
-    padding: .25em .5em .2em;
-    margin-left: -.3em;
-    margin-right: .3em;
-    border-radius: .3em;
-    background: #abb0ba;
-    color: white;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 55%; }
+body > section:first-of-type:not([id]) p::before,
+body > section#intro p::before {
+  content: "In a nutshell"; }
 
 .unimplemented {
   text-decoration: line-through;

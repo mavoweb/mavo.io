@@ -208,31 +208,31 @@ body > header nav {
 		}
 	}
 
-	a.soon {
-		cursor: not-allowed;
-
-		&:not(:hover):not(:focus) {
-			color: hsla(0, 0%, 100%, .7);
-		}
-
-		&::after {
-			content: "Soon";
-			display: inline-block;
-			vertical-align: middle;
-			padding: .4em .5em .3em;
-			margin-left: .5em;
-			border-radius: .3em;
-			background: $orange;
-			color: white;
-			text-transform: uppercase;
-			font-size: 60%;
-			line-height: 1;
-		}
-	}
-
 	html:not(.home) & {
 		transform: rotate(-1deg);
 		transform-origin: right;
+	}
+}
+
+a.soon {
+	cursor: not-allowed;
+
+	&:not(:hover):not(:focus) {
+		color: hsla(0, 0%, 100%, .7);
+	}
+
+	&::after {
+		content: "Soon";
+		display: inline-block;
+		vertical-align: middle;
+		padding: .4em .5em .3em;
+		margin-left: .5em;
+		border-radius: .3em;
+		background: $orange;
+		color: white;
+		text-transform: uppercase;
+		font-size: 60%;
+		line-height: 1;
 	}
 }
 
@@ -264,6 +264,7 @@ body > section {
 body > footer {
 	display: flex;
 	flex-flow: row wrap;
+	align-items: flex-start;
 	padding: 3em 1em 1em;
 	padding: 3em calc(50% - #{$content-width/2}) 1em;
 	background: hsl(220, 10%, 92%);
@@ -271,9 +272,28 @@ body > footer {
 	font-size: 80%;
 	clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%);
 
-	& > div {
+	p:first-child {
+		width: 100%;
+		font-size: 150%;
+	}
+
+	& > article {
 		flex: 1;
 		margin: 0 1em 0 .5em;
+
+		& > h1 {
+			font-size: 100%;
+			text-transform: uppercase;
+			opacity: .4;
+		}
+
+		&:first-of-type {
+			flex: 2;
+
+			ul {
+				columns: 2;
+			}
+		}
 	}
 
 	p {
@@ -287,11 +307,23 @@ body > footer {
 	}
 
 	a.logo {
-		height: 3em;
+		height: 5em;
 		margin: 0 .5em;
+		align-self: center;
 
 		img {
 			height: 100%;
+		}
+	}
+
+	ul {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+
+		a {
+			display: block;
+			padding: .3em 0;
 		}
 	}
 }
@@ -422,6 +454,35 @@ body > section table {
 				margin: 0;
 			}
 		}
+	}
+}
+
+body > section:first-of-type:not([id]),
+body > section#intro {
+	font-size: 200%;
+	hyphens: manual;
+
+	p:first-child {
+		margin-top: 0;
+	}
+
+	p:last-child {
+		margin-bottom: 0;
+	}
+
+	p::before {
+		display: inline-block;
+		vertical-align: text-bottom;
+		padding: .25em .5em .2em;
+		margin-left: -.3em;
+		margin-right: .3em;
+		border-radius: .3em;
+		background: hsl(220, 10%, 70%);
+		color: white;
+		text-transform: uppercase;
+		font-weight: bold;
+		font-size: 55%;
+
 	}
 }
 
