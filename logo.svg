@@ -19,12 +19,10 @@ svg {
 }
 </style>
 
-<g id="logo">
-	<g id="coloredBracket" style="fill: hsl(35, 100%, 50%); fill: #ff9500;">
-		<g id="bracket" transform="translate(22.261434265426804, 2)">
-			<rect height="46" id="bar" class="bar" width="12" transform="skewX(-24)"></rect>
-			<rect height="46" id="bar2" class="bar" width="12" transform="skewX(24)"></rect>
-		</g>
+<g id="logo" style="fill: hsl(35, 100%, 50%); fill: #ff9500;">
+	<g id="bracket" transform="translate(22.261434265426804, 2)">
+		<rect height="46" id="bar" class="bar" width="12" transform="skewX(-24)"></rect>
+		<rect height="46" id="bar2" class="bar" width="12" transform="skewX(24)"></rect>
 	</g>
 	<g id="A" style="fill: hsl(330, 100%, 50%); fill: #ff0080;">
 		<use xlink:href="#bracket" id="A-top" x="41" />
