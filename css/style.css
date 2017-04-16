@@ -297,14 +297,14 @@ body > footer {
   width: auto; }
   .notice a {
     font-weight: bold; }
-  .notice a {
-    color: #ff9500;
-    mix-blend-mode: multiply; }
   .notice.warning {
     background: #ffeacc; }
     .notice.warning::before {
       content: "⚠️ ";
       filter: hue-rotate(-10deg);
+      mix-blend-mode: multiply; }
+    .notice.warning a {
+      color: #ff9500;
       mix-blend-mode: multiply; }
 
 .note, .tip {

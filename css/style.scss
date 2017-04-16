@@ -338,17 +338,17 @@ body > footer {
 		font-weight: bold;
 	}
 
-	a {
-		color: $orange;
-		mix-blend-mode: multiply;
-	}
-
 	&.warning {
 		background: mix(white, $orange, 80%);
 
 		&::before {
 			content: "⚠️ ";
 			filter: hue-rotate(-10deg);
+			mix-blend-mode: multiply;
+		}
+
+		a {
+			color: $orange;
 			mix-blend-mode: multiply;
 		}
 	}
