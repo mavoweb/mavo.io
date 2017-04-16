@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900");
 @font-face {
   font-family: 'Libre Bodoni';
@@ -296,6 +297,15 @@ body > footer {
   width: auto; }
   .notice a {
     font-weight: bold; }
+  .notice a {
+    color: #ff9500;
+    mix-blend-mode: multiply; }
+  .notice.warning {
+    background: #ffeacc; }
+    .notice.warning::before {
+      content: "⚠️ ";
+      filter: hue-rotate(-10deg);
+      mix-blend-mode: multiply; }
 
 .note, .tip {
   border-left: 0.5em solid #66c7f7;
