@@ -6,11 +6,6 @@ svg {
 	fill: #ff9500;
 }
 
-#A, #A-crossbow {
-	fill: hsl(330, 100%, 50%);
-	fill: #ff0080;
-}
-
 #V {
 	fill: hsl(85, 80%, 45%);
 	fill: #82cf17;
@@ -23,17 +18,19 @@ svg {
 	stroke-width: 10.96254549171121;
 }
 </style>
-<rect width="100%" height="100%" fill-opacity=".01" />
+
 <g id="logo">
-	<g id="bracket" transform="translate(22.261434265426804, 2)">
-		<rect height="46" id="bar" class="bar" width="12" transform="skewX(-24)"></rect>
-		<rect height="46" id="bar2" class="bar" width="12" transform="skewX(24)"></rect>
+	<g id="coloredBracket" style="fill: hsl(35, 100%, 50%); fill: #ff9500;">
+		<g id="bracket" transform="translate(22.261434265426804, 2)">
+			<rect height="46" id="bar" class="bar" width="12" transform="skewX(-24)"></rect>
+			<rect height="46" id="bar2" class="bar" width="12" transform="skewX(24)"></rect>
+		</g>
 	</g>
-
-	<use xlink:href="#bracket" id="A" x="41"></use>
-	<circle id="A-crossbow" r="5" cx="69.35" cy="72%"></circle>
-
-	<use xlink:href="#bracket" id="V" x="86" y="-50" transform="scale(1, -1)"></use>
+	<g id="A" style="fill: hsl(330, 100%, 50%); fill: #ff0080;">
+		<use xlink:href="#bracket" id="A-top" x="41" />
+		<circle id="A-crossbar" r="5" cx="69.35" cy="72%"></circle>
+	</g>
+	<use xlink:href="#bracket" id="V" x="86" y="-50" transform="scale(1, -1)" />
 	<circle id="O" r="19" cx="166.5" cy="25"></circle>
 </g>
 
