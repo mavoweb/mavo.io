@@ -12,7 +12,7 @@
 
 <g style="fill: hsl(35, 100%, 50%); fill: #ff9500; filter: drop-shadow(0 0 10px black)" id="icon">
 	<use xlink:href="#bracket" class="stroke" />
-	<g id="bracket" transform="translate(0, 2)">
+	<g id="bracket">
 		<polygon class="st0" points="53, 46 32.5, 0 20.5, 0 0, 46 12, 46 26.5, 13.5 41, 46 "/>
 	</g>
 	<use xlink:href="#A" class="stroke" />
