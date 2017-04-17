@@ -142,12 +142,12 @@ main > section > h1 {
   border: 1px solid var(--color);
   border-radius: .3em;
   background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)) var(--color); }
-  [property=segment] .mv-item-controls {
+  [property=segment] .mv-item-bar {
     position: static;
     opacity: 1;
     border: 0;
     pointer-events: auto; }
-    [property=segment] .mv-item-controls:not(:hover):not(:focus) {
+    [property=segment] .mv-item-bar:not(:hover):not(:focus) {
       mix-blend-mode: multiply; }
   [property=segment] h1 {
     display: -ms-flexbox;

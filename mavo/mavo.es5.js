@@ -956,7 +956,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 			hooks: new $.Hooks(),
 
-			attributes: ["mv-app", "mv-storage", "mv-source", "mv-init", "mv-path", "mv-format", "mv-attribute", "mv-default", "mv-mode", "mv-edit", "mv-permisssions"]
+			attributes: ["mv-app", "mv-storage", "mv-source", "mv-init", "mv-path", "mv-format", "mv-attribute", "mv-default", "mv-mode", "mv-edit", "mv-permisssions", "mv-rel"]
 		}
 	});
 
@@ -1322,25 +1322,21 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
    * Deep clone an object. Only supports object literals, arrays, and primitives
    */
 		clone: function clone(o) {
-			if ((typeof o === "undefined" ? "undefined" : _typeof(o)) !== "object" || o === null) {
-				// Primitive
-				return o;
-			}
+			var cache = new WeakSet();
 
-			if (Array.isArray(o)) {
-				return o.slice().map(_.clone);
-			}
+			return JSON.parse(JSON.stringify(o, function (key, value) {
+				if ((typeof value === "undefined" ? "undefined" : _typeof(value)) === "object" && value !== null) {
+					// No circular reference found
 
-			// Object
-			var clone = {};
+					if (cache.has(value)) {
+						return; // Circular reference found!
+					}
 
-			for (var property in o) {
-				if (o.hasOwnProperty(property)) {
-					clone[property] = _.clone(o[property]);
+					cache.add(value);
 				}
-			}
 
-			return clone;
+				return value;
+			}));
 		},
 
 		// Credit: https://remysharp.com/2010/07/21/throttling-function-calls
@@ -3002,7 +2998,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			if (!this.fromTemplate("property", "type")) {
 				this.property = _.getProperty(element);
 				this.type = Mavo.Group.normalize(element);
-				this.store = this.element.getAttribute("mv-storage"); // TODO rename to storage
+				this.storage = this.element.getAttribute("mv-storage"); // TODO rename to storage
 			}
 
 			this.modes = this.element.getAttribute("mv-mode");
@@ -3048,7 +3044,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		},
 
 		get saved() {
-			return this.store !== "none";
+			return this.storage !== "none";
 		},
 
 		get path() {
@@ -3066,7 +3062,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			}
 		},
 
-		destroy: function destroy() {},
+		destroy: function destroy() {
+			if (this.template) {
+				Mavo.delete(this.template.copies, this);
+			}
+		},
 
 		getData: function getData() {
 			var o = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -3080,7 +3080,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			var env = {
 				context: this,
 				options: o,
-				result: this.deleted || !this.saved && o.store != "*"
+				result: this.deleted || !this.saved && !o.live
 			};
 
 			Mavo.hooks.run("unit-isdatanull", env);
@@ -3470,6 +3470,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 (function ($, $$) {
@@ -3576,7 +3578,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			}
 
 			if (!env.options.live) {
-				// Add JSON-LD stuff to stored data
+				// Stored data
+				// If storing, use the rendered data too
+				env.data = Mavo.subset(this.data, this.inPath, env.data);
+
+				// Add JSON-LD stuff
 				if (this.type && this.type != _.DEFAULT_TYPE) {
 					env.data["@type"] = this.type;
 				}
@@ -3584,9 +3590,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				if (this.vocab) {
 					env.data["@context"] = this.vocab;
 				}
+			}
 
-				// If storing, use the rendered data too
-				env.data = Mavo.subset(this.data, this.inPath, env.data);
+			// {foo: {foo: 5}} should become {foo: 5}
+			var properties = Object.keys(env.data);
+
+			if (properties.length == 1 && properties[0] == this.property) {
+				env.data = env.data[this.property];
 			}
 
 			Mavo.hooks.run("node-getdata-end", env);
@@ -3636,27 +3646,45 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 		// Do not call directly, call this.render() instead
 		dataRender: function dataRender(data) {
+			var _this3 = this;
+
 			if (!data) {
 				return;
 			}
 
-			// TODO what if it was a primitive and now it's a group?
-			// In that case, render the this.children[this.property] with it
+			// What if data is not an object?
+			if ((typeof data === "undefined" ? "undefined" : _typeof(data)) !== "object") {
+				// Data is a primitive, render it on this.property or failing that, any writable property
+				var score = function score(prop) {
+					return (prop == _this3.property) + !_this3.children[prop].expressionText + (_this3.children[prop] instanceof Mavo.Primitive);
+				};
+				var property = Object.keys(this.children).sort(function (prop1, prop2) {
+					return score(prop1) - score(prop2);
+				}).reverse()[0];
 
-			this.propagate(function (obj) {
-				obj.render(data[obj.property]);
-			});
+				data = _defineProperty({}, property, data);
 
-			// Fire datachange events for properties not in the template,
-			// since nothing else will and they can still be referenced in expressions
-			var oldData = Mavo.subset(this.oldData, this.inPath);
+				this.data = Mavo.subset(this.data, this.inPath, data);
 
-			for (var property in data) {
-				if (!(property in this.children)) {
-					var value = data[property];
+				this.propagate(function (obj) {
+					obj.render(data[obj.property]);
+				});
+			} else {
+				this.propagate(function (obj) {
+					obj.render(data[obj.property]);
+				});
 
-					if ((typeof value === "undefined" ? "undefined" : _typeof(value)) != "object" && (!oldData || oldData[property] != value)) {
-						this.dataChanged("propertychange", { property: property });
+				// Fire datachange events for properties not in the template,
+				// since nothing else will and they can still be referenced in expressions
+				var oldData = Mavo.subset(this.oldData, this.inPath);
+
+				for (var _property in data) {
+					if (!(_property in this.children)) {
+						var value = data[_property];
+
+						if ((typeof value === "undefined" ? "undefined" : _typeof(value)) != "object" && (!oldData || oldData[_property] != value)) {
+							this.dataChanged("propertychange", { property: _property });
+						}
 					}
 				}
 			}
@@ -3750,34 +3778,25 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     * Set up input widget
     */
 
-			// Nested widgets
-			if (!this.editor && !this.attribute) {
-				this.editor = $$(this.element.children).filter(function (el) {
-					return el.matches(Mavo.selectors.formControl) && !el.matches(Mavo.selectors.property);
-				})[0];
-
-				if (this.editor) {
-					this.element.textContent = this.editorValue;
-					$.remove(this.editor);
-				}
-			}
-
 			// Linked widgets
 			if (!this.editor && this.element.hasAttribute("mv-edit")) {
 				var original = $(this.element.getAttribute("mv-edit"));
 
-				if (original && Mavo.is("formControl", original)) {
+				if (original) {
 					this.editor = original.cloneNode(true);
 
 					// Update editor if original mutates
+					// This means that expressions on mv-edit for individual collection items will not be picked up
 					if (!this.template) {
 						new Mavo.Observer(original, "all", function (records) {
+							var all = _this.copies.concat(_this);
+
 							var _iteratorNormalCompletion = true;
 							var _didIteratorError = false;
 							var _iteratorError = undefined;
 
 							try {
-								for (var _iterator = _this.copies[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+								for (var _iterator = all[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 									var primitive = _step.value;
 
 									primitive.editor = original.cloneNode(true);
@@ -3799,6 +3818,18 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 							}
 						});
 					}
+				}
+			}
+
+			// Nested widgets
+			if (!this.editor && !this.attribute) {
+				this.editor = $$(this.element.children).filter(function (el) {
+					return el.matches(Mavo.selectors.formControl) && !el.matches(Mavo.selectors.property);
+				})[0];
+
+				if (this.editor) {
+					this.element.textContent = this.editorValue;
+					$.remove(this.editor);
 				}
 			}
 
@@ -4251,7 +4282,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 				var ret = element.getAttribute("mv-attribute") || config.attribute;
 
-				if (!ret || ret === "null") {
+				if (!ret || ret === "null" || ret === "none") {
 					ret = null;
 				}
 
@@ -5585,8 +5616,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		propagated: ["save"],
 
 		dataRender: function dataRender(data) {
-			var _this5 = this;
-
 			if (!data) {
 				return;
 			}
@@ -5604,6 +5633,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 						this.children[i].render(data[i]);
 					} else {
 						this.delete(this.children[i], true);
+						this.children[i].dataChanged("delete");
 					}
 				}
 
@@ -5626,7 +5656,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 						Mavo.hooks.run("collection-add-end", env);
 
 						this.mavo.treeBuilt.then(function () {
-							return _this5.mavo.expressions.update(env.item.element);
+							item.dataChanged("add");
 						});
 					}
 
@@ -5681,7 +5711,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 		// Make sure to only call after dragula has loaded
 		getDragula: function getDragula() {
-			var _this6 = this;
+			var _this5 = this;
 
 			if (this.dragula) {
 				return this.dragula;
@@ -5696,9 +5726,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			this.dragula = dragula({
 				containers: [this.marker.parentNode],
 				isContainer: function isContainer(el) {
-					if (_this6.accepts.length) {
-						return Mavo.flatten(_this6.accepts.map(function (property) {
-							return _this6.mavo.root.find(property, { collections: true });
+					if (_this5.accepts.length) {
+						return Mavo.flatten(_this5.accepts.map(function (property) {
+							return _this5.mavo.root.find(property, { collections: true });
 						})).filter(function (c) {
 							return c && c instanceof _;
 						}).map(function (c) {
@@ -5746,7 +5776,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 					var index = closestItem ? closestItem.index + (closestItem.element === previous) : collection.length;
 					collection.add(item, index);
 				} else {
-					return _this6.dragula.cancel(true);
+					return _this5.dragula.cancel(true);
 				}
 			});
 
@@ -5788,7 +5818,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			},
 
 			addButton: function addButton() {
-				var _this7 = this;
+				var _this6 = this;
 
 				// Find add button if provided, or generate one
 				var selector = "button.mv-add-" + this.property;
@@ -5796,7 +5826,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 				if (group) {
 					var button = $$(selector, group).filter(function (button) {
-						return !_this7.templateElement.contains(button);
+						return !_this6.templateElement.contains(button);
 					})[0];
 				}
 
@@ -5817,7 +5847,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				button.addEventListener("click", function (evt) {
 					evt.preventDefault();
 
-					_this7.editItem(_this7.add());
+					_this6.editItem(_this6.add());
 				});
 
 				return button;
@@ -5858,18 +5888,20 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 			this.item = item;
 
-			this.element = $$(".mv-item-controls", this.item.element).filter(function (el) {
+			this.element = $$(".mv-item-bar:not([mv-rel]), .mv-item-bar[mv-rel=\"" + this.item.property + "\"]", this.item.element).filter(function (el) {
+
 				// Remove item controls meant for other collections
 				return el.closest(Mavo.selectors.multiple) == _this.item.element && !Mavo.data(el, "item");
 			})[0];
 
 			this.element = this.element || $.create({
-				className: "mv-item-controls mv-ui"
+				className: "mv-item-bar mv-ui"
 			});
 
 			Mavo.data(this.element, "item", this.item);
 
 			$.set(this.element, {
+				"mv-rel": this.item.property,
 				contents: [{
 					tag: "button",
 					title: "Delete this " + this.item.name,
@@ -6304,6 +6336,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 			var env = { context: this, ret: {}, event: event };
 			var parentEnv = env;
+
 			this.data = data;
 
 			env.ret = {};
@@ -6591,10 +6624,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		Mavo.hooks.add("node-getdata-end", function (env) {
 			var _this4 = this;
 
-			if (env.options.live && (env.data && _typeof(env.data) === "object" || this.collection)) {
+			if (env.options.live && env.data && (_typeof(env.data) === "object" || this.collection)) {
 				var data = env.data;
 
-				if (this instanceof Mavo.Primitive) {
+				if (_typeof(env.data) !== "object") {
 					var _env$data;
 
 					env.data = (_env$data = {}, _defineProperty(_env$data, Symbol.toPrimitive, function () {
@@ -6668,7 +6701,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 						}
 
 						// Does it reference another Mavo?
-						if (property in Mavo.all) {
+						if (property in Mavo.all && Mavo.all[property].root) {
 							return data[property] = Mavo.all[property].root.getData(env.options);
 						}
 
@@ -6864,6 +6897,7 @@ Mavo.Expressions.directive("mv-value", {
 			}
 
 			et.mavoNode = this;
+			this.expressionText = et;
 			this.storage = this.storage || "none";
 			this.modes = "read";
 
@@ -6918,6 +6952,8 @@ Mavo.Expressions.directive("mv-value", {
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -6937,7 +6973,21 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
    * Get a property of an object. Used by the . operator to prevent TypeErrors
    */
 		get: function get(obj, property) {
-			return obj && obj[property] !== undefined ? obj[property] : null;
+			if (obj && obj[property] !== undefined) {
+				return obj[property];
+			}
+
+			if (Array.isArray(obj) && isNaN(property) && _typeof(obj[0]) === "object") {
+				// Array and non-numerical property, try by id
+				for (var i = 0; i < obj.length; i++) {
+					if (obj[i] && obj[i].id == property) {
+						return obj[i];
+					}
+				}
+			}
+
+			// Not found :(
+			return null;
 		},
 
 		unique: function unique(arr) {
@@ -7138,7 +7188,17 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			return Math.floor(Math.abs(seconds) / (30.4368 * 86400 * 12));
 		},
 
-		localTimezone: -new Date().getTimezoneOffset()
+		localTimezone: -new Date().getTimezoneOffset(),
+
+		// Log to the console and return
+		log: function log() {
+			for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+				args[_key] = arguments[_key];
+			}
+
+			console.log(args);
+			return args[0];
+		}
 	};
 
 	// $url: Read-only syntactic sugar for URL stuff
@@ -7225,8 +7285,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			o.identity = o.identity === undefined ? 0 : o.identity;
 
 			return _[name] = o.code || function () {
-				for (var _len = arguments.length, operands = Array(_len), _key = 0; _key < _len; _key++) {
-					operands[_key] = arguments[_key];
+				for (var _len2 = arguments.length, operands = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+					operands[_key2] = arguments[_key2];
 				}
 
 				if (operands.length === 1) {

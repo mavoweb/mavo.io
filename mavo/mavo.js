@@ -811,7 +811,8 @@ var _ = self.Mavo = $.Class({
 
 		attributes: [
 			"mv-app", "mv-storage", "mv-source", "mv-init", "mv-path", "mv-format",
-			"mv-attribute", "mv-default", "mv-mode", "mv-edit", "mv-permisssions"
+			"mv-attribute", "mv-default", "mv-mode", "mv-edit", "mv-permisssions",
+			"mv-rel"
 		]
 	}
 });
@@ -1123,25 +1124,21 @@ var _ = $.extend(Mavo, {
 	 * Deep clone an object. Only supports object literals, arrays, and primitives
 	 */
 	clone: function(o) {
-		if (typeof o !== "object" || o === null) {
-			// Primitive
-			return o;
-		}
+		var cache = new WeakSet();
 
-		if (Array.isArray(o)) {
-			return o.slice().map(_.clone);
-		}
+		return JSON.parse(JSON.stringify(o, (key, value) => {
+			if (typeof value === "object" && value !== null) {
+				// No circular reference found
 
-		// Object
-		var clone = {};
+				if (cache.has(value)) {
+					return; // Circular reference found!
+				}
 
-		for (let property in o) {
-			if (o.hasOwnProperty(property)) {
-				clone[property] = _.clone(o[property]);
+				cache.add(value);
 			}
-		}
 
-		return clone;
+			return value;
+		}));
 	},
 
 	// Credit: https://remysharp.com/2010/07/21/throttling-function-calls
@@ -2488,7 +2485,7 @@ var _ = Mavo.Node = $.Class({
 		if (!this.fromTemplate("property", "type")) {
 			this.property = _.getProperty(element);
 			this.type = Mavo.Group.normalize(element);
-			this.store = this.element.getAttribute("mv-storage"); // TODO rename to storage
+			this.storage = this.element.getAttribute("mv-storage"); // TODO rename to storage
 		}
 
 		this.modes = this.element.getAttribute("mv-mode");
@@ -2532,7 +2529,7 @@ var _ = Mavo.Node = $.Class({
 	},
 
 	get saved() {
-		return this.store !== "none";
+		return this.storage !== "none";
 	},
 
 	get path() {
@@ -2551,7 +2548,9 @@ var _ = Mavo.Node = $.Class({
 	},
 
 	destroy: function() {
-
+		if (this.template) {
+			Mavo.delete(this.template.copies, this);
+		}
 	},
 
 	getData: function(o = {}) {
@@ -2564,7 +2563,7 @@ var _ = Mavo.Node = $.Class({
 		var env = {
 			context: this,
 			options: o,
-			result: this.deleted || !this.saved && (o.store != "*")
+			result: this.deleted || !this.saved && !o.live
 		};
 
 		Mavo.hooks.run("unit-isdatanull", env);
@@ -3013,8 +3012,11 @@ var _ = Mavo.Group = $.Class({
 			}
 		}
 
-		if (!env.options.live) {
-			// Add JSON-LD stuff to stored data
+		if (!env.options.live) { // Stored data
+			// If storing, use the rendered data too
+			env.data = Mavo.subset(this.data, this.inPath, env.data);
+
+			// Add JSON-LD stuff
 			if (this.type && this.type != _.DEFAULT_TYPE) {
 				env.data["@type"] = this.type;
 			}
@@ -3022,9 +3024,13 @@ var _ = Mavo.Group = $.Class({
 			if (this.vocab) {
 				env.data["@context"] = this.vocab;
 			}
+		}
 
-			// If storing, use the rendered data too
-			env.data = Mavo.subset(this.data, this.inPath, env.data);
+		// {foo: {foo: 5}} should become {foo: 5}
+		var properties = Object.keys(env.data);
+
+		if (properties.length == 1 && properties[0] == this.property) {
+			env.data = env.data[this.property];
 		}
 
 		Mavo.hooks.run("node-getdata-end", env);
@@ -3077,23 +3083,38 @@ var _ = Mavo.Group = $.Class({
 			return;
 		}
 
-		// TODO what if it was a primitive and now it's a group?
-		// In that case, render the this.children[this.property] with it
+		// What if data is not an object?
+		if (typeof data !== "object") {
+			// Data is a primitive, render it on this.property or failing that, any writable property
+			var score = prop => (prop == this.property)
+				+ (!this.children[prop].expressionText)
+				+ (this.children[prop] instanceof Mavo.Primitive);
+			var property = Object.keys(this.children).sort((prop1, prop2) => score(prop1) - score(prop2)).reverse()[0];
 
-		this.propagate(obj => {
-			obj.render(data[obj.property]);
-		});
+			data = {[property]: data};
 
-		// Fire datachange events for properties not in the template,
-		// since nothing else will and they can still be referenced in expressions
-		var oldData = Mavo.subset(this.oldData, this.inPath);
+			this.data = Mavo.subset(this.data, this.inPath, data);
 
-		for (let property in data) {
-			if (!(property in this.children)) {
-				let value = data[property];
+			this.propagate(obj => {
+				obj.render(data[obj.property]);
+			});
+		}
+		else {
+			this.propagate(obj => {
+				obj.render(data[obj.property]);
+			});
 
-				if (typeof value != "object" && (!oldData || oldData[property] != value)) {
-					this.dataChanged("propertychange", {property});
+			// Fire datachange events for properties not in the template,
+			// since nothing else will and they can still be referenced in expressions
+			var oldData = Mavo.subset(this.oldData, this.inPath);
+
+			for (let property in data) {
+				if (!(property in this.children)) {
+					let value = data[property];
+
+					if (typeof value != "object" && (!oldData || oldData[property] != value)) {
+						this.dataChanged("propertychange", {property});
+					}
 				}
 			}
 		}
@@ -3181,6 +3202,28 @@ var _ = Mavo.Primitive = $.Class({
 		 * Set up input widget
 		 */
 
+		 // Linked widgets
+		if (!this.editor && this.element.hasAttribute("mv-edit")) {
+			var original = $(this.element.getAttribute("mv-edit"));
+
+			if (original) {
+				this.editor = original.cloneNode(true);
+
+				// Update editor if original mutates
+				// This means that expressions on mv-edit for individual collection items will not be picked up
+				if (!this.template) {
+					new Mavo.Observer(original, "all", records => {
+						var all = this.copies.concat(this);
+
+						for (let primitive of all) {
+							primitive.editor = original.cloneNode(true);
+							primitive.setValue(primitive.value, {force: true, silent: true});
+						}
+					});
+				}
+			}
+		}
+
 		// Nested widgets
 		if (!this.editor && !this.attribute) {
 			this.editor = $$(this.element.children).filter(function (el) {
@@ -3190,25 +3233,6 @@ var _ = Mavo.Primitive = $.Class({
 			if (this.editor) {
 				this.element.textContent = this.editorValue;
 				$.remove(this.editor);
-			}
-		}
-
-		// Linked widgets
-		if (!this.editor && this.element.hasAttribute("mv-edit")) {
-			var original = $(this.element.getAttribute("mv-edit"));
-
-			if (original && Mavo.is("formControl", original)) {
-				this.editor = original.cloneNode(true);
-
-				// Update editor if original mutates
-				if (!this.template) {
-					new Mavo.Observer(original, "all", records => {
-						for (let primitive of this.copies) {
-							primitive.editor = original.cloneNode(true);
-							primitive.setValue(primitive.value, {force: true, silent: true});
-						}
-					});
-				}
 			}
 		}
 
@@ -3640,7 +3664,7 @@ var _ = Mavo.Primitive = $.Class({
 		getValueAttribute: function (element, config = Mavo.Elements.search(element)) {
 			var ret = element.getAttribute("mv-attribute") || config.attribute;
 
-			if (!ret || ret === "null") {
+			if (!ret || ret === "null" || ret === "none") {
 				ret = null;
 			}
 
@@ -4790,6 +4814,7 @@ var _ = Mavo.Collection = $.Class({
 				}
 				else {
 					this.delete(this.children[i], true);
+					this.children[i].dataChanged("delete");
 				}
 			}
 
@@ -4811,7 +4836,9 @@ var _ = Mavo.Collection = $.Class({
 					var env = {context: this, item};
 					Mavo.hooks.run("collection-add-end", env);
 
-					this.mavo.treeBuilt.then(() => this.mavo.expressions.update(env.item.element));
+					this.mavo.treeBuilt.then(() => {
+						item.dataChanged("add");
+					});
 				}
 
 				if (this.bottomUp) {
@@ -5028,18 +5055,20 @@ var _ = Mavo.UI.Itembar = $.Class({
 	constructor: function(item) {
 		this.item = item;
 
-		this.element = $$(".mv-item-controls", this.item.element).filter(el => {
+		this.element = $$(`.mv-item-bar:not([mv-rel]), .mv-item-bar[mv-rel="${this.item.property}"]`, this.item.element).filter(el => {
+
 								   // Remove item controls meant for other collections
 								   return el.closest(Mavo.selectors.multiple) == this.item.element && !Mavo.data(el, "item");
 							   })[0];
 
 		this.element = this.element || $.create({
-			className: "mv-item-controls mv-ui"
+			className: "mv-item-bar mv-ui"
 		});
 
 		Mavo.data(this.element, "item", this.item);
 
 		$.set(this.element, {
+			"mv-rel": this.item.property,
 			contents: [
 				{
 					tag: "button",
@@ -5436,6 +5465,7 @@ var _ = Mavo.DOMExpression = $.Class({
 	update: function(data = this.data, event) {
 		var env = {context: this, ret: {}, event};
 		var parentEnv = env;
+		
 		this.data = data;
 
 		env.ret = {};
@@ -5681,10 +5711,10 @@ var _ = Mavo.Expressions = $.Class({
 
 if (self.Proxy) {
 	Mavo.hooks.add("node-getdata-end", function(env) {
-		if (env.options.live && (env.data && typeof env.data === "object" || this.collection)) {
+		if (env.options.live && (env.data && (typeof env.data === "object" || this.collection))) {
 			var data = env.data;
 
-			if (this instanceof Mavo.Primitive) {
+			if (typeof env.data !== "object") {
 				env.data = {
 					[Symbol.toPrimitive]: () => data,
 					[this.property]: data
@@ -5755,7 +5785,7 @@ if (self.Proxy) {
 					}
 
 					// Does it reference another Mavo?
-					if (property in Mavo.all) {
+					if (property in Mavo.all && Mavo.all[property].root) {
 						return data[property] = Mavo.all[property].root.getData(env.options);
 					}
 
@@ -5898,6 +5928,7 @@ Mavo.Expressions.directive("mv-value", {
 			}
 
 			et.mavoNode = this;
+			this.expressionText = et;
 			this.storage = this.storage || "none";
 			this.modes = "read";
 
@@ -5964,7 +5995,21 @@ var _ = Mavo.Functions = {
 	 * Get a property of an object. Used by the . operator to prevent TypeErrors
 	 */
 	get: function(obj, property) {
-		return obj && obj[property] !== undefined? obj[property] : null;
+		if (obj && obj[property] !== undefined) {
+			return obj[property];
+		}
+
+		if (Array.isArray(obj) && isNaN(property) && typeof obj[0] === "object") {
+			// Array and non-numerical property, try by id
+			for (var i=0; i<obj.length; i++) {
+				if (obj[i] && obj[i].id == property) {
+					return obj[i];
+				}
+			}
+		}
+
+		// Not found :(
+		return null;
 	},
 
 	unique: function(arr) {
@@ -6129,7 +6174,13 @@ var _ = Mavo.Functions = {
 	months: seconds => Math.floor(Math.abs(seconds) / (30.4368 * 86400)),
 	years: seconds => Math.floor(Math.abs(seconds) / (30.4368 * 86400 * 12)),
 
-	localTimezone: -(new Date()).getTimezoneOffset()
+	localTimezone: -(new Date()).getTimezoneOffset(),
+
+	// Log to the console and return
+	log: (...args) => {
+		console.log(args);
+		return args[0];
+	}
 };
 
 // $url: Read-only syntactic sugar for URL stuff

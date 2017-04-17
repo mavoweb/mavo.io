@@ -100,7 +100,7 @@ input::-moz-placeholder {
 }
 
 
-:not(.mv-item-controls) > button.mv-add {
+:not(.mv-item-bar) > button.mv-add {
 	padding: .2em .5em;
 	margin-top: 1em;
 	border-radius: .3em;
@@ -153,7 +153,7 @@ li[property=task].mv-deleted {
 	padding: .3em;
 }
 
-.mv-item-controls.mv-ui {
+.mv-item-bar.mv-ui {
 	position: static;
 	pointer-events: auto;
 	opacity: 1;
