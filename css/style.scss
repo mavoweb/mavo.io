@@ -472,7 +472,7 @@ body > section table {
 	}
 }
 
-body > section:first-of-type:not([id]),
+.docs > body > section:first-of-type:not([id]),
 body > section#intro {
 	font-size: 200%;
 	hyphens: manual;

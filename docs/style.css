@@ -98,7 +98,7 @@ body > header + h2 {
     font-size: 120%;
     font-weight: bold; }
 
-body > section:first-of-type:not([id]) p::before,
+.docs > body > section:first-of-type:not([id]) p::before,
 body > section#intro p::before {
   content: "In a nutshell"; }
 

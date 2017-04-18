@@ -390,19 +390,19 @@ body > section table {
       .example.side-by-side .example-container {
         margin: 0; } }
 
-body > section:first-of-type:not([id]),
+.docs > body > section:first-of-type:not([id]),
 body > section#intro {
   font-size: 200%;
   -webkit-hyphens: manual;
   -ms-hyphens: manual;
   hyphens: manual; }
-  body > section:first-of-type:not([id]) p:first-child,
+  .docs > body > section:first-of-type:not([id]) p:first-child,
   body > section#intro p:first-child {
     margin-top: 0; }
-  body > section:first-of-type:not([id]) p:last-child,
+  .docs > body > section:first-of-type:not([id]) p:last-child,
   body > section#intro p:last-child {
     margin-bottom: 0; }
-  body > section:first-of-type:not([id]) p::before,
+  .docs > body > section:first-of-type:not([id]) p::before,
   body > section#intro p::before {
     display: inline-block;
     vertical-align: text-bottom;
