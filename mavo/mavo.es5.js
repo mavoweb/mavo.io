@@ -7107,9 +7107,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		},
 
 		starts: function starts(haystack, needle) {
-			return _.search(haystack, needle) === 0;
+			return _.search(haystack + "", needle + "") === 0;
 		},
 		ends: function ends(haystack, needle) {
+			haystack += "";
+			needle += "";
 			var i = _.search(haystack, needle);
 			return i > -1 && i === haystack.length - needle.length;
 		},

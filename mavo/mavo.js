@@ -6114,8 +6114,10 @@ var _ = Mavo.Functions = {
 	 */
 	search: (haystack, needle) => haystack && needle? haystack.toLowerCase().indexOf(needle.toLowerCase()) : -1,
 
-	starts: (haystack, needle) => _.search(haystack, needle) === 0,
+	starts: (haystack, needle) => _.search((haystack + ""), (needle + "")) === 0,
 	ends: function(haystack, needle) {
+		haystack += "";
+		needle += "";
 		var i = _.search(haystack, needle);
 		return  i > -1 && i === haystack.length - needle.length;
 	},
