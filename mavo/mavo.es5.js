@@ -546,16 +546,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 						});
 					});
 				}
-			}, function () {
-				_this.element.removeEventListener(".mavo:autosave");
-			});
 
-			// Ctrl + S or Cmd + S to save
-			this.element.addEventListener("keydown", function (evt) {
-				if (evt.keyCode == 83 && evt[_.superKey]) {
-					evt.preventDefault();
-					_this.save();
-				}
+				// Ctrl + S or Cmd + S to save
+				_this.element.addEventListener("keydown.mavo:save", function (evt) {
+					if (evt.keyCode == 83 && evt[_.superKey]) {
+						evt.preventDefault();
+						_this.save();
+					}
+				});
+			}, function () {
+				$.unbind(_this.element, ".mavo:save .mavo:autosave");
 			});
 
 			Mavo.hooks.run("init-end", this);
@@ -597,6 +597,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		},
 
 		render: function render(data) {
+			var _this2 = this;
+
 			this.expressions.active = false;
 
 			var env = { context: this, data: data };
@@ -609,17 +611,19 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			this.unsavedChanges = false;
 
 			this.expressions.active = true;
-			this.expressions.update();
+			requestAnimationFrame(function () {
+				return _this2.expressions.update();
+			});
 
 			_.hooks.run("render-end", env);
 		},
 
 		clear: function clear() {
-			var _this2 = this;
+			var _this3 = this;
 
 			if (confirm("This will delete all your data. Are you sure?")) {
 				this.store(null).then(function () {
-					return _this2.root.clear();
+					return _this3.root.clear();
 				});
 			}
 		},
@@ -737,7 +741,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
    * @return {Promise}  A promise that resolves when the data is loaded.
    */
 		load: function load() {
-			var _this3 = this;
+			var _this4 = this;
 
 			var backend = this.source || this.storage;
 
@@ -751,10 +755,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				return backend.load();
 			}).catch(function (err) {
 				// Try again with init
-				if (_this3.init && _this3.init != backend) {
-					backend = _this3.init;
-					return _this3.init.ready.then(function () {
-						return _this3.init.load();
+				if (_this4.init && _this4.init != backend) {
+					backend = _this4.init;
+					return _this4.init.ready.then(function () {
+						return _this4.init.load();
 					});
 				}
 
@@ -765,7 +769,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 					var xhr = err instanceof XMLHttpRequest ? err : err.xhr;
 
 					if (xhr && xhr.status == 404) {
-						_this3.render(null);
+						_this4.render(null);
 					} else {
 						var message = "Problem loading data";
 
@@ -773,20 +777,20 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 							message += xhr.status ? ": HTTP error " + err.status + ": " + err.statusText : ": Can’t connect to the Internet";
 						}
 
-						_this3.error(message, err);
+						_this4.error(message, err);
 					}
 				}
 				return null;
 			}).then(function (data) {
-				return _this3.render(data);
+				return _this4.render(data);
 			}).then(function () {
-				_this3.inProgress = false;
-				$.fire(_this3.element, "mavo:load");
+				_this4.inProgress = false;
+				$.fire(_this4.element, "mavo:load");
 			});
 		},
 
 		store: function store() {
-			var _this4 = this;
+			var _this5 = this;
 
 			if (!this.storage) {
 				return Promise.resolve();
@@ -795,7 +799,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			this.inProgress = "Saving";
 
 			return this.storage.login().then(function () {
-				return _this4.storage.store(_this4.getData());
+				return _this5.storage.store(_this5.getData());
 			}).catch(function (err) {
 				if (err) {
 					var message = "Problem saving data";
@@ -804,18 +808,18 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 						message += err.status ? ": HTTP error " + err.status + ": " + err.statusText : ": Can’t connect to the Internet";
 					}
 
-					_this4.error(message, err);
+					_this5.error(message, err);
 				}
 
 				return null;
 			}).then(function (saved) {
-				_this4.inProgress = false;
+				_this5.inProgress = false;
 				return saved;
 			});
 		},
 
 		upload: function upload(file) {
-			var _this5 = this;
+			var _this6 = this;
 
 			var path = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "images/" + file.name;
 
@@ -826,25 +830,25 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			this.inProgress = "Uploading";
 
 			return this.uploadBackend.upload(file, path).then(function (url) {
-				_this5.inProgress = false;
+				_this6.inProgress = false;
 				return url;
 			}).catch(function (err) {
-				_this5.error("Error uploading file", err);
-				_this5.inProgress = false;
+				_this6.error("Error uploading file", err);
+				_this6.inProgress = false;
 				return null;
 			});
 		},
 
 		save: function save() {
-			var _this6 = this;
+			var _this7 = this;
 
 			return this.store().then(function (saved) {
 				if (saved) {
-					$.fire(_this6.element, "mavo:save", saved);
+					$.fire(_this7.element, "mavo:save", saved);
 
-					_this6.lastSaved = Date.now();
-					_this6.root.save();
-					_this6.unsavedChanges = false;
+					_this7.lastSaved = Date.now();
+					_this7.root.save();
+					_this7.unsavedChanges = false;
 				}
 			});
 		},
@@ -3138,8 +3142,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				return false;
 			}
 
-			this.propagate("edit");
-
 			Mavo.hooks.run("node-edit-end", this);
 		},
 
@@ -3646,6 +3648,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			}
 		},
 
+		edit: function edit() {
+			if (this.super.edit.call(this) === false) {
+				return false;
+			}
+
+			this.propagate("edit");
+		},
+
 		save: function save() {
 			this.unsavedChanges = false;
 		},
@@ -4030,7 +4040,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				// Empty properties should become editable immediately
 				// otherwise they could be invisible!
 				if (_this3.empty && !_this3.attribute) {
-					return resolve();
+					return requestAnimationFrame(resolve);
 				}
 
 				var timer;
@@ -4379,7 +4389,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				return _.safeCast(ret, datatype);
 			},
 
-			getConfig: function getConfig(element, attribute) {
+			getConfig: function getConfig(element, attribute, datatype) {
 				if (attribute === undefined) {
 					attribute = element.getAttribute("mv-attribute") || undefined;
 				}
@@ -4388,10 +4398,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 					attribute = null;
 				}
 
-				var config = Mavo.Elements.search(element, attribute);
+				datatype = element.getAttribute("datatype") || undefined;
+
+				var config = Mavo.Elements.search(element, attribute, datatype);
 
 				if (config.attribute === undefined) {
 					config.attribute = attribute || null;
+				}
+
+				if (config.datatype === undefined) {
+					config.datatype = datatype;
 				}
 
 				return config;
@@ -5161,6 +5177,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		"text": {
 			default: true,
 			popup: true
+		},
+
+		"[role=checkbox]": {
+			default: true,
+			attribute: "aria-checked",
+			datatype: "boolean",
+			edit: function edit() {
+				var _this5 = this;
+
+				this.element.addEventListener("click.mavo:edit", function (evt) {
+					_this5.value = !_this5.value;
+					evt.preventDefault();
+				});
+			},
+			done: function done() {
+				$.unbind(this.element, ".mavo:edit");
+			}
 		}
 	});
 })(Bliss, Bliss.$);
@@ -5333,20 +5366,20 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				add: env.item
 			});
 
-			if (!o.silent) {
-				env.changed.forEach(function (i) {
-					i.dataChanged(i == env.item && env.previousIndex === undefined ? "add" : "move");
-					i.unsavedChanges = true;
-				});
+			requestAnimationFrame(function () {
+				if (!o.silent) {
+					env.changed.forEach(function (i) {
+						i.dataChanged(i == env.item && env.previousIndex === undefined ? "add" : "move");
+						i.unsavedChanges = true;
+					});
 
-				this.unsavedChanges = this.mavo.unsavedChanges = true;
-			}
+					_this.unsavedChanges = _this.mavo.unsavedChanges = true;
+				}
+
+				_this.mavo.expressions.update(env.item.element);
+			});
 
 			Mavo.hooks.run("collection-add-end", env);
-
-			this.mavo.treeBuilt.then(function () {
-				return _this.mavo.expressions.update(env.item.element);
-			});
 
 			return env.item;
 		},
@@ -5663,9 +5696,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 						var env = { context: this, item: item };
 						Mavo.hooks.run("collection-add-end", env);
 
-						this.mavo.treeBuilt.then(function () {
-							item.dataChanged("add");
-						});
+						item.dataChanged("add");
 					}
 
 					if (this.bottomUp) {
@@ -7904,6 +7935,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 			var repoCall = "repos/" + this.username + "/" + this.repo;
 			var fileCall = repoCall + "/contents/" + path;
+			var commitPrefix = this.mavo.element.getAttribute("mv-github-commit-prefix");
 
 			// Create repo if it doesn’t exist
 			var repoInfo = this.repoInfo || this.request("user/repos", { name: this.repo }, "POST").then(function (repoInfo) {
@@ -7941,7 +7973,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 					ref: _this3.branch
 				}).then(function (fileInfo) {
 					return _this3.request(fileCall, {
-						message: "Updated " + (fileInfo.name || "file"),
+						message: commitPrefix + " Updated " + (fileInfo.name || "file"),
 						content: serialized,
 						branch: _this3.branch,
 						sha: fileInfo.sha
@@ -7950,7 +7982,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 					if (xhr.status == 404) {
 						// File does not exist, create it
 						return _this3.request(fileCall, {
-							message: "Created file",
+							message: commitPrefix + "Created file",
 							content: serialized,
 							branch: _this3.branch
 						}, "PUT");
