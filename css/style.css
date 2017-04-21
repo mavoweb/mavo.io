@@ -32,7 +32,7 @@
   --font-body: Roboto, "Helvetica Neue", sans-serif;
   --font-heading: Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
   --font-mono: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-  --content-width: 900px; }
+  --content-width: 930px; }
 
 .flat-button {
   display: inline-block;
@@ -234,7 +234,7 @@ body > section {
     font: bold 150% Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
     color: #ff0080; }
   body > section > * {
-    width: 900px;
+    width: 930px;
     max-width: 90vw; }
 
 body > footer {
@@ -245,7 +245,7 @@ body > footer {
   -ms-flex-align: start;
   align-items: flex-start;
   padding: 3em 1em 1em;
-  padding: 3em calc(50% - 450px) 1em;
+  padding: 3em calc(50% - 465px) 1em;
   background: #e9eaed;
   color: rgba(0, 0, 0, 0.8);
   font-size: 80%;

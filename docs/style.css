@@ -7,7 +7,7 @@
   --font-body: Roboto, "Helvetica Neue", sans-serif;
   --font-heading: Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
   --font-mono: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-  --content-width: 900px; }
+  --content-width: 930px; }
 
 h1 > a {
   color: inherit; }
@@ -120,7 +120,7 @@ body > section#intro p::before {
       left: 0;
       bottom: 0;
       z-index: 1;
-      max-width: calc(50vw - 450px - 2em);
+      max-width: calc(50vw - 465px - 2em);
       max-height: calc(100vh - 3em); } }
   #toc summary, #toc ul {
     margin: 0;
