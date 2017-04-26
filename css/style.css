@@ -382,8 +382,8 @@ body > section table {
         -webkit-clip-path: none;
         clip-path: none;
         margin: 0 1em 0 0;
-        -ms-flex: 2;
-        flex: 2;
+        -ms-flex: 1.8;
+        flex: 1.8;
         border: 1px solid rgba(0, 0, 0, 0.05);
         border-radius: .3em;
         font-size: 88%; }
