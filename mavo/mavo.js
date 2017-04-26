@@ -568,7 +568,7 @@ var _ = self.Mavo = $.Class({
 			// We have a string, convert to a backend object if different than existing
 			this[role] = backend = _.Backend.create(backend, {
 				mavo: this,
-				format: this.element.getAttribute("mv-format-" + role) || this.element.getAttribute("mv-format")
+				format: this.element.getAttribute(`mv-${role}-format`) || this.element.getAttribute("mv-format")
 			});
 		}
 		else if (!backend) {
@@ -851,6 +851,7 @@ let andNot = s.andNot = (selector1, selector2) => and(selector1, not(selector2))
 $.extend(_.selectors, {
 	primitive: andNot(s.property, s.group),
 	rootGroup: andNot(s.group, s.property),
+	item: or(s.multiple, s.group),
 	output: or(s.specificProperty("output"), ".mv-output")
 });
 
@@ -1420,8 +1421,8 @@ var _ = Mavo.Plugins = {
 		});
 	},
 
-	register: function(o) {
-		if (o.name && _.loaded[o.name]) {
+	register: function(name, o = {}) {
+		if (_.loaded[name]) {
 			// Do not register same plugin twice
 			return;
 		}
@@ -1455,9 +1456,7 @@ var _ = Mavo.Plugins = {
 			Mavo.dependencies.push(...ready);
 		}
 
-		if (o.name) {
-			_.loaded[o.name] = o;
-		}
+		_.loaded[name] = o;
 
 		if (o.init) {
 			Promise.all(ready).then(() => o.init());
@@ -2398,7 +2397,7 @@ var csv = _.CSV = $.Class({
 			};
 		}),
 
-		stringify: (serialized, me) => csv.ready().then(() => {
+		stringify: (data, me) => csv.ready().then(() => {
 			var property = me? me.property : "content";
 			var options = me? me.options : csv.defaultOptions;
 			return Papa.unparse(data[property], options);
@@ -4713,8 +4712,6 @@ var _ = Mavo.Collection = $.Class({
 				});
 
 				this.unsavedChanges = this.mavo.unsavedChanges = true;
-
-				this.mavo.expressions.update(env.item.element);
 			});
 		}
 
@@ -5005,7 +5002,7 @@ var _ = Mavo.Collection = $.Class({
 				// Keep position of the template in the DOM, since we might remove it
 				this.marker = document.createComment("mv-marker");
 				Mavo.data(this.marker, "collection", this);
-				
+
 				var ref = this.templateElement.parentNode? this.templateElement : this.children[this.length - 1].element;
 
 				$.after(this.marker, ref);
@@ -5572,7 +5569,7 @@ var _ = Mavo.DOMExpression = $.Class({
 		this.mavo.treeBuilt.then(() => {
 			if (!this.template) {
 				// Only collection items and groups can have their own expressions arrays
-				this.item = Mavo.Node.get(this.element.closest(Mavo.selectors.multiple + ", " + Mavo.selectors.group));
+				this.item = Mavo.Node.get(this.element.closest(Mavo.selectors.item));
 				this.item.expressions = [...(this.item.expressions || []), this];
 			}
 
@@ -5748,27 +5745,34 @@ var _ = Mavo.Expressions = $.Class({
 	},
 
 	update: function(evt) {
-		var root, rootGroup;
-
 		if (!this.active) {
 			return;
 		}
 
-		if (evt instanceof Element) {
-			root = evt.closest(Mavo.selectors.group);
+		var root, rootObject;
+
+		if (evt instanceof Mavo.Node) {
+			rootObject = evt;
 			evt = null;
 		}
+		else if (evt instanceof Element) {
+			root = evt.closest(Mavo.selectors.item);
+			rootObject = Mavo.Node.get(root);
+			evt = null;
+		}
+		else {
+			rootObject = this.mavo.root;
+		}
 
-		root = root || this.mavo.element;
-		rootGroup = Mavo.Node.get(root);
+		var allData = rootObject.getData({live: true});
 
-		var allData = rootGroup.getData({live: true});
-
-		rootGroup.walk((obj, path) => {
+		rootObject.walk((obj, path) => {
 			var data = $.value(allData, ...path);
 
 			if (obj.expressions && obj.expressions.length && !obj.isDeleted()) {
-				if (typeof data != "object") {
+				if (typeof data != "object" || data === null) {
+					// Turn primitives into objects, so we can have $index, their property
+					// name etc resolve relative to them, not their parent group
 					var parentData = $.value(allData, ...path.slice(0, -1));
 
 					data = {
@@ -5845,8 +5849,7 @@ var _ = Mavo.Expressions = $.Class({
 		directive: function(name, o) {
 			_.directives.push(name);
 			Mavo.attributes.push(name);
-			o.name = name;
-			Mavo.Plugins.register(o);
+			Mavo.Plugins.register(name, o);
 		}
 	}
 });
@@ -6827,7 +6830,7 @@ var _ = Mavo.Backend.register($.Class({
 
 		var repoCall = `repos/${this.username}/${this.repo}`;
 		var fileCall = `${repoCall}/contents/${path}`;
-		var commitPrefix = this.mavo.element.getAttribute("mv-github-commit-prefix");
+		var commitPrefix = this.mavo.element.getAttribute("mv-github-commit-prefix") || "";
 
 		// Create repo if it doesn’t exist
 		var repoInfo = this.repoInfo || this.request("user/repos", {name: this.repo}, "POST").then(repoInfo => this.repoInfo = repoInfo);
