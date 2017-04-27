@@ -95,35 +95,35 @@ body > header {
       -webkit-text-decoration-color: rgba(0, 0, 0, 0.3);
       text-decoration-color: rgba(0, 0, 0, 0.3); }
 
-.manual.example [mv-app="todo"] h1 {
+.manual.example [mv-app="shopping"] h1 {
   margin: 0;
   color: #668899;
   font: bold 200% Helvetica Neue, sans-serif;
   letter-spacing: -.04em; }
 
-.manual.example [mv-app="todo"] ul {
+.manual.example [mv-app="shopping"] ul {
   padding: 0; }
 
-.manual.example [mv-app="todo"] li {
+.manual.example [mv-app="shopping"] li {
   padding: .5em; }
 
-.manual.example [mv-app="todo"] li:not(.mv-deleted) {
+.manual.example [mv-app="shopping"] li:not(.mv-deleted) {
   display: -ms-flexbox;
   display: flex;
   background: #f6f8f9; }
-  .manual.example [mv-app="todo"] li:not(.mv-deleted):nth-child(odd) {
+  .manual.example [mv-app="shopping"] li:not(.mv-deleted):nth-child(odd) {
     background: #edf1f3; }
 
-.manual.example [mv-app="todo"] :checked + span {
+.manual.example [mv-app="shopping"] :checked + span {
   font-style: italic;
   text-decoration: line-through;
   color: gray; }
 
-.manual.example [mv-app="todo"] label {
+.manual.example [mv-app="shopping"] label {
   -ms-flex: 1;
   flex: 1; }
 
-.manual.example [mv-app="todo"] .mv-item-bar.mv-ui {
+.manual.example [mv-app="shopping"] .mv-item-bar.mv-ui {
   position: static;
   pointer-events: auto;
   opacity: 1;
