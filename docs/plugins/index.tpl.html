@@ -42,7 +42,39 @@
 <section>
 	<h1>Hooks</h1>
 
-	<p><strong>Danny, edit this</strong></p>
+  <p>Hooks are used as ways to execute specified code during various points of Mavo's execution.</p>
+  <p>The name of the hook gives a summary of where the hook will be executed (For example: the <code>group-init-start</code> hook executes after the constructor for a Mavo group has been called, but before any of the code within the constructor has been called) </p>
+  <section>
+    <h1>Adding a hook</h1>
+    <p>You can add a hook by calling <code>Mavo.hooks.add("hook-name", callback)</code>.  This will take the code in the <code>callback</code> function, and run it where <code>Mavo.hooks.run("hook-name", data)</code> is placed.</p>
+    <p>It is common to want to add multiple hooks without calling <code>Mavo.hooks.add</code> multiple times.  To do so, you can use the <code>hooks</code> attribute of the object passed into <code>Mavo.Plugins.register</code>.</p>
+    <p>As an example: 
+      <pre>
+        Mavo.Plugins.register("plugin-name", {
+          ready: ..., 
+          init: ..., 
+          hooks: {
+            "hook1-name": function(data) {
+              // hook 1 callback
+            }, 
+            "hook2-name": function(data) {
+              // hook 2 callback
+            }
+          }
+        }
+      </pre>
+    </p>
+  </section>
+  <section>
+    <h1>Where exactly are hooks run</h1>
+    <p><code>Mavo.hooks.run("hook-name", data)</code> defines exactly where a hook will be called.  The <code>data</code> param will be passed as a param into the callback passed into <code>Mavo.hooks.add</code>.</p>
+    <p>This is not code that should need to be written for a plugin, but if you're curious exactly where a hook's code will be run, you can find out by looking for calls to <code>Mavo.hooks.run</code> in the codebase</p>
+  </section>
+  <section>
+    <h1>Available hooks</h1> 
+    <p>Below we summarize hooks available for you to use, and where the hook will be called</p>
+    <p>TODO</p>
+  </section>
 </section>
 
 <section id="architecture">
