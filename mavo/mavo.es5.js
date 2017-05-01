@@ -962,7 +962,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 			hooks: new $.Hooks(),
 
-			attributes: ["mv-app", "mv-storage", "mv-source", "mv-init", "mv-path", "mv-format", "mv-attribute", "mv-default", "mv-mode", "mv-edit", "mv-permisssions", "mv-rel"]
+			attributes: ["mv-app", "mv-storage", "mv-source", "mv-init", "mv-path", "mv-format", "mv-attribute", "mv-default", "mv-mode", "mv-edit", "mv-permisssions", "mv-rel"],
+
+			lazy: {
+				locale: function locale() {
+					return document.documentElement.lang || "en-GB";
+				}
+			}
 		}
 	});
 
@@ -1210,7 +1216,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				return $.value(element, "_", "data", "mavo", name);
 			} else {
 				element._.data.mavo = element._.data.mavo || {};
-				return element._.data.mavo[name] = value;
+
+				if (value === undefined) {
+					delete element._.data.mavo[name];
+				} else {
+					return element._.data.mavo[name] = value;
+				}
 			}
 		},
 
@@ -1302,6 +1313,27 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				}
 
 				return false;
+			},
+
+			setAttribute: function setAttribute(element, attribute, value) {
+				var previousValue = _.data(element, "attribute-" + attribute);
+
+				if (previousValue === undefined) {
+					// Only set this when there's no old value stored, otherwise
+					// if called multiple times, it could result in losing the original value
+					_.data(element, "attribute-" + attribute, element.getAttribute(attribute));
+				}
+
+				element.setAttribute(attribute, value);
+			},
+
+			restoreAttribute: function restoreAttribute(element, attribute) {
+				var previousValue = _.data(element, "attribute-" + attribute);
+
+				if (previousValue !== undefined) {
+					$.toggleAttribute(element, attribute, previousValue);
+					_.data(element, "attribute-" + attribute, undefined);
+				}
 			}
 		},
 
@@ -3196,6 +3228,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			Mavo.hooks.run("node-done-end", this);
 		},
 
+		clear: function clear() {
+			if (this.modes != "read") {
+				this.propagate("clear");
+			}
+		},
+
 		propagate: function propagate(callback) {
 			for (var i in this.children) {
 				var _node2 = this.children[i];
@@ -3785,7 +3823,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			this.unsavedChanges = false;
 		},
 
-		propagated: ["save", "import", "clear"],
+		propagated: ["save", "import"],
 
 		// Do not call directly, call this.render() instead
 		dataRender: function dataRender(data) {
@@ -3875,7 +3913,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		constructor: function constructor(element, mavo, o) {
 			var _this = this;
 
-			if (!this.fromTemplate("config", "attribute", "templateValue")) {
+			if (!this.fromTemplate("config", "attribute", "templateValue", "originalEditor")) {
 				this.config = _.getConfig(element);
 
 				// Which attribute holds the data, if any?
@@ -3922,15 +3960,15 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 			// Linked widgets
 			if (!this.editor && this.element.hasAttribute("mv-edit")) {
-				var original = $(this.element.getAttribute("mv-edit"));
+				if (!this.originalEditor) {
+					this.originalEditor = $(this.element.getAttribute("mv-edit"));
+				}
 
-				if (original) {
-					this.editor = original.cloneNode(true);
-
+				if (this.originalEditor) {
 					// Update editor if original mutates
 					// This means that expressions on mv-edit for individual collection items will not be picked up
 					if (!this.template) {
-						new Mavo.Observer(original, "all", function (records) {
+						this.originalEditorObserver = new Mavo.Observer(this.originalEditor, "all", function (records) {
 							var all = _this.copies.concat(_this);
 
 							var _iteratorNormalCompletion = true;
@@ -3941,7 +3979,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 								for (var _iterator = all[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 									var primitive = _step.value;
 
-									primitive.editor = original.cloneNode(true);
+									if (primitive.editor) {
+										primitive.editor = _this.originalEditor.cloneNode(true);
+									}
+
 									primitive.setValue(primitive.value, { force: true, silent: true });
 								}
 							} catch (err) {
@@ -3964,7 +4005,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			}
 
 			// Nested widgets
-			if (!this.editor && !this.attribute) {
+			if (!this.editor && !this.originalEditor && !this.attribute) {
 				this.editor = $$(this.element.children).filter(function (el) {
 					return el.matches(Mavo.selectors.formControl) && !el.matches(Mavo.selectors.property);
 				})[0];
@@ -3981,7 +4022,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 			if (this.default === null) {
 				// no mv-default
-				this._default = this.modes === "read" ? this.templateValue : this.editor ? this.editorValue : undefined;
+				this._default = this.modes === "read" ? this.templateValue : this.editorValue;
 			} else if (this.default === "") {
 				// mv-default exists, no value, default is template value
 				this._default = this.templateValue;
@@ -4019,17 +4060,15 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		},
 
 		get editorValue() {
-			if (this.config.getEditorValue) {
-				return this.config.getEditorValue.call(this);
-			}
+			var editor = this.editor || this.originalEditor;
 
-			if (this.editor) {
-				if (this.editor.matches(Mavo.selectors.formControl)) {
-					return _.getValue(this.editor, { datatype: this.datatype });
+			if (editor) {
+				if (editor.matches(Mavo.selectors.formControl)) {
+					return _.getValue(editor, { datatype: this.datatype });
 				}
 
 				// if we're here, this.editor is an entire HTML structure
-				var output = $(Mavo.selectors.output + ", " + Mavo.selectors.formControl, this.editor);
+				var output = $(Mavo.selectors.output + ", " + Mavo.selectors.formControl, editor);
 
 				if (output) {
 					return _.getValue(output);
@@ -4104,6 +4143,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		initEdit: function initEdit() {
 			var _this2 = this;
 
+			if (!this.editor && this.originalEditor) {
+				this.editor = this.originalEditor.cloneNode(true);
+			}
+
 			if (!this.editor) {
 				// No editor provided, use default for element type
 				// Find default editor for datatype
@@ -4159,14 +4202,17 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			}
 
 			// Make element focusable, so it can actually receive focus
-			this.element._.data.prevTabindex = this.element.getAttribute("tabindex");
-			this.element.tabIndex = 0;
+			if (this.element.tabIndex === -1) {
+				Mavo.revocably.setAttribute(this.element, "tabindex", "0");
+			}
 
 			// Prevent default actions while editing
 			// e.g. following links etc
-			this.element.addEventListener("click.mavo:edit", function (evt) {
-				return evt.preventDefault();
-			});
+			if (!this.modes) {
+				this.element.addEventListener("click.mavo:edit", function (evt) {
+					return evt.preventDefault();
+				});
+			}
 
 			this.preEdit = Mavo.defer(function (resolve, reject) {
 				// Empty properties should become editable immediately
@@ -4219,6 +4265,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 						_this3.element.textContent = "";
 
 						_this3.element.appendChild(_this3.editor);
+
+						if (!_this3.collection) {
+							Mavo.revocably.restoreAttribute(_this3.element, "tabindex");
+						}
 					}
 				}
 			});
@@ -4245,20 +4295,25 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 					_this4.popup.close();
 				} else if (!_this4.attribute && _this4.editor) {
 					$.remove(_this4.editor);
-					_this4.element.textContent = _this4.editorValue;
+
+					_.setValue(_this4.element, _this4.editorValue, {
+						config: _this4.config,
+						attribute: _this4.attribute,
+						datatype: _this4.datatype,
+						map: _this4.originalEditor || _this4.editor
+					});
 				}
 			});
 
-			// Revert tabIndex
-			if (this.element._.data.prevTabindex !== null) {
-				this.element.tabIndex = this.element._.data.prevTabindex;
-			} else {
-				this.element.removeAttribute("tabindex");
+			if (!this.collection) {
+				Mavo.revocably.restoreAttribute(this.element, "tabindex");
 			}
 		},
 
 		clear: function clear() {
-			this.value = this.templateValue;
+			if (this.modes != "read") {
+				this.value = this.templateValue;
+			}
 		},
 
 		dataRender: function dataRender(data) {
@@ -4334,11 +4389,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			var o = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
 			this.sneak(function () {
-				if ($.type(value) == "object" && "value" in value) {
-					var presentational = value.presentational;
-					value = value.value;
-				}
-
 				// Convert nulls and undefineds to empty string
 				value = value || value === 0 ? value : "";
 
@@ -4350,32 +4400,26 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				value = _.safeCast(value, _this5.datatype);
 
 				if (value == _this5._value && !o.force) {
+					// Do nothing if value didn't actually change, unless forced to
 					return value;
 				}
 
 				if (_this5.editor && document.activeElement != _this5.editor) {
+					// If external forces are changing the value (i.e. not the editor)
+					// and an editor is present, set its value to match
 					_this5.editorValue = value;
-				}
-
-				if (_this5.config.humanReadable && _this5.attribute) {
-					presentational = _this5.config.humanReadable.call(_this5, value);
 				}
 
 				if (!_this5.editing || _this5.popup || !_this5.editor) {
 					if (_this5.config.setValue) {
 						_this5.config.setValue.call(_this5, _this5.element, value);
-					} else {
-						if (_this5.editor && _this5.editor.matches("select") && _this5.editor.selectedOptions[0]) {
-							presentational = _this5.editor.selectedOptions[0].textContent;
-						}
-
-						if (!o.dataOnly) {
-							_.setValue(_this5.element, { value: value, presentational: presentational }, {
-								config: _this5.config,
-								attribute: _this5.attribute,
-								datatype: _this5.datatype
-							});
-						}
+					} else if (!o.dataOnly) {
+						_.setValue(_this5.element, value, {
+							config: _this5.config,
+							attribute: _this5.attribute,
+							datatype: _this5.datatype,
+							map: _this5.originalEditor || _this5.editor
+						});
 					}
 				}
 
@@ -4546,62 +4590,52 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			},
 
 			setValue: function setValue(element, value) {
-				var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-				    config = _ref2.config,
-				    attribute = _ref2.attribute,
-				    datatype = _ref2.datatype;
-
-				if ($.type(value) == "object" && "value" in value) {
-					var presentational = value.presentational;
-					value = value.value;
-				}
+				var o = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
 				if (element.nodeType === 1) {
-					if (!config) {
-						config = _.getConfig(element, attribute);
+					if (!o.config) {
+						o.config = _.getConfig(element, o.attribute);
 					}
 
-					attribute = config.attribute;
+					o.attribute = o.config.attribute;
 
-					datatype = datatype !== undefined ? datatype : config.datatype;
+					o.datatype = o.datatype !== undefined ? o.datatype : o.config.datatype;
 
-					if (config.setValue && attribute == config.attribute) {
-						return config.setValue(element, value);
+					if (o.config.setValue && o.attribute == o.config.attribute) {
+						return o.config.setValue(element, value);
 					}
 				}
 
-				if (attribute) {
-					if (attribute in element && _.useProperty(element, attribute) && element[attribute] !== value) {
+				if (o.attribute) {
+					if (o.attribute in element && _.useProperty(element, o.attribute) && element[o.attribute] !== value) {
 						// Setting properties (if they exist) instead of attributes
 						// is needed for dynamic elements such as checkboxes, sliders etc
 						try {
-							element[attribute] = value;
+							element[o.attribute] = value;
 						} catch (e) {}
 					}
 
 					// Set attribute anyway, even if we set a property because when
 					// they're not in sync it gets really fucking confusing.
-					if (datatype == "boolean") {
-						if (value != element.hasAttribute(attribute)) {
-							$.toggleAttribute(element, attribute, value, value);
+					if (o.datatype == "boolean") {
+						if (value != element.hasAttribute(o.attribute)) {
+							$.toggleAttribute(element, o.attribute, value, value);
 						}
-					} else if (element.getAttribute(attribute) != value) {
+					} else if (element.getAttribute(o.attribute) != value) {
 						// intentionally non-strict, e.g. "3." !== 3
-						element.setAttribute(attribute, value);
-
-						if (presentational) {
-							element.textContent = presentational;
-						}
+						element.setAttribute(o.attribute, value);
 					}
 				} else {
-					if (datatype === "number" && !presentational) {
-						presentational = _.formatNumber(value);
-					}
+					presentational = _.format(value, o);
 
-					element.textContent = presentational || value;
+					if (presentational !== value) {
+						element.textContent = presentational;
 
-					if (presentational && element.setAttribute) {
-						element.setAttribute("content", value);
+						if (element.setAttribute) {
+							element.setAttribute("content", value);
+						}
+					} else {
+						element.textContent = value;
 					}
 				}
 			},
@@ -4624,9 +4658,29 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				return true;
 			},
 
+			format: function format(value) {
+				var o = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+				if (o.map && /^select$/i.test(o.map.nodeName)) {
+					for (var i = 0, option; option = o.map.options[i]; i++) {
+						if (option.value == value) {
+							return option.textContent;
+						}
+					}
+				}
+
+				if ($.type(value) === "number" || o.datatype == "number") {
+					return _.formatNumber(value);
+				} else if (Array.isArray(value)) {
+					return value.join(", ");
+				}
+
+				return value;
+			},
+
 			lazy: {
 				formatNumber: function formatNumber() {
-					var numberFormat = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
+					var numberFormat = new Intl.NumberFormat(Mavo.locale, { maximumFractionDigits: 2 });
 
 					return function (value) {
 						if (value === Infinity || value === -Infinity) {
@@ -4786,7 +4840,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	Object.defineProperties(_, {
 		"register": {
-			value: function value(id, o) {
+			value: function value(id, config) {
 				if (_typeof(arguments[0]) === "object") {
 					// Multiple definitions
 					for (var s in arguments[0]) {
@@ -4796,62 +4850,58 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 					return;
 				}
 
-				var all = Mavo.toArray(arguments[1]);
+				if (config.extend) {
+					var base = _[config.extend];
 
-				var _iteratorNormalCompletion = true;
-				var _didIteratorError = false;
-				var _iteratorError = undefined;
+					config = $.extend($.extend({}, base, function (p) {
+						return p != "selector";
+					}), config);
+				}
 
-				try {
-					for (var _iterator = all[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-						var config = _step.value;
+				if (id.indexOf("@") > -1) {
+					var parts = id.split("@");
 
-						config.attribute = Mavo.toArray(config.attribute || null);
+					config.selector = config.selector || parts[0] || "*";
 
-						var _iteratorNormalCompletion2 = true;
-						var _didIteratorError2 = false;
-						var _iteratorError2 = undefined;
-
-						try {
-							for (var _iterator2 = config.attribute[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-								var attribute = _step2.value;
-
-								var _o = $.extend({}, config);
-								_o.attribute = attribute;
-								_o.selector = _o.selector || id;
-								_o.id = id;
-
-								_[id] = _[id] || [];
-								_[id].push(_o);
-							}
-						} catch (err) {
-							_didIteratorError2 = true;
-							_iteratorError2 = err;
-						} finally {
-							try {
-								if (!_iteratorNormalCompletion2 && _iterator2.return) {
-									_iterator2.return();
-								}
-							} finally {
-								if (_didIteratorError2) {
-									throw _iteratorError2;
-								}
-							}
-						}
+					if (config.attribute === undefined) {
+						config.attribute = parts[1];
 					}
-				} catch (err) {
-					_didIteratorError = true;
-					_iteratorError = err;
-				} finally {
+				}
+
+				config.selector = config.selector || id;
+				config.id = id;
+
+				if (Array.isArray(config.attribute)) {
+					var _iteratorNormalCompletion = true;
+					var _didIteratorError = false;
+					var _iteratorError = undefined;
+
 					try {
-						if (!_iteratorNormalCompletion && _iterator.return) {
-							_iterator.return();
+						for (var _iterator = config.attribute[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+							var attribute = _step.value;
+
+							o = $.extend({}, config);
+							o.attribute = attribute;
+
+							_[id + "@" + attribute] = o;
 						}
+					} catch (err) {
+						_didIteratorError = true;
+						_iteratorError = err;
 					} finally {
-						if (_didIteratorError) {
-							throw _iteratorError;
+						try {
+							if (!_iteratorNormalCompletion && _iterator.return) {
+								_iterator.return();
+							}
+						} finally {
+							if (_didIteratorError) {
+								throw _iteratorError;
+							}
 						}
 					}
+				} else {
+
+					_[id] = config;
 				}
 
 				return _;
@@ -4869,54 +4919,33 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				var matches = [];
 
 				selectorloop: for (var id in _) {
-					var _iteratorNormalCompletion3 = true;
-					var _didIteratorError3 = false;
-					var _iteratorError3 = undefined;
+					var o = _[id];
 
-					try {
-						for (var _iterator3 = _[id][Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-							var o = _step3.value;
+					// Passes attribute test?
+					var attributeMatches = attribute === undefined && o.default || attribute === o.attribute;
 
-							// Passes attribute test?
-							var attributeMatches = attribute === undefined && o.default || attribute === o.attribute;
-
-							if (!attributeMatches) {
-								continue;
-							}
-
-							// Passes datatype test?
-							if (datatype !== undefined && datatype !== "string" && datatype !== o.datatype) {
-								continue;
-							}
-
-							// Passes selector test?
-							var selector = o.selector || id;
-							if (!element.matches(selector)) {
-								continue;
-							}
-
-							// Passes arbitrary test?
-							if (o.test && !o.test(element, attribute, datatype)) {
-								continue;
-							}
-
-							// All tests have passed
-							matches.push(o);
-						}
-					} catch (err) {
-						_didIteratorError3 = true;
-						_iteratorError3 = err;
-					} finally {
-						try {
-							if (!_iteratorNormalCompletion3 && _iterator3.return) {
-								_iterator3.return();
-							}
-						} finally {
-							if (_didIteratorError3) {
-								throw _iteratorError3;
-							}
-						}
+					if (!attributeMatches) {
+						continue;
 					}
+
+					// Passes datatype test?
+					if (datatype !== undefined && datatype !== "string" && datatype !== o.datatype) {
+						continue;
+					}
+
+					// Passes selector test?
+					var selector = o.selector || id;
+					if (!element.matches(selector)) {
+						continue;
+					}
+
+					// Passes arbitrary test?
+					if (o.test && !o.test(element, attribute, datatype)) {
+						continue;
+					}
+
+					// All tests have passed
+					matches.push(o);
 				}
 
 				return matches;
@@ -4939,22 +4968,20 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	});
 
 	_.register({
-		"*": [{
-			test: function test(e, a) {
-				return a == "hidden";
-			},
-			attribute: "hidden",
+		"@hidden": {
 			datatype: "boolean"
-		}, {
+		},
+
+		"@y": {
 			test: _.isSVG,
-			attribute: "y",
 			datatype: "number"
-		}, {
+		},
+
+		"@x": {
 			default: true,
 			test: _.isSVG,
-			attribute: "x",
 			datatype: "number"
-		}],
+		},
 
 		"media": {
 			default: true,
@@ -5064,17 +5091,22 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			datatype: "boolean"
 		},
 
-		"select, input": {
+		"formControl": {
+			selector: "select, input",
 			default: true,
 			attribute: "value",
-			modes: "read",
-			changeEvents: "input change"
+			modes: "edit",
+			changeEvents: "input change",
+			edit: function edit() {},
+			done: function done() {},
+			init: function init() {
+				this.editor = this.element;
+			}
 		},
 
 		"textarea": {
-			default: true,
-			modes: "read",
-			changeEvents: "input",
+			extend: "formControl",
+			attribute: null,
 			getValue: function getValue(element) {
 				return element.value;
 			},
@@ -5083,26 +5115,24 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			}
 		},
 
-		"input[type=range], input[type=number]": {
-			default: true,
-			attribute: "value",
-			datatype: "number",
-			modes: "read",
-			changeEvents: "input change"
+		"formNumber": {
+			extend: "formControl",
+			selector: "input[type=range], input[type=number]",
+			datatype: "number"
 		},
 
-		"input[type=checkbox]": {
-			default: true,
+		"checkbox": {
+			extend: "formControl",
+			selector: "input[type=checkbox]",
 			attribute: "checked",
 			datatype: "boolean",
-			modes: "read",
 			changeEvents: "click"
 		},
 
 		"input[type=radio]": {
-			default: true,
+			extend: "formControl",
 			attribute: "checked",
-			modes: "read",
+			modes: "edit",
 			getValue: function getValue(element) {
 				if (element.form) {
 					return element.form[element.name].value;
@@ -5131,11 +5161,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			}
 		},
 
-		"button, .counter": {
-			default: true,
+		"counter": {
+			extend: "formControl",
+			selector: "button, .counter",
 			attribute: "mv-clicked",
 			datatype: "number",
-			modes: "read",
 			init: function init(element) {
 				var _this3 = this;
 
@@ -5304,14 +5334,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			}
 		},
 
-		"circle": [{
+		"circle@r": {
 			default: true,
-			attribute: "r",
 			datatype: "number"
-		}, {
+		},
+
+		"circle": {
 			attribute: ["cx", "cy"],
 			datatype: "number"
-		}],
+		},
 
 		"text": {
 			default: true,
@@ -5511,6 +5542,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 					});
 
 					_this.unsavedChanges = _this.mavo.unsavedChanges = true;
+
+					_this.mavo.expressions.update(env.item);
 				});
 			}
 
@@ -5739,6 +5772,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
    * Delete all items in the collection. Not undoable.
    */
 		clear: function clear() {
+			if (this.modes == "read") {
+				return;
+			}
+
 			if (this.mutable) {
 				for (var i = 1, item; item = this.children[i]; i++) {
 					item.element.remove();
@@ -6514,18 +6551,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.data;
 			var event = arguments[1];
 
-			var env = { context: this, ret: {}, event: event };
+			var env = { context: this, event: event };
 			var parentEnv = env;
 
 			this.data = data;
-
-			env.ret = {};
 
 			Mavo.hooks.run("domexpression-update-start", env);
 
 			this.oldValue = this.value;
 
-			env.ret.value = this.value = this.parsed.map(function (expr, i) {
+			env.value = this.value = this.parsed.map(function (expr, i) {
 				if (expr instanceof Mavo.Expression) {
 					if (expr.changedBy(parentEnv.event)) {
 						var env = { context: _this2, expr: expr, parentEnv: parentEnv };
@@ -6553,38 +6588,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				return expr;
 			});
 
-			if (!this.attribute) {
-				// Separate presentational & actual values only apply when content is variable
-				env.ret.presentational = this.value.map(function (value) {
-					if (Array.isArray(value)) {
-						return value.join(", ");
-					}
+			env.value = env.value.length === 1 ? env.value[0] : env.value.map(Mavo.Primitive.format).join("");
 
-					if (typeof value == "number") {
-						return Mavo.Primitive.formatNumber(value);
-					}
-
-					return value;
-				});
-
-				env.ret.presentational = env.ret.presentational.length === 1 ? env.ret.presentational[0] : env.ret.presentational.join("");
-			}
-
-			env.ret.value = env.ret.value.length === 1 ? env.ret.value[0] : env.ret.value.join("");
-
-			if (this.primitive && this.parsed.length === 1) {
-				if (typeof env.ret.value === "number") {
-					this.primitive.datatype = "number";
-				} else if (typeof env.ret.value === "boolean") {
-					this.primitive.datatype = "boolean";
-				}
-			}
-
-			if (env.ret.presentational === env.ret.value) {
-				env.ret = env.ret.value;
-			}
-
-			this.output(env.ret);
+			this.output(env.value);
 
 			Mavo.hooks.run("domexpression-update-end", env);
 		},
@@ -6593,7 +6599,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			if (this.primitive) {
 				this.primitive.value = value;
 			} else {
-				value = value.presentational || value;
 				Mavo.Primitive.setValue(this.node, value, { attribute: this.attribute });
 			}
 		},
@@ -7229,7 +7234,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			});
 		},
 
-		ordinal: function ordinal(num) {
+		th: function th(num) {
 			if (num === null || num === "") {
 				return "";
 			}
@@ -7755,7 +7760,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		divide: "div",
 		lt: "lessThan smaller",
 		gt: "moreThan greater greaterThan bigger",
-		eq: "equal equality"
+		eq: "equal equality",
+		th: "ordinal"
 	};
 
 	var _loop2 = function _loop2(_name) {
@@ -7878,8 +7884,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "numeric";
 		var o = arguments[2];
 
-		var locale = document.documentElement.lang || "en-GB";
-
 		return function (date) {
 			var _$$extend;
 
@@ -7896,23 +7900,26 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			if (component == "weekday" && format == "numeric") {
 				ret = date.getDay() || 7;
 			} else {
-				var ret = date.toLocaleString(locale, options);
+				var ret = date.toLocaleString(Mavo.locale, options);
 			}
 
 			if (format == "numeric" && !isNaN(ret)) {
-				ret = new Number(ret);
+				if (component != "year") {
+					// We don't want years to be formatted like 2,017!
+					ret = new Number(ret);
+				}
 
 				if (component == "month" || component == "weekday") {
 					options[component] = "long";
-					ret.name = date.toLocaleString(locale, options);
+					ret.name = date.toLocaleString(Mavo.locale, options);
 
 					options[component] = "short";
-					ret.shortname = date.toLocaleString(locale, options);
+					ret.shortname = date.toLocaleString(Mavo.locale, options);
 				}
 
 				if (component != "weekday") {
 					options[component] = "2-digit";
-					ret.twodigit = date.toLocaleString(locale, options);
+					ret.twodigit = date.toLocaleString(Mavo.locale, options);
 				}
 			}
 
