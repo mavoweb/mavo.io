@@ -211,7 +211,7 @@ var _ = self.Mavo = $.Class({
 		this.element = element;
 
 		// Index among other mavos in the page, 1 is first
-		this.index = _.length + 1;
+		this.index = Object.keys(_.all).length + 1;
 		Object.defineProperty(_.all, this.index - 1, {value: this});
 
 		// Convert any data-mv-* attributes to mv-*
@@ -777,10 +777,6 @@ var _ = self.Mavo = $.Class({
 	static: {
 		all: {},
 
-		get length() {
-			return Object.keys(_.all).length;
-		},
-
 		get: function(id) {
 			if (id instanceof Element) {
 				// Get by element
@@ -1048,12 +1044,13 @@ var _ = $.extend(Mavo, {
 		if (Array.isArray(element)) {
 			// Get element by path
 			var path = element;
+
 			return path.reduce((acc, cur) => {
 				if (elementsOnly) {
 					var children = acc.children;
 				}
 				else {
-					var children = [...acc.childNodes].filter(node => types.indexOf(node.nodeType) > -1);
+					var children = $$(acc.childNodes).filter(node => types.indexOf(node.nodeType) > -1);
 				}
 				return children[cur];
 			}, ancestor);
@@ -1064,10 +1061,10 @@ var _ = $.extend(Mavo, {
 
 			for (var parent = element; parent && parent != ancestor; parent = parent.parentNode) {
 				var index = 0;
-				var element = parent;
+				var sibling = parent;
 
-				while (element = element[`previous${elementsOnly? "Element" : ""}Sibling`]) {
-					if (types.indexOf(element.nodeType) > -1) {
+				while (sibling = sibling[`previous${elementsOnly? "Element" : ""}Sibling`]) {
+					if (types.indexOf(sibling.nodeType) > -1) {
 						index++;
 					}
 				}
@@ -6123,7 +6120,15 @@ var _ = Mavo.Expressions = $.Class({
 			}
 
 			$$(node.attributes).forEach(attribute => this.extract(node, attribute, path, syntax));
-			$$(node.childNodes).forEach((child, i) => this.traverse(child, `${path}/${i}`, syntax));
+
+			var index = 0;
+
+			$$(node.childNodes).forEach(child => {
+				if (child.nodeType == 1 || child.nodeType == 3) {
+					this.traverse(child, `${path}/${index}`, syntax);
+					index++;
+				}
+			});
 		}
 	},
 
@@ -6923,7 +6928,7 @@ function toDate(date) {
 			date += sign + twodigits(hours) + ":" + twodigits(minutes);
 		}
 	}
-
+console.log(date);
 	date = new Date(date);
 
 	if (isNaN(date)) {
@@ -6931,6 +6936,14 @@ function toDate(date) {
 	}
 
 	return date;
+}
+
+function toLocaleString(date, options) {
+	var ret = date.toLocaleString(Mavo.locale, options);
+
+	ret = ret.replace(/\u200e/g, ""); // Stupid Edge bug
+
+	return ret;
 }
 
 function getDateComponent(component, option = "numeric", o) {
@@ -6950,10 +6963,11 @@ function getDateComponent(component, option = "numeric", o) {
 			ret = date.getDay() || 7;
 		}
 		else {
-			var ret = date.toLocaleString(Mavo.locale, options);
+			var ret = toLocaleString(date, options);
 		}
 
 		if (format == "numeric" && !isNaN(ret)) {
+
 			if (component != "year") {
 				// We don't want years to be formatted like 2,017!
 				ret = new Number(ret);
@@ -6961,15 +6975,15 @@ function getDateComponent(component, option = "numeric", o) {
 
 			if (component == "month" || component == "weekday") {
 				options[component] = "long";
-				ret.name = date.toLocaleString(Mavo.locale, options);
+				ret.name = toLocaleString(date, options);
 
 				options[component] = "short";
-				ret.shortname = date.toLocaleString(Mavo.locale, options);
+				ret.shortname = toLocaleString(date, options);
 			}
 
 			if (component != "weekday") {
 				options[component] = "2-digit";
-				ret.twodigit = date.toLocaleString(Mavo.locale, options);
+				ret.twodigit = toLocaleString(date, options);
 			}
 		}
 

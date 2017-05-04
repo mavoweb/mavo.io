@@ -217,7 +217,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			this.element = element;
 
 			// Index among other mavos in the page, 1 is first
-			this.index = _.length + 1;
+			this.index = Object.keys(_.all).length + 1;
 			Object.defineProperty(_.all, this.index - 1, { value: this });
 
 			// Convert any data-mv-* attributes to mv-*
@@ -923,10 +923,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		static: {
 			all: {},
 
-			get length() {
-				return Object.keys(_.all).length;
-			},
-
 			get: function get(id) {
 				if (id instanceof Element) {
 					// Get by element
@@ -1248,11 +1244,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			if (Array.isArray(element)) {
 				// Get element by path
 				var path = element;
+
 				return path.reduce(function (acc, cur) {
 					if (elementsOnly) {
 						var children = acc.children;
 					} else {
-						var children = [].concat(_toConsumableArray(acc.childNodes)).filter(function (node) {
+						var children = $$(acc.childNodes).filter(function (node) {
 							return types.indexOf(node.nodeType) > -1;
 						});
 					}
@@ -1264,10 +1261,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 				for (var parent = element; parent && parent != ancestor; parent = parent.parentNode) {
 					var index = 0;
-					var element = parent;
+					var sibling = parent;
 
-					while (element = element["previous" + (elementsOnly ? "Element" : "") + "Sibling"]) {
-						if (types.indexOf(element.nodeType) > -1) {
+					while (sibling = sibling["previous" + (elementsOnly ? "Element" : "") + "Sibling"]) {
+						if (types.indexOf(sibling.nodeType) > -1) {
 							index++;
 						}
 					}
@@ -7031,8 +7028,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				$$(node.attributes).forEach(function (attribute) {
 					return _this2.extract(node, attribute, path, syntax);
 				});
-				$$(node.childNodes).forEach(function (child, i) {
-					return _this2.traverse(child, path + "/" + i, syntax);
+
+				var index = 0;
+
+				$$(node.childNodes).forEach(function (child) {
+					if (child.nodeType == 1 || child.nodeType == 3) {
+						_this2.traverse(child, path + "/" + index, syntax);
+						index++;
+					}
 				});
 			}
 		},
@@ -8077,7 +8080,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 				date += sign + twodigits(hours) + ":" + twodigits(minutes);
 			}
 		}
-
+		console.log(date);
 		date = new Date(date);
 
 		if (isNaN(date)) {
@@ -8085,6 +8088,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 		}
 
 		return date;
+	}
+
+	function toLocaleString(date, options) {
+		var ret = date.toLocaleString(Mavo.locale, options);
+
+		ret = ret.replace(/\u200e/g, ""); // Stupid Edge bug
+
+		return ret;
 	}
 
 	function getDateComponent(component) {
@@ -8107,10 +8118,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 			if (component == "weekday" && format == "numeric") {
 				ret = date.getDay() || 7;
 			} else {
-				var ret = date.toLocaleString(Mavo.locale, options);
+				var ret = toLocaleString(date, options);
 			}
 
 			if (format == "numeric" && !isNaN(ret)) {
+
 				if (component != "year") {
 					// We don't want years to be formatted like 2,017!
 					ret = new Number(ret);
@@ -8118,15 +8130,15 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 				if (component == "month" || component == "weekday") {
 					options[component] = "long";
-					ret.name = date.toLocaleString(Mavo.locale, options);
+					ret.name = toLocaleString(date, options);
 
 					options[component] = "short";
-					ret.shortname = date.toLocaleString(Mavo.locale, options);
+					ret.shortname = toLocaleString(date, options);
 				}
 
 				if (component != "weekday") {
 					options[component] = "2-digit";
-					ret.twodigit = date.toLocaleString(Mavo.locale, options);
+					ret.twodigit = toLocaleString(date, options);
 				}
 			}
 
