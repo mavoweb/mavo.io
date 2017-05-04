@@ -249,6 +249,11 @@ button.mv-close {
 [property][mv-mode="edit"]:not([typeof]):not([mv-group]) select.mv-editor {
   white-space: nowrap; }
 
+[property][mv-mode="edit"]:not([typeof]):not([mv-group]).mv-empty[mv-attribute="none"]:empty::before {
+  content: "(" attr(aria-label) ")";
+  opacity: .5;
+  cursor: text; }
+
 meta[property][mv-mode="edit"] {
   display: inline-block;
   padding: .15em .4em;
@@ -401,8 +406,8 @@ meter[property][mv-mode="edit"], progress[property][mv-mode="edit"] {
     .mv-message.mv-error::before {
       content: "😳 Oh noes! "; }
 
-time[property][mv-label][mv-mode="edit"].mv-empty::before {
-  content: "(No " attr(mv-label) ")"; }
+time[property][aria-label][mv-mode="edit"].mv-empty::before {
+  content: "(No " attr(aria-label) ")"; }
 
 .mv-bar.mv-ui {
   all: initial;
