@@ -53,7 +53,159 @@
 	<section>
 		<h1>Adding a new backend</h1>
 
-		<p><strong>Lizzie, edit this</strong></p>
+		<p>Backends specify where Mavo apps write and read data.</p>
+
+		<p>You can add a new backend to Mavo by creating a new subclass of Mavo.Backend:</p>
+		<pre>
+		(function($) {
+
+		if (!self.Mavo) {
+			return;
+		}
+
+		var _ = Mavo.Backend.register($.Class({
+			extends: Mavo.Backend,
+			id: "newMavoBackend", // your backend's name goes here 
+
+			// more code goes here 
+
+		}));
+
+		})(Bliss);
+		</pre>
+
+		<p>In order for Mavo to "find" your backend, add a <b>test</b> function, which checks the url to see which backend the Mavo app specified.</p>
+
+		<pre>
+		static: {
+			test: function(url) {
+				if(someConditionOnURL) { // add your condition here
+					return url;
+				}
+				else {
+					return false;
+				}
+			},
+		}
+		</pre>
+
+		<h2>Authentication</h2>
+
+		<p>Add authentication to your backend by implementing login and logout functions.</p>
+
+		<p>Before writing login and logout functions, add an <b>isAuthenticated</b> function that checks whether the user is already authenticated. (This will prevent users from being signed out every time they refresh the page.)</p>
+
+		<pre>
+		isAuthenticated: function() {
+			return !!this.accessToken;
+		},
+		</pre>
+
+		Another helpful function you may write is the <b>getUser</b> function, which sets the user field of your backend class. Although optional, the getUser function might be helpful for writing your login and logout functions.  
+
+		<pre>
+		getUser: function() {
+			if (this.user) {
+				return Promise.resolve(this.user);
+			}
+
+			return this.request("user").then(info => {
+				this.user = { // replace the following fields with how you get username, name, profile picture, etc
+					username: info.getUsernameHere, 
+					name: info.getNameHere,
+					avatar: info.getProfilePictureHere,
+					info
+				};
+
+				$.fire(this.mavo.element, "mavo:login", { backend: this });
+			});
+		},
+		</pre>
+
+		We can now use the isAuthenticated and getUser functions in our login and logout functions. For <b>login</b>, we first check whether a user is already authenticated, and if not, display a sign-in popup. 
+
+		<pre>
+		login: function(passive) {
+			return this.ready.then(() => {
+				if(this.isAuthenticated()) {
+					return Promise.resolve();
+				}
+
+				return (new Promise((resolve, reject) => {
+					if (passive) {
+						if (this.accessToken) {
+							resolve(this.accessToken);
+						}
+					}
+
+					// add code here for displaying a sign-in popup
+				}))
+			});
+		},
+		</pre>
+
+		If you're using the oAuth protocol, an example login function would be
+
+		<pre>
+		login: function(passive) {
+		return this.oAuthenticate(passive)
+			.then(() => this.getUser())
+			.then(u => {
+				if (this.user) {
+					this.permissions.logout = true;
+
+					// add code for editing permissions here
+				}
+			});
+		},
+		</pre>
+
+		The <b>logout</b> function removes permissions, and deletes the user and accessToken. If you use the oAuth protocol, then logging out will look similar to:
+
+		<pre>
+		logout: function() {
+			return this.oAuthLogout().then(() => {
+				this.user = null; // clear any potential variables here
+			});
+		},
+		</pre>
+
+		If you're not using the oAuth protocol, an example logout function is:
+
+		<pre>
+		logout: function() {
+			if (this.isAuthenticated()) {
+				delete this.accessToken;
+				this.user = null;
+				this.permissions.off(["edit", "add", "delete", "save"]).on("login");
+				this.mavo.element._.fire("mavo:logout", {backend: this});
+			}
+			return Promise.resolve();
+		},
+		</pre>
+
+		<p>Finally, don't forget to call login in the <b>constructor</b>:</p>
+
+		<pre>
+		constructor: function() {
+			this.permissions.on(["read", "login"]); // be default, all users can read
+			this.login(true);
+		},
+		</pre>
+
+		<h2>Reading from storage</h2>
+
+		<p>Write a <b>get</b> function to specify how your backend reads data in. This function's implementation will vary widely from backend to backend.</p>
+
+		<pre>
+			get: function() {
+				// add code for reading in from a source here
+			},
+		</pre>
+
+		<h2>Writing to storage</h2>
+
+		<p>Write a <b>put</b> function to specify how your backend writes data to a location. DIFFERENCE BETWEEN STORE AND PUT??</p>
 	</section>
 
 	<section>
