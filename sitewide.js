@@ -6,7 +6,7 @@ if (!self.document) {
 		// We're testing locally, use local URLs for Mavo
 		self.addEventListener("fetch", function(evt) {
 			var url = evt.request.url;
-console.log(url, /\/get\.mavo\.io\/mavo\./.test(url));
+//console.log(url, /\/get\.mavo\.io\/mavo\./.test(url));
 			if (/\/get\.mavo\.io\/mavo\./.test(url)) {
 
 				var response = fetch(new Request(url.replace(/^.+?get\.mavo\.io\//gi, "../mavo/dist/")), evt.request)
