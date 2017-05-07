@@ -14,7 +14,7 @@ body > header {
   text-align: center;
   -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 5em), 0% 100%);
   clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 5em), 0% 100%);
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.5)), url(../img/header.jpg) bottom/cover; }
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.5)), url(img/header.jpg) bottom/cover; }
   body > header a {
     color: inherit; }
   body > header .masthead {

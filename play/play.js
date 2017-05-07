@@ -73,10 +73,10 @@ tinymce.init({
 <html lang="en">
 <head><meta charset="UTF-8" />
 <title>Mavo</title>
-<link rel="stylesheet" href="../mavo/mavo.css" />
+<link rel="stylesheet" href="https://get.mavo.io/mavo.css" />
 </head>
 <body>${editor.getContent({format: 'raw'})}
-<script src="../mavo/mavo.js"></script>
+<script src="https://get.mavo.io/mavo.js"></script>
 </body>
 </html>`);
 		}

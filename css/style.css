@@ -126,6 +126,13 @@ pre {
   font-weight: bold;
   color: #505662; }
 
+pre > code mark[aria-label] {
+  cursor: help;
+  position: relative; }
+  pre > code mark[aria-label]:hover::after, pre > code mark[aria-label]:focus::after {
+    content: attr(aria-label);
+    position: absolute; }
+
 body > section > hr {
   height: .5em;
   width: 5em;
@@ -266,6 +273,7 @@ body > footer {
       -ms-flex: 2;
       flex: 2; }
       body > footer > article:first-of-type ul {
+        -moz-columns: 2;
         columns: 2; }
   body > footer p {
     margin: .5em; }
@@ -288,6 +296,15 @@ body > footer {
     body > footer ul a {
       display: block;
       padding: .3em 0; }
+  body > footer .netlify::before {
+    content: "";
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    margin-right: .1em;
+    opacity: .4;
+    background: url("https://www.netlify.com/img/global/favicon/safari-pinned-tab.svg") no-repeat center/100% 100%; }
 
 .notice {
   padding: .5em 1em;

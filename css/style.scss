@@ -130,6 +130,19 @@ pre, code {
 		color: hsl(220,10%,35%);
 	}
 
+	pre > code mark[aria-label] {
+		cursor: help;
+		position: relative;
+
+		&:hover,
+		&:focus {
+			&::after {
+				content: attr(aria-label);
+				position: absolute;
+			}
+		}
+	}
+
 body > section > hr {
 	height: .5em;
 	width: 5em;
@@ -324,6 +337,19 @@ body > footer {
 		a {
 			display: block;
 			padding: .3em 0;
+		}
+	}
+
+	.netlify {
+		&::before {
+			content: "";
+			display: inline-block;
+			width: 1em;
+			height: 1em;
+			vertical-align: middle;
+			margin-right: .1em;
+			opacity: .4;
+			background: url("https://www.netlify.com/img/global/favicon/safari-pinned-tab.svg") no-repeat center / 100% 100%;
 		}
 	}
 }
