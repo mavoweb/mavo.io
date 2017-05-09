@@ -8,6 +8,14 @@
 			"id": "todo"
 		},
 		{
+			"name": "Editable homepage",
+			"tag": [
+				"Github",
+				"TINYMCE"
+			],
+			"id": "homepage"
+		},
+		{
 			"name": "Mortgage Calculator",
 			"tag": [],
 			"id": "mortgage"
