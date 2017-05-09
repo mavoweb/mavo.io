@@ -3,7 +3,8 @@ main {
   width: 30em;
   max-width: 90vw;
   margin: auto;
-  text-align: center; }
+  text-align: center;
+  box-shadow: none; }
   main h1 {
     font-weight: normal;
     font-size: 250%; }

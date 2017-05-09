@@ -12,7 +12,7 @@
 	<div>
 		<article property="demo" mv-multiple mv-if="!tagFilter or count(tag = tagFilter) > 0">
 			<a href="/demos/[id]">
-				<video src="/videos/[id].mp4" preload="metadata" loop tabindex="0"></video>
+				<video src="/demos/[id]/video.mp4" preload="metadata" loop tabindex="0"></video>
 				<h1 property="name"></h1>
 			</a>
 			<a href="?tag=[tag]" property="tag" mv-attribute="null" mv-multiple></a>
@@ -44,6 +44,12 @@ $.events(document.body, "mouseenter mouseleave focus blur", function(evt) {
 		}
 	}
 }, true);
+
+document.body.addEventListener("error", function(evt) {
+	if (!evt.target.hasAttribute("poster")) {
+		evt.target.setAttribute("poster", evt.target.src.replace("video.mp4", "preview.png"));
+	}
+}, true)
 </script>
 
 @@include('_footer.html')
