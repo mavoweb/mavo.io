@@ -1,17 +1,16 @@
-body {
-	padding: 50px;
-	font: 100% Helvetica Neue, sans-serif;
+main {
+	width: 40rem;
+	margin: auto;
+	box-shadow: 1px 1px 5px rgba(0,0,0,.3);
+	font: 150% Helvetica Neue, sans-serif;
+	border-radius: 0;
+	padding: 0;
 }
 
-h1 {
+main h1 {
 	padding: 1.5rem;
 	margin: 0;
 	font: 300 160% Helvetica Neue, sans-serif;
-}
-
-main {
-	width: 40rem;
-	box-shadow: 1px 1px 5px rgba(0,0,0,.3);
 }
 
 #data {

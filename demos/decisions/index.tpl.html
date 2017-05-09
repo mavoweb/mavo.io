@@ -1,0 +1,48 @@
+@@include('_head-demo.html', {
+	"name": "Decisions, Decisions"
+})
+
+<main mv-storage="local" class="mv-autoedit" mv-app id="decisions">
+	<article property="decision" mv-multiple>
+		<header class="answer-[answer]">
+			<h1 property="decision">Should I go to the party?</h1>
+
+			<p>
+				Answer: <span property="answer">[if(score > 0, Yes, if(score < 0, No, Maybe))]</span>!
+				(score: <span property="score">[sum(pro.weight) - sum(con.weight)]</span>)
+			</p>
+		</header>
+
+		<section>
+			<h2>[count(pro)] pro(s)</h2>
+			<ul>
+				<li property="pro" class="weight-[weight]" mv-multiple mv-accepts="con">
+					<p property="argument">Fun with friends!</p>
+					<p>
+						Weight:
+						<meter property="weight" min="1" value="1" max="5"></meter>
+						[weight]
+					</p>
+				</li>
+			</ul>
+		</section>
+
+		<section>
+			<h2>[count(con)] con(s)</h2>
+			<ul>
+				<li property="con" class="weight-[weight]" mv-multiple mv-accepts="pro">
+					<p property="argument">I have tons of work to do.</p>
+					<p>
+						Weight:
+						<meter property="weight" min="1" value="1" max="5"></meter>
+						[weight]
+					</p>
+				</li>
+			</ul>
+		</section>
+	</article>
+
+	<footer>Total: [count(score > 0)] “yes” decision(s) and [count(score < 0)] “no” decision(s)</footer>
+</main>
+
+@@include('_footer-demo.html')

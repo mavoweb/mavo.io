@@ -1,21 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="demos">
 <head>
+	<meta charset="UTF-8">
+	<title>Decisions, Decisions &bull; Mavo Demos</title>
+	<link rel="stylesheet" href="https://get.mavo.io/mavo.css" />
+	<link rel="stylesheet" href="../../css/style.css" />
+	<link rel="icon" href="/favicon.ico">
 
-<meta charset="utf-8" />
-<title>Decisions, decisions</title>
-<link rel="stylesheet" href="https://get.mavo.io/mavo.css" />
-<link rel="stylesheet" href="style.css" />
+	<link rel='stylesheet' href='/demos/style.css'><link rel='stylesheet' href='style.css'>
 
+	<script src="https://get.mavo.io/mavo.js"></script>
 </head>
+
+
 <body>
 
-<main mv-storage="local" class="mv-autoedit" mv-app id="decisions">
-	<h1>
-		Decisions
-		<span>Decisions</span>
+<header>
+	<h1 class="logo">
+		<a href="/"><img src="../../logo.svg" alt="Mavo"></a>
 	</h1>
+	<nav>
+	<a href="../../docs/primer">Get started</a>
+	<a href="../../docs">Docs</a>
+	<a href="../../demos">Demos</a>
+	<a href="../../faq">FAQ</a>
+	<a href="https://plugins.mavo.io">Plugins</a>
+	<a href="../../get">Get Mavo</a>
+</nav>
 
+</header>
+
+
+<h2>Demos</h2>
+
+<section>
+	<h1>Decisions, Decisions</h1>
+
+
+<main mv-storage="local" class="mv-autoedit" mv-app id="decisions">
 	<article property="decision" mv-multiple>
 		<header class="answer-[answer]">
 			<h1 property="decision">Should I go to the party?</h1>
@@ -58,7 +80,46 @@
 	<footer>Total: [count(score > 0)] “yes” decision(s) and [count(score < 0)] “no” decision(s)</footer>
 </main>
 
-<script src="https://get.mavo.io/mavo.js"></script>
+</section>
+
+<footer>
+	<p>
+		Made with &hearts; by <a href="http://lea.verou.me">Lea Verou</a> and <a href="https://github.com/mavoweb/mavo/graphs/contributors">all these awesome people</a>.
+		Proudly hosted by <a href="https://www.netlify.com" class="netlify">Netlify</a>.
+	</p>
+	<article>
+		<h1>Explore</h1>
+
+		<ul>
+			<li><a href="/docs/primer">Get started</a></li>
+			<li><a href="/docs">Docs</a></li>
+			<li><a href="/demos">Demos</a></li>
+			<li><a href="/faq">FAQ</a></li>
+			<li><a href="https://plugins.mavo.io">Plugins</a></li>
+			<li><a href="/get">Get Mavo</a></li>
+			<li><a href="https://test.mavo.io">Testsuite</a></li>
+			<li><a href="/credits">Credits</a></li>
+		</ul>
+	</article>
+	<article>
+		<h1>Social Mavo</h1>
+
+		<ul>
+			<li><a href="https://twitter.com/mavoweb">Follow @mavoweb on Twitter</a></li>
+			<li><a href="https://gitter.im/mavoweb">Chat with us on Gitter</a></li>
+			<li><a href="https://github.com/mavoweb/mavo">Github</a></li>
+		</ul>
+	</article>
+
+	<a href="http://mit.edu" class="logo"><img src="../../img/logo-mit.svg" alt="MIT" /></a>
+	<a href="http://csail.mit.edu" class="logo"><img src="../../img/logo-csail.svg" alt="CSAIL" /></a>
+</footer>
+
+
+<script src="../../js/prism.js"></script>
+<script src="/sitewide.js"></script>
+
 
 </body>
 </html>
+

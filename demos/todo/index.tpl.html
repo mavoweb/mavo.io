@@ -1,0 +1,23 @@
+@@include('_head-demo.html', {
+	"name": "To-Do List"
+})
+
+<main mv-storage="https://github.com/mavoweb/data" mv-app="todo" class="mv-autoedit">
+	<header>
+		<h1>My tasks</h1>
+		<p><strong>[count(done)]</strong> done out of <strong>[count(task)]</strong> total</p>
+	</header>
+
+	<div>
+		<ul>
+			<li property="task" mv-multiple>
+				<label>
+					<input property="done" type="checkbox" />
+					<span property="taskTitle">Do stuff</span>
+				</label>
+			</li>
+		</ul>
+	</div>
+</main>
+
+@@include('_footer-demo.html')

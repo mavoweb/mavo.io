@@ -24,6 +24,12 @@
   font-weight: normal;
   font-style: normal; }
 
+@font-face {
+  font-family: 'Mavo Icons';
+  src: url("fonts/mavo-icons.woff") format("woff");
+  font-weight: normal;
+  font-style: normal; }
+
 :root {
   --color-magenta: #ff0080;
   --color-blue: #25aff4;
@@ -33,6 +39,9 @@
   --font-heading: Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
   --font-mono: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   --content-width: 930px; }
+
+button {
+  cursor: pointer; }
 
 .flat-button {
   display: inline-block;
@@ -257,7 +266,8 @@ body > footer {
   color: rgba(0, 0, 0, 0.8);
   font-size: 80%;
   -webkit-clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%);
-  clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%); }
+  clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%);
+  margin-top: 2rem; }
   body > footer p:first-child {
     width: 100%;
     font-size: 150%; }

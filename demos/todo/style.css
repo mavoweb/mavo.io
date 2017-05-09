@@ -1,162 +1,124 @@
-* {
-	margin: 0;
-	padding: 0;
-	font-family: inherit;
-	font-size: inherit;
-	line-height: inherit;
-	color: inherit;
-}
-
-body {
-	min-height: 100vh;
-	box-sizing: border-box;
-	padding: 1em;
-	background: url(img/wood.png) hsl(30, 70%, 18%);
-	text-align: center;
-	font: 120% Helvetica Neue, sans-serif;
-	color: white;
-}
-
-a {
-	text-decoration: none;
-}
+main {
+  padding: 1em;
+  background: url(img/wood.png) #4e2e0e;
+  text-align: center;
+  font: 100% Helvetica Neue, sans-serif;
+  color: white; }
+  main * {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit; }
+  main a {
+    text-decoration: none; }
 
 @keyframes transform {
-	from { transform: rotate(5deg) }
-}
+  from {
+    transform: rotate(8deg); } }
+  main > header + div {
+    position: relative;
+    z-index: 1;
+    max-width: 20em;
+    padding: 2em;
+    margin: 1em auto 3em;
+    border-top-right-radius: 100% 2%;
+    border-bottom-left-radius: 1% 100%;
+    box-shadow: 2px 3px 20px black, 0 0 60px #8a4d0f inset;
+    background: #fffef0;
+    font-size: 120%; }
+    main > header + div::before, main > header + div::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      background: inherit;
+      box-shadow: inherit;
+      transform: rotate(-3deg);
+      animation: transform 0.4s cubic-bezier(0.25, 0.1, 0.4, 1.5); }
+    main > header + div::after {
+      transform: rotate(2deg); }
+  main ul {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    color: #013;
+    list-style: none;
+    font-size: 120%; }
+  main li[property=task] {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    border-bottom: 1px dashed rgba(51, 85, 153, 0.5); }
+    main li[property=task].mv-deleted {
+      padding: .3em; }
+  main label {
+    -ms-flex: 1;
+    flex: 1;
+    padding: .2em;
+    margin: .3em 0;
+    font-family: Marker Felt, Helvetica Neue, sans-serif; }
+  main :checked + [property=taskTitle] {
+    font-style: italic;
+    text-decoration: line-through;
+    color: gray;
+    mix-blend-mode: multiply; }
+  main input {
+    outline: none !important; }
+  main input::-webkit-input-placeholder {
+    font-style: italic;
+    color: #999;
+    mix-blend-mode: multiply; }
+  main input::-moz-placeholder {
+    font-style: italic;
+    color: #999;
+    mix-blend-mode: multiply; }
+  main :not(.mv-item-bar) > button.mv-add {
+    padding: .2em .5em;
+    margin-top: 1em;
+    border-radius: .3em;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: #85c20a linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+    box-shadow: 0 1px rgba(255, 255, 255, 0.5) inset, 0 0.1em 0.2em -0.1em black;
+    color: white;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    cursor: pointer; }
+  main button.mv-add:hover {
+    background-color: orange; }
+  main button.mv-add:active {
+    box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.8) inset;
+    background-image: none; }
+  main > header {
+    display: block;
+    margin: 2em 0 3em;
+    text-shadow: 0 -1px 3px black;
+    opacity: .9;
+    font-size: 120%; }
+    main > header > h1 {
+      font-weight: 100;
+      font-size: 400%;
+      opacity: .6; }
+    main > header > p {
+      margin-top: .5em; }
+  main body > footer {
+    display: block;
+    margin-top: 3em;
+    font-size: small; }
+  main .auth-controls, main .progress {
+    mix-blend-mode: multiply; }
+  main .mv-item-bar.mv-ui {
+    position: static;
+    pointer-events: auto;
+    opacity: 1;
+    mix-blend-mode: multiply;
+    border: 0; }
 
-main {
-	position: relative;
-	max-width: 20em;
-	padding: 2em;
-	margin: 1em auto;
-	border-top-right-radius: 100% 2%;
-	border-bottom-left-radius: 1% 100%;
-	box-shadow: 2px 3px 20px black, 0 0 60px hsl(30, 80%, 30%) inset;
-	background: hsl(55, 100%, 97%);
-}
-
-	main::before,
-	main::after {
-		content: '';
-		position: absolute;
-		top: 0; right: 0; bottom: 0; left: 0;
-		z-index: -1;
-		background: inherit;
-		box-shadow: inherit;
-		transform: rotate(-2deg);
-		animation: transform .4s cubic-bezier(.25,.1,.4,1.5);
-	}
-
-	main::after {
-		transform: rotate(3deg);
-	}
-
-ul {
-	position: relative;
-	display: block;
-	margin: 0;
-	padding: 0;
-	text-align: left;
-	color: #013;
-	list-style: none;
-	font-size: 120%;
-}
-
-	li {
-		display: flex;
-		align-items: center;
-		border-bottom: 1px dashed rgba(51, 85, 153, .5);
-	}
-
-	label {
-		flex: 1;
-		padding: .2em;
-		margin: .3em 0;
-		font-family: Marker Felt, Helvetica Neue, sans-serif;
-	}
-
-:checked + [property=taskTitle] {
-	font-style: italic;
-	text-decoration: line-through;
-	color: gray;
-	mix-blend-mode: multiply;
-}
-
-input {
-	outline: none !important;
-}
-
-input::-webkit-input-placeholder {
-	font-style: italic;
-	color: #999;
-	mix-blend-mode: multiply;
-}
-
-input::-moz-placeholder {
-	font-style: italic;
-	color: #999;
-	mix-blend-mode: multiply;
-}
-
-
-:not(.mv-item-bar) > button.mv-add {
-	padding: .2em .5em;
-	margin-top: 1em;
-	border-radius: .3em;
-	border: 1px solid rgba(0,0,0,.2);
-	background: hsl(80,90%,40%) linear-gradient(hsla(0,0%,100%,.3), hsla(0,0%,100%,0));
-	box-shadow: 0 1px hsla(0,0%,100%,.5) inset, 0 .1em .2em -.1em black;
-	color: white;
-	text-shadow: 0 -1px 1px rgba(0,0,0,.5);
-	font-weight: bold;
-	cursor: pointer;
-}
-
-	button.mv-add:hover {
-		background-color: orange;
-	}
-
-	button.mv-add:active {
-		box-shadow: 0 .1em .3em rgba(0,0,0,.8) inset;
-		background-image: none;
-	}
-
-body > header {
-	display: block;
-	margin: 2em 0 3em;
-	text-shadow: 0 -1px 3px black;
-	opacity: .9;
-}
-
-	body > header > h1 {
-		font-weight: 100;
-		font-size: 400%;
-		opacity: .6;
-	}
-
-	body > header > p {
-		margin-top: .5em;
-	}
-
-body > footer {
-	display: block;
-	margin-top: 3em;
-	font-size: small;
-}
-
-.auth-controls, .progress {
-	mix-blend-mode: multiply;
-}
-
-li[property=task].mv-deleted {
-	padding: .3em;
-}
-
-.mv-item-bar.mv-ui {
-	position: static;
-	pointer-events: auto;
-	opacity: 1;
-	mix-blend-mode: multiply;
-	border: 0;
-}
+/*# sourceMappingURL=style.css.map */

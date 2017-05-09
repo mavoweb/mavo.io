@@ -30,10 +30,6 @@ gulp.task("sass", function() {
 		}));
 });
 
-gulp.task("update", function() {
-	gulp.src(["../mavo/dist/**/*"]).pipe(gulp.dest("mavo"));
-});
-
 gulp.task("html", function() {
 	gulp.src(["**/*.tpl.html"])
 		.pipe(fileinclude({
@@ -51,7 +47,6 @@ gulp.task("html", function() {
 });
 
 gulp.task("watch", function() {
-	gulp.watch(["../mavo/dist/*"], ["update"]);
 	gulp.watch(["**/*.scss"], ["sass"]);
 	gulp.watch(["**/*.tpl.html", "./templates/*.html"], ["html"]);
 });

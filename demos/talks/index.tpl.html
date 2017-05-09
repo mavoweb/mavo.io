@@ -1,0 +1,45 @@
+@@include('_head-demo.html', {
+	"name": "Talks list"
+})
+
+<main mv-app class="talks" mv-storage="https://github.com/leaverou/leaverou.github.io/data.json" mv-init="talks-subset.json">
+	<h1>[count(talk)] sessions at [count(event)] events ([count(upcoming)] events upcoming)</h1>
+	<article mv-multiple property="event" mv-order="desc">
+		<meta property="upcoming" content="[date > $now]" />
+		<h1 mv-multiple property="talk">
+			<span property="title" mv-default>TBD</span>
+			<span property class="type">
+				<select>
+					<option selected>Talk</option>
+					<option>Keynote</option>
+					<option>Workshop</option>
+					<option>Panel</option>
+				</select>
+			</span>
+			<a property class="video" target="_blank">Video</a>
+			<a property class="slides" target="_blank">Slides</a>
+		</h1>
+		<h2>
+			<a property="url" target="_blank">
+				<span property="name"></span>
+			</a>
+		</h2>
+		<p class="date"><time property="date"></time></p>
+		<address class="flag-[country]">
+			<span property="city"></span>,
+			<span property="country" mv-edit="#countries"></span>
+		</address>
+		<p class="comment" property></p>
+		<p class="comment" style="display: [iff(feedback, block, none)]">
+			<a property="feedback" target="_blank">Feedback</a>
+		</p>
+	</article>
+</main>
+
+<div hidden mv-app mv-init="http://leaverou.github.io/countries.json">
+	<select id="countries">
+		<option value="[code]" property="country" mv-multiple typeof>[name]</option>
+	</select>
+</div>
+
+@@include('_footer-demo.html')

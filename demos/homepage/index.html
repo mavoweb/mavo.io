@@ -2,7 +2,7 @@
 <html lang="en" class="demos">
 <head>
 	<meta charset="UTF-8">
-	<title>Mavo logo &bull; Mavo Demos</title>
+	<title>Personal Homepage &bull; Mavo Demos</title>
 	<link rel="stylesheet" href="https://get.mavo.io/mavo.css" />
 	<link rel="stylesheet" href="../../css/style.css" />
 	<link rel="icon" href="/favicon.ico">
@@ -34,64 +34,29 @@
 <h2>Demos</h2>
 
 <section>
-	<h1>Mavo logo</h1>
+	<h1>Personal Homepage</h1>
 
 
-<main mv-app="logo" mv-mode="edit" mv-bar="none">
+<main mv-app="homepage" mv-storage="https://github.com/mavoweb/mavo.io/demos/homepage" mv-plugins="tinymce">
 
-<fieldset>
-	<legend>Geometry</legend>
-	<label>
-		Angle: <input type="range" min="0" max="60" step=".5" property="angle" value="24"> [angle]°
-	</label>
+<h1>
+	<img property="image" src="images/photo.jpg" alt="">
+	<span property="name">Grumpy Cat</span>
+</h1>
 
-	<label>
-		Thickness:
-		<input type="range" min="1" max="[height/2]" step=".2" property="thickness" value="13"> [thickness]
-	</label>
+<p property="description" class="tinymce">
+	<strong>Tardar Sauce</strong> (born April 4, 2012), commonly known as <strong>Grumpy Cat</strong>, is a cat Internet and media personality and actress.
+	She is known for her permanently "grumpy" facial appearance, which is caused by an <a href="https://en.wikipedia.org/wiki/Malocclusion" title="Malocclusion">underbite</a> and <a href="https://en.wikipedia.org/wiki/Dwarf_cat" title="Dwarf cat">feline dwarfism</a>.
+	She came to prominence when a photograph of her was posted on social news website <a href="https://reddit.com" title="Reddit">Reddit</a> by Bryan Bundesen,
+	the brother of her owner Tabatha, in September 2012, and <a href="https://en.wikipedia.org/wiki/Lolcat" title="Lolcat">lolcats</a> and parodies created from the photograph by Reddit users went viral.
+	She is the subject of a popular <a href="https://en.wikipedia.org/wiki/Internet_meme" title="Internet meme">internet meme</a> in which negative lolcats (such as "I Had Fun Once... It Was Awful") are made from photographs of her.
+</p>
 
-	<label>
-		Size:
-		<input type="range" property="size" min="1" value="80"> [size]%
-	</label>
-
-	<meta property="height" content="50" mv-mode="read">
-</fieldset>
-
-<meta property="charwidth" content="[2 * height * tan(angle * PI/180) + thickness]">
-
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 [height]" width="[size]%">
-<style>
-#O {
-	fill: none;
-	stroke-width: [thickness * cos(angle * PI/180)];
-}
-</style>
-
-<g id="logo">
-	<g property="mColor" mv-attribute="fill" fill="hsl(30, 100%, 50%)">
-		<g id="bracket" transform="translate([height * tan(angle * PI/180)], 0)">
-			<rect height="100%" id="bar" class="bar" width="[thickness]" transform="skewX(-[angle])" />
-			<rect height="100%" id="bar2" class="bar" width="[thickness]" transform="skewX([angle])" />
-		</g>
-	</g>
-
-	<g property="aColor" mv-attribute="fill" fill="hsl(330, 90%, 45%)">
-		<use xlink:href="#bracket" id="A" x="[charwidth - thickness]" />
-		<circle id="A-crossbow" r="[thickness / 2.5]" cx="[1.5 * charwidth - thickness]" cy="70%"></circle>
-	</g>
-
-	<use xlink:href="#bracket" id="V" x="[2*charwidth - 2*thickness]" y="[-height]" transform="scale(1, -1)"
-	     property="vColor" mv-attribute="fill" fill="hsl(85, 80%, 45%)" />
-	<circle id="O" r="[height * .52 - thickness/2]" cx="[3*charwidth - 2*thickness + height/2]" cy="[height/2]"
-	        property="oColor" mv-attribute="stroke" stroke="hsl(200, 90%, 55%)"/>
-</g>
-
-</svg>
-
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 [height]" width="[size]%" id="black-logo">
-	<use xlink:href="#logo"></use>
-</svg>
+<div class="links">
+	<a property class="twitter" href="https://twitter.com/RealGrumpyCat" target="_blank" title="Twitter">🐦</a>
+	<a property class="facebook" href="https://www.facebook.com/TheOfficialGrumpyCat" target="_blank" title="Facebook">f</a>
+	<a property class="wikipedia" href="https://en.wikipedia.org/wiki/Grumpy_Cat" target="_blank" title="Wikipedia">W</a>
+</div>
 
 </main>
 

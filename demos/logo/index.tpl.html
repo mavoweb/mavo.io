@@ -1,0 +1,63 @@
+@@include('_head-demo.html', {
+	"name": "Mavo logo"
+})
+
+<main mv-app="logo" mv-mode="edit" mv-bar="none">
+
+<fieldset>
+	<legend>Geometry</legend>
+	<label>
+		Angle: <input type="range" min="0" max="60" step=".5" property="angle" value="24"> [angle]°
+	</label>
+
+	<label>
+		Thickness:
+		<input type="range" min="1" max="[height/2]" step=".2" property="thickness" value="13"> [thickness]
+	</label>
+
+	<label>
+		Size:
+		<input type="range" property="size" min="1" value="80"> [size]%
+	</label>
+
+	<meta property="height" content="50" mv-mode="read">
+</fieldset>
+
+<meta property="charwidth" content="[2 * height * tan(angle * PI/180) + thickness]">
+
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 [height]" width="[size]%">
+<style>
+#O {
+	fill: none;
+	stroke-width: [thickness * cos(angle * PI/180)];
+}
+</style>
+
+<g id="logo">
+	<g property="mColor" mv-attribute="fill" fill="hsl(30, 100%, 50%)">
+		<g id="bracket" transform="translate([height * tan(angle * PI/180)], 0)">
+			<rect height="100%" id="bar" class="bar" width="[thickness]" transform="skewX(-[angle])" />
+			<rect height="100%" id="bar2" class="bar" width="[thickness]" transform="skewX([angle])" />
+		</g>
+	</g>
+
+	<g property="aColor" mv-attribute="fill" fill="hsl(330, 90%, 45%)">
+		<use xlink:href="#bracket" id="A" x="[charwidth - thickness]" />
+		<circle id="A-crossbow" r="[thickness / 2.5]" cx="[1.5 * charwidth - thickness]" cy="70%"></circle>
+	</g>
+
+	<use xlink:href="#bracket" id="V" x="[2*charwidth - 2*thickness]" y="[-height]" transform="scale(1, -1)"
+	     property="vColor" mv-attribute="fill" fill="hsl(85, 80%, 45%)" />
+	<circle id="O" r="[height * .52 - thickness/2]" cx="[3*charwidth - 2*thickness + height/2]" cy="[height/2]"
+	        property="oColor" mv-attribute="stroke" stroke="hsl(200, 90%, 55%)"/>
+</g>
+
+</svg>
+
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 [height]" width="[size]%" id="black-logo">
+	<use xlink:href="#logo"></use>
+</svg>
+
+</main>
+
+@@include('_footer-demo.html')

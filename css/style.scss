@@ -28,7 +28,18 @@
 	font-style: normal;
 }
 
+@font-face {
+	font-family: 'Mavo Icons';
+	src: url('fonts/mavo-icons.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
 @import "vars";
+
+button {
+	cursor: pointer;
+}
 
 .flat-button {
 	display: inline-block;
@@ -284,6 +295,7 @@ body > footer {
 	color: rgba(0,0,0,.8);
 	font-size: 80%;
 	clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%);
+	margin-top: 2rem;
 
 	p:first-child {
 		width: 100%;

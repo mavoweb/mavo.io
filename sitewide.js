@@ -6,10 +6,9 @@ if (!self.document) {
 		// We're testing locally, use local URLs for Mavo
 		self.addEventListener("fetch", function(evt) {
 			var url = evt.request.url;
-//console.log(url, /\/get\.mavo\.io\/mavo\./.test(url));
-			if (/\/get\.mavo\.io\/mavo\./.test(url)) {
 
-				var response = fetch(new Request(url.replace(/^.+?get\.mavo\.io\//gi, "../mavo/dist/")), evt.request)
+			if (/\/get\.mavo\.io\/mavo\./.test(url)) {
+				var response = fetch(new Request(url.replace(/^.+?get\.mavo\.io\//gi, "http://localhost:8000/dist/")), evt.request)
 					.then(r => r.status < 400? r : Promise.reject())
 					.catch(err => fetch(evt.request)); // if that fails, return original request
 
@@ -21,7 +20,7 @@ if (!self.document) {
 	return;
 }
 
-var src = document.currentScript ? document.currentScript.src : "test.js";
+var src = document.currentScript ? document.currentScript.src : "sitewide.js";
 
 if ("serviceWorker" in navigator) {
 	// Register this script as a service worker
