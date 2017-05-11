@@ -9,6 +9,11 @@
 			"image": "http://mavo.io/demos/portfolio/images/pasted-image-1494528264937.png",
 			"name": "Muck Mouth",
 			"@type": "Painting"
+		},
+		{
+			"image": "http://mavo.io/demos/portfolio/images/pasted-image-1494528646446.png",
+			"name": "Fishwall",
+			"@type": "Painting"
 		}
 	]
 }
