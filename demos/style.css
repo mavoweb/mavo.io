@@ -12,27 +12,46 @@ section[mv-app="demos"][mv-permissions~="login"] > .mv-bar {
   display: none; }
 
 section[mv-app="demos"] > div {
-  width: 65rem;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-flow: row wrap;
   flex-flow: row wrap;
-  -ms-flex-pack: justify;
-  justify-content: space-between; }
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin: auto;
+  width: 100%; }
 
 article[property="demo"] {
+  position: relative;
   vertical-align: top;
-  max-width: 20rem;
-  margin: 1rem auto; }
+  width: 30rem;
+  margin: .2em;
+  box-shadow: 0 0 0.1em rgba(0, 0, 0, 0.2);
+  background: url("/logo.svg") center/40% auto no-repeat #e3e5e8;
+  background-blend-mode: luminosity; }
+  article[property="demo"] > div {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0 1em;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    overflow: hidden;
+    max-height: 0;
+    transition: 1s; }
+  article[property="demo"]:hover > div,
+  article[property="demo"]:focus > div {
+    padding-bottom: 1em;
+    max-height: 10rem; }
   article[property="demo"] h1 {
     margin: .3em 0;
     font-family: Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
-    font-size: 150%; }
+    font-size: 180%;
+    color: white; }
   article[property="demo"] video {
     display: block;
-    max-width: 100%;
-    height: 12.5rem;
-    background: #e3e5e8; }
+    width: 100%; }
 
 a[property="tag"] {
   display: inline-block;
