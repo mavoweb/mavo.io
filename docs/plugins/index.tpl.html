@@ -1,35 +1,9 @@
-<!DOCTYPE html>
-<html lang="en" class="docs">
-<head>
-	<meta charset="UTF-8">
-	<title>Writing Plugins - Mavo Documentation</title>
-	<link rel="stylesheet" href="/mavo/mavo.css" />
-	<link rel="stylesheet" href="../../css/style.css" />
-	<link rel="icon" href="/favicon.ico">
-
-	<link rel='stylesheet' href='/docs/style.css'>
-
-	<script src="/mavo/mavo.js"></script>
-</head>
-
-
+@@include('_head-docs.html', {
+	"title": "Writing Plugins"
+})
 <body class="language-markup">
 
-<header>
-	<h1 class="logo">
-		<a href="/"><img src="../../logo.svg" alt="Mavo"></a>
-	</h1>
-	<nav>
-	<a href="../../docs/primer">Get started</a>
-	<a href="../../docs">Docs</a>
-	<a href="../../demos">Demos</a>
-	<a href="../../faq">FAQ</a>
-	<a href="https://plugins.mavo.io">Plugins</a>
-	<a href="../../get">Get Mavo</a>
-</nav>
-
-</header>
-
+@@include('_header.html')
 
 <h2>Writing Plugins</h2>
 
@@ -247,99 +221,61 @@
 	</section>
 
 	<section>
-		<h1>Adding a new element type</h1>
+			<h1>Adding a new element type</h1>
+		</section>
+
+		<section>
+			<h1>Adding a new toolbar button</h1>
+		</section>
 	</section>
 
 	<section>
-		<h1>Adding a new toolbar button</h1>
-	</section>
-</section>
+		<h1>Hooks</h1>
 
-<section>
-	<h1>Hooks</h1>
-
-	<p>Hooks are used as ways to execute specified code during various points of Mavo's execution.</p>
-	<p>The name of the hook gives a summary of where the hook will be executed (For example: the <code>group-init-start</code> hook executes after the constructor for a Mavo group has been called, but before any of the code within the constructor has been called) </p>
-	<section>
-		<h1>Adding a hook</h1>
-		<p>You can add a hook by calling <code>Mavo.hooks.add("hook-name", callback)</code>.  This will take the code in the <code>callback</code> function, and run it where <code>Mavo.hooks.run("hook-name", data)</code> is placed.</p>
-		<p>It is common to want to add multiple hooks without calling <code>Mavo.hooks.add</code> multiple times.  To do so, you can use the <code>hooks</code> attribute of the object passed into <code>Mavo.Plugins.register</code>.</p>
-		<p>As an example:
-			<pre>
-				Mavo.Plugins.register("plugin-name", {
-					ready: ...,
-					init: ...,
-					hooks: {
-						"hook1-name": function(data) {
-							// hook 1 callback
-						},
-						"hook2-name": function(data) {
-							// hook 2 callback
+		<p>Hooks are used as ways to execute specified code during various points of Mavo's execution.</p>
+		<p>The name of the hook gives a summary of where the hook will be executed (For example: the <code>group-init-start</code> hook executes after the constructor for a Mavo group has been called, but before any of the code within the constructor has been called) </p>
+		<section>
+			<h1>Adding a hook</h1>
+			<p>You can add a hook by calling <code>Mavo.hooks.add("hook-name", callback)</code>.  This will take the code in the <code>callback</code> function, and run it where <code>Mavo.hooks.run("hook-name", data)</code> is placed.</p>
+			<p>It is common to want to add multiple hooks without calling <code>Mavo.hooks.add</code> multiple times.  To do so, you can use the <code>hooks</code> attribute of the object passed into <code>Mavo.Plugins.register</code>.</p>
+			<p>As an example:
+				<pre>
+					Mavo.Plugins.register("plugin-name", {
+						ready: ...,
+						init: ...,
+						hooks: {
+							"hook1-name": function(data) {
+								// hook 1 callback
+							},
+							"hook2-name": function(data) {
+								// hook 2 callback
+							}
 						}
 					}
-				}
-			</pre>
-		</p>
+				</pre>
+			</p>
+		</section>
+		<section>
+			<h1>Where exactly are hooks run</h1>
+			<p><code>Mavo.hooks.run("hook-name", data)</code> defines exactly where a hook will be called.  The <code>data</code> param will be passed as a param into the callback passed into <code>Mavo.hooks.add</code>.</p>
+			<p>This is not code that should need to be written for a plugin, but if you're curious exactly where a hook's code will be run, you can find out by looking for calls to <code>Mavo.hooks.run</code> in the codebase</p>
+		</section>
+		<section>
+			<h1>Available hooks</h1>
+			<p>Below we summarize hooks available for you to use, and where the hook will be called</p>
+			<p>TODO</p>
+		</section>
 	</section>
-	<section>
-		<h1>Where exactly are hooks run</h1>
-		<p><code>Mavo.hooks.run("hook-name", data)</code> defines exactly where a hook will be called.  The <code>data</code> param will be passed as a param into the callback passed into <code>Mavo.hooks.add</code>.</p>
-		<p>This is not code that should need to be written for a plugin, but if you're curious exactly where a hook's code will be run, you can find out by looking for calls to <code>Mavo.hooks.run</code> in the codebase</p>
+
+	<section id="architecture">
+		<h1>Architecture Overview</h1>
+
+		<p><strong>Danny, edit this</strong></p>
+
+		<p>Now that you understand the basics, learn more about Mavo’s internals in the <a href="/docs/api">API Reference</a>.</p>
 	</section>
-	<section>
-		<h1>Available hooks</h1>
-		<p>Below we summarize hooks available for you to use, and where the hook will be called</p>
-		<p>TODO</p>
-	</section>
-</section>
 
-<section id="architecture">
-	<h1>Architecture Overview</h1>
+	@@include('_footer-docs.html')
 
-	<p><strong>Danny, edit this</strong></p>
-
-	<p>Now that you understand the basics, learn more about Mavo’s internals in the <a href="/docs/api">API Reference</a>.</p>
-</section>
-
-<footer>
-	<p>
-		Made with &hearts; by <a href="http://lea.verou.me">Lea Verou</a> and <a href="https://github.com/mavoweb/mavo/graphs/contributors">all these awesome people</a>
-	</p>
-	<article>
-		<h1>Explore</h1>
-
-		<ul>
-			<li><a href="/docs/primer">Get started</a></li>
-			<li><a href="/docs">Docs</a></li>
-			<li><a href="/demos">Demos</a></li>
-			<li><a href="/faq">FAQ</a></li>
-			<li><a href="https://plugins.mavo.io">Plugins</a></li>
-			<li><a href="/get">Get Mavo</a></li>
-			<li><a href="https://test.mavo.io">Testsuite</a></li>
-			<li><a href="/credits">Credits</a></li>
-		</ul>
-	</article>
-	<article>
-		<h1>Social Mavo</h1>
-
-		<ul>
-			<li><a href="https://twitter.com/mavoweb">Follow @mavoweb on Twitter</a></li>
-			<li><a href="https://gitter.im/mavoweb">Chat with us on Gitter</a></li>
-			<li><a href="https://github.com/mavoweb/mavo">Github</a></li>
-		</ul>
-	</article>
-
-	<a href="http://mit.edu" class="logo"><img src="../../img/logo-mit.svg" alt="MIT" /></a>
-	<a href="http://csail.mit.edu" class="logo"><img src="../../img/logo-csail.svg" alt="CSAIL" /></a>
-</footer>
-
-
-<script src="../../js/prism.js"></script>
-<script src="../../js/sitewide.js"></script>
-
-
-<script src="/js/docs.js"></script>
-
-
-</body>
-</html>
+	</body>
+	</html>
