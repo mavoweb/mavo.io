@@ -1,0 +1,74 @@
+main {
+  margin: 0 auto; }
+  main a {
+    text-decoration: none;
+    color: #aaa; }
+  main header {
+    margin: 0; }
+    main header h1 {
+      display: inline-block;
+      margin: 0; }
+      main header h1 img {
+        max-width: 8em; }
+  main > div {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -ms-flex-pack: center;
+    justify-content: center; }
+  main footer {
+    text-align: center;
+    font-weight: 300;
+    color: rgba(0, 0, 0, 0.5); }
+
+[property=painting],
+.mv-add-painting {
+  display: inline-block;
+  vertical-align: top;
+  margin: .8rem; }
+  [property=painting] > div,
+  .mv-add-painting > div {
+    position: relative; }
+  [property=painting] img,
+  .mv-add-painting img {
+    display: block;
+    width: 200px;
+    min-height: 200px;
+    background: #ddd;
+    background-image: linear-gradient(to bottom right, transparent 50%, white 0, white calc(50% + 1px), transparent 0), linear-gradient(to bottom left, transparent 50%, white 0, white calc(50% + 1px), transparent 0); }
+  [property=painting] p,
+  .mv-add-painting p {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: .6em;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    transition: .2s bottom; }
+  [property=painting]:not([mv-mode="edit"]),
+  .mv-add-painting:not([mv-mode="edit"]) {
+    overflow: hidden; }
+    [property=painting]:not([mv-mode="edit"]):not(:hover) p,
+    .mv-add-painting:not([mv-mode="edit"]):not(:hover) p {
+      bottom: -6em; }
+
+.mv-add-painting {
+  width: 5.2em;
+  padding: .5em;
+  border: 3px dashed rgba(0, 0, 0, 0.4);
+  background: white;
+  color: rgba(0, 0, 0, 0.4);
+  text-align: center;
+  font: inherit;
+  font-size: 200%;
+  font-weight: bold;
+  width: 200px;
+  min-height: 200px; }
+  .mv-add-painting:hover {
+    background: deeppink;
+    color: white; }
+
+/*# sourceMappingURL=style.css.map */
