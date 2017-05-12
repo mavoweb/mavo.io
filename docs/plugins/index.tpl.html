@@ -1,9 +1,35 @@
-@@include('_head-docs.html', {
-	"title": "Writing Plugins"
-})
+<!DOCTYPE html>
+<html lang="en" class="docs">
+<head>
+	<meta charset="UTF-8">
+	<title>Writing Plugins - Mavo Documentation</title>
+	<link rel="stylesheet" href="/mavo/mavo.css" />
+	<link rel="stylesheet" href="../../css/style.css" />
+	<link rel="icon" href="/favicon.ico">
+
+	<link rel='stylesheet' href='/docs/style.css'>
+
+	<script src="/mavo/mavo.js"></script>
+</head>
+
+
 <body class="language-markup">
 
-@@include('_header.html')
+<header>
+	<h1 class="logo">
+		<a href="/"><img src="../../logo.svg" alt="Mavo"></a>
+	</h1>
+	<nav>
+	<a href="../../docs/primer">Get started</a>
+	<a href="../../docs">Docs</a>
+	<a href="../../demos">Demos</a>
+	<a href="../../faq">FAQ</a>
+	<a href="https://plugins.mavo.io">Plugins</a>
+	<a href="../../get">Get Mavo</a>
+</nav>
+
+</header>
+
 
 <h2>Writing Plugins</h2>
 
@@ -27,7 +53,197 @@
 	<section>
 		<h1>Adding a new backend</h1>
 
-		<p><strong>Lizzie, edit this</strong></p>
+		<p>Backends specify where Mavo apps write and read data.</p>
+
+		<p>You can add a new backend to Mavo by creating a new subclass of Mavo.Backend:</p>
+		<pre>
+			<code class='language-javascript'>
+		(function($) {
+
+		if (!self.Mavo) {
+			return;
+		}
+
+		var _ = Mavo.Backend.register($.Class({
+			extends: Mavo.Backend,
+			id: "newMavoBackend", // your backend's name goes here
+
+			// more code goes here
+
+		}));
+
+		})(Bliss);
+			</code>
+		</pre>
+
+		<p>In order for Mavo to "find" your backend, add a <b>test</b> function, which checks the url to see which backend the Mavo app specified.</p>
+
+		<pre>
+			<code class='language-javascript'>
+		static: {
+			test: function(url) {
+				if(someConditionOnURL) { // add your condition here
+					return url;
+				}
+				else {
+					return false;
+				}
+			},
+		}
+			</code>
+		</pre>
+
+		<h2>Authentication</h2>
+
+		<p>Add authentication to your backend by implementing login and logout functions.</p>
+
+		<p>Before writing login and logout functions, add an <b>isAuthenticated</b> function that checks whether the user is already authenticated. (This will prevent users from being signed out every time they refresh the page.)</p>
+
+		<pre>
+			<code class='language-javascript'>
+		isAuthenticated: function() {
+			return !!this.accessToken;
+		},
+			</code>
+		</pre>
+
+		Another helpful function you may write is the <b>getUser</b> function, which sets the user field of your backend class. Although optional, the getUser function might be helpful for writing your login and logout functions.
+
+		<pre>
+			<code class='language-javascript'>
+		getUser: function() {
+			if (this.user) {
+				return Promise.resolve(this.user);
+			}
+
+			return this.request("user").then(info => {
+				this.user = { // replace the following fields with how you get username, name, profile picture, etc
+					username: info.getUsernameHere,
+					name: info.getNameHere,
+					avatar: info.getProfilePictureHere,
+					info
+				};
+
+				$.fire(this.mavo.element, "mavo:login", { backend: this });
+			});
+		},
+			</code>
+		</pre>
+
+		We can now use the isAuthenticated and getUser functions in our login and logout functions. For <b>login</b>, we first check whether a user is already authenticated, and if not, display a sign-in popup.
+
+		<pre>
+			<code class='language-javascript'>
+		login: function(passive) {
+			return this.ready.then(() => {
+				if(this.isAuthenticated()) {
+					return Promise.resolve();
+				}
+
+				return (new Promise((resolve, reject) => {
+					if (passive) {
+						if (this.accessToken) {
+							resolve(this.accessToken);
+						}
+					}
+
+					// add code here for displaying a sign-in popup
+				}))
+			});
+		},
+			</code>
+		</pre>
+
+		If you're using the oAuth protocol, an example login function would be
+
+		<pre>
+			<code class='language-javascript'>
+		login: function(passive) {
+		return this.oAuthenticate(passive)
+			.then(() => this.getUser())
+			.then(u => {
+				if (this.user) {
+					this.permissions.logout = true;
+
+					// add code for editing permissions here
+				}
+			});
+		},
+			</code>
+		</pre>
+
+		The <b>logout</b> function removes permissions, and deletes the user and accessToken. If you use the oAuth protocol, then logging out will look similar to:
+
+		<pre>
+			<code class='language-javascript'>
+		logout: function() {
+			return this.oAuthLogout().then(() => {
+				this.user = null; // clear any potential variables here
+			});
+		},
+			</code>
+		</pre>
+
+		If you're not using the oAuth protocol, an example logout function is:
+
+		<pre>
+			<code class='language-javascript'>
+		logout: function() {
+			if (this.isAuthenticated()) {
+				delete this.accessToken;
+				this.user = null;
+				this.permissions.off(["edit", "add", "delete", "save"]).on("login");
+				this.mavo.element._.fire("mavo:logout", {backend: this});
+			}
+			return Promise.resolve();
+		},
+			</code>
+		</pre>
+
+		<p>Finally, don't forget to call login in the <b>constructor</b>:</p>
+
+		<pre>
+			<code class='language-javascript'>
+		constructor: function() {
+			this.permissions.on(["read", "login"]); // be default, all users can read
+			this.login(true);
+		},
+			</code>
+		</pre>
+
+		<h2>Reading from storage</h2>
+
+		<p>Write a <b>get</b> function to specify how your backend reads data in. This function's implementation will vary widely from backend to backend.</p>
+
+		<pre>
+			<code class='language-javascript'>
+			get: function() {
+				// add code for reading in data from storage here
+			},
+			</code>
+		</pre>
+
+		<h2>Writing to storage</h2>
+
+		<p>Write a <b>put</b> or <b>store</b> function to specify how your backend writes data to a location.  Most likely, you will override <b> load</b>.</p>
+
+		<pre>
+			<code class='language-javascript'>
+		put: function(serialized, path = this.path, o = {}) {
+				// add code for writing serialized data to storage here
+		},
+			</code>
+		</pre>
+
+		However, you can override <b>store</b> if you don't need to seralize - in other words, your backend can store objects.
+
+		<pre>
+			<code class='language-javascript'>
+				store: function(data, {path, format = this.format} = {}) {
+				 // add code for writing unseralized data to storage here
+			},
+			</code>
+		</pre>
 	</section>
 
 	<section>
@@ -48,15 +264,15 @@
 		<h1>Adding a hook</h1>
 		<p>You can add a hook by calling <code>Mavo.hooks.add("hook-name", callback)</code>.  This will take the code in the <code>callback</code> function, and run it where <code>Mavo.hooks.run("hook-name", data)</code> is placed.</p>
 		<p>It is common to want to add multiple hooks without calling <code>Mavo.hooks.add</code> multiple times.  To do so, you can use the <code>hooks</code> attribute of the object passed into <code>Mavo.Plugins.register</code>.</p>
-		<p>As an example: 
+		<p>As an example:
 			<pre>
 				Mavo.Plugins.register("plugin-name", {
-					ready: ..., 
-					init: ..., 
+					ready: ...,
+					init: ...,
 					hooks: {
 						"hook1-name": function(data) {
 							// hook 1 callback
-						}, 
+						},
 						"hook2-name": function(data) {
 							// hook 2 callback
 						}
@@ -71,7 +287,7 @@
 		<p>This is not code that should need to be written for a plugin, but if you're curious exactly where a hook's code will be run, you can find out by looking for calls to <code>Mavo.hooks.run</code> in the codebase</p>
 	</section>
 	<section>
-		<h1>Available hooks</h1> 
+		<h1>Available hooks</h1>
 		<p>Below we summarize hooks available for you to use, and where the hook will be called</p>
 		<p>TODO</p>
 	</section>
@@ -85,7 +301,45 @@
 	<p>Now that you understand the basics, learn more about Mavo’s internals in the <a href="/docs/api">API Reference</a>.</p>
 </section>
 
-@@include('_footer-docs.html')
+<footer>
+	<p>
+		Made with &hearts; by <a href="http://lea.verou.me">Lea Verou</a> and <a href="https://github.com/mavoweb/mavo/graphs/contributors">all these awesome people</a>
+	</p>
+	<article>
+		<h1>Explore</h1>
+
+		<ul>
+			<li><a href="/docs/primer">Get started</a></li>
+			<li><a href="/docs">Docs</a></li>
+			<li><a href="/demos">Demos</a></li>
+			<li><a href="/faq">FAQ</a></li>
+			<li><a href="https://plugins.mavo.io">Plugins</a></li>
+			<li><a href="/get">Get Mavo</a></li>
+			<li><a href="https://test.mavo.io">Testsuite</a></li>
+			<li><a href="/credits">Credits</a></li>
+		</ul>
+	</article>
+	<article>
+		<h1>Social Mavo</h1>
+
+		<ul>
+			<li><a href="https://twitter.com/mavoweb">Follow @mavoweb on Twitter</a></li>
+			<li><a href="https://gitter.im/mavoweb">Chat with us on Gitter</a></li>
+			<li><a href="https://github.com/mavoweb/mavo">Github</a></li>
+		</ul>
+	</article>
+
+	<a href="http://mit.edu" class="logo"><img src="../../img/logo-mit.svg" alt="MIT" /></a>
+	<a href="http://csail.mit.edu" class="logo"><img src="../../img/logo-csail.svg" alt="CSAIL" /></a>
+</footer>
+
+
+<script src="../../js/prism.js"></script>
+<script src="../../js/sitewide.js"></script>
+
+
+<script src="/js/docs.js"></script>
+
 
 </body>
 </html>
