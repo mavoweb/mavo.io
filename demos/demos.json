@@ -85,11 +85,6 @@
 				"Hierarchy"
 			],
 			"id": "contacts"
-		},
-		{
-			"name": "Personal chequebook",
-			"tag": [],
-			"id": "cheques"
 		}
 	]
 }
