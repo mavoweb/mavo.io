@@ -86,10 +86,6 @@ main {
 		mix-blend-mode: multiply;
 	}
 
-	input {
-		outline: none !important;
-	}
-
 	input::-webkit-input-placeholder {
 		font-style: italic;
 		color: #999;

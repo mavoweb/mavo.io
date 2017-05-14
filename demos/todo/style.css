@@ -70,8 +70,6 @@ main {
     text-decoration: line-through;
     color: gray;
     mix-blend-mode: multiply; }
-  main input {
-    outline: none !important; }
   main input::-webkit-input-placeholder {
     font-style: italic;
     color: #999;
