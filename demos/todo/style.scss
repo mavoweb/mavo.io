@@ -57,27 +57,7 @@ main {
 		margin: 0;
 		padding: 0;
 		text-align: left;
-		color: #013;
-		list-style: none;
-		font-size: 120%;
 	}
-
-		li[property=task] {
-			display: flex;
-			align-items: center;
-			border-bottom: 1px dashed rgba(51, 85, 153, .5);
-
-			&.mv-deleted {
-				padding: .3em;
-			}
-		}
-
-		label {
-			flex: 1;
-			padding: .2em;
-			margin: .3em 0;
-			font-family: Marker Felt, Helvetica Neue, sans-serif;
-		}
 
 	:checked + [property=taskTitle] {
 		font-style: italic;
@@ -98,7 +78,7 @@ main {
 		mix-blend-mode: multiply;
 	}
 
-	:not(.mv-item-bar) > button.mv-add {
+	button.mv-add-task {
 		padding: .2em .5em;
 		margin-top: 1em;
 		border-radius: .3em;
@@ -109,6 +89,7 @@ main {
 		text-shadow: 0 -1px 1px rgba(0,0,0,.5);
 		font-weight: bold;
 		cursor: pointer;
+		font-size: 120%;
 	}
 
 		button.mv-add:hover {
@@ -156,4 +137,24 @@ main {
 		border: 0;
 	}
 
+}
+
+li[property=task] {
+	display: flex;
+	align-items: center;
+	border-bottom: 1px dashed rgba(51, 85, 153, .5);
+	list-style: none;
+	color: #013;
+	font-size: 1.5rem;
+
+	&.mv-deleted {
+		padding: .3em;
+	}
+
+	label {
+		flex: 1;
+		padding: .2em;
+		margin: .3em 0;
+		font-family: Marker Felt, Helvetica Neue, sans-serif;
+	}
 }

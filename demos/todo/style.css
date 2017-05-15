@@ -47,24 +47,7 @@ main {
     display: block;
     margin: 0;
     padding: 0;
-    text-align: left;
-    color: #013;
-    list-style: none;
-    font-size: 120%; }
-  main li[property=task] {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center;
-    border-bottom: 1px dashed rgba(51, 85, 153, 0.5); }
-    main li[property=task].mv-deleted {
-      padding: .3em; }
-  main label {
-    -ms-flex: 1;
-    flex: 1;
-    padding: .2em;
-    margin: .3em 0;
-    font-family: Marker Felt, Helvetica Neue, sans-serif; }
+    text-align: left; }
   main :checked + [property=taskTitle] {
     font-style: italic;
     text-decoration: line-through;
@@ -78,7 +61,7 @@ main {
     font-style: italic;
     color: #999;
     mix-blend-mode: multiply; }
-  main :not(.mv-item-bar) > button.mv-add {
+  main button.mv-add-task {
     padding: .2em .5em;
     margin-top: 1em;
     border-radius: .3em;
@@ -88,7 +71,8 @@ main {
     color: white;
     text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.5);
     font-weight: bold;
-    cursor: pointer; }
+    cursor: pointer;
+    font-size: 120%; }
   main button.mv-add:hover {
     background-color: orange; }
   main button.mv-add:active {
@@ -118,5 +102,23 @@ main {
     opacity: 1;
     mix-blend-mode: multiply;
     border: 0; }
+
+li[property=task] {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  border-bottom: 1px dashed rgba(51, 85, 153, 0.5);
+  list-style: none;
+  color: #013;
+  font-size: 1.5rem; }
+  li[property=task].mv-deleted {
+    padding: .3em; }
+  li[property=task] label {
+    -ms-flex: 1;
+    flex: 1;
+    padding: .2em;
+    margin: .3em 0;
+    font-family: Marker Felt, Helvetica Neue, sans-serif; }
 
 /*# sourceMappingURL=style.css.map */
