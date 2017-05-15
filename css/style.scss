@@ -141,15 +141,30 @@ pre, code {
 		color: hsl(220,10%,35%);
 	}
 
+	pre > code a[aria-label],
 	pre > code mark[aria-label] {
-		cursor: help;
 		position: relative;
+		background: hsla(70, 100%, 50%, .4);
+		box-shadow: .1em 0 0 .1em hsla(70, 100%, 50%, .3), -.1em 0 0 .1em hsla(70, 100%, 50%, .3);
 
 		&:hover,
 		&:focus {
 			&::after {
-				content: attr(aria-label);
+				content: attr(aria-label) " Click to learn more!";
 				position: absolute;
+				top: 1.5em;
+				left: 0;
+				z-index: 1;
+				white-space: normal;
+				width: 15em;
+				padding: .8em 1.2em;
+				background: white;
+				border: 1px solid rgba(0,0,0,.2);
+				border-radius: .4em;
+				box-shadow: .1em .1em .5em rgba(0,0,0,.2);
+				color: black;
+				font-weight: 400;
+				font-family: $body-font;
 			}
 		}
 	}

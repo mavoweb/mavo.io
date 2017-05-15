@@ -17,9 +17,10 @@ main {
 @keyframes transform {
   from {
     transform: rotate(8deg); } }
-  main > header + div {
+  main ul {
     position: relative;
     z-index: 1;
+    display: block;
     max-width: 20em;
     padding: 2em;
     margin: 1em auto 3em;
@@ -27,8 +28,9 @@ main {
     border-bottom-left-radius: 1% 100%;
     box-shadow: 2px 3px 20px black, 0 0 60px #8a4d0f inset;
     background: #fffef0;
-    font-size: 120%; }
-    main > header + div::before, main > header + div::after {
+    font-size: 120%;
+    text-align: left; }
+    main ul::before, main ul::after {
       content: '';
       position: absolute;
       top: 0;
@@ -40,14 +42,8 @@ main {
       box-shadow: inherit;
       transform: rotate(-3deg);
       animation: transform 0.4s cubic-bezier(0.25, 0.1, 0.4, 1.5); }
-    main > header + div::after {
+    main ul::after {
       transform: rotate(2deg); }
-  main ul {
-    position: relative;
-    display: block;
-    margin: 0;
-    padding: 0;
-    text-align: left; }
   main :checked + [property=taskTitle] {
     font-style: italic;
     text-decoration: line-through;
@@ -87,6 +83,7 @@ main {
     main > header > h1 {
       font-weight: 100;
       font-size: 400%;
+      font-family: inherit;
       opacity: .6; }
     main > header > p {
       margin-top: .5em; }

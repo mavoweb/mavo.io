@@ -37,22 +37,21 @@
 	<h1>To-Do List</h1>
 
 
-<main mv-storage="local" mv-app="todo" class="mv-autoedit">
+<main mv-app="todo" mv-storage="local" mv-mode="edit">
 	<header>
 		<h1>My tasks</h1>
 		<p><strong>[count(done)]</strong> done out of <strong>[count(task)]</strong> total</p>
 	</header>
 
-	<div>
-		<ul>
-			<li property="task" mv-multiple>
-				<label>
-					<input property="done" type="checkbox" />
-					<span property="taskTitle">Do stuff</span>
-				</label>
-			</li>
-		</ul>
-	</div>
+	<ul>
+		<li property="task" mv-multiple>
+			<label>
+				<input property="done" type="checkbox" />
+				<span property="taskTitle">Do stuff</span>
+			</label>
+		</li>
+	</ul>
+
 </main>
 
 </section>

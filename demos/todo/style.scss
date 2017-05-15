@@ -22,9 +22,10 @@ main {
 		from { transform: rotate(8deg) }
 	}
 
-	& > header + div {
+	ul {
 		position: relative;
 		z-index: 1;
+		display: block;
 		max-width: 20em;
 		padding: 2em;
 		margin: 1em auto 3em;
@@ -33,6 +34,7 @@ main {
 		box-shadow: 2px 3px 20px black, 0 0 60px hsl(30, 80%, 30%) inset;
 		background: hsl(55, 100%, 97%);
 		font-size: 120%;
+		text-align: left;
 
 		&::before,
 		&::after {
@@ -49,14 +51,6 @@ main {
 		&::after {
 			transform: rotate(2deg);
 		}
-	}
-
-	ul {
-		position: relative;
-		display: block;
-		margin: 0;
-		padding: 0;
-		text-align: left;
 	}
 
 	:checked + [property=taskTitle] {
@@ -111,6 +105,7 @@ main {
 		& > h1 {
 			font-weight: 100;
 			font-size: 400%;
+			font-family: inherit;
 			opacity: .6;
 		}
 
