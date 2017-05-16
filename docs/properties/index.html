@@ -91,7 +91,7 @@
 	<p>Mavo automatically assumes that the data each property element holds is stored either as its content or in a "primary" attribute, different per element type.
 		Most of the time this works great, and you don't have to think about it. However, sometimes this heuristic will fail.
 		In those cases, you can correct Mavo's prediction by using the <code>mv-attribute</code> attribute.
-		Its value is either the name of the attribute that holds data, or <code>null</code> for no attribute (element contents).</p>
+		Its value is either the name of the attribute that holds data, or <code>none</code> for no attribute (element contents).</p>
 
 	<p>For example, an <code>&lt;a></code> element's primary data attribute is <code>href</code>.
 		However, sometimes you want to make the content editable instead, and even reference it in the <code>href</code> attribute via an expression.
@@ -99,18 +99,31 @@
 
 	<section class="example">
 		<script type="text/plain">
-			<a href="mailto:[email]" property="email" mv-attribute="null">lea@mavo.io</a>
+			<a href="mailto:[email]" property="email" mv-attribute="none">lea@mavo.io</a>
 		</script>
 	</section>
 </section>
 
-<section>
+<section id="mv-mode">
 	<h1>The mv-mode attribute</h1>
-	<p>Possible values: <code>edit</code> or <code>read</code>.
-		The purpose of this attribute is twofold: If set by you on a property, this property (and any descendant properties that don't have their own <code>mv-mode</code> attribute) become read-only or edit-only, regardless of whether the Mavo app is in edit mode or not.
-		This is useful for creating "constants": Properties that are saved but not edited. It's also useful for properties (or entire apps, if you use <code>mv-mode</code> on the Mavo wrapper) that don't make sense in read mode.
-		This attribute is also used by Mavo: properties that are being edited have <code>mv-mode="edit"</code>. This means you can use the CSS selector <code>[mv-mode="edit"]</code> to style properties differently when they are being edited.
-	</p>
+	<p>Possible values: <code>edit</code> or <code>read</code>.</p>
+
+	<p>The purpose of this attribute is twofold:</p>
+
+	<ol>
+		<li>Mavo sets <code>mv-mode="edit"</code> on properties when they are being edited. This allows you to customize your design in the editing state
+		by using <code>[mv-mode="edit"]</code> selectors</li>
+		<li>If you use <code>mv-mode="read"</code> or <code>mv-mode="edit"</code> on a property, Mavo applies that state and does not change it when the state of the rest of the app changes.
+		You can change it yourself, via expressions.</li>
+	</ol>
+
+	<p>The latter allows many cool things:</p>
+
+	<ul>
+		<li>Use <code>mv-mode="read"</code> to create "constants": Properties that are saved but not edited.</li>
+		<li>Use <code>mv-mode="edit"</code> for properties (or entire apps, if you use it on the Mavo root) that don't make sense in read mode.</li>
+		<li>Use <code>mv-mode="[if (condition, read, edit)]"</code> on collection items, to edit them separately from the rest of the app (useful with large collection items such as blog posts)</li>
+	</ul>
 </section>
 
 <footer>
