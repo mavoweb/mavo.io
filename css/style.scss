@@ -259,9 +259,11 @@ body > header nav {
 		}
 	}
 
-	html:not(.home) & {
-		transform: rotate(-1deg);
-		transform-origin: right;
+	@supports(clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%)) {
+		html:not(.home) & {
+			transform: rotate(-1deg);
+			transform-origin: right;
+		}
 	}
 }
 
@@ -464,8 +466,12 @@ body > section table {
 		text-align: left;
 	}
 
-	td {
-		padding: .1em .5em;
+	th {
+		padding: 0 .5em;
+	}
+
+	td, tbody th {
+		padding: .2em .5em;
 		border: 1px solid rgba(0,0,0,.1);
 	}
 }

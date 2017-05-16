@@ -8,7 +8,7 @@ if (!self.document) {
 			var url = evt.request.url;
 
 			if (/\/get\.mavo\.io\/mavo\./.test(url)) {
-				var response = fetch(new Request(url.replace(/^.+?get\.mavo\.io\//gi, "http://localhost:8000/dist/")), evt.request)
+				var response = fetch(new Request(url.replace(/^.+?get\.mavo\.io\//gi, "http://localhost:8000/dist/") + "?" + Date.now()), evt.request)
 					.then(r => r.status < 400? r : Promise.reject())
 					.catch(err => fetch(evt.request)); // if that fails, return original request
 

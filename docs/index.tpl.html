@@ -20,13 +20,9 @@ thead th:first-child {
 }
 </style>
 
-<section id="primer">
-	<p class="notice">New to Mavo? Read the <a href="primer">Primer</a> first!</p>
-</section>
-
 <section id="intro">
 	<p>
-		This is an index of all Mavo attributes and classes, with links to their respective pages in the documentation
+		This is an index of all Mavo attributes and classes, with links to their respective pages in the documentation. New to Mavo? Read the <a href="primer">Primer</a> first!
 	</p>
 </section>
 
@@ -210,7 +206,7 @@ thead th:first-child {
 				<td>Render and edit only a subset of the remote data, by providing a (slash-separated) path to the data it handles.</td>
 
 				<td class="semi">Initially</td>
-				<td></td>
+				<td><a href="/docs/formats">Formats</a></td>
 			</tr>
 			<tr>
 				<td><code>mv-autosave</code></td>
@@ -225,6 +221,13 @@ thead th:first-child {
 				<td>Control which buttons may appear in the toolbar and in what order, or hide the toolbar completely.</td>
 				<td></td>
 				<td><a href="/docs/ui/#bar">UI Customization</a></td>
+			</tr>
+			<tr>
+				<td><code>mv-alias</code></td>
+				<td>Properties</td>
+				<td>If provided, Mavo will read data from this property if using the primary property name fails. Useful to read stored data properly after renaming a property in the HTML.</td>
+				<td></td>
+				<td></td>
 			</tr>
 		</tbody>
 	</table>

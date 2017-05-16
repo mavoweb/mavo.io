@@ -89,37 +89,37 @@ body > header + h2 {
 		}
 
 		summary {
-		   display: block;
-		   padding: .3em .8em;
-		   background: rgba(0,0,0,.3);
-		   color: white;
-		   font-size: 75%;
-		   font-weight: bold;
-		   cursor: pointer;
-		   outline: none;
+			display: block;
+			padding: .3em .8em;
+			background: rgba(0,0,0,.3);
+			color: white;
+			font-size: 75%;
+			font-weight: bold;
+			cursor: pointer;
+			outline: none;
 
-		   &:hover, &:focus {
-			   background: rgba(0,0,0,.6);
-		   }
-	   }
+			&:hover, &:focus {
+				background: rgba(0,0,0,.6);
+			}
+		}
 
-	   pre {
-		   background: none;
-		   margin: 0;
-		   color: black;
+		pre {
+			background: none;
+			margin: 0;
+			color: black;
 
-		   th {
-			   color: white;
-		   }
+			th {
+				color: white;
+			}
 
 			th, td {
 				border-color: hsla(0,0%,0%,.1);
 			}
-	   }
+		}
 
-	   @media print {
-		   display: none;
-	   }
+		@media print {
+			display: none;
+		}
 	}
 }
 

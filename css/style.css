@@ -245,9 +245,10 @@ body > header nav {
       color: black;
       mix-blend-mode: screen;
       text-decoration: none; }
-  html:not(.home) body > header nav {
-    transform: rotate(-1deg);
-    transform-origin: right; }
+  @supports ((-webkit-clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%)) or (clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%))) {
+    html:not(.home) body > header nav {
+      transform: rotate(-1deg);
+      transform-origin: right; } }
 
 a.soon {
   cursor: not-allowed; }
@@ -392,8 +393,10 @@ body > section table {
   border-collapse: collapse; }
   body > section table th, body > section table td {
     text-align: left; }
-  body > section table td {
-    padding: .1em .5em;
+  body > section table th {
+    padding: 0 .5em; }
+  body > section table td, body > section table tbody th {
+    padding: .2em .5em;
     border: 1px solid rgba(0, 0, 0, 0.1); }
 
 .example {

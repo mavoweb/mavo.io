@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" class="docs">
+<head>
+	<meta charset="UTF-8">
+	<title>Formats - Mavo Documentation</title>
+	<link rel="stylesheet" href="https://get.mavo.io/mavo.css" />
+	<link rel="stylesheet" href="../../css/style.css" />
+	<link rel="icon" href="/favicon.ico">
+
+	<link rel='stylesheet' href='/docs/style.css'>
+
+	<script src="https://get.mavo.io/mavo.js"></script>
+</head>
+
+
+<body class="language-markup">
+
+<header>
+	<h1 class="logo">
+		<a href="/"><img src="../../logo.svg" alt="Mavo"></a>
+	</h1>
+	<nav>
+	<a href="../../docs/primer">Get started</a>
+	<a href="../../docs">Docs</a>
+	<a href="../../demos">Demos</a>
+	<a href="../../faq">FAQ</a>
+	<a href="https://plugins.mavo.io">Plugins</a>
+	<a href="../../get">Get Mavo</a>
+</nav>
+
+</header>
+
+
+<h2>Formats</h2>
+
+<section>
+	<p>
+		By default, Mavo saves and reads data in JSON. While you don’t need to understand JSON to use Mavo, you need to use a different file format at some point.
+		This is exactly what <code>mv-format</code> is for.
+	</p>
+</section>
+
+<section>
+	<h1>Basic usage</h1>
+
+	<p>You can select a file format in one of two ways:</p>
+
+	<ol>
+		<li><em>Explicitly</em>, by using the <code>mv-format</code> attribute on your Mavo root. Its value is a keyword, depending on the format, e.g. <code>text</code>, <code>markdown</code>, <code>csv</code> etc.</li>
+		<li><em>Implicitly</em>, depending on the extension of your file in <code>mv-storage</code>. E.g. if you use a URL to a CSV file, Mavo will automatically use the CSV format.</li>
+	</ol>
+
+	<p>Often, you need to specify a different format for the <code>mv-storage</code>, <code>mv-source</code>, and <code>mv-init</code> attributes.
+		You can do this by using the <code>mv-storage-format</code>, <code>mv-source-format</code>, and <code>mv-init-format</code> attributes respectively.</p>
+</section>
+
+<section>
+	<h1>Available formats</h1>
+
+	<p>Mavo comes with some formats out of the box, but you can add more via <a href="https://plugins.mavo.io/?tag=Format">Plugins</a>.
+	Read the documenation of the format you’re using carefully, because formats may come with restrictions about the structure of your properties.
+	These restrictions are only about which properties will be used for displaying and saving data. If you have more properties in your Mavo, they will just be ignored.
+	For example, you can have additional properties that are read-only or contain expressions.
+</p>
+
+	<section>
+		<h1>CSV</h1>
+
+		<p>Uses the popular <a href="http://papaparse.com/">PapaParse</a> library for reading and writing CSV, fetched dynamically via <a href="https://cdnjs.com/">cdnjs</a>.</p>
+
+		<table>
+			<tr>
+				<th>Keyword</th>
+				<td><code>csv</code></td>
+			</tr>
+			<tr>
+				<th>File extensions</th>
+				<td>*.csv, *.tsv</td>
+			</tr>
+			<tr>
+				<th>Restrictions</th>
+				<td>Only one collection, property names inside collection must correspond to headers in CSV file.</td>
+			</tr>
+		</table>
+	</section>
+
+	<section>
+		<h1>Text</h1>
+
+		<table>
+			<tr>
+				<th>Keyword</th>
+				<td><code>text</code></td>
+			</tr>
+			<tr>
+				<th>File extensions</th>
+				<td>*.txt</td>
+			</tr>
+			<tr>
+				<th>Restrictions</th>
+				<td>Only one property.</td>
+			</tr>
+		</table>
+	</section>
+</section>
+
+<section class="language-javascript">
+	<h1>Advanced: Creating your own formats</h1>
+
+	<p class="notice warning">This section requires an understanding of JavaScript.</p>
+
+	<p>To create your own formats, all you need is to create a class that extends from <code>Mavo.Formats.Base</code>.
+	For information on how the <code>$.Class()</code> class helper works, look in <a href="http://blissfuljs.com/docs.html#fn-Class">Bliss’ documentation</a>.</p>
+
+	<pre><code>
+		Mavo.MyFormat = $.Class({
+			// Mandatory. You may instead extend another format, e.g. Mavo.Formats.Text
+			extends: Mavo.Formats.Base,
+
+			// Initialization code (optional)
+			constructor: function(backend) {
+				// ...
+			},
+
+			static: {
+				// File extensions
+				extensions: [".foo", ".bar"],
+
+				// Any dependencies (optional)
+				dependencies: [{
+					test: () => "CoolLibrary" in window, // is the library already loaded?
+					url: "URL/to/library" // URL to fetch if the library is not loaded
+				}],
+
+				// must specify this if you’re using dependencies
+				ready: Mavo.Formats.Base.ready,
+
+				// Mandatory: Convert a string to an object for rendering
+				// serialized: The string, as it was read from the remote file
+				// me: Instance of Mavo.MyFormat, optional
+				parse: function (serialized, me) {
+					// ...
+				},
+
+				// Mandatory: Convert an object to a string for saving
+				// data: The object
+				// me: Instance of Mavo.MyFormat, optional
+				stringify: function (data, me) {
+					// ...
+				}
+			}
+		});
+	</code></pre>
+
+	<p>You can see examples of format declarations in <a href="https://github.com/mavoweb/mavo/blob/master/src/formats.js">src/formats.js</a></p>
+</section>
+
+<footer>
+	<p>
+		Made with &hearts; by <a href="http://lea.verou.me">Lea Verou</a> and <a href="https://github.com/mavoweb/mavo/graphs/contributors">all these awesome people</a>.
+		Proudly hosted by <a href="https://www.netlify.com" class="netlify">Netlify</a>.
+	</p>
+	<article>
+		<h1>Explore</h1>
+
+		<ul>
+			<li><a href="/docs/primer">Get started</a></li>
+			<li><a href="/docs">Docs</a></li>
+			<li><a href="/demos">Demos</a></li>
+			<li><a href="/faq">FAQ</a></li>
+			<li><a href="https://plugins.mavo.io">Plugins</a></li>
+			<li><a href="/get">Get Mavo</a></li>
+			<li><a href="https://test.mavo.io">Testsuite</a></li>
+			<li><a href="/credits">Credits</a></li>
+		</ul>
+	</article>
+	<article>
+		<h1>Social Mavo</h1>
+
+		<ul>
+			<li><a href="https://twitter.com/mavoweb">Follow @mavoweb on Twitter</a></li>
+			<li><a href="https://gitter.im/mavoweb">Chat with us on Gitter</a></li>
+			<li><a href="https://github.com/mavoweb/mavo">Github</a></li>
+		</ul>
+	</article>
+
+	<a href="http://mit.edu" class="logo"><img src="../../img/logo-mit.svg" alt="MIT" /></a>
+	<a href="http://csail.mit.edu" class="logo"><img src="../../img/logo-csail.svg" alt="CSAIL" /></a>
+</footer>
+
+
+<script src="../../js/prism.js"></script>
+<script src="/sitewide.js"></script>
+
+
+<script src="/js/docs.js"></script>
+
+
+</body>
+</html>
