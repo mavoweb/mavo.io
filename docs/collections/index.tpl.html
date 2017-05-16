@@ -1,0 +1,48 @@
+@@include('_head-docs.html', {
+	"title": "Collections"
+})
+<body class="language-markup">
+
+@@include('_header.html')
+
+<h2>Collections</h2>
+
+<section>
+	<p>
+		<em>Collections</em> are repeatable elements. They are specified by adding an <code>mv-multiple</code> attribute to properties.
+		Mavo creates controls for adding, deleting, and rearranging items, as well as keyboard shortcuts for these.
+	</p>
+</section>
+
+<section>
+	<h1>mv-accepts</h1>
+
+	<p>By default, collection items can only be dragged either within the same collection, or to collections of the same type.
+		The <code>mv-accepts</code> attribute takes a space-separated list of property names as its value and is specified on properties with <code>mv-multiple</code>.
+		When specified, the current collection can accept items from those other collections as well.</p>
+
+	<p>Note that if you want to drag and drop items between two collections, you will need to specify <code>mv-accepts</code> twice, once on each collection.</p>
+
+	<p>An example of <code>mv-accepts</code> can be found in the <a href="/demos/decisions/">Decisions</a> demo. Try dragging pros to cons or vice versa.</p>
+</section>
+
+<section>
+	<h1>mv-order</h1>
+
+	<p><code>mv-order="desc"</code> does not sort the collection. Instead, it affects the behavior of the controls that add new items.
+	The main add button of the collection is placed <em>before</em> the collection, and inserts new items at the top.
+	The add buttons on each item always add in the opposite direction than the main add button, so they add new items <em>after</em> the item they are on.
+	</p>
+
+	<p>An example of <code>mv-order="desc"</code> can be found in the following demos:</p>
+
+	<ul>
+		<li><a href="/demos/talks/">Talks list</a></li>
+		<li><a href="/demos/invoice/">Invoice Manager</a></li>
+	</ul>
+</section>
+
+@@include('_footer-docs.html')
+
+</body>
+</html>
