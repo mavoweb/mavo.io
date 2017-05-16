@@ -295,6 +295,10 @@ select[property="type"] {
 	font-size: 120%;
 	font-weight: 200;
 	width: 10em;
+
+	option {
+		background: var(--color);
+	}
 }
 
 label {

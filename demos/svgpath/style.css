@@ -212,6 +212,8 @@ select[property="type"] {
   font-size: 120%;
   font-weight: 200;
   width: 10em; }
+  select[property="type"] option {
+    background: var(--color); }
 
 label {
   display: inline-block; }
