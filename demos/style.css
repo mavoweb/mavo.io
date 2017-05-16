@@ -64,10 +64,28 @@ a[property="tag"] {
   text-transform: uppercase;
   font-size: 75%; }
 
-main {
+html:not(.embed) main {
   padding: 1rem;
   margin: 1rem 1rem 2rem;
   border-radius: .5rem;
   box-shadow: 0.05em 0.05em 0.5em rgba(0, 0, 0, 0.3); }
+
+.embed body > header,
+.embed body > header + h2,
+.embed body > footer,
+.embed body > section > h1 {
+  display: none; }
+
+.embed body > section {
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -ms-flex-pack: stretch;
+  justify-content: stretch;
+  padding: 0; }
+
+.embed main {
+  max-width: none;
+  width: auto;
+  min-height: 100vh; }
 
 /*# sourceMappingURL=style.css.map */

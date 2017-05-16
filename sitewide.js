@@ -29,6 +29,10 @@ if ("serviceWorker" in navigator) {
 	});
 }
 
+if (parent && parent !== window || new URL(location).searchParams.get("fullscreen") !== null) {
+	document.documentElement.classList.add("embed")
+}
+
 // Create the live examples
 $$(".example:not(.manual)").forEach((example, i) => {
 	example.id = example.id || "example" + (i + 1);
