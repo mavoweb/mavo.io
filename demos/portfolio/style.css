@@ -26,10 +26,8 @@ main {
 .mv-add-painting {
   display: inline-block;
   vertical-align: top;
-  margin: .8rem; }
-  [property=painting] > div,
-  .mv-add-painting > div {
-    position: relative; }
+  margin: .8rem;
+  position: relative; }
   [property=painting] img,
   .mv-add-painting img {
     display: block;

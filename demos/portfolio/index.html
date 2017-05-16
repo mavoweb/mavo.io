@@ -44,10 +44,8 @@
 
 	<div>
 		<a property="painting" typeof="Painting" mv-multiple mv-attribute="none">
-			<div>
-				<img property="image" />
-				<p property="name" mv-default="[readable(to(filename(image), '.'))]"></p>
-			</div>
+			<img property="image" />
+			<p property="name" mv-default="[readable(to(filename(image), '.'))]"></p>
 		</a>
 	</div>
 

@@ -40,10 +40,7 @@ main {
 	display: inline-block;
 	vertical-align: top;
 	margin: .8rem;
-
-	& > div {
-		position: relative;
-	}
+	position: relative;
 
 	img {
 		display: block;
