@@ -400,6 +400,7 @@ body > footer {
 	border-radius: .3em;
 	background: mix(white, $blue, 80%);
 	width: auto;
+	max-width: $content-width;
 
 	a {
 		font-weight: bold;
