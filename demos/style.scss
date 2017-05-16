@@ -67,14 +67,14 @@ a[property="tag"] {
 	font-size: 75%;
 }
 
-html:not(.embed) main {
+html:not(.lite) main {
 	padding: 1rem;
 	margin: 1rem 1rem 2rem;
 	border-radius: .5rem;
 	box-shadow: .05em .05em .5em rgba(0,0,0,.3);
 }
 
-.embed {
+.lite {
 	body > header,
 	body > header + h2,
 	body > footer,
@@ -92,5 +92,6 @@ html:not(.embed) main {
 		max-width: none;
 		width: auto;
 		min-height: 100vh;
+		padding: 1em;
 	}
 }

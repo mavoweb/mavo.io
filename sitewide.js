@@ -29,8 +29,8 @@ if ("serviceWorker" in navigator) {
 	});
 }
 
-if (parent && parent !== window || new URL(location).searchParams.get("fullscreen") !== null) {
-	document.documentElement.classList.add("embed")
+if (parent && parent !== window || new URL(location).searchParams.get("lite") !== null) {
+	document.documentElement.classList.add("lite")
 }
 
 // Create the live examples

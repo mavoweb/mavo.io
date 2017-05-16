@@ -1,6 +1,10 @@
 main {
 	margin: 0 auto;
 
+	.lite & {
+		max-width: 58rem;
+	}
+
 	a {
 		text-decoration: none;
 		color: #aaa;
@@ -22,7 +26,6 @@ main {
 	& > div {
 		display: flex;
 		flex-flow: row wrap;
-		justify-content: center;
 	}
 
 	footer {
@@ -45,10 +48,11 @@ main {
 	img {
 		display: block;
 		width: 200px;
-		min-height: 200px;
+		height: 200px;
+		object-fit: cover;
 		background: #ddd;
-		background-image: linear-gradient(to bottom right, transparent 50%, white 0, white calc(50% + 1px), transparent 0),
-						  linear-gradient(to bottom left, transparent 50%, white 0, white calc(50% + 1px), transparent 0);
+		background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" stroke="black" stroke-opacity=".3">
+			<line x2="100" y2="100" /><line x1="100" y2="100" /></svg>')
 	}
 
 	p {
@@ -58,9 +62,14 @@ main {
 		right: 0;
 		padding: .6em;
 		margin: 0;
-		background: rgba(0,0,0,.6);
+		background: rgba(0,0,0,.5);
+		backdrop-filter: blur(4px);
 		color: white;
 		transition: .2s bottom;
+
+		::placeholder {
+			color: hsla(0,0%,100%,.6);
+		}
 	}
 
 	&:not([mv-mode="edit"]) {
