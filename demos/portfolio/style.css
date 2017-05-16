@@ -18,21 +18,22 @@ main {
     -ms-flex-flow: row wrap;
     flex-flow: row wrap; }
   main footer {
+    margin-top: 1em;
     text-align: center;
     font-weight: 300;
-    color: rgba(0, 0, 0, 0.5); }
+    color: rgba(0, 0, 0, 0.6); }
 
 [property=painting],
 .mv-add-painting {
   display: inline-block;
   vertical-align: top;
-  margin: .8rem;
+  margin: .3rem;
   position: relative; }
   [property=painting] img,
   .mv-add-painting img {
     display: block;
-    width: 200px;
-    height: 200px;
+    width: 13rem;
+    height: 13rem;
     object-fit: cover;
     background: #ddd;
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" stroke="black" stroke-opacity=".3">\a 			<line x2="100" y2="100" /><line x1="100" y2="100" /></svg>'); }
@@ -75,10 +76,16 @@ main {
   font: inherit;
   font-size: 200%;
   font-weight: bold;
-  width: 200px;
-  min-height: 200px; }
+  width: 13rem;
+  min-height: 13rem; }
   .mv-add-painting:hover {
     background: deeppink;
     color: white; }
+
+@media (max-width: 600px) {
+  html.lite [property=painting] img,
+  .mv-add-painting {
+    width: 10.5rem;
+    height: 10.5rem; } }
 
 /*# sourceMappingURL=style.css.map */

@@ -80,9 +80,12 @@ body > header {
 	font-weight: 400;
 
 	article {
-		width: $content-width / 2;
 		box-sizing: border-box;
 		padding: .4em;
+
+		@media (min-width: 800px) {
+			width: 50%;
+		}
 
 		h1 {
 			margin: 0;

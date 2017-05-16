@@ -7,7 +7,7 @@
   --font-body: Roboto, "Helvetica Neue", sans-serif;
   --font-heading: Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
   --font-mono: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-  --content-width: 930px; }
+  --content-width: 1050px; }
 
 body > header {
   display: block;
@@ -68,9 +68,11 @@ body > header {
   clip-path: polygon(0% 0%, 100% 4em, 100% calc(100% - 7em), 0% 100%);
   font-weight: 400; }
   #pros article {
-    width: 465px;
     box-sizing: border-box;
     padding: .4em; }
+    @media (min-width: 800px) {
+      #pros article {
+        width: 50%; } }
     #pros article h1 {
       margin: 0;
       color: white;

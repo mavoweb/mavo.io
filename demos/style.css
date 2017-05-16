@@ -6,7 +6,7 @@
   --font-body: Roboto, "Helvetica Neue", sans-serif;
   --font-heading: Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
   --font-mono: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-  --content-width: 930px; }
+  --content-width: 1050px; }
 
 section[mv-app="demos"][mv-permissions~="login"] > .mv-bar {
   display: none; }
@@ -87,6 +87,7 @@ html:not(.lite) main {
   max-width: none;
   width: auto;
   min-height: 100vh;
-  padding: 1em; }
+  padding: 1em;
+  box-sizing: border-box; }
 
 /*# sourceMappingURL=style.css.map */

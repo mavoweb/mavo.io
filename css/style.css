@@ -38,7 +38,7 @@
   --font-body: Roboto, "Helvetica Neue", sans-serif;
   --font-heading: Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
   --font-mono: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-  --content-width: 930px; }
+  --content-width: 1050px; }
 
 button {
   cursor: pointer; }
@@ -59,7 +59,7 @@ button {
     color: var(--background); }
 
 .call-to-action.button {
-  display: block;
+  display: inline-block;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -74,6 +74,9 @@ button {
   font-weight: bold; }
   .call-to-action.button:hover, .call-to-action.button:focus {
     background: #ff0080; }
+
+.buttons {
+  text-align: center; }
 
 body {
   display: -ms-flexbox;
@@ -138,26 +141,36 @@ pre {
 pre > code a[aria-label],
 pre > code mark[aria-label] {
   position: relative;
-  background: rgba(213, 255, 0, 0.4);
-  box-shadow: 0.1em 0 0 0.1em rgba(213, 255, 0, 0.3), -0.1em 0 0 0.1em rgba(213, 255, 0, 0.3); }
-  pre > code a[aria-label]:hover::after, pre > code a[aria-label]:focus::after,
-  pre > code mark[aria-label]:hover::after,
-  pre > code mark[aria-label]:focus::after {
-    content: attr(aria-label) " Click to learn more!";
-    position: absolute;
-    top: 1.5em;
-    left: 0;
-    z-index: 1;
-    white-space: normal;
-    width: 15em;
-    padding: .8em 1.2em;
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: .4em;
-    box-shadow: 0.1em 0.1em 0.5em rgba(0, 0, 0, 0.2);
-    color: black;
-    font-weight: 400;
-    font-family: Roboto, "Helvetica Neue", sans-serif; }
+  background: rgba(37, 175, 244, 0.15);
+  border: 1px solid rgba(37, 175, 244, 0.1);
+  padding: .16em .666ch .1em;
+  border-radius: .3em;
+  color: inherit;
+  text-shadow: 0 1px 1px white; }
+  pre > code a[aria-label]:hover, pre > code a[aria-label]:focus,
+  pre > code mark[aria-label]:hover,
+  pre > code mark[aria-label]:focus {
+    background: rgba(255, 149, 0, 0.3);
+    border-color: rgba(255, 149, 0, 0.2);
+    text-decoration: none; }
+    pre > code a[aria-label]:hover::after, pre > code a[aria-label]:focus::after,
+    pre > code mark[aria-label]:hover::after,
+    pre > code mark[aria-label]:focus::after {
+      content: attr(aria-label);
+      position: absolute;
+      top: 1.5em;
+      left: 0;
+      z-index: 1;
+      white-space: normal;
+      width: 15em;
+      padding: .8em 1.2em;
+      background: white;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: .4em;
+      box-shadow: 0.1em 0.1em 0.5em rgba(0, 0, 0, 0.2);
+      color: black;
+      font-weight: 400;
+      font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 body > section > hr {
   height: .5em;
@@ -267,7 +280,7 @@ body > section {
     font: bold 150% Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
     color: #ff0080; }
   body > section > * {
-    width: 930px;
+    width: 1050px;
     max-width: 90vw; }
 
 body > footer {
@@ -278,7 +291,7 @@ body > footer {
   -ms-flex-align: start;
   align-items: flex-start;
   padding: 3em 1em 1em;
-  padding: 3em calc(50% - 465px) 1em;
+  padding: 3em calc(50% - 525px) 1em;
   background: #e9eaed;
   color: rgba(0, 0, 0, 0.8);
   font-size: 80%;
@@ -404,12 +417,23 @@ body > section table {
       margin: .5em 0; }
       .example .example-container [mv-multiple] h1 {
         margin-top: 0; }
+    .example .example-container.embedded {
+      padding: 0; }
+      .example .example-container.embedded iframe {
+        display: block;
+        border: 0;
+        width: 100%;
+        min-height: 100%; }
   @media (min-width: 700px) {
     .example.side-by-side {
       display: -ms-flexbox;
       display: flex;
       -ms-flex-flow: row wrap;
       flex-flow: row wrap;
+      -ms-flex-align: stretch;
+      align-items: stretch;
+      -ms-flex-pack: stretch;
+      justify-content: stretch;
       position: relative; }
       .example.side-by-side > h1,
       .example.side-by-side > header {
@@ -419,19 +443,22 @@ body > section table {
         width: 100%;
         margin-bottom: .5em; }
       .example.side-by-side > * {
-        -ms-flex: 1;
-        flex: 1; }
+        xflex: 1; }
       .example.side-by-side pre {
         -webkit-clip-path: none;
         clip-path: none;
         margin: 0 1em 0 0;
-        -ms-flex: 1.8;
-        flex: 1.8;
         border: 1px solid rgba(0, 0, 0, 0.05);
         border-radius: .3em;
-        font-size: 88%; }
+        font-size: 87%;
+        overflow: visible; }
+        .example.side-by-side pre code {
+          -moz-tab-size: 2;
+          tab-size: 2; }
       .example.side-by-side .example-container {
-        margin: 0; } }
+        margin: 0;
+        -ms-flex: 1;
+        flex: 1; } }
 
 .docs > body > section:first-of-type:not([id]),
 body > section#intro {

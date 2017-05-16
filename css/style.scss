@@ -60,7 +60,7 @@ button {
 }
 
 .call-to-action.button {
-	display: block;
+	display: inline-block;
 	width: fit-content;
 	margin: auto;
 	padding: .5em 1em .4em;
@@ -76,6 +76,10 @@ button {
 	&:focus {
 		background: $magenta;
 	}
+}
+
+.buttons {
+	text-align: center;
 }
 
 body {
@@ -144,13 +148,21 @@ pre, code {
 	pre > code a[aria-label],
 	pre > code mark[aria-label] {
 		position: relative;
-		background: hsla(70, 100%, 50%, .4);
-		box-shadow: .1em 0 0 .1em hsla(70, 100%, 50%, .3), -.1em 0 0 .1em hsla(70, 100%, 50%, .3);
+		background: transparentize($blue, .85);
+		border: 1px solid transparentize($blue, .9);
+		padding: .16em .666ch .1em;
+		border-radius: .3em;
+		color: inherit;
+		text-shadow: 0 1px 1px white;
 
 		&:hover,
 		&:focus {
+			background: transparentize($orange, .7);
+			border-color: transparentize($orange, .8);
+			text-decoration: none;
+
 			&::after {
-				content: attr(aria-label) " Click to learn more!";
+				content: attr(aria-label);
 				position: absolute;
 				top: 1.5em;
 				left: 0;
@@ -489,12 +501,25 @@ body > section table {
 				margin-top: 0;
 			}
 		}
+
+		&.embedded {
+			padding: 0;
+
+			iframe {
+				display: block;
+				border: 0;
+				width: 100%;
+				min-height: 100%;
+			}
+		}
 	}
 
 	@media (min-width: 700px) {
 		&.side-by-side {
 			display: flex;
 			flex-flow: row wrap;
+			align-items: stretch;
+			justify-content: stretch;
 			position: relative;
 
 			& > h1,
@@ -506,20 +531,25 @@ body > section table {
 			}
 
 			& > * {
-				flex: 1;
+				xflex: 1;
 			}
 
 			pre {
 				clip-path: none;
 				margin: 0 1em 0 0;
-				flex: 1.8;
 				border: 1px solid rgba(0,0,0,.05);
 				border-radius: .3em;
-				font-size: 88%;
+				font-size: 87%;
+				overflow: visible;
+
+				code {
+					tab-size: 2;
+				}
 			}
 
 			.example-container {
 				margin: 0;
+				flex: 1;
 			}
 		}
 	}

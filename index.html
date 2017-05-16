@@ -86,43 +86,92 @@
 <section class="language-markup" id="at-a-glance">
 	<h1>Mavo at a glance</h1>
 
-	<!-- <h2>Editable portfolio</h2> -->
+	<h2><a href="/demos/homepage">Editable homepage</a></h2>
 
-	<h2>Simple shopping list</h2>
-	<p>Click Edit to modify the items, Save to save your changes.</p>
+	<p>To try out editing, log in to Github or watch the <a href="/demos/homepage/video.mp4" target="_blank">video</a>.</p>
 
 	<section class="manual example side-by-side">
 		<pre><code>
-			&lt;h1>Shopping list&lt;/h1>
-			&lt;section <a href="/docs/primer/#mv-app" aria-label="Give your app a name and tell Mavo to be active on this portion of the page.">mv-app</a>="shopping" <a href="/docs/primer/#mv-storage" aria-label="Tell Mavo where to store data, whether that’s in the browser as in this case, or a service in the cloud, such as Github or Dropbox.">mv-storage</a>="local">
-				Bought <a href="/docs/primer/#expressions" aria-label="Use brackets to refer to current values of properties and perform calculations. These expressions automatically update whenever needed.">[count(bought)]</a> of [count(product)] products
-				&lt;ul>
-					&lt;li <a href="/docs/primer/#property" aria-label="Name important elements. Makes elements editable and saveable by default.">property</a>="product" <a href="docs/primer/#mv-multiple" aria-label="mv-multiple makes it possible to get copies of an element, and adds UI for adding, deleting, and rearranging items via drag and drop.">mv-multiple</a>>
-						&lt;label>
-							&lt;input property="bought" type="checkbox" />
-							&lt;span property="name">Garlic&lt;/span>
-						&lt;/label>
-					&lt;/li>
-				&lt;/ul>
-			&lt;/section>
+			&lt;main <a href="/docs/primer/#mv-app" aria-label="Give your app a name and tell Mavo to be active on this portion of the page.">mv-app="homepage"</a>
+			      <a href="/docs/primer/#mv-storage" aria-label="mv-storage tells Mavo where to store the data, in this case on Github.">mv-storage="https://github.com/mavoweb/data"</a>
+			      <a href="http://plugins.mavo.io/plugin/tinymce" aria-label="Load the TinyMCE plugin for rich text editing">mv-plugins="tinymce"</a>>
+
+			&lt;h1>
+				&lt;img <a href="/docs/primer/#property" aria-label="Name important elements. Makes elements editable and saveable when that makes sense.">property</a>="image" alt="">
+				&lt;span property="name">Your Name&lt;/span>
+			&lt;/h1>
+
+			&lt;p property="description" <a href="http://plugins.mavo.io/plugin/tinymce" aria-label="This tells the TinyMCE plugin to be active on this property, i.e. that this property should be edited as rich text.">class="tinymce"</a>>&lt;/p>
+
+			&lt;div class="links">
+				&lt;a <a href="/docs/primer/#property" aria-label="Note that property doesn’t need a value if it’s the same as its first class (or id, or name, or itemprop)">property</a> class="twitter" title="Twitter">🐦&lt;/a>
+				&lt;a property class="facebook" title="Facebook">f&lt;/a>
+				&lt;a property class="wikipedia" title="Wikipedia">W&lt;/a>
+			&lt;/div>
+
+			&lt;/main>
 		</code></pre>
-		<div class="example-container">
-			<section mv-app="shopping" mv-storage="local">
-				<h1>Shopping list</h1>
-				Bought [count(bought)] of [count(product)] products
-				<ul>
-					<li property="product" mv-multiple>
-						<label>
-							<input property="bought" type="checkbox" />
-							<span property="name">Garlic</span>
-						</label>
-					</li>
-				</ul>
-			</section>
+		<div class="example-container embedded">
+			<iframe src="/demos/homepage/?lite"></iframe>
 		</div>
 	</section>
 
-	<a href="/docs/primer" class="call-to-action button">Learn More</a>
+	<h2><a href="/demos/todo/">Simple To-Do list</a></h2>
+
+	<section class="manual example side-by-side">
+		<pre><code>
+			&lt;main mv-app="todo" <a href="/docs/primer/#mv-storage" aria-label="Store data locally, in the browser">mv-storage="local"</a> <a aria-label="Make entire app always editable, no need for a separate editing mode here">mv-mode="edit"</a>>
+				&lt;header>
+					&lt;h1>My tasks&lt;/h1>
+					&lt;p><a href="/docs/primer/#expressions" aria-label="Use brackets to refer to current values of properties and perform calculations. Mavo will automatically update this every time the “done” property changes in any item.">[count(done)]</a> done out of [count(task)] total&lt;/p>
+				&lt;/header>
+
+				&lt;ul>
+					&lt;li property="task" <a href="docs/primer/#mv-multiple" aria-label="mv-multiple turns an element into an editable collection of items, complete with controls to add and delete items, reorder items via drag and drop, and even keyboard shortcuts for all these!">mv-multiple</a>>
+						&lt;label>
+							&lt;input property="done" type="checkbox" />
+							&lt;span property="taskTitle">Do stuff&lt;/span>
+						&lt;/label>
+					&lt;/li>
+				&lt;/ul>
+			&lt;/main>
+		</code></pre>
+		<div class="example-container embedded">
+			<iframe src="/demos/todo/?lite"></iframe>
+		</div>
+	</section>
+
+	<h2><a href="/demos/portfolio">Editable portfolio</a></h2>
+
+	<p>To try out editing, log in to Github or watch the <a href="/demos/portfolio/video.mp4" target="_blank">video</a>.</p>
+
+	<section class="manual example side-by-side">
+		<pre><code>
+			&lt;main mv-app="portfolio"
+			      mv-storage="http://github.com/mavoweb/data/portfolio">
+				&lt;header>
+					&lt;h1>&lt;a href="http://julesmuck.com">muck&lt;/a>&lt;/h1>
+				&lt;/header>
+
+				&lt;div>
+					&lt;a property="painting" mv-multiple mv-attribute="none">
+						&lt;img property="image" />
+						&lt;p property="name"
+						   <a aria-label="mv-default allows setting default values for properties. As evidenced here, these could be dynamic, set via expressions.">mv-default</a>="<a href="" aria-label="Expression that uses Mavo functions to extract a default description for the image from its URL">[readable(to(filename(image), '.'))]</a>">
+						&lt;/p>
+					&lt;/a>
+				&lt;/div>
+			&lt;/main>
+		</code></pre>
+		<div class="example-container embedded">
+			<iframe src="/demos/portfolio/?lite"></iframe>
+		</div>
+	</section>
+
+	<p class="buttons">
+		<a href="/docs/primer" class="call-to-action button">Learn More</a>
+		<a href="/demos" class="call-to-action button">More Demos</a>
+	</p>
 </section>
 
 <footer>

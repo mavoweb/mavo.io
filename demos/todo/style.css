@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "Marker Felt";
+  src: local("Marker Felt"), url("Marker-Felt.woff"); }
+
 main {
   padding: 1em;
   background: url(img/wood.png) #4e2e0e;

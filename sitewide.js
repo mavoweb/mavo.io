@@ -59,5 +59,28 @@ $$(".example:not(.manual)").forEach((example, i) => {
 	mavoRoot.setAttribute("mv-app", mavoRoot.getAttribute("mv-app") || "");
 });
 
+$$(".example-container > iframe").forEach(iframe => {
+	$.events(iframe, "DOMFrameContentLoaded load", () => {
+		var root = iframe.contentDocument.documentElement;
+
+		$.style(root, {
+			"font-size": "85%",
+			"box-sizing": "border-box"
+		});
+
+		//iframe.style.height = root.offsetHeight - 29 + "px";
+
+		var height = 0;
+		Mavo.observeResize(root, e => {
+			if (height != root.offsetHeight) {
+				iframe.style.height = root.offsetHeight + "px";
+				height = root.offsetHeight
+			}
+
+		});
+	});
+});
+
+$$("pre > code a[aria-label]").forEach(a => a.target = "_blank");
 
 })(self.Bliss)
