@@ -162,7 +162,7 @@ thead th:first-child {
 				<td>Collections</td>
 				<td>Values: <code>desc</code> or <code>asc</code>. Controls the order that new items are added to collections.</td>
 				<td></td>
-				<td></td>
+				<td><a href="/docs/collections/#mv-order">Collections</a></td>
 			</tr>
 			<tr>
 				<td><code>mv-expressions</code></td>
@@ -193,7 +193,7 @@ thead th:first-child {
 				<td>Collections</td>
 				<td>Property names (space separated) of other collections that can move items to this one.</td>
 				<td></td>
-				<td></td>
+				<td><a href="/docs/collections/#mv-accepts">Collections</a></td>
 			</tr>
 			<tr>
 				<td><code>mv-edit</code></td>
@@ -220,13 +220,6 @@ thead th:first-child {
 				<td><a href="/docs/properties/#mv-mode">Properties</a></td>
 			</tr>
 			<tr>
-				<td><code>mv-path</code></td>
-				<td>Properties</td>
-				<td>Render and edit only a subset of the stored data.</td>
-				<td class="semi">Initially</td>
-				<td></td>
-			</tr>
-			<tr>
 				<td><code>mv-format</code></td>
 				<td>Mavo root</td>
 				<td>Render and edit only a subset of the remote data, by providing a (slash-separated) path to the data it handles.</td>
@@ -247,6 +240,13 @@ thead th:first-child {
 				<td>Control which buttons may appear in the toolbar and in what order, or hide the toolbar completely.</td>
 				<td></td>
 				<td><a href="/docs/ui/#bar">UI Customization</a></td>
+			</tr>
+			<tr>
+				<td><code>mv-path</code></td>
+				<td>Properties</td>
+				<td>Render and edit only a subset of the stored data.</td>
+				<td class="semi">Initially</td>
+				<td></td>
 			</tr>
 			<tr>
 				<td><code>mv-alias</code></td>
@@ -398,6 +398,7 @@ thead th:first-child {
 	<ul class="index">
 	<li><a href="/docs/primer">Primer</a></li>
 	<li><a href="/docs/properties">Properties</a></li>
+	<li><a href="/docs/collections">Collections</a></li>
 	<li><a href="/docs/storage">Storage</a></li>
 	<li><a href="/docs/expressions">Expressions</a></li>
 	<li><a href="/docs/mavoscript">MavoScript</a></li>
@@ -433,7 +434,10 @@ thead th:first-child {
 		<ul>
 			<li><a href="https://twitter.com/mavoweb">Follow @mavoweb on Twitter</a></li>
 			<li><a href="https://gitter.im/mavoweb">Chat with us on Gitter</a></li>
-			<li><a href="https://github.com/mavoweb/mavo">Github</a></li>
+			<li>
+				<a href="https://github.com/mavoweb/mavo">Github</a>
+				<a class="github-button" href="https://github.com/mavoweb/mavo" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star mavoweb/mavo on GitHub">Star</a>
+			</li>
 		</ul>
 	</article>
 
@@ -441,9 +445,9 @@ thead th:first-child {
 	<a href="http://csail.mit.edu" class="logo"><img src="../img/logo-csail.svg" alt="CSAIL" /></a>
 </footer>
 
-
 <script src="../js/prism.js"></script>
 <script src="/sitewide.js"></script>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
 
 
 <script src="/js/docs.js"></script>
