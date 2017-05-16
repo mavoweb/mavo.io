@@ -54,9 +54,11 @@ $$(".example:not(.manual)").forEach((example, i) => {
 
 	var mavoRoot = $("[mv-app], [mv-storage]", container) || container;
 
-	mavoRoot.classList.add("debug-saving");
-	mavoRoot.setAttribute("mv-storage", mavoRoot.getAttribute("mv-storage") || "local");
-	mavoRoot.setAttribute("mv-app", mavoRoot.getAttribute("mv-app") || "");
+	if (!example.classList.contains("no-fixup")) {
+		mavoRoot.classList.add("debug-saving");
+		mavoRoot.setAttribute("mv-storage", mavoRoot.getAttribute("mv-storage") || "local");
+		mavoRoot.setAttribute("mv-app", mavoRoot.getAttribute("mv-app") || "");
+	}
 });
 
 $$(".example-container > iframe").forEach(iframe => {

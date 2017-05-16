@@ -57,11 +57,16 @@
 		The name must be unique to the page, just like an id.
 		The element with that attribute is called the <strong>Mavo root</strong>.</p>
 
-	<script type="text/plain">
-		<div mv-app="mavoTest">
-			My first Mavo app!
-		</div>
-	</script>
+	<section class="example side-by-side no-fixup">
+		<script type="text/plain">
+			<div mv-app="mavoTest">
+				My first Mavo app!
+			</div>
+		</script>
+	</section>
+
+	<p>Note that <code>mv-app</code> doesn’t really do much by itself.
+		You can see how you can use Mavo attributes to do more useful things in the next sections.</p>
 
 	<p>The <code>mv-app</code> attribute can be used with or without a value.
 		If the element already has an id, you don't need to repeat it in the <code>mv-app</code> attribute:</p>
@@ -104,14 +109,16 @@
 
 	<section class="example commentform side-by-side">
 		<script type="text/plain">
-			<div mv-app="commentform" mv-storage="local" mv-autosave>
+			<div mv-app="commentform" mv-storage="local" mv-autosave="0">
 				<label>
 					Email:
 					<input type="email" property="email" value="foo@bar.com" />
 				</label>
 				<label>
 					Message:
-					<textarea property="message">Edit the form and notice how the values persist after you refresh!</textarea>
+					<textarea property="message">
+						Edit the form and notice how the values persist after you refresh!
+					</textarea>
 				</label>
 			</div>
 		</script>
@@ -185,6 +192,8 @@
 		This will always happen when you use the <code>property</code> attribute on elements that contain other properties inside them.
 		<strong>Groups</strong> have many interesting characteristics when combined with expressions, which we will see next.
 	</p>
+
+	<p class="learn-more"><a href="/docs/collections">Collections</a></p>
 </section>
 
 <section>
