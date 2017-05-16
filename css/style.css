@@ -245,6 +245,8 @@ body > header nav {
       color: black;
       mix-blend-mode: screen;
       text-decoration: none; }
+  body > header nav iframe {
+    display: none; }
   @supports ((-webkit-clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%)) or (clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%))) {
     html:not(.home) body > header nav {
       transform: rotate(-1deg);

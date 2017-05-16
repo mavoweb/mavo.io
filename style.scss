@@ -59,6 +59,20 @@ body > header {
 	}
 }
 
+body > header nav iframe {
+	display: inline-block;
+
+	&:not(:hover) {
+		mix-blend-mode: screen;
+		filter: invert(100%);
+	}
+
+	&:hover,
+	&:focus {
+		mix-blend-mode: luminosity;
+	}
+}
+
 #what {
 	ul {
 		font-size: 150%;

@@ -259,6 +259,10 @@ body > header nav {
 		}
 	}
 
+	iframe {
+		display: none;
+	}
+
 	@supports(clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%)) {
 		html:not(.home) & {
 			transform: rotate(-1deg);

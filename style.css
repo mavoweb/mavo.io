@@ -48,6 +48,14 @@ body > header {
       background: #82cf17;
       color: white; }
 
+body > header nav iframe {
+  display: inline-block; }
+  body > header nav iframe:not(:hover) {
+    mix-blend-mode: screen;
+    filter: invert(100%); }
+  body > header nav iframe:hover, body > header nav iframe:focus {
+    mix-blend-mode: luminosity; }
+
 #what ul {
   font-size: 150%;
   -webkit-hyphens: none;
