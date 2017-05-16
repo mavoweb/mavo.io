@@ -50,6 +50,18 @@
 	</p>
 </section>
 
+<section>
+	<h1>Why property and not mv-property?</h1>
+
+	<p>Mavo tries to use a standardized attribute when one is appropriate. The reason <code>property</code>, <code>typeof</code> and <code>datatype</code>
+	attributes are not prefixed with <code>mv-</code> is simply because Mavo did not invent them: they actually come from <a href="https://rdfa.info/">RDFa</a>, a W3C technology for enhancing the semantic richness of HTML with information about <em>what the data is</em>.
+	Since Mavo needs the same kind of information about the page, why reinvent these attributes?</p>
+
+	<p>Don’t worry, you don’t need to know one iota of RDFa to use Mavo!
+		However, if you do, you may be interested in knowing that all Mavo apps are valid RDFa on runtime and Mavo will even store data in <a href="http://json-ld.org/">JSON-LD</a> if you provide a <code>vocab</code> attribute.
+	</p>
+</section>
+
 <section id="seo">
 	<h1>What about search engines?</h1>
 
