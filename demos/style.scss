@@ -78,7 +78,8 @@ html:not(.lite) main {
 	body > header,
 	body > header + h2,
 	body > footer,
-	body > section > h1 {
+	body > section > h1,
+	body > section#code {
 		display: none;
 	}
 

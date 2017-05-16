@@ -104,6 +104,7 @@ ${html}
 `;
 
 		$.create("section", {
+			id: "code",
 			contents: [
 				{tag: "h1", textContent: "Mavo HTML"},
 				pre = $.create({
