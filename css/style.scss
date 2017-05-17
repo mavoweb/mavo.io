@@ -513,6 +513,10 @@ body > section table {
 			}
 		}
 
+		span[mv-multiple] {
+			display: inline-block;
+		}
+
 		&.embedded {
 			padding: 0;
 

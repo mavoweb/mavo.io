@@ -188,8 +188,7 @@ thead th:first-child {
 			<tr>
 				<td><code>mv-mode</code></td>
 				<td></td>
-				<td>Make properties read-only or edit-only or use as a style hook to style properties differently depending on their edit state.</td>
-
+				<td>Control whether a property is in read or edit mode independently of the mode of the rest of the Mavo app.</td>
 				<td>✓</td>
 				<td><a href="/docs/properties/#mv-mode">Properties</a></td>
 			</tr>
@@ -283,7 +282,12 @@ thead th:first-child {
 				<td>Mavo root</td>
 				<td>Space-separated list of permissions (read, edit, add, delete, login, logout, save)</td>
 			</tr>
-			<!-- tr>td>code^td*3 -->
+			<tr>
+				<td><code>mv-mode</code></td>
+				<td>Any property</td>
+				<td><code>mv-mode="edit"</code> is applied on every property when it’s being edited.</td>
+			</tr>
+			<!-- tr>td>code^td*2 -->
 		</tbody>
 	</table>
 </section>
@@ -305,7 +309,7 @@ thead th:first-child {
 				<td>Any (usually generated) controls for triggering Mavo-related actions</td>
 			</tr>
 			<tr>
-				<td>mv-empty</td>
+				<td><code>mv-empty</code></td>
 				<td>Properties with no value</td>
 			</tr>
 			<tr>

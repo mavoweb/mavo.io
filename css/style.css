@@ -423,6 +423,8 @@ body > section table {
       margin: .5em 0; }
       .example .example-container [mv-multiple] h1 {
         margin-top: 0; }
+    .example .example-container span[mv-multiple] {
+      display: inline-block; }
     .example .example-container.embedded {
       padding: 0; }
       .example .example-container.embedded iframe {

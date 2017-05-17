@@ -20,9 +20,10 @@
 		We explored many different syntaxes, and resulted in that as having the best readability.
 		However, if you are concerned about potential false positives, you can change that with the <code>mv-expressions</code> attribute.
 		For example, to switch to a double curly brace syntax (common in many other systems), you can use <code>mv-expressions="{{ }}"</code>.
+		To disable expressions in an element and its descendants altogether, use <code>mv-expressions="none"</code>.
 	</p>
 
-	<p>If you are concerned about the expression content being shown while the page loads, you can use the <code>mv-value</code> attribute instead, and provide a fallback as content.</p>
+	<p>If you are concerned about the expression content being shown while the page loads, you can use the <a href="#mv-value"><code>mv-value</code></a> attribute instead, and provide a fallback as content.</p>
 
 	<section class="example">
 		<h1>Example: Using mv-value</h1>
@@ -44,8 +45,6 @@
 			<div mv-value="5 +">Fallback</div>
 		</script>
 	</section>
-
-	<p>To disable expressions in an element and its descendants altogether, use <code>mv-expressions="none"</code>.</p>
 </section>
 
 <section>
@@ -251,6 +250,22 @@
 				<p mv-if="rating = 1">Wow, you hated that movie!</p>
 				<p mv-if="rating > 3">Glad you liked it!</p>
 			</div>
+		</script>
+	</section>
+</section>
+
+<section>
+	<h1>mv-value</h1>
+
+	<p>We’ve seen in the introduction how <code>mv-value</code> can be used to create fallback content for expressions. However, it’s much more powerful than that.
+	When used on a collection, mv-value renders its value <strong>on the entire collection</strong>, enabling you to create lists of items that depend on other lists.</p>
+
+	<p>As a simple example, note how these two lists are synchronized:</p>
+
+	<section class="example">
+		<script type="text/plain">
+			<div><span property="list1" mv-multiple mv-mode="edit">[$index + 1]</span></div>
+			<div><span property="list2" mv-multiple mv-value="list1"></span></div>
 		</script>
 	</section>
 </section>
