@@ -37,51 +37,6 @@
 
 @import "vars";
 
-button {
-	cursor: pointer;
-}
-
-.flat-button {
-	display: inline-block;
-	padding: .2em .8em;
-	border: 2px solid white;
-	border-color: var(--color);
-	border-radius: .3em;
-	color: white;
-	color: var(--color);
-	font-size: 130%;
-	font-weight: 400;
-	text-decoration: none;
-
-	&:hover {
-		background: var(--color);
-		color: var(--background);
-	}
-}
-
-.call-to-action.button {
-	display: inline-block;
-	width: fit-content;
-	margin: auto;
-	padding: .5em 1em .4em;
-	border-radius: .3em;
-	background: $green;
-	color: white;
-	text-align: center;
-	text-transform: uppercase;
-	text-decoration: none;
-	font-weight: bold;
-
-	&:hover,
-	&:focus {
-		background: $magenta;
-	}
-}
-
-.buttons {
-	text-align: center;
-}
-
 body {
 	display: flex;
 	flex-flow: column;
@@ -91,6 +46,7 @@ body {
 	font-kerning: auto;
 	hyphens: auto;
 	counter-reset: figure;
+	padding: 0 1rem;
 }
 
 a {
@@ -109,6 +65,10 @@ p {
 
 dd + dt {
 	margin-top: 1.5em;
+}
+
+ul {
+	padding-left: 1em;
 }
 
 pre, code {
@@ -181,6 +141,51 @@ pre, code {
 		}
 	}
 
+button {
+	cursor: pointer;
+}
+
+.flat-button {
+	display: inline-block;
+	padding: .2em .8em;
+	border: 2px solid white;
+	border-color: var(--color);
+	border-radius: .3em;
+	color: white;
+	color: var(--color);
+	font-size: 130%;
+	font-weight: 400;
+	text-decoration: none;
+
+	&:hover {
+		background: var(--color);
+		color: var(--background);
+	}
+}
+
+.call-to-action.button {
+	display: inline-block;
+	width: fit-content;
+	margin: auto;
+	padding: .5em 1em .4em;
+	border-radius: .3em;
+	background: $green;
+	color: white;
+	text-align: center;
+	text-transform: uppercase;
+	text-decoration: none;
+	font-weight: bold;
+
+	&:hover,
+	&:focus {
+		background: $magenta;
+	}
+}
+
+.buttons {
+	text-align: center;
+}
+
 body > section > hr {
 	height: .5em;
 	width: 5em;
@@ -197,13 +202,11 @@ input {
 }
 
 body > header,
-body > section,
 body > footer {
 	display: flex;
 	flex-flow: column;
 	align-items: center;
 	justify-content: center;
-	padding: 1rem;
 }
 
 body > header {
@@ -211,6 +214,7 @@ body > header {
 	z-index: 1;
 	display: flex;
 	padding: .8em 1em;
+	margin: 0 -1rem;
 	justify-content: space-between;
 	flex-flow: row;
 	clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%);
@@ -228,7 +232,7 @@ body > header {
 
 	& + h2 {
 		padding: 1.5em 1em .5em;
-		margin-top: -1.5em;
+		margin: -1.5em -1rem 2rem;
 		clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% calc(100% - 1em));
 		background: $magenta;
 		color: white;
@@ -237,36 +241,36 @@ body > header {
 		font-weight: 200;
 		line-height: 1;
 	}
-}
 
-body > header nav {
-	display: flex;
-	font-weight: 700;
-	margin-bottom: 1.5em;
+	nav {
+		display: flex;
+		font-weight: 700;
+		margin-bottom: 1.5em;
 
-	a {
-		display: block;
-		padding: 0 1em;
-		border-radius: 2em;
-		line-height: 2;
-		color: white;
+		a {
+			display: block;
+			padding: 0 1em;
+			border-radius: 2em;
+			line-height: 2;
+			color: white;
 
-		&:hover {
-			background: white;
-			color: black;
-			mix-blend-mode: screen;
-			text-decoration: none;
+			&:hover {
+				background: white;
+				color: black;
+				mix-blend-mode: screen;
+				text-decoration: none;
+			}
 		}
-	}
 
-	iframe {
-		display: none;
-	}
+		iframe {
+			display: none;
+		}
 
-	@supports(clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%)) {
-		html:not(.home) & {
-			transform: rotate(-1deg);
-			transform-origin: right;
+		@supports(clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%)) {
+			html:not(.home) & {
+				transform: rotate(-1deg);
+				transform-origin: right;
+			}
 		}
 	}
 }
@@ -293,29 +297,34 @@ a.soon {
 	}
 }
 
-body > section {
-	flex: 1;
+h1, h2 {
+	font-family: $heading-font;
+	font-weight: bold;
 
-	h1, h2 {
-		font-family: $heading-font;
-		font-weight: bold;
+	& > a {
+		color: inherit;
 	}
+}
 
-	& > h1 {
-		font: bold 200% $heading-font;
-		color: $orange;
-	}
+body > section > h1,
+.h1 {
+	font: bold 200% $heading-font;
+	color: $orange;
+}
 
-	& > h2,
-	& > section > h1 {
-		font: bold 150% $heading-font;
-		color: $magenta;
-	}
+body > section > h2,
+body > section > section > h1,
+.h2 {
+	font: bold 150% $heading-font;
+	color: $magenta;
+}
 
-	& > * {
-		width: $content-width;
-		max-width: 90vw;
-	}
+body > section,
+body > div {
+	width: $content-width;
+	max-width: 90vw;
+	margin: auto;
+	padding: 1rem 0;
 }
 
 body > footer {
@@ -328,7 +337,39 @@ body > footer {
 	color: rgba(0,0,0,.8);
 	font-size: 80%;
 	clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%);
-	margin-top: 2rem;
+	margin: 2rem -1rem 0 -1rem;
+
+	nav {
+		display: flex;
+		font-weight: 700;
+		margin-bottom: 1.5em;
+
+		a {
+			display: block;
+			padding: 0 1em;
+			border-radius: 2em;
+			line-height: 2;
+			color: white;
+
+			&:hover {
+				background: white;
+				color: black;
+				mix-blend-mode: screen;
+				text-decoration: none;
+			}
+		}
+
+		iframe {
+			display: none;
+		}
+
+		@supports(clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%)) {
+			html:not(.home) & {
+				transform: rotate(-1deg);
+				transform-origin: right;
+			}
+		}
+	}
 
 	p:first-child {
 		width: 100%;

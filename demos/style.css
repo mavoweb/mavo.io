@@ -8,18 +8,19 @@
   --font-mono: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   --content-width: 1050px; }
 
-section[mv-app="demos"][mv-permissions~="login"] > .mv-bar {
-  display: none; }
-
-section[mv-app="demos"] > div {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-flow: row wrap;
-  flex-flow: row wrap;
-  -ms-flex-pack: center;
-  justify-content: center;
-  margin: auto;
-  width: 100%; }
+section[mv-app="demos"] {
+  width: auto; }
+  section[mv-app="demos"][mv-permissions~="login"] > .mv-bar {
+    display: none; }
+  section[mv-app="demos"] > div {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin: auto;
+    width: 100%; }
 
 article[property="demo"] {
   position: relative;

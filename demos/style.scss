@@ -1,6 +1,8 @@
 @import "../css/vars";
 
 section[mv-app="demos"] {
+	width: auto;
+	
 	&[mv-permissions~="login"] > .mv-bar {
 		display: none;
 	}

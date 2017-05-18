@@ -85,13 +85,16 @@ body > header nav iframe {
 }
 
 #pros {
-	$background: lighten($blue, 15%);
-	background: $background;
+	display: flex;
 	flex-flow: row wrap;
 	align-items: flex-start;
+	justify-content: center;
+	$background: lighten($blue, 15%);
+	background: $background;
 	padding: 5em calc(50vw - 450px - 1em) 6em;
 	clip-path: polygon(0% 0%, 100% 4em, 100% calc(100% - 7em), 0% 100%);
 	font-weight: 400;
+	margin: 0 -1rem;
 
 	article {
 		box-sizing: border-box;

@@ -40,44 +40,6 @@
   --font-mono: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   --content-width: 1050px; }
 
-button {
-  cursor: pointer; }
-
-.flat-button {
-  display: inline-block;
-  padding: .2em .8em;
-  border: 2px solid white;
-  border-color: var(--color);
-  border-radius: .3em;
-  color: white;
-  color: var(--color);
-  font-size: 130%;
-  font-weight: 400;
-  text-decoration: none; }
-  .flat-button:hover {
-    background: var(--color);
-    color: var(--background); }
-
-.call-to-action.button {
-  display: inline-block;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  margin: auto;
-  padding: .5em 1em .4em;
-  border-radius: .3em;
-  background: #82cf17;
-  color: white;
-  text-align: center;
-  text-transform: uppercase;
-  text-decoration: none;
-  font-weight: bold; }
-  .call-to-action.button:hover, .call-to-action.button:focus {
-    background: #ff0080; }
-
-.buttons {
-  text-align: center; }
-
 body {
   display: -ms-flexbox;
   display: flex;
@@ -91,7 +53,8 @@ body {
   -webkit-hyphens: auto;
   -ms-hyphens: auto;
   hyphens: auto;
-  counter-reset: figure; }
+  counter-reset: figure;
+  padding: 0 1rem; }
 
 a {
   color: #25aff4;
@@ -107,6 +70,9 @@ p {
 
 dd + dt {
   margin-top: 1.5em; }
+
+ul {
+  padding-left: 1em; }
 
 pre, code {
   background: whitesmoke;
@@ -172,6 +138,44 @@ pre > code mark[aria-label] {
       font-weight: 400;
       font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+button {
+  cursor: pointer; }
+
+.flat-button {
+  display: inline-block;
+  padding: .2em .8em;
+  border: 2px solid white;
+  border-color: var(--color);
+  border-radius: .3em;
+  color: white;
+  color: var(--color);
+  font-size: 130%;
+  font-weight: 400;
+  text-decoration: none; }
+  .flat-button:hover {
+    background: var(--color);
+    color: var(--background); }
+
+.call-to-action.button {
+  display: inline-block;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: auto;
+  padding: .5em 1em .4em;
+  border-radius: .3em;
+  background: #82cf17;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: bold; }
+  .call-to-action.button:hover, .call-to-action.button:focus {
+    background: #ff0080; }
+
+.buttons {
+  text-align: center; }
+
 body > section > hr {
   height: .5em;
   width: 5em;
@@ -186,7 +190,6 @@ input {
   border-bottom: 0.1em solid rgba(0, 0, 0, 0.4); }
 
 body > header,
-body > section,
 body > footer {
   display: -ms-flexbox;
   display: flex;
@@ -195,8 +198,7 @@ body > footer {
   -ms-flex-align: center;
   align-items: center;
   -ms-flex-pack: center;
-  justify-content: center;
-  padding: 1rem; }
+  justify-content: center; }
 
 body > header {
   position: relative;
@@ -204,6 +206,7 @@ body > header {
   display: -ms-flexbox;
   display: flex;
   padding: .8em 1em;
+  margin: 0 -1rem;
   -ms-flex-pack: justify;
   justify-content: space-between;
   -ms-flex-flow: row;
@@ -219,7 +222,7 @@ body > header {
       height: 2.2rem; }
   body > header + h2 {
     padding: 1.5em 1em .5em;
-    margin-top: -1.5em;
+    margin: -1.5em -1rem 2rem;
     -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% calc(100% - 1em));
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% calc(100% - 1em));
     background: #ff0080;
@@ -228,29 +231,28 @@ body > header {
     font-size: 250%;
     font-weight: 200;
     line-height: 1; }
-
-body > header nav {
-  display: -ms-flexbox;
-  display: flex;
-  font-weight: 700;
-  margin-bottom: 1.5em; }
-  body > header nav a {
-    display: block;
-    padding: 0 1em;
-    border-radius: 2em;
-    line-height: 2;
-    color: white; }
-    body > header nav a:hover {
-      background: white;
-      color: black;
-      mix-blend-mode: screen;
-      text-decoration: none; }
-  body > header nav iframe {
-    display: none; }
-  @supports ((-webkit-clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%)) or (clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%))) {
-    html:not(.home) body > header nav {
-      transform: rotate(-1deg);
-      transform-origin: right; } }
+  body > header nav {
+    display: -ms-flexbox;
+    display: flex;
+    font-weight: 700;
+    margin-bottom: 1.5em; }
+    body > header nav a {
+      display: block;
+      padding: 0 1em;
+      border-radius: 2em;
+      line-height: 2;
+      color: white; }
+      body > header nav a:hover {
+        background: white;
+        color: black;
+        mix-blend-mode: screen;
+        text-decoration: none; }
+    body > header nav iframe {
+      display: none; }
+    @supports ((-webkit-clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%)) or (clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%))) {
+      html:not(.home) body > header nav {
+        transform: rotate(-1deg);
+        transform-origin: right; } }
 
 a.soon {
   cursor: not-allowed; }
@@ -269,22 +271,29 @@ a.soon {
     font-size: 60%;
     line-height: 1; }
 
-body > section {
-  -ms-flex: 1;
-  flex: 1; }
-  body > section h1, body > section h2 {
-    font-family: Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
-    font-weight: bold; }
-  body > section > h1 {
-    font: bold 200% Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
-    color: #ff9500; }
-  body > section > h2,
-  body > section > section > h1 {
-    font: bold 150% Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
-    color: #ff0080; }
-  body > section > * {
-    width: 1050px;
-    max-width: 90vw; }
+h1, h2 {
+  font-family: Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
+  font-weight: bold; }
+  h1 > a, h2 > a {
+    color: inherit; }
+
+body > section > h1,
+.h1 {
+  font: bold 200% Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
+  color: #ff9500; }
+
+body > section > h2,
+body > section > section > h1,
+.h2 {
+  font: bold 150% Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
+  color: #ff0080; }
+
+body > section,
+body > div {
+  width: 1050px;
+  max-width: 90vw;
+  margin: auto;
+  padding: 1rem 0; }
 
 body > footer {
   display: -ms-flexbox;
@@ -300,7 +309,29 @@ body > footer {
   font-size: 80%;
   -webkit-clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%);
   clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%);
-  margin-top: 2rem; }
+  margin: 2rem -1rem 0 -1rem; }
+  body > footer nav {
+    display: -ms-flexbox;
+    display: flex;
+    font-weight: 700;
+    margin-bottom: 1.5em; }
+    body > footer nav a {
+      display: block;
+      padding: 0 1em;
+      border-radius: 2em;
+      line-height: 2;
+      color: white; }
+      body > footer nav a:hover {
+        background: white;
+        color: black;
+        mix-blend-mode: screen;
+        text-decoration: none; }
+    body > footer nav iframe {
+      display: none; }
+    @supports ((-webkit-clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%)) or (clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%))) {
+      html:not(.home) body > footer nav {
+        transform: rotate(-1deg);
+        transform-origin: right; } }
   body > footer p:first-child {
     width: 100%;
     font-size: 150%; }

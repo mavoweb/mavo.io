@@ -120,7 +120,7 @@ body > section#intro p::before {
       left: 0;
       bottom: 0;
       z-index: 1;
-      max-width: calc(50vw - 525px - 2em);
+      max-width: calc(50vw - 525px - 3rem);
       max-height: calc(100vh - 3em); } }
   #toc summary, #toc ul {
     margin: 0;

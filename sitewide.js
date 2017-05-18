@@ -22,7 +22,7 @@ if (!self.document) {
 
 var src = document.currentScript ? document.currentScript.src : "sitewide.js";
 
-if ("serviceWorker" in navigator) {
+if ("serviceWorker" in navigator && location.hostname == "localhost") {
 	// Register this script as a service worker
 	addEventListener('load', function() {
 		navigator.serviceWorker.register(src);

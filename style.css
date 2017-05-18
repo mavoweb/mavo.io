@@ -66,15 +66,20 @@ body > header nav iframe {
   font-weight: 400; }
 
 #pros {
-  background: #6ec9f7;
+  display: -ms-flexbox;
+  display: flex;
   -ms-flex-flow: row wrap;
   flex-flow: row wrap;
   -ms-flex-align: start;
   align-items: flex-start;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background: #6ec9f7;
   padding: 5em calc(50vw - 450px - 1em) 6em;
   -webkit-clip-path: polygon(0% 0%, 100% 4em, 100% calc(100% - 7em), 0% 100%);
   clip-path: polygon(0% 0%, 100% 4em, 100% calc(100% - 7em), 0% 100%);
-  font-weight: 400; }
+  font-weight: 400;
+  margin: 0 -1rem; }
   #pros article {
     box-sizing: border-box;
     padding: .4em; }
