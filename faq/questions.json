@@ -16,7 +16,7 @@
 		{
 			"question": "What about search engines?",
 			"answer": "Despite what you may have been told, **Google _does_ index dynamically generated content**. Here is a sample of articles about this:\n\n*   [Understanding web pages better (Official Google blog)](https://webmasters.googleblog.com/2014/05/understanding-web-pages-better.html)\n*   [Does Google crawl dynamic content?](https://centrical.com/test/google-json-ld-and-javascript-crawling-and-indexing-test.html)\n*   [We Tested How Googlebot Crawls Javascript And Here’s What We Learned](http://searchengineland.com/tested-googlebot-crawls-javascript-heres-learned-220157)\n*   [Google Gives Update On Crawling JavaScript Sites & Progressive Web Apps](https://www.seroundtable.com/google-on-crawling-javascript-sites-progressive-web-apps-21737.html)\n\nOther search engines are likely to follow suit, if they haven’t done so already.",
-			"id": "what-about-search-engines"
+			"id": "seo"
 		}
 	]
 }
