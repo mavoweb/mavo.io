@@ -32,51 +32,15 @@
 
 <h2>FAQ</h2>
 
-<section id="attribute-names">
-	<h1>Why are you not using data-* attributes?</h1>
+<div mv-app="faq" mv-storage="https://github.com/mavoweb/mavo.io/faq/questions.json" mv-plugins="markdown">
+	<section id="[id]" mv-multiple property="questions">
+		<h1 class="h1"><a href="#[id]" property="question" mv-attribute="none">Question</a></h1>
 
-	<p>We love standards, and we struggled with this one a lot. Originally, Mavo was using <code>data-</code> attributes.
-		However, we use a lot of attributes, so just using a <code>data-</code> prefix meant our attributes would likely collide with attributes from libraries that may be included on the same page or even <code>data-</code> attributes that the page author has defined for styling purposes.
-		Also, if we are just using a <code>data-</code> prefix, it's not obvious which attributes are Mavo's and which ones are not.
-		We <em>could</em> use a <code>data-mv-</code> prefix, but that is very verbose and would make Mavo code harder to read since half of it would be the same attribute prefix repeated over and over.
-		So, we chose <code>mv-</code> whose only drawback is theoretical purity: it causes absolutely no problems with anything, but as of right now, it will not pass HTML validation.
-		<a href="https://github.com/whatwg/html/issues/2271" target="_blank">And even that may be changing</a>.
-	</p>
+		<div property="answer" class="markdown"></div>
 
-	<p><strong>We do support <code>data-mv-</code> versions of all our <code>mv-</code> attributes, but they are static</strong>: they are converted to <code>mv-</code> attributes when Mavo starts and never read back.
-	However, they work fine for most cases, and they can help you pass an HTML validator, if required.</p>
-
-	<p>Lastly, we designed Mavo to prototype a future where HTML can be used to create web applications.
-		Our vision is that one day, some or all of its functionality will be supported natively by browsers, and then it's attribute prefix will certainly not be <code>data-</code>.
-	</p>
-</section>
-
-<section>
-	<h1>Why property and not mv-property?</h1>
-
-	<p>Mavo tries to use a standardized attribute when one is appropriate. The reason <code>property</code>, <code>typeof</code> and <code>datatype</code>
-	attributes are not prefixed with <code>mv-</code> is simply because Mavo did not invent them: they actually come from <a href="https://rdfa.info/">RDFa</a>, a W3C technology for enhancing the semantic richness of HTML with information about <em>what the data is</em>.
-	Since Mavo needs the same kind of information about the page, why reinvent these attributes?</p>
-
-	<p>Don’t worry, you don’t need to know one iota of RDFa to use Mavo!
-		However, if you do, you may be interested in knowing that all Mavo apps are valid RDFa on runtime and Mavo will even store data in <a href="http://json-ld.org/">JSON-LD</a> if you provide a <code>vocab</code> attribute.
-	</p>
-</section>
-
-<section id="seo">
-	<h1>What about search engines?</h1>
-
-	<p>Despite what you may have been told, <strong>Google <em>does</em> index dynamically generated content</strong>. Here is a sample of articles about this:</p>
-
-	<ul>
-		<li><a href="https://webmasters.googleblog.com/2014/05/understanding-web-pages-better.html">Understanding web pages better (Official Google blog)</a></li>
-		<li><a href="https://centrical.com/test/google-json-ld-and-javascript-crawling-and-indexing-test.html">Does Google crawl dynamic content?</a></li>
-		<li><a href="http://searchengineland.com/tested-googlebot-crawls-javascript-heres-learned-220157">We Tested How Googlebot Crawls Javascript And Here’s What We Learned</a></li>
-		<li><a href="https://www.seroundtable.com/google-on-crawling-javascript-sites-progressive-web-apps-21737.html">Google Gives Update On Crawling JavaScript Sites & Progressive Web Apps</a></li>
-	</ul>
-
-	<p>Other search engines are likely to follow suit, if they haven’t done so already.</p>
-</section>
+		<meta property="id" mv-default="[idify(question)]">
+	</section>
+</div>
 
 <footer>
 	<p>
