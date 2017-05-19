@@ -13,6 +13,50 @@
 	</p>
 </section>
 
+<section>
+	<h1>Special properties</h1>
+
+	<p>Special properties are available on every Mavo and start with a dollar ($) sign. Some of them have more information that you can access with a dot.</p>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Property</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tr>
+			<td><code>$url</code></td>
+			<td>
+				Current page URL. Also: <ul>
+					<li><code>$url.foo</code> will be "bar" if you have a <code>?foo=bar</code> URL parameter (and so on)</li>
+					<li><code>$url.path</code> will contain the URL path as a list</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td><code>$now</code></td>
+			<td>Current date and time</td>
+		</tr>
+		<tr>
+			<td><code>$today</code></td>
+			<td>Current date</td>
+		</tr>
+		<tr>
+			<td><code>$index</code></td>
+			<td>If inside a collection, the closest item’s position in its collection, starting from 0</td>
+		</tr>
+		<tr>
+			<td><code>$previous</code></td>
+			<td>If inside a collection, the closest item’s previous item</td>
+		</tr>
+		<tr>
+			<td><code>$next</code></td>
+			<td>If inside a collection, the closest item’s next item</td>
+		</tr>
+	</table>
+</section>
+
 <section id="list-functions">
 	<h1>List Functions</h1>
 	<p>The following functions are useful with properties that have multiple values, i.e. are on or inside a <code>mv-multiple</code> element.</p>
@@ -45,12 +89,16 @@
 				<td><code>max(property)</code></td>
 				<td>Calculate the maximum of all numbers in the list.</td>
 			</tr>
+			<tr>
+				<td><code>last(property)</code></td>
+				<td>Get the last item</td>
+			</tr>
 		</tbody>
 	</table>
 </section>
 
 <section id="math-functions">
-	<h1>Math Functions</h1>
+	<h1>Math and logical Functions</h1>
 
 	<section>
 		<h1>Functions with operators</h1>
@@ -143,7 +191,100 @@
 </section>
 
 <section>
-	<h1>Date and Time functions</h1>
+	<h1>Text Functions</h1>
+
+	<table>
+		<thead>
+			<th style="width: 10em">Example</th>
+			<th style="width: 15%">Result</th>
+			<th style="width: 60%">What? / Why?</th>
+		</thead>
+		<tr>
+			<td><code>len('foo')</code></td>
+			<td>3</td>
+			<td>"foo" is 3 characters long</td>
+		</tr>
+		<tr>
+			<td><code>search('abcd', 'cd')</code></td>
+			<td>2</td>
+			<td>"cd" is in after the 2nd character in "abcd"</td>
+		</tr>
+		<tr>
+			<td><code>starts("abcd", "b")</code></td>
+			<td>false</td>
+			<td>"abcd" does not start with "b"</td>
+		</tr>
+		<tr>
+			<td><code>ends("abcd", "d")</code></td>
+			<td>true</td>
+			<td>"abcd" does end with "d"</td>
+		</tr>
+		<tr>
+			<td><code>replace("abbbc", "b", "d")</code></td>
+			<td>"adddc"</td>
+			<td>Replaced every "b" with "d"</td>
+		</tr>
+		<tr>
+			<td><code>replace("abbbbbbc", "bb", "b", 3)</code></td>
+			<td>"abc"</td>
+			<td>Replaced every "bb" with "b", then did it again on the result, then again (3 times total).</td>
+		</tr>
+		<tr>
+			<td><code>idify("Foo Bar? Baz!")</code></td>
+			<td>"foo-bar-baz"</td>
+			<td>Converted "Foo Bar? Baz!" to something more appropriate for use in an id or class attribute.</td>
+		</tr>
+		<tr>
+			<td><code>readable("fooBar-baz")</code></td>
+			<td>"Foo bar baz"</td>
+			<td>Opposite of <code>idify()</code>: converts something id-like to something more human readable.</td>
+		</tr>
+		<tr>
+			<td><code>uppercase("Foo")</code></td>
+			<td>"FOO"</td>
+			<td>Converts all letters to uppercase.</td>
+		</tr>
+		<tr>
+			<td><code>lowercase("Foo")</code></td>
+			<td>"foo"</td>
+			<td>Converts all letters to lowercase.</td>
+		</tr>
+		<tr>
+			<td><code>from("foo.bar", ".")</code></td>
+			<td>"bar"</td>
+			<td>Only get the text after the first "."</td>
+		</tr>
+		<tr>
+			<td><code>to("foo.bar", ".")</code></td>
+			<td>"foo"</td>
+			<td>Only get the text before the first "."</td>
+		</tr>
+		<tr>
+			<td><code>between("foo@gmail.com", "@", ".")</code></td>
+			<td>"gmail"</td>
+			<td>Get the text between "@" and "."</td>
+		</tr>
+		<tr>
+			<td><code>filename("http://mavo.io/demos/homepage/
+images/photo.jpg?foo=bar#baz")</code></td>
+			<td>"photo.jpg"</td>
+			<td>Get the filename part of a URL</td>
+		</tr>
+		<tr>
+			<td><code>join(multiple, ", ")</code></td>
+			<td></td>
+			<td>Display multiple values as text, comma-separated</td>
+		</tr>
+		<tr>
+			<td><code>json(property)</code></td>
+			<td></td>
+			<td>Get the value of a property (or any custom data) as JSON</td>
+		</tr>
+	</table>
+</section>
+
+<section>
+	<h1>Date and Time Functions</h1>
 
 	<p>The following examples assume you have defined a <code>&lt;time property="date"></code> property in your Mavo whose current value is June 13th, 1986 at 8:30:05pm.</p>
 
