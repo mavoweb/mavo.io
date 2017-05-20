@@ -325,6 +325,13 @@ body > div {
 	max-width: 90vw;
 	margin: auto;
 	padding: 1rem 0;
+
+	@media (max-width: $content-width + 100px) {
+		width: auto;
+		max-width: 100vw;
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
 }
 
 body > footer {
@@ -570,7 +577,7 @@ body > section table {
 		}
 	}
 
-	@media (min-width: 700px) {
+	@media (min-width: 1000px) {
 		&.side-by-side {
 			display: flex;
 			flex-flow: row wrap;

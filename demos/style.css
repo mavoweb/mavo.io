@@ -78,12 +78,20 @@ html:not(.lite) main {
 .lite body > section#code {
   display: none; }
 
-.lite body > section {
+.lite body {
+  padding: 0;
   -ms-flex-align: stretch;
   align-items: stretch;
   -ms-flex-pack: stretch;
-  justify-content: stretch;
-  padding: 0; }
+  justify-content: stretch; }
+
+.lite body > section,
+.lite body > div {
+  width: auto;
+  max-width: none;
+  display: block;
+  padding: 0;
+  margin: 0; }
 
 .lite main {
   max-width: none;

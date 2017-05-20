@@ -75,7 +75,7 @@ body > header nav iframe {
   -ms-flex-pack: center;
   justify-content: center;
   background: #6ec9f7;
-  padding: 5em calc(50vw - 450px - 1em) 6em;
+  padding: 5em calc(50vw - 525px) 6em;
   -webkit-clip-path: polygon(0% 0%, 100% 4em, 100% calc(100% - 7em), 0% 100%);
   clip-path: polygon(0% 0%, 100% 4em, 100% calc(100% - 7em), 0% 100%);
   font-weight: 400;

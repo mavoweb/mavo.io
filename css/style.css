@@ -294,6 +294,13 @@ body > div {
   max-width: 90vw;
   margin: auto;
   padding: 1rem 0; }
+  @media (max-width: 1150px) {
+    body > section,
+    body > div {
+      width: auto;
+      max-width: 100vw;
+      padding-left: 1rem;
+      padding-right: 1rem; } }
 
 body > footer {
   display: -ms-flexbox;
@@ -463,7 +470,7 @@ body > section table {
         border: 0;
         width: 100%;
         min-height: 100%; }
-  @media (min-width: 700px) {
+  @media (min-width: 1000px) {
     .example.side-by-side {
       display: -ms-flexbox;
       display: flex;

@@ -2,7 +2,7 @@
 
 section[mv-app="demos"] {
 	width: auto;
-	
+
 	&[mv-permissions~="login"] > .mv-bar {
 		display: none;
 	}
@@ -85,10 +85,19 @@ html:not(.lite) main {
 		display: none;
 	}
 
-	body > section {
+	body {
+		padding: 0;
 		align-items: stretch;
 		justify-content: stretch;
+	}
+
+	body > section,
+	body > div {
+		width: auto;
+		max-width: none;
+		display: block;
 		padding: 0;
+		margin: 0;
 	}
 
 	main {
