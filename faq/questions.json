@@ -14,6 +14,11 @@
 			"id": "why-property"
 		},
 		{
+			"question": "Isn’t this basically Angular 1.x?",
+			"answer": "Nope. There are some superficial similarities between Mavo and Angular, namely:\n\n1. They both have some HTML-based syntax\n2. They both support expressions.\n\nHowever, Angular was never designed with the goal of writing apps entirely in HTML. It treats HTML as a shortcut for data binding to views, but everything else is expected to be written in JavaScript. For example, persistence or editability needs to be coded from scratch, just like with every other JavaScript framework. That does not make Angular worse; it has a different scope and a different target group. Angular is more low level, so it can produce a broader set of applications, but requires more effort and more learning.",
+			"id": "angular"
+		},
+		{
 			"question": "What about search engines?",
 			"answer": "Despite what you may have been told, **Google _does_ index dynamically generated content**. Here is a sample of articles about this:\n\n*   [Understanding web pages better (Official Google blog)](https://webmasters.googleblog.com/2014/05/understanding-web-pages-better.html)\n*   [Does Google crawl dynamic content?](https://centrical.com/test/google-json-ld-and-javascript-crawling-and-indexing-test.html)\n*   [We Tested How Googlebot Crawls Javascript And Here’s What We Learned](http://searchengineland.com/tested-googlebot-crawls-javascript-heres-learned-220157)\n*   [Google Gives Update On Crawling JavaScript Sites & Progressive Web Apps](https://www.seroundtable.com/google-on-crawling-javascript-sites-progressive-web-apps-21737.html)\n\nOther search engines are likely to follow suit, if they haven’t done so already.",
 			"id": "seo"
