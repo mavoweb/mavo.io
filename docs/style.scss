@@ -139,6 +139,18 @@ body > section#intro {
 	}
 }
 
+section.advanced > h1 {
+	color: black;
+
+	&::before {
+		content: "☠️ Advanced";
+		@include run-in;
+		vertical-align: .35em;
+		margin-right: .5em;
+		background: rgba(0,0,0,.85);
+	}
+}
+
 .unimplemented {
 	text-decoration: line-through;
 	text-decoration-style: dashed;

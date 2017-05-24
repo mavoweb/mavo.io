@@ -524,11 +524,10 @@ body > section#intro {
     margin-left: -.3em;
     margin-right: .3em;
     border-radius: .3em;
-    background: #abb0ba;
     color: white;
+    font: bold 55%/1.5 Roboto, "Helvetica Neue", sans-serif;
     text-transform: uppercase;
-    font-weight: bold;
-    font-size: 55%; }
+    background: #abb0ba; }
 
 /**
  * Syntax highlighting

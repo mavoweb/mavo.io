@@ -78,16 +78,14 @@
 	</section>
 </section>
 
-<section class="language-javascript">
-	<h1>Advanced: Creating your own formats</h1>
-
-	<p class="notice warning">This section requires an understanding of JavaScript.</p>
+<section class="advanced language-javascript">
+	<h1>Creating your own formats</h1>
 
 	<p>To create your own formats, all you need is to create a class that extends from <code>Mavo.Formats.Base</code>.
 	For information on how the <code>$.Class()</code> class helper works, look in <a href="http://blissfuljs.com/docs.html#fn-Class">Bliss’ documentation</a>.</p>
 
 	<pre><code>
-		Mavo.MyFormat = $.Class({
+		Mavo.Formats.MyFormat = $.Class({
 			// Mandatory. You may instead extend another format, e.g. Mavo.Formats.Text
 			extends: Mavo.Formats.Base,
 
@@ -127,6 +125,8 @@
 	</code></pre>
 
 	<p>You can see examples of format declarations in <a href="https://github.com/mavoweb/mavo/blob/master/src/formats.js">src/formats.js</a></p>
+
+	<p>If your format may be useful to other people, please consider adding it to the <a href="https://plugins.mavo.io">Plugin directory</a>!</p>
 </section>
 
 @@include('_footer-docs.html')

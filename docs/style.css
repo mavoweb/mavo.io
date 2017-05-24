@@ -1,14 +1,4 @@
 @charset "UTF-8";
-:root {
-  --color-magenta: #ff0080;
-  --color-blue: #25aff4;
-  --color-green: #82cf17;
-  --color-orange: #ff9500;
-  --font-body: Roboto, "Helvetica Neue", sans-serif;
-  --font-heading: Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
-  --font-mono: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-  --content-width: 1050px; }
-
 h1 > a {
   color: inherit; }
 
@@ -101,6 +91,23 @@ body > header + h2 {
 .docs > body > section:first-of-type:not([id]) p::before,
 body > section#intro p::before {
   content: "In a nutshell"; }
+
+section.advanced > h1 {
+  color: black; }
+  section.advanced > h1::before {
+    content: "☠️ Advanced";
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding: .25em .5em .2em;
+    margin-left: -.3em;
+    margin-right: .3em;
+    border-radius: .3em;
+    color: white;
+    font: bold 55%/1.5 Roboto, "Helvetica Neue", sans-serif;
+    text-transform: uppercase;
+    vertical-align: .35em;
+    margin-right: .5em;
+    background: rgba(0, 0, 0, 0.85); }
 
 .unimplemented {
   text-decoration: line-through;

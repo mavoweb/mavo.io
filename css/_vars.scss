@@ -12,19 +12,14 @@ $mono-font: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 // Layout
 $content-width: 1050px;
 
-// Sass variables to CSS variables
-:root {
-	// Colors
-	--color-magenta: $magenta;
-	--color-blue: $blue;
-	--color-green: $green;
-	--color-orange: $orange;
-
-	// Fonts
-	--font-body: $body-font;
-	--font-heading: $heading-font;
-	--font-mono: $mono-font;
-
-	// Layout
-	--content-width: $content-width;
+@mixin run-in {
+	display: inline-block;
+	vertical-align: text-bottom;
+	padding: .25em .5em .2em;
+	margin-left: -.3em;
+	margin-right: .3em;
+	border-radius: .3em;
+	color: white;
+	font: bold 55%/1.5 $body-font;
+	text-transform: uppercase;
 }

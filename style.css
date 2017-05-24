@@ -1,14 +1,4 @@
 @charset "UTF-8";
-:root {
-  --color-magenta: #ff0080;
-  --color-blue: #25aff4;
-  --color-green: #82cf17;
-  --color-orange: #ff9500;
-  --font-body: Roboto, "Helvetica Neue", sans-serif;
-  --font-heading: Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
-  --font-mono: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-  --content-width: 1050px; }
-
 body > header {
   display: block;
   text-align: center;
@@ -66,15 +56,20 @@ body > header nav iframe {
   font-weight: 400; }
 
 #pros {
-  background: #6ec9f7;
+  display: -ms-flexbox;
+  display: flex;
   -ms-flex-flow: row wrap;
   flex-flow: row wrap;
   -ms-flex-align: start;
   align-items: flex-start;
-  padding: 5em calc(50vw - 450px - 1em) 6em;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background: #6ec9f7;
+  padding: 5em calc(50vw - 525px) 6em;
   -webkit-clip-path: polygon(0% 0%, 100% 4em, 100% calc(100% - 7em), 0% 100%);
   clip-path: polygon(0% 0%, 100% 4em, 100% calc(100% - 7em), 0% 100%);
-  font-weight: 400; }
+  font-weight: 400;
+  margin: 0 -1rem; }
   #pros article {
     box-sizing: border-box;
     padding: .4em; }

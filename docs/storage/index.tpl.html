@@ -153,6 +153,130 @@
 	</p>
 </section>
 
+<section class="advanced language-javascript">
+	<h1>Creating your own storage backend</h1>
+
+	<p>To add support for a new backend, all you need is call <code>Mavo.Backend.register()</code> with a class that extends from <code>Mavo.Backend</code>.
+	For information on how the <code>$.Class()</code> class helper works, look in <a href="http://blissfuljs.com/docs.html#fn-Class">Bliss’ documentation</a>.</p>
+
+	<pre><code>
+		Mavo.Backend.register($.Class({
+			// Mandatory. You may instead extend another backend, e.g. Mavo.Backend.Github
+			extends: Mavo.Backend,
+
+			id: "MyAwesomeBackend", // an id for your backend
+
+			constructor: function() {
+				// Initialization code
+			},
+
+			// Low-level functions for reading data. You don’t need to implement this
+			// if the mv-storage/mv-source value is a URL and reading the data is just
+			// a GET request to that URL.
+			get: function() {
+				// Should return a promise that resolves to the data as a string or object
+			},
+
+			// High level function for reading data. Calls this.get().
+			// You rarely need to override this.
+			load: function() {
+				// Should return a promise that resolves to the data as an object
+			},
+
+			// Low-level saving code.
+			// serialized: Data serialized according to this.format
+			// path: Path to store data
+			// o: Arbitrary options
+			put: function(serialized, path = this.path, o = {}) {
+				// Returns promise
+			},
+
+			// If your backend supports uploads, this is mandatory.
+			// file: File object to be uploaded
+			// path: relative path to store uploads (e.g. "images")
+			upload: function(file, path) {
+				// Upload code. Should call this.put()
+			},
+
+			// High level function for storing data.
+			// You rarely need to override this, except to avoid serialization.
+			store: function(data, {path, format = this.format} = {}) {
+				// Should return a promise that resolves when the data is saved successfully
+			},
+
+			// Takes care of authentication. If passive is true, only checks if
+			// the user is already logged in, but does not present any login UI.
+			// Typically, you’d call this.login(true) in the constructor
+			login: function(passive) {
+				// Typically, you’d check if a user is already authenticated
+				// and return Promise.resolve() if so.
+
+				// Returns promise that resolves when the user has successfully authenticated
+			},
+
+			// Log current user out
+			logout: function() {
+				// Returns promise
+			},
+
+			static: {
+				// Mandatory and very important! This determines when your backend is used.
+				// value: The mv-storage/mv-source/mv-init value
+				test: function(value) {
+					// Returns true if this value applies to this backend
+				}
+			}
+		}));
+	</code></pre>
+
+	<p>Make sure to set <code>this.permissions</code> accordingly throughout. You can read more about <a href="/docs/api/#permissions"><code>Mavo.Permissions</code> in the API documentation</a>.</p>
+
+	<p>In case you’re writing a backend for a JSON-based OAuth 2 service, <code>Mavo.Backend</code> includes many helpers to make this as easy as possible.
+		Take a look at the following in the API documentation:</p>
+
+	<ul>
+		<li><a href="/docs/api/#backend-accesstoken"><code>Mavo.Backend#accessToken</code></a></li>
+		<li><a href="/docs/api/#backend-isauthenticated"><code>Mavo.Backend#isAuthenticated</code></a></li>
+		<li><a href="/docs/api/#backend-oauthenticate"><code>Mavo.Backend#oAuthenticate</code></a></li>
+		<li><a href="/docs/api/#backend-oauthlogout"><code>Mavo.Backend#oAuthLogout</code></a></li>
+		<li><a href="/docs/api/#backend-oauthparams"><code>Mavo.Backend#oAuthParams</code></a></li>
+		<li><a href="/docs/api/#backend-request"><code>Mavo.Backend#request</code></a></li>
+		<li><a href="/docs/api/#backend-apidomain"><code>Mavo.Backend.apiDomain</code></a></li>
+		<li><a href="/docs/api/#backend-oauth"><code>Mavo.Backend.oAuth</code></a></li>
+	</ul>
+
+	<p>Another helpful function you may write if your backend supports authentication, is the <code>getUser</code> function,
+		which should make the API call to get user information and set <code>this.user</code>.
+		You <strong>must</strong> set <code>this.user</code> <strong>before</strong> setting the <code>logout</code> permission
+		to show user information in the Mavo toolbar.
+	</p>
+
+	<pre>
+		<code class='language-javascript'>
+	getUser: function() {
+		if (this.user) {
+			return Promise.resolve(this.user);
+		}
+
+		return this.request("user").then(info => {
+			this.user = { // replace the following fields with how you get username, name, profile picture, etc
+				username: info.getUsernameHere,
+				name: info.getNameHere,
+				avatar: info.getProfilePictureHere,
+				info // raw info object
+			};
+
+			$.fire(this.mavo.element, "mavo:login", { backend: this });
+		});
+	},
+		</code>
+	</pre>
+
+	<p>You can see examples of backend declarations in <a href="https://github.com/mavoweb/mavo/blob/master/src/backend.github.js">src/backend.github.js</a>, <a href="https://github.com/mavoweb/mavo/blob/master/src/backend.dropbox.js">src/backend.dropbox.js</a> and <a href="https://github.com/mavoweb/mavo/blob/master/src/backend.js">src/backend.js</a></p>
+
+	<p>If your backend may be useful to other people, please consider adding it to the <a href="https://plugins.mavo.io">Plugin directory</a>!</p>
+</section>
+
 @@include('_footer-docs.html')
 
 </body>
