@@ -228,9 +228,7 @@ body > header {
     background: #ff0080;
     color: white;
     text-align: right;
-    font-size: 250%;
-    font-weight: 200;
-    line-height: 1; }
+    font: 200 250%/1 Roboto, "Helvetica Neue", sans-serif; }
   body > header nav {
     display: -ms-flexbox;
     display: flex;
@@ -349,6 +347,7 @@ body > footer {
     body > footer > article > h1 {
       font-size: 100%;
       text-transform: uppercase;
+      font-family: Roboto, "Helvetica Neue", sans-serif;
       opacity: .4; }
     body > footer > article:first-of-type {
       -ms-flex: 2;

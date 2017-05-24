@@ -254,9 +254,7 @@ body > header {
 		background: $magenta;
 		color: white;
 		text-align: right;
-		font-size: 250%;
-		font-weight: 200;
-		line-height: 1;
+		font: 200 250%/1 $body-font;
 	}
 
 	nav {
@@ -407,6 +405,7 @@ body > footer {
 		& > h1 {
 			font-size: 100%;
 			text-transform: uppercase;
+			font-family: $body-font;
 			opacity: .4;
 		}
 
