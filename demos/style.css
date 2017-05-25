@@ -76,7 +76,7 @@ html:not(.lite) main {
   justify-content: stretch; }
 
 .lite body > section,
-.lite body > div {
+.lite body > div:not(.mv-popup) {
   width: auto;
   max-width: none;
   display: block;

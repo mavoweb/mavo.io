@@ -92,7 +92,7 @@ html:not(.lite) main {
 	}
 
 	body > section,
-	body > div {
+	body > div:not(.mv-popup) {
 		width: auto;
 		max-width: none;
 		display: block;
