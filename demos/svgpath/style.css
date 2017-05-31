@@ -65,6 +65,10 @@ body > header {
     background: rgba(255, 255, 255, 0.3);
     border-color: rgba(255, 255, 255, 0.5);
     color: white; }
+  body > header input[type=range] {
+    width: 2em; }
+  body > header > section {
+    padding: 0 .5em; }
 
 main {
   -ms-flex: 1;
@@ -123,9 +127,6 @@ main > section > h1 {
     background: #e6e6e6;
     display: block;
     overflow: visible; }
-    .preview svg path {
-      stroke: black;
-      fill: yellow; }
     .preview svg circle {
       fill: red; }
     .preview svg pattern {

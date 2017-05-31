@@ -14,7 +14,7 @@
 	<h1>
 		SVG &lt;path> builder
 		<a property="svgfile" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 [width] [height]">
-	<path d="[path]" stroke="black" fill="yellow" />
+	<path d="[path]" fill="[fill]" stroke="[stroke]" stroke-width="[strokeWidth]" />
 </svg>' target="_blank">↗️ Open in new tab</a>
 		<a href='[svgfile]' download="path.svg" target="_blank">⏬ Download</a>
 		<div class="mv-bar"></div>
@@ -24,6 +24,19 @@
 		Coordinate system:
 		<input type="number" property="width" value="100" /> &times;
 		<input type="number" property="height" value="100" />
+	</section>
+
+	<section>
+		Fill color:
+		<input type="color" value="#FFFF00" property="fill" />
+	</section>
+	<section>
+		Stroke color:
+		<input type="color" value="#000000" property="stroke" />
+	</section>
+	<section>
+		Stroke width:
+		<input type="range" value="1" min="0" max="5" property="strokeWidth" />
 	</section>
 </header>
 
@@ -118,7 +131,7 @@
 		</marker>
 		<rect width="100%" height="100%" fill="white" />
 		<rect width="100vw" height="100vh" fill="url(#grid)" />
-		<path d="[path]" marker-end="url(#pos)" />
+		<path d="[path]" marker-end="url(#pos)" fill="[fill]" stroke="[stroke]" stroke-width="[strokeWidth]" />
 	</svg>
 </section>
 

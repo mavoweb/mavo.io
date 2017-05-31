@@ -85,6 +85,14 @@ body > header {
 		border-color: hsla(0,0%,100%,.5);
 		color: white;
 	}
+
+	input[type=range] {
+		width: 2em;
+	}
+
+	& > section {
+		padding: 0 .5em;
+	}
 }
 
 main {
@@ -168,11 +176,6 @@ main > section {
 
 		rect {
 
-		}
-
-		path {
-			stroke: black;
-			fill: yellow;
 		}
 
 		circle {
