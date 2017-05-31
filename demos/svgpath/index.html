@@ -46,7 +46,7 @@
 		Path segments
 		<details>
 			<summary>path code</summary>
-			<textarea property="path">[join(pathsummary, ' ')]</textarea>
+			<textarea property="path">[replace(join(pathsummary, ' '), '  ', ' ', 10)]</textarea>
 		</details>
 	</h1>
 	<div>
@@ -115,7 +115,7 @@
 				</label>
 			</div>
 
-			<meta property="pathsummary" content="[if(absolute, uppercase(type), type)] [arcFlags] [x] [y]">
+			<meta property="pathsummary" content="[if(absolute, uppercase(type), type)] [arcFlags] [x1] [y1] [x2] [y2] [x] [y]">
 		</article>
 	</div>
 

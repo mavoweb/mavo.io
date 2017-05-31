@@ -143,6 +143,10 @@ main > section > h1 {
   border: 1px solid var(--color);
   border-radius: .3em;
   background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)) var(--color); }
+  [property=segment].mv-deleted {
+    padding: 1em; }
+    [property=segment].mv-deleted::before {
+      content: none; }
   [property=segment] .mv-item-bar {
     position: static;
     opacity: 1;

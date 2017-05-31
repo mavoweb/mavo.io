@@ -203,6 +203,14 @@ main > section {
 	border-radius: .3em;
 	background: linear-gradient(hsla(0,0%,100%,.8), hsla(0,0%,100%,.8)) var(--color);
 
+	&.mv-deleted {
+		padding: 1em;
+
+		&::before {
+			content: none;
+		}
+	}
+
 	.mv-item-bar {
 		position: static;
 		opacity: 1;
