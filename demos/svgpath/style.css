@@ -57,9 +57,9 @@ body > header {
       border: 0;
       background: white;
       letter-spacing: normal; }
-      body > header h1 a:hover, body > header h1 a:active, body > header h1 button:hover, body > header h1 button:active {
+      body > header h1 a:hover, body > header h1 a:active, body > header h1 a:focus, body > header h1 button:hover, body > header h1 button:active, body > header h1 button:focus {
         background: rgba(255, 255, 255, 0.4); }
-      body > header h1 a:not(:hover):not(:active), body > header h1 button:not(:hover):not(:active) {
+      body > header h1 a:not(:hover):not(:active):not(:focus), body > header h1 button:not(:hover):not(:active):not(:focus) {
         color: #737b8c; }
   body > header input[type=number] {
     background: rgba(255, 255, 255, 0.3);

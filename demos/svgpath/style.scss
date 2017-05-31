@@ -70,11 +70,12 @@ body > header {
 			letter-spacing: normal;
 
 			&:hover,
-			&:active {
+			&:active,
+			&:focus {
 				background: hsla(0,0%,100%,.4);
 			}
 
-			&:not(:hover):not(:active) {
+			&:not(:hover):not(:active):not(:focus) {
 				color: hsl(220, 10%, 50%);
 			}
 		}
