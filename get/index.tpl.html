@@ -14,7 +14,7 @@
 	<p>You need to include both Mavo’s CSS file and JS file. To select the appropriate files, please answer the following questions:</p>
 
 	<div class="questions">
-		<!-- <article>
+		<article>
 			<h1>Will you read the code in the JavaScript file?</h1>
 			<label>
 				<input type="radio" property name="minify" value="" checked>
@@ -24,7 +24,7 @@
 				<input type="radio" name="minify" value="min">
 				No, give me something compressed
 			</label>
-		</article> -->
+		</article>
 		<article>
 			<h1>What browser support do you need?</h1>
 			<label>
@@ -49,7 +49,7 @@
 		</article>
 	</div>
 
-	<meta property="filename" content="mavo[if(transpile, '.' & transpile)].js">
+	<meta property="filename" content="mavo[if(transpile, '.' & transpile)][if(minify, '.' & min)].js">
 
 	<p>Now copy and paste the following code in your page’s <code>&lt;head></code> section, or click on the links below to download these files locally:</p>
 	<pre class="language-foo"><code>&lt;script src="<a href="[path]/[filename]" download>[path]/[filename]</a>">&lt;/script>
@@ -57,7 +57,7 @@
 
 	<p class="tip">This page is also a Mavo! View source!</p>
 
-	<p class="notice warning">Minified version currently disabled until we figure out what was wrong with it (see <a href="https://github.com/mavoweb/mavo/issues/191">#191</a>).</p>
+	<!-- <p class="notice warning">Minified version currently disabled until we figure out what was wrong with it (see <a href="https://github.com/mavoweb/mavo/issues/191">#191</a>).</p> -->
 
 </section>
 
