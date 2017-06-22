@@ -555,6 +555,15 @@ body > section table {
 		font-size: 150%;
 	}
 
+	& > h6 {
+		font: bold 120% $heading-font;
+
+		&::before {
+			content: "🍭 ";
+			font-size: 90%;
+		}
+	}
+
 	.example-container {
 		position: relative;
 		transform: scale(1);
@@ -602,6 +611,7 @@ body > section table {
 			position: relative;
 
 			& > h1,
+			& > h6,
 			& > header {
 				margin: 0;
 				flex: none;

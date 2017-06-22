@@ -445,6 +445,11 @@ body > section table {
   .example > header > h1 {
     color: #ff0080;
     font-size: 150%; }
+  .example > h6 {
+    font: bold 120% Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif; }
+    .example > h6::before {
+      content: "🍭 ";
+      font-size: 90%; }
   .example .example-container {
     position: relative;
     transform: scale(1);
@@ -481,6 +486,7 @@ body > section table {
       justify-content: stretch;
       position: relative; }
       .example.side-by-side > h1,
+      .example.side-by-side > h6,
       .example.side-by-side > header {
         margin: 0;
         -ms-flex: none;

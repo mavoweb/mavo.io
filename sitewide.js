@@ -37,8 +37,8 @@ if (parent && parent !== window || new URL(location).searchParams.get("lite") !=
 $$(".example:not(.manual)").forEach((example, i) => {
 	example.id = example.id || "example" + (i + 1);
 
-	if (!$("h1", example)) {
-		$.create("h1", {
+	if (!$("h1, h2, h3, h4, h5, h6", example)) {
+		$.create("h6", {
 			textContent: "Example",
 			start: $("header", example) || example
 		});
