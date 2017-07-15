@@ -166,14 +166,21 @@
 
 			id: "MyAwesomeBackend", // an id for your backend
 
-			constructor: function() {
+			constructor: function(url, {mavo, format}) {
 				// Initialization code
+
+				// Already defined by the parent constructor:
+				this.source // Raw URL (attribute value)
+				this.url // URL object from this.source
+				this.mavo // Mavo instance
+				this.format // Current format
+				this.permissions // Permissions of this particular backend.
 			},
 
 			// Low-level functions for reading data. You don’t need to implement this
 			// if the mv-storage/mv-source value is a URL and reading the data is just
 			// a GET request to that URL.
-			get: function() {
+			get: function(url) {
 				// Should return a promise that resolves to the data as a string or object
 			},
 
