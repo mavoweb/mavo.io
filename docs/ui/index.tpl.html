@@ -136,6 +136,43 @@
 	<p>Both of these classes are also present on the generated buttons and you can use them for styling.</p>
 </section>
 
+<section>
+	<h1>Customizing Text & Localization</h1>
+
+	<p>Your app needs to be in a different language? No problem! You can customize every bit of displayed text, whether that is to change the text displayed to your liking or to localize it to a different language.</p>
+
+	<h2>Localization</h2>
+
+	<p>First check the <a href="https://plugins.mavo.io/?tag=Locale">available locale plugins</a> in case your language is available.
+		If not, you would have to write one yourself, using the methods outlined below.</p>
+
+	<h2>Customizing text via HTML</h2>
+
+	<p>You can use a <code>&lt;datalist></code> element to define your own phrases or localize text. The syntax is:</p>
+
+	<script type="text/plain" class="language-markup">
+		<datalist class="mv-phrases" lang="en">
+			<option value="id">Phrase text</option>
+			...
+		</datalist>
+	</script>
+
+	<p>Please note that the <code>lang</code> attribute is mandatory, even if you’re only overriding a few English phrases.
+		Please note that <code>lang</code> is not a Mavo attribute, it’s an HTML attribute and its values are described in any HTML documentation.
+	</p>
+
+	<p class="warning">
+		Please try to avoid locales with hyphens unless you absolutely need to. E.g. it's better to define a general French (<code>lang="fr"</code>) locale and another Canadian French (Québécois) locale (<code>lang="fr-ca"</code>) with only the phrases that are different.
+		The reason is that any French dialect can fall back to general French, but not to a specific dialect of French, which means that even if you have defined a locale for <code>fr-ca</code>, apps with <code>lang="fr"</code> will be displayed in English.
+	</p>
+
+	<p class="warning">
+		Please note that this datalist element is <strong>static</strong>, i.e. changes to its contents via scripts or expressions will not be picked up.
+	</p>
+
+	<p>For a list of ids and phrases that you can copy as a starting point, use <a href="https://github.com/mavoweb/mavo/blob/master/src/locale.en.js">src/locale.en.js</a>, however note that plugins can also define their own phrases.</p>
+</section>
+
 @@include('_footer-docs.html')
 
 </body>
