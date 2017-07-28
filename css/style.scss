@@ -490,7 +490,7 @@ body > footer {
 	}
 }
 
-.note, .tip {
+.note, .tip, .warning {
 	border-left: .5em solid mix(white, $blue, 30%);
 	padding-left: .5em;
 	margin-left: -1em;
@@ -505,6 +505,15 @@ body > footer {
 .tip {
 	&::before {
 		content: "Tip: ";
+	}
+}
+
+.warning:not(.notice) {
+	border-left-color: $orange;
+
+	&::before {
+		content: "Warning: ";
+		color: $orange;
 	}
 }
 

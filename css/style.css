@@ -404,17 +404,23 @@ body > footer {
       color: #ff9500;
       mix-blend-mode: multiply; }
 
-.note, .tip {
+.note, .tip, .warning {
   border-left: 0.5em solid #66c7f7;
   padding-left: .5em;
   margin-left: -1em; }
-  .note::before, .tip::before {
+  .note::before, .tip::before, .warning::before {
     content: "Note: ";
     font-weight: bold;
     color: #25aff4; }
 
 .tip::before {
   content: "Tip: "; }
+
+.warning:not(.notice) {
+  border-left-color: #ff9500; }
+  .warning:not(.notice)::before {
+    content: "Warning: ";
+    color: #ff9500; }
 
 figure {
   counter-increment: figure; }
