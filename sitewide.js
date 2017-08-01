@@ -29,7 +29,7 @@ if ("serviceWorker" in navigator && location.hostname == "localhost") {
 	});
 }
 
-if (parent && parent !== window || new URL(location).searchParams.get("lite") !== null) {
+if (parent && parent !== window && new URL(location).searchParams.get("full") === null || new URL(location).searchParams.get("lite") !== null) {
 	document.documentElement.classList.add("lite")
 }
 
