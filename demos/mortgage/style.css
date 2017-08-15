@@ -1,33 +1,10 @@
-main {
-	width: 40rem;
+html main:not(.enough-specificity) {
 	margin: auto;
-	box-shadow: 1px 1px 5px rgba(0,0,0,.3);
+	box-shadow: 0 0 1px white inset, 1px 1px 5px rgba(0,0,0,.3), 0 0 1px white inset;
 	font: 150% Helvetica Neue, sans-serif;
 	border-radius: 0;
 	padding: 0;
 }
-
-main h1 {
-	padding: 1.5rem;
-	margin: 0;
-	font: 300 160% Helvetica Neue, sans-serif;
-}
-
-#data {
-	display: block;
-	font: 100%/1.5 Consolas, Monaco, monospace;
-	white-space: pre;
-	background: hsl(0, 0%, 96%);
-	padding: .6em;
-	margin: 3em 0 1em;
-	overflow: auto;
-	tab-size: 4;
-	box-shadow: 1px 1px 4px rgba(0,0,0,.2) inset;
-}
-
-	#data:empty {
-		visibility: hidden;
-	}
 
 .inputs {
 	display: flex;
