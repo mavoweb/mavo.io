@@ -6,7 +6,6 @@
 			"filename": "mavo.js",
 			"member": [
 				{
-					"type": "constructor",
 					"static": false,
 					"argument": [
 						{
@@ -19,13 +18,23 @@
 				},
 				{
 					"name": "treeBuilt",
-					"type": "property",
+					"type": "Promise",
 					"static": false,
 					"description": "Promise that resolves when the Mavo tree has been built.",
 					"argument": [
 						{}
 					],
 					"role": "property"
+				},
+				{
+					"name": "element",
+					"role": "property",
+					"type": "Element",
+					"static": false,
+					"description": "The Mavo root element. Same element that was passed in to the constructor.",
+					"argument": [
+						{}
+					]
 				}
 			]
 		}
