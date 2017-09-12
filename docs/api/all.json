@@ -14,7 +14,8 @@
 							"type": "Element",
 							"description": "The Mavo root element"
 						}
-					]
+					],
+					"role": "constructor"
 				},
 				{
 					"name": "treeBuilt",
@@ -23,7 +24,8 @@
 					"description": "Promise that resolves when the Mavo tree has been built.",
 					"argument": [
 						{}
-					]
+					],
+					"role": "property"
 				}
 			]
 		}
