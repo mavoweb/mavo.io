@@ -31,7 +31,17 @@
 					"role": "property",
 					"type": "Element",
 					"static": false,
-					"description": "The Mavo root element. Same element that was passed in to the constructor.",
+					"description": "The Mavo root element. Same element that was passed to the constructor.",
+					"argument": [
+						{}
+					]
+				},
+				{
+					"name": "inProgress",
+					"role": "accessor",
+					"type": "String",
+					"static": false,
+					"description": "Name of event that is currently in progress (e.g. `\"Loading\"`, `\"Saving\"` etc), if any, `false` otherwise. Setting this triggers the progress indicator UI.",
 					"argument": [
 						{}
 					]
