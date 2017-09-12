@@ -1,0 +1,31 @@
+{
+	"class": [
+		{
+			"name": "Mavo",
+			"description": "`Mavo` is the main class. Every Mavo app is an instance of `Mavo` and `mavo.js` is the entry point of Mavo itself.",
+			"filename": "mavo.js",
+			"member": [
+				{
+					"type": "constructor",
+					"static": false,
+					"argument": [
+						{
+							"name": "element",
+							"type": "Element",
+							"description": "The Mavo root element"
+						}
+					]
+				},
+				{
+					"name": "treeBuilt",
+					"type": "property",
+					"static": false,
+					"description": "Promise that resolves when the Mavo tree has been built.",
+					"argument": [
+						{}
+					]
+				}
+			]
+		}
+	]
+}
