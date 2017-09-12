@@ -47,6 +47,40 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Mavo.Node",
+			"filename": "node.js",
+			"description": "Every property corresponds to an instance of this class, i.e. a node in the Mavo tree. ",
+			"member": [
+				{
+					"static": false,
+					"role": "constructor",
+					"argument": [
+						{}
+					]
+				},
+				{
+					"name": "element",
+					"type": "Element",
+					"static": false,
+					"role": "property",
+					"description": "The DOM element that this Mavo Node corresponds to.",
+					"argument": [
+						{}
+					]
+				},
+				{
+					"name": "template",
+					"type": "Mavo.Node",
+					"static": false,
+					"role": "property",
+					"description": "A reference to the first Mavo node like this one that was ever created. This is `null` for properties that are not inside any collection, or for the first item of a collection across all its instances. I.e. even if a collection is nested within another collection, there is only one template per collection.",
+					"argument": [
+						{}
+					]
+				}
+			]
 		}
 	]
 }
