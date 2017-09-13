@@ -259,6 +259,7 @@ table.attributes {
 
 			h2 {
 				font-size: 200%;
+				margin-right: .3em;
 			}
 
 			p {
@@ -322,7 +323,8 @@ table.attributes {
 			--color: $green;
 		}
 
-		[property=role] {
+		[property=role],
+		[property=static] {
 			margin-left: .5em;
 			padding: .15em .5em;
 			border-radius: .3em;
@@ -331,10 +333,38 @@ table.attributes {
 			font-weight: bold;
 			text-transform: uppercase;
 			font-size: 80%;
+
+			select {
+				text-transform: none;
+			}
+		}
+
+		[property=static] {
+			background: black;
 		}
 	}
 
-	[property=type] {
+	[property=type],
+	[property=returnType] {
 		font-family: $mono-font;
+		font-weight: bold;
+	}
+
+	details {
+		summary {
+			text-transform: uppercase;
+			font-size: 80%;
+			font-weight: bold;
+			color: hsla(0,0%,30%,.5);
+			text-shadow: 0 0 var(--color);
+		}
+	}
+
+	p:not(:empty) + details {
+		margin-top: .5em;
+	}
+
+	&:not([mv-mode=edit]) .hide-on-read {
+		display: none;
 	}
 }

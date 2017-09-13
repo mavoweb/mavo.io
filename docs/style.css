@@ -185,7 +185,8 @@ table.attributes td:nth-last-child(2) {
     -ms-flex-align: baseline;
     align-items: baseline; }
     [mv-app="api"] [property=class] > header h2 {
-      font-size: 200%; }
+      font-size: 200%;
+      margin-right: .3em; }
     [mv-app="api"] [property=class] > header p {
       font-style: italic;
       color: gray; }
@@ -228,7 +229,8 @@ table.attributes td:nth-last-child(2) {
     --color: #25aff4; }
   [mv-app="api"] [property=member].role-constructor {
     --color: #82cf17; }
-  [mv-app="api"] [property=member] [property=role] {
+  [mv-app="api"] [property=member] [property=role],
+  [mv-app="api"] [property=member] [property=static] {
     margin-left: .5em;
     padding: .15em .5em;
     border-radius: .3em;
@@ -237,8 +239,28 @@ table.attributes td:nth-last-child(2) {
     font-weight: bold;
     text-transform: uppercase;
     font-size: 80%; }
+    [mv-app="api"] [property=member] [property=role] select,
+    [mv-app="api"] [property=member] [property=static] select {
+      text-transform: none; }
+  [mv-app="api"] [property=member] [property=static] {
+    background: black; }
 
-[mv-app="api"] [property=type] {
-  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace; }
+[mv-app="api"] [property=type],
+[mv-app="api"] [property=returnType] {
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  font-weight: bold; }
+
+[mv-app="api"] details summary {
+  text-transform: uppercase;
+  font-size: 80%;
+  font-weight: bold;
+  color: rgba(77, 77, 77, 0.5);
+  text-shadow: 0 0 var(--color); }
+
+[mv-app="api"] p:not(:empty) + details {
+  margin-top: .5em; }
+
+[mv-app="api"]:not([mv-mode=edit]) .hide-on-read {
+  display: none; }
 
 /*# sourceMappingURL=style.css.map */

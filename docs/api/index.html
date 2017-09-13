@@ -47,10 +47,10 @@
 
 	<p>This is a work in progress. Wanna help? Log in and edit!</p>
 
-	<article property="class" mv-multiple id="[idify(name)]">
+	<article property="mavoClass" mv-multiple id="[name]">
 		<header>
 			<h2 property="name">Mavo</h2>
-			<p class="[if(parent, '', 'no-')]inherits">
+			<p class="[if(!parent, 'hide-on-read')] inherits">
 				Inherits from <a href="#[parent]" property="parent" mv-attribute="none"></a>
 			</p>
 			<p class="defined">Defined in <a href="https://github.com/mavoweb/mavo/blob/master/src/[filename]" property="filename" mv-attribute="none" target="_blank">mavo.js</a></p>
@@ -60,11 +60,11 @@
 
 		<h3>Members</h3>
 
-		<article property="member" mv-multiple class="role-[role]" id="[idify(class.name)]-[idify(name)]">
+		<article property="member" mv-multiple class="role-[role]" id="[mavoClass.name][if(static, '.', '#')][name]">
 			<header>
 				<h4 property="name"></h4>
-				<span property="type"></span>
-				<span property="static" role="checkbox">Static</span>
+				<span property="type" mv-if="role != 'constructor'"></span>
+				<span property="static" role="checkbox" mv-if="role != 'constructor'">Static</span>
 				<span property="role">
 					<select>
 						<option value="property">Property</option>
@@ -76,26 +76,31 @@
 			</header>
 
 			<p property="description" class="markdown"></p>
-			<details mv-if="type = 'function' or type = 'constructor'">
-				<summary>Arguments & Return Value</summary>
-				<table>
+<p>args: [argument.name]
+			<details mv-if="role = 'function' or role = 'constructor'">
+				<summary>Arguments ([count(argument.name)])<span mv-if="role != 'constructor'"> & Return Value</span></summary>
+
+				<table class="[if(!returnType and !returnDescription and isVoid, 'hide-on-read')]">
 					<thead>
 						<th>Name</th>
 						<th>Type</th>
 						<th>Description</th>
 					</thead>
-					<tr property="argument" mv-multiple>
-						<td property="name"></td>
-						<td property="type"></td>
-						<td property="description"></td>
-					</tr>
-					<tr>
-						<td></td>
+					<tbody class="[if(isVoid, 'hide-on-read')]">
+						<tr property="argument" mv-multiple>
+							<td property="name"></td>
+							<td property="type"></td>
+							<td property="description" class="markdown"></td>
+						</tr>
+					</tbody>
+					<tr mv-if="role != 'constructor'" class="[if(!returnType and !returnDescription, 'hide-on-read')]">
+						<th>Returns</th>
 						<td property="returnType"></td>
 						<td property="returnDescription"></td>
 					</tr>
 				</table>
 			</details>
+			<meta property="isVoid" content="[count(argument.name) = 0]">
 		</article>
 	</article>
 </section>
