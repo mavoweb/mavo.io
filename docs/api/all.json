@@ -81,6 +81,21 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Mavo.Group",
+			"parentClass": "Mavo.Node",
+			"filename": "group.js",
+			"description": "Group nodes are Mavo's equivalent of objects. Their child nodes are other properties, which could be other groups, primitives, or collections. There is always at least one group in every Mavo: The root.",
+			"member": [
+				{
+					"static": false,
+					"role": "property",
+					"argument": [
+						{}
+					]
+				}
+			]
 		}
 	]
 }
