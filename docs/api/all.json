@@ -93,7 +93,10 @@
 					"role": "property",
 					"argument": [
 						{}
-					]
+					],
+					"name": "children",
+					"type": "Object",
+					"description": "Object literal with child properties. The keys are the property names and the values are the Mavo nodes of the properties (which could in turn be other groups, [primitives](#Mavo.Primitive), or [collections](#Mavo.Collection)."
 				}
 			],
 			"parent": "Mavo.Node"
