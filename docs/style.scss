@@ -242,3 +242,99 @@ table.attributes {
 		}
 	}
 }
+
+[mv-app="api"] {
+	h2, h3, h4, p {
+		margin: 0;
+	}
+
+	[property=class] {
+		margin-top: 1em;
+		border: 1px solid #eee;
+		padding: .8em 1em;
+
+		& > header {
+			display: flex;
+			align-items: baseline;
+
+			h2 {
+				font-size: 200%;
+			}
+
+			p {
+				font-style: italic;
+				color: gray;
+
+				a {
+					color: inherit;
+				}
+			}
+
+			p:last-of-type {
+				flex: 1;
+				text-align: right;
+			}
+		}
+
+		& > h3 {
+			margin-top: 1em;
+		}
+
+		&:not([mv-mode=edit]) .no-inherits {
+			display: none;
+		}
+	}
+
+	[property=member] {
+		border: 1px solid rgba(0,0,0,.1);
+		padding: 0 .8em .5em;
+		margin: .3em 0;
+		background: color-image(hsla(0,0%,100%,.95)) var(--color);
+		background-clip: border-box;
+		box-shadow: .3em 0 var(--color) inset;
+
+		header {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			padding: .3em .5em;
+			margin: 0 -.7em .5em -.5em;
+			background: color-image(hsla(0,0%,100%,.85)) var(--color);
+
+			h4 {
+				flex: 1;
+			}
+		}
+
+		&.role-property {
+			--color: $magenta;
+		}
+
+		&.role-accessor {
+			--color: $orange;
+		}
+
+		&.role-function {
+			--color: $blue;
+		}
+
+		&.role-constructor {
+			--color: $green;
+		}
+
+		[property=role] {
+			margin-left: .5em;
+			padding: .15em .5em;
+			border-radius: .3em;
+			background: var(--color);
+			color: white;
+			font-weight: bold;
+			text-transform: uppercase;
+			font-size: 80%;
+		}
+	}
+
+	[property=type] {
+		font-family: $mono-font;
+	}
+}

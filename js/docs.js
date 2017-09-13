@@ -1,5 +1,5 @@
 // Print out URL for empty non-local links
-$$('a[href^="#"]:empty').forEach(function (a) {
+$$('a[href^="#"]:empty:not([property])').forEach(function (a) {
 	a.textContent = a.getAttribute("href").slice(1);
 });
 

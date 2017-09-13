@@ -23,3 +23,15 @@ $content-width: 1050px;
 	font: bold 55%/1.5 $body-font;
 	text-transform: uppercase;
 }
+
+@function tint($color, $percentage) {
+	@return mix(white, $color, $percentage);
+}
+
+@function shade($color, $percentage) {
+	@return mix(black, $color, $percentage);
+}
+
+@function color-image($color) {
+	@return linear-gradient($color, $color);
+}
