@@ -1,5 +1,5 @@
 {
-	"class": [
+	"mavoClass": [
 		{
 			"name": "Mavo",
 			"description": "`Mavo` is the main class. Every Mavo app is an instance of `Mavo` and `mavo.js` is the entry point of Mavo itself.",
