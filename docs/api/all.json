@@ -47,6 +47,26 @@
 					]
 				},
 				{
+					"name": "getData",
+					"type": "Object",
+					"static": false,
+					"role": "function",
+					"description": "Calls `getData()` on the root node.",
+					"argument": [
+						{}
+					]
+				},
+				{
+					"name": "toJSON",
+					"type": "String",
+					"static": false,
+					"role": "function",
+					"description": "Serializes all current data as JSON",
+					"argument": [
+						{}
+					]
+				},
+				{
 					"name": "all",
 					"type": "Object",
 					"static": true,
