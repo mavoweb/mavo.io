@@ -53,8 +53,14 @@
 					"role": "function",
 					"description": "Calls `getData()` on the root node.",
 					"argument": [
-						{}
-					]
+						{
+							"name": "o",
+							"type": "Object",
+							"description": "Configuration object. For details see [Mavo.Node#getData()](Mavo.Node#getData)"
+						}
+					],
+					"returnType": "Object",
+					"returnDescription": "Data of entire Mavo app"
 				},
 				{
 					"name": "toJSON",
