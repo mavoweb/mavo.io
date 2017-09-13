@@ -45,6 +45,16 @@
 					"argument": [
 						{}
 					]
+				},
+				{
+					"name": "all",
+					"type": "Object",
+					"static": true,
+					"role": "property",
+					"description": "Object with all Mavo instances that are currently active on the page. These can be accessed by index, e.g. `Mavo.all[0]` or by name, like `Mavo.all.appid`.",
+					"argument": [
+						{}
+					]
 				}
 			]
 		},
