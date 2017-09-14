@@ -122,7 +122,7 @@
 			"name": "Mavo.Group",
 			"parentClass": "Mavo.Node",
 			"filename": "group.js",
-			"description": "Group nodes are Mavo's equivalent of objects. Their child nodes are other properties, which could be other groups, primitives, or collections. There is always at least one group in every Mavo: The root.",
+			"description": "Group nodes are analogous to JSON objects. There is always at least one group in every Mavo: The root.",
 			"member": [
 				{
 					"static": false,
@@ -132,10 +132,68 @@
 					],
 					"name": "children",
 					"type": "Object",
-					"description": "Object literal with child properties. The keys are the property names and the values are the Mavo nodes of the properties (which could in turn be other groups, [primitives](#Mavo.Primitive), or [collections](#Mavo.Collection)."
+					"description": "Object literal with child properties. The keys are the property names and the values are the Mavo nodes of the properties (which could in turn be other groups, [primitives](#Mavo.Primitive), or [collections](#Mavo.Collection))."
 				}
 			],
 			"parent": "Mavo.Node"
+		},
+		{
+			"name": "Mavo.Collection",
+			"parent": "Mavo.Node",
+			"filename": "collection.js",
+			"description": "Collection nodes are analogous to JSON arrays, and correspond to `mv-multiple` elements. However, the collection itself is not represented by any HTML element, what is represented in the HTML is the collection *items*.",
+			"member": [
+				{
+					"name": "children",
+					"type": "Array",
+					"static": false,
+					"role": "property",
+					"description": "Array with all collection items. Collection items are other Mavo nodes, and can be either [groups](#Mavo.Group) or [primitives](#Mavo.Primitive).",
+					"argument": [
+						{}
+					]
+				}
+			]
+		},
+		{
+			"name": "Mavo.Primitive",
+			"parent": "Mavo.Node",
+			"filename": "primitive.js",
+			"description": "Primitive nodes are analogous to JSON strings, numbers, and booleans. They correspond to property elements that do not contain other properties.",
+			"member": [
+				{
+					"name": "value",
+					"static": false,
+					"role": "property",
+					"argument": [
+						{}
+					]
+				}
+			]
+		},
+		{
+			"name": "Mavo.Locale",
+			"filename": "locale.js",
+			"description": "Class responsible for localization. Each locale is an instance of this.",
+			"member": [
+				{
+					"name": "lang",
+					"static": false,
+					"role": "property",
+					"description": "Language code, based on HTML’s language codes",
+					"argument": [
+						{}
+					]
+				},
+				{
+					"name": "phrases",
+					"static": false,
+					"role": "property",
+					"argument": [
+						{}
+					]
+				}
+			]
 		}
 	]
 }
