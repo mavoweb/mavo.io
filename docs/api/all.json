@@ -68,9 +68,9 @@
 					"static": false,
 					"role": "function",
 					"description": "Serializes all current data as JSON",
-					"argument": [
-						{}
-					]
+					"argument": [],
+					"returnType": "String",
+					"returnDescription": "The current data as a JSON string"
 				},
 				{
 					"name": "all",
