@@ -248,7 +248,7 @@ table.attributes {
 		margin: 0;
 	}
 
-	[property=class] {
+	[property=mavoClass] {
 		margin-top: 1em;
 		border: 1px solid #eee;
 		padding: .8em 1em;
@@ -333,10 +333,6 @@ table.attributes {
 			font-weight: bold;
 			text-transform: uppercase;
 			font-size: 80%;
-
-			select {
-				text-transform: none;
-			}
 		}
 
 		[property=static] {
@@ -345,7 +341,8 @@ table.attributes {
 	}
 
 	[property=type],
-	[property=returnType] {
+	[property=returnType],
+	.type {
 		font-family: $mono-font;
 		font-weight: bold;
 	}
@@ -366,5 +363,12 @@ table.attributes {
 
 	&:not([mv-mode=edit]) .hide-on-read {
 		display: none;
+	}
+
+	[property=argument] {
+		.mv-item-bar {
+			position: static;
+			opacity: 1;
+		}
 	}
 }

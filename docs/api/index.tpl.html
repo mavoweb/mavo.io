@@ -35,7 +35,8 @@
 		<article property="member" mv-multiple class="role-[role]" id="[mavoClass.name][if(static, '.', '#')][name]">
 			<header>
 				<h4 property="name"></h4>
-				<span property="type" mv-if="role != 'constructor'"></span>
+				<span property="type" mv-if="role != 'constructor' and role != 'function'" foo="role != 'function'"></span>
+				<span class="type">[returnType]</span>
 				<span property="static" role="checkbox" mv-if="role != 'constructor'">Static</span>
 				<span property="role">
 					<select>
@@ -48,11 +49,11 @@
 			</header>
 
 			<p property="description" class="markdown"></p>
-<p>args: [argument.name]
-			<details mv-if="role = 'function' or role = 'constructor'">
+
+			<details mv-if="role = 'function' or role = 'constructor'" class="[if(!returnType and !returnDescription and isVoid, 'hide-on-read')]">
 				<summary>Arguments ([count(argument.name)])<span mv-if="role != 'constructor'"> & Return Value</span></summary>
 
-				<table class="[if(!returnType and !returnDescription and isVoid, 'hide-on-read')]">
+				<table>
 					<thead>
 						<th>Name</th>
 						<th>Type</th>
@@ -65,11 +66,13 @@
 							<td property="description" class="markdown"></td>
 						</tr>
 					</tbody>
-					<tr mv-if="role != 'constructor'" class="[if(!returnType and !returnDescription, 'hide-on-read')]">
-						<th>Returns</th>
-						<td property="returnType"></td>
-						<td property="returnDescription"></td>
-					</tr>
+					<tfoot mv-if="role != 'constructor'" class="[if(!returnType and !returnDescription, 'hide-on-read')]">
+						<tr>
+							<th>Returns</th>
+							<td property="returnType"></td>
+							<td property="returnDescription"></td>
+						</tr>
+					</tfoot>
 				</table>
 			</details>
 			<meta property="isVoid" content="[count(argument.name) = 0]">

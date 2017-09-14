@@ -175,30 +175,30 @@ table.attributes td:nth-last-child(2) {
 [mv-app="api"] h2, [mv-app="api"] h3, [mv-app="api"] h4, [mv-app="api"] p {
   margin: 0; }
 
-[mv-app="api"] [property=class] {
+[mv-app="api"] [property=mavoClass] {
   margin-top: 1em;
   border: 1px solid #eee;
   padding: .8em 1em; }
-  [mv-app="api"] [property=class] > header {
+  [mv-app="api"] [property=mavoClass] > header {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-align: baseline;
     align-items: baseline; }
-    [mv-app="api"] [property=class] > header h2 {
+    [mv-app="api"] [property=mavoClass] > header h2 {
       font-size: 200%;
       margin-right: .3em; }
-    [mv-app="api"] [property=class] > header p {
+    [mv-app="api"] [property=mavoClass] > header p {
       font-style: italic;
       color: gray; }
-      [mv-app="api"] [property=class] > header p a {
+      [mv-app="api"] [property=mavoClass] > header p a {
         color: inherit; }
-    [mv-app="api"] [property=class] > header p:last-of-type {
+    [mv-app="api"] [property=mavoClass] > header p:last-of-type {
       -ms-flex: 1;
       flex: 1;
       text-align: right; }
-  [mv-app="api"] [property=class] > h3 {
+  [mv-app="api"] [property=mavoClass] > h3 {
     margin-top: 1em; }
-  [mv-app="api"] [property=class]:not([mv-mode=edit]) .no-inherits {
+  [mv-app="api"] [property=mavoClass]:not([mv-mode=edit]) .no-inherits {
     display: none; }
 
 [mv-app="api"] [property=member] {
@@ -239,14 +239,12 @@ table.attributes td:nth-last-child(2) {
     font-weight: bold;
     text-transform: uppercase;
     font-size: 80%; }
-    [mv-app="api"] [property=member] [property=role] select,
-    [mv-app="api"] [property=member] [property=static] select {
-      text-transform: none; }
   [mv-app="api"] [property=member] [property=static] {
     background: black; }
 
 [mv-app="api"] [property=type],
-[mv-app="api"] [property=returnType] {
+[mv-app="api"] [property=returnType],
+[mv-app="api"] .type {
   font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   font-weight: bold; }
 
@@ -262,5 +260,9 @@ table.attributes td:nth-last-child(2) {
 
 [mv-app="api"]:not([mv-mode=edit]) .hide-on-read {
   display: none; }
+
+[mv-app="api"] [property=argument] .mv-item-bar {
+  position: static;
+  opacity: 1; }
 
 /*# sourceMappingURL=style.css.map */
