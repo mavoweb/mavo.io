@@ -232,6 +232,21 @@
 					"returnDescription": "Serialized string corresponding to the data."
 				}
 			]
+		},
+		{
+			"name": "Mavo.Expressions",
+			"filename": "expressions.js",
+			"description": "Each Mavo app has one Expressions object that handles picking up expressions and creating the necessary objects for each.",
+			"member": [
+				{
+					"name": "update",
+					"static": false,
+					"role": "function",
+					"argument": [
+						{}
+					]
+				}
+			]
 		}
 	]
 }
