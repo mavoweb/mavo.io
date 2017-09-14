@@ -242,6 +242,35 @@
 					"name": "update",
 					"static": false,
 					"role": "function",
+					"description": "Updates all expressions in the Mavo app.",
+					"argument": [
+						{}
+					]
+				}
+			]
+		},
+		{
+			"name": "Mavo.DOMExpression",
+			"filename": "domexpression.js",
+			"description": "A `DOMExpression` object is created for each text node or attribute that contains one or more expressions.",
+			"member": [
+				{
+					"static": false,
+					"role": "property",
+					"argument": [
+						{}
+					]
+				}
+			]
+		},
+		{
+			"name": "Mavo.Expression",
+			"filename": "expression.js",
+			"description": "Expression instances are created for each expression. Copies of the expression (due to collection items) use the same Expression object.",
+			"member": [
+				{
+					"static": false,
+					"role": "property",
 					"argument": [
 						{}
 					]
