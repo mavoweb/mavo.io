@@ -178,9 +178,10 @@
 			"member": [
 				{
 					"name": "lang",
+					"type": "String",
 					"static": false,
 					"role": "property",
-					"description": "Language code, based on HTML’s language codes",
+					"description": "Language code, based on HTML’s language codes, e.g. `\"en\"` or `\"en-GB\"`.",
 					"argument": [
 						{}
 					]
@@ -192,6 +193,43 @@
 					"argument": [
 						{}
 					]
+				}
+			]
+		},
+		{
+			"name": "Mavo.Formats.Base",
+			"filename": "formats.js",
+			"description": "[Mavo Formats](https://mavo.io/docs/formats/) are implemented as classes that inherit from `Mavo.Formats.Base`. `Mavo.Formats.Base` itself is abstract and should not be directly instantiated.",
+			"member": [
+				{
+					"name": "parse",
+					"static": false,
+					"role": "function",
+					"description": "Converts a string of serialized data to a data object",
+					"argument": [
+						{
+							"name": "content",
+							"type": "String",
+							"description": "Serialized data"
+						}
+					],
+					"returnType": "Object",
+					"returnDescription": "Data object"
+				},
+				{
+					"name": "stringify",
+					"static": false,
+					"role": "function",
+					"description": "Converts a data object to a serialized data string based on the current format.",
+					"argument": [
+						{
+							"name": "data",
+							"type": "Object",
+							"description": "Data object."
+						}
+					],
+					"returnType": "String",
+					"returnDescription": "Serialized string corresponding to the data."
 				}
 			]
 		}
