@@ -276,6 +276,87 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Mavo.Permissions",
+			"filename": "permissions.js",
+			"description": "Permissions such as edit, save, add, delete etc.",
+			"member": [
+				{
+					"static": false,
+					"role": "property",
+					"argument": [
+						{}
+					]
+				}
+			]
+		},
+		{
+			"name": "Mavo.Backend",
+			"filename": "backend.js",
+			"description": "Base class for backends to inherit from.",
+			"member": [
+				{
+					"static": false,
+					"role": "property",
+					"argument": [
+						{}
+					]
+				}
+			]
+		},
+		{
+			"name": "Mavo.UI.Bar",
+			"filename": "ui.bar.js",
+			"description": "Class for the Mavo toolbar.",
+			"member": [
+				{
+					"static": false,
+					"role": "property",
+					"argument": [
+						{}
+					]
+				}
+			]
+		},
+		{
+			"name": "Mavo.UI.Itembar",
+			"filename": "ui.itembar.js",
+			"description": "Class for the item bar that allows deleting, rearranging, cloning collection items.",
+			"member": [
+				{
+					"static": false,
+					"role": "property",
+					"argument": [
+						{}
+					]
+				}
+			]
+		},
+		{
+			"name": "Mavo.UI.Message",
+			"filename": "ui.message.js",
+			"description": "Class for messages displayed to the user, e.g. errors, notices etc.",
+			"member": [
+				{
+					"static": false,
+					"role": "property",
+					"argument": [
+						{}
+					]
+				}
+			]
+		},
+		{
+			"member": [
+				{
+					"static": false,
+					"role": "property",
+					"argument": [
+						{}
+					]
+				}
+			]
 		}
 	]
 }
