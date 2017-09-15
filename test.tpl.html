@@ -1,0 +1,40 @@
+<script>
+window.onerror = function (message, url, lineNo, colNo, error) {
+
+console.log(arguments);
+
+let container = document.createElement('div');
+
+container.style.color = 'red';
+
+let msg = document.createElement('pre');
+msg.innerText = [
+  'Message: ' + message,
+  'URL: ' + url,
+  'Line: ' + lineNo,
+  'Column: ' + colNo,
+  'Stack: ' + (error && error.stack)
+].join('\n');
+
+container.appendChild(msg);
+
+(document.querySelector("body section") || document.documentElement).appendChild(container);
+};
+</script>
+@@include('_head-docs.html', {
+	"title": "API Reference"
+})
+<body class="language-javascript">
+
+@@include('_header.html')
+
+<h2>Testing page</h2>
+
+<section>
+
+</section>
+
+@@include('_footer-docs.html')
+
+</body>
+</html>
