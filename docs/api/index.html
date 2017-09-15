@@ -3,13 +3,13 @@
 <head>
 	<meta charset="UTF-8">
 	<title>API Reference - Mavo Documentation</title>
-	<link rel="stylesheet" href="https://get.mavo.io/mavo.css" />
+	<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css" />
 	<link rel="stylesheet" href="../../css/style.css" />
 	<link rel="icon" href="/favicon.ico">
 
 	<link rel='stylesheet' href='/docs/style.css'>
 
-	<script src="https://get.mavo.io/mavo.es5.js"></script>
+	<script src="https://dev.mavo.io/dist/mavo.es5.js"></script>
 </head>
 
 
@@ -94,11 +94,13 @@
 							<td property="description" class="markdown"></td>
 						</tr>
 					</tbody>
-					<tr mv-if="role != 'constructor'" class="[if(!returnType and !returnDescription, 'hide-on-read')]">
-						<th>Returns</th>
-						<td property="returnType"></td>
-						<td property="returnDescription"></td>
-					</tr>
+					<tfoot mv-if="role != 'constructor'" class="[if(!returnType and !returnDescription, 'hide-on-read')]">
+						<tr>
+							<th>Returns</th>
+							<td property="returnType"></td>
+							<td property="returnDescription"></td>
+						</tr>
+					</tfoot>
 				</table>
 			</details>
 			<meta property="isVoid" content="[count(argument.name) = 0]">

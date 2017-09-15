@@ -7,8 +7,10 @@ if (!self.document) {
 		self.addEventListener("fetch", function(evt) {
 			var url = evt.request.url;
 
-			if (/\/get\.mavo\.io\/mavo\./.test(url)) {
-				var response = fetch(new Request(url.replace(/^.+?get\.mavo\.io\//gi, "http://localhost:8000/dist/") + "?" + Date.now()), evt.request)
+			if (url.indexOf("get.mavo.io/mavo.") > -1 || url.indexOf("dev.mavo.io/dist/mavo.") > -1) {
+				var newURL = url.replace(/.+?(get|dev)\.mavo\.io\/(dist\/)?/, "http://localhost:8000/dist/") + "?" + Date.now();
+				console.log(newURL);
+				var response = fetch(new Request(newURL), evt.request)
 					.then(r => r.status < 400? r : Promise.reject())
 					.catch(err => fetch(evt.request)); // if that fails, return original request
 
