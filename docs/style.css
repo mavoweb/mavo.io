@@ -203,7 +203,7 @@ table.attributes td:nth-last-child(2) {
 
 [mv-app="api"] [property=member] {
   border: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 0 .8em .5em;
+  padding: 0 .8em 0;
   margin: .3em 0;
   background: linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)) var(--color);
   background-clip: border-box;
@@ -216,11 +216,14 @@ table.attributes td:nth-last-child(2) {
     -ms-flex-pack: end;
     justify-content: flex-end;
     padding: .3em .5em;
-    margin: 0 -.7em .5em -.5em;
+    margin: 0 -.75em 0 -.5em;
     background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)) var(--color); }
     [mv-app="api"] [property=member] header h4 {
       -ms-flex: 1;
       flex: 1; }
+  [mv-app="api"] [property=member] [property=description],
+  [mv-app="api"] [property=member] details {
+    margin: .5em 0; }
   [mv-app="api"] [property=member].role-property {
     --color: #ff0080; }
   [mv-app="api"] [property=member].role-accessor {

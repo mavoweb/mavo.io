@@ -43,6 +43,7 @@
 </section>
 
 <section mv-app="api" mv-storage="https://github.com/mavoweb/mavo.io/docs/api/api.json" mv-plugins="markdown">
+	<div class="mv-bar mv-ui mv-fixed"></div>
 	<h1>API Reference</h1>
 
 	<p>This is a work in progress. Wanna help? Log in and edit!</p>
@@ -65,7 +66,7 @@
 				<h4 property="name"></h4>
 				<span property="type" mv-if="role != 'constructor' and role != 'function'" foo="role != 'function'"></span>
 				<span class="type">[returnType]</span>
-				<span property="static" role="checkbox" mv-if="role != 'constructor'">Static</span>
+				<span property="static" class="mv-toggle" mv-if="role != 'constructor'">Static</span>
 				<span property="role">
 					<select>
 						<option value="property">Property</option>

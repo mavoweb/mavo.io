@@ -288,7 +288,7 @@ table.attributes {
 
 	[property=member] {
 		border: 1px solid rgba(0,0,0,.1);
-		padding: 0 .8em .5em;
+		padding: 0 .8em 0;
 		margin: .3em 0;
 		background: color-image(hsla(0,0%,100%,.95)) var(--color);
 		background-clip: border-box;
@@ -299,12 +299,17 @@ table.attributes {
 			align-items: center;
 			justify-content: flex-end;
 			padding: .3em .5em;
-			margin: 0 -.7em .5em -.5em;
+			margin: 0 -.75em 0 -.5em;
 			background: color-image(hsla(0,0%,100%,.85)) var(--color);
 
 			h4 {
 				flex: 1;
 			}
+		}
+
+		[property=description],
+		details {
+			margin: .5em 0;
 		}
 
 		&.role-property {
