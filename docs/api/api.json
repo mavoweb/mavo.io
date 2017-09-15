@@ -11,7 +11,8 @@
 						{
 							"name": "element",
 							"type": "Element",
-							"description": "The Mavo root element"
+							"description": "The Mavo root element",
+							"optional": false
 						}
 					],
 					"role": "constructor"
@@ -22,7 +23,9 @@
 					"static": false,
 					"description": "Promise that resolves when the Mavo tree has been built.",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					],
 					"role": "property"
 				},
@@ -33,7 +36,9 @@
 					"static": false,
 					"description": "The Mavo root element. Same element that was passed to the constructor.",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				},
 				{
@@ -43,7 +48,9 @@
 					"static": false,
 					"description": "Name of event that is currently in progress (e.g. `\"Loading\"`, `\"Saving\"` etc), if any, `false` otherwise. Setting this triggers the progress indicator UI.",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				},
 				{
@@ -56,7 +63,8 @@
 						{
 							"name": "o",
 							"type": "Object",
-							"description": "Configuration object. For details see [Mavo.Node#getData()](Mavo.Node#getData)"
+							"description": "Configuration object. For details see [Mavo.Node#getData()](Mavo.Node#getData)",
+							"optional": false
 						}
 					],
 					"returnType": "Object",
@@ -79,7 +87,9 @@
 					"role": "property",
 					"description": "Object with all Mavo instances that are currently active on the page. These can be accessed by index, e.g. `Mavo.all[0]` or by name, like `Mavo.all.appid`.",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				}
 			]
@@ -93,7 +103,9 @@
 					"static": false,
 					"role": "constructor",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				},
 				{
@@ -103,7 +115,9 @@
 					"role": "property",
 					"description": "The DOM element that this Mavo Node corresponds to.",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				},
 				{
@@ -113,7 +127,9 @@
 					"role": "property",
 					"description": "A reference to the first Mavo node like this one that was ever created. This is `null` for properties that are not inside any collection, or for the first item of a collection across all its instances. I.e. even if a collection is nested within another collection, there is only one template per collection.",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				},
 				{
@@ -125,12 +141,14 @@
 						{
 							"name": "element",
 							"type": "Element",
-							"description": "The DOM element to look up"
+							"description": "The DOM element to look up",
+							"optional": false
 						},
 						{
 							"name": "prioritizePrimitive",
 							"type": "Boolean",
-							"description": "If both a Group and a Primitive exist on the same element, the default behavior is to return the Group. Set this to true to return the Primitive instead."
+							"description": "If both a Group and a Primitive exist on the same element, the default behavior is to return the Group. Set this to true to return the Primitive instead.",
+							"optional": true
 						}
 					],
 					"returnType": "Mavo.Node",
@@ -148,7 +166,9 @@
 					"static": false,
 					"role": "property",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					],
 					"name": "children",
 					"type": "Object",
@@ -170,7 +190,9 @@
 					"role": "property",
 					"description": "Array with all collection items. Collection items are other Mavo nodes, and can be either [groups](#Mavo.Group) or [primitives](#Mavo.Primitive).",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				}
 			]
@@ -186,7 +208,9 @@
 					"static": false,
 					"role": "property",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				}
 			]
@@ -203,7 +227,9 @@
 					"role": "property",
 					"description": "Language code, based on HTML’s language codes, e.g. `\"en\"` or `\"en-GB\"`.",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				},
 				{
@@ -211,7 +237,9 @@
 					"static": false,
 					"role": "property",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				}
 			]
@@ -230,7 +258,8 @@
 						{
 							"name": "content",
 							"type": "String",
-							"description": "Serialized data"
+							"description": "Serialized data",
+							"optional": false
 						}
 					],
 					"returnType": "Object",
@@ -245,7 +274,8 @@
 						{
 							"name": "data",
 							"type": "Object",
-							"description": "Data object."
+							"description": "Data object.",
+							"optional": false
 						}
 					],
 					"returnType": "String",
@@ -264,7 +294,9 @@
 					"role": "function",
 					"description": "Updates all expressions in the Mavo app.",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				}
 			]
@@ -278,7 +310,9 @@
 					"static": false,
 					"role": "property",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				}
 			]
@@ -292,7 +326,9 @@
 					"static": false,
 					"role": "property",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				}
 			]
@@ -308,7 +344,9 @@
 					"role": "function",
 					"description": "Add a unary operator to the expression syntax.",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				},
 				{
@@ -317,7 +355,9 @@
 					"role": "function",
 					"description": "Add a binary operator to the expression syntax.",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				}
 			]
@@ -334,7 +374,9 @@
 					"role": "property",
 					"description": "Proxy against which expressions are evaluated (via `with`). This is second priority, after lookup in data has failed. It's used for things like case-insensitive functions and unquoted strings.",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				}
 			]
@@ -348,7 +390,9 @@
 					"static": false,
 					"role": "property",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				}
 			]
@@ -362,7 +406,9 @@
 					"static": false,
 					"role": "property",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				}
 			]
@@ -376,7 +422,9 @@
 					"static": false,
 					"role": "property",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				}
 			]
@@ -390,7 +438,9 @@
 					"static": false,
 					"role": "property",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				}
 			]
@@ -404,7 +454,9 @@
 					"static": false,
 					"role": "property",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				}
 			]
@@ -418,7 +470,9 @@
 					"static": false,
 					"role": "property",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				}
 			]
@@ -435,22 +489,26 @@
 						{
 							"name": "element",
 							"type": "Element",
-							"description": "The element to observe"
+							"description": "The element to observe",
+							"optional": false
 						},
 						{
 							"name": "attribute",
 							"type": "String",
-							"description": "The attribute to observe (`null` if none)"
+							"description": "The attribute to observe (`null` if none)",
+							"optional": false
 						},
 						{
 							"name": "callback",
 							"type": "Function",
-							"description": "The callback to execute"
+							"description": "The callback to execute",
+							"optional": false
 						},
 						{
 							"name": "o",
 							"type": "Object",
-							"description": "Configuration object with any extra options to pass to `MutationObserver#observe()` "
+							"description": "Configuration object with any extra options to pass to `MutationObserver#observe()` ",
+							"optional": false
 						}
 					]
 				},
@@ -460,7 +518,9 @@
 					"static": false,
 					"role": "property",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				},
 				{
@@ -469,7 +529,9 @@
 					"static": false,
 					"role": "property",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				},
 				{
@@ -478,7 +540,9 @@
 					"static": false,
 					"role": "property",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				},
 				{
@@ -487,7 +551,9 @@
 					"static": false,
 					"role": "property",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				},
 				{
@@ -496,7 +562,9 @@
 					"static": false,
 					"role": "property",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				},
 				{
@@ -504,7 +572,9 @@
 					"static": false,
 					"role": "function",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				},
 				{
@@ -512,7 +582,9 @@
 					"static": false,
 					"role": "function",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				},
 				{
@@ -524,7 +596,8 @@
 						{
 							"name": "callback",
 							"type": "Function",
-							"description": "Code to run"
+							"description": "Code to run",
+							"optional": false
 						}
 					],
 					"returnDescription": "Return value of the callback"
@@ -535,7 +608,9 @@
 					"role": "function",
 					"description": "Stop & destroy this observer.",
 					"argument": [
-						{}
+						{
+							"optional": false
+						}
 					]
 				},
 				{
@@ -547,12 +622,14 @@
 						{
 							"name": "observer",
 							"type": "Mavo.Observer",
-							"description": "The observer to call `sneak()` on"
+							"description": "The observer to call `sneak()` on",
+							"optional": false
 						}
 					],
 					"returnDescription": "Return value of the callback"
 				}
 			]
 		}
-	]
+	],
+	"collapse": {}
 }
