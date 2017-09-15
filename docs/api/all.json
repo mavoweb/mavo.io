@@ -422,6 +422,96 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Mavo.Observer",
+			"filename": "util.js",
+			"description": "Helper class to make Mutation observers more pleasant to deal with",
+			"member": [
+				{
+					"static": false,
+					"role": "constructor",
+					"argument": [
+						{
+							"name": "element",
+							"type": "Element",
+							"description": "The element to observe"
+						},
+						{
+							"name": "attribute",
+							"type": "String",
+							"description": "The attribute to observe (`null` if none)"
+						},
+						{
+							"name": "callback",
+							"type": "Function",
+							"description": "The callback to execute"
+						},
+						{
+							"name": "o",
+							"type": "Object",
+							"description": "Configuration object with any extra options to pass to `MutationObserver#observe()` "
+						}
+					]
+				},
+				{
+					"name": "observer",
+					"type": "MutationObserver",
+					"static": false,
+					"role": "property",
+					"argument": [
+						{}
+					]
+				},
+				{
+					"name": "element",
+					"static": false,
+					"role": "property",
+					"argument": [
+						{}
+					]
+				},
+				{
+					"name": "attribute",
+					"static": false,
+					"role": "property",
+					"argument": [
+						{}
+					]
+				},
+				{
+					"name": "callback",
+					"static": false,
+					"role": "property",
+					"argument": [
+						{}
+					]
+				},
+				{
+					"name": "options",
+					"static": false,
+					"role": "property",
+					"argument": [
+						{}
+					]
+				},
+				{
+					"name": "run",
+					"static": false,
+					"role": "function",
+					"argument": [
+						{}
+					]
+				},
+				{
+					"name": "stop",
+					"static": false,
+					"role": "function",
+					"argument": [
+						{}
+					]
+				}
+			]
 		}
 	]
 }
