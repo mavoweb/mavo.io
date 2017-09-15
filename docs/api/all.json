@@ -465,6 +465,7 @@
 				},
 				{
 					"name": "element",
+					"type": "Element",
 					"static": false,
 					"role": "property",
 					"argument": [
@@ -473,6 +474,7 @@
 				},
 				{
 					"name": "attribute",
+					"type": "String",
 					"static": false,
 					"role": "property",
 					"argument": [
@@ -481,6 +483,7 @@
 				},
 				{
 					"name": "callback",
+					"type": "Function",
 					"static": false,
 					"role": "property",
 					"argument": [
@@ -489,6 +492,7 @@
 				},
 				{
 					"name": "options",
+					"type": "Object",
 					"static": false,
 					"role": "property",
 					"argument": [
