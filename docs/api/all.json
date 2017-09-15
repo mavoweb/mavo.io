@@ -122,8 +122,19 @@
 					"role": "function",
 					"description": "Get the Mavo node that corresponds to a particular DOM element, if one exists.",
 					"argument": [
-						{}
-					]
+						{
+							"name": "element",
+							"type": "Element",
+							"description": "The DOM element to look up"
+						},
+						{
+							"name": "prioritizePrimitive",
+							"type": "Boolean",
+							"description": "If both a Group and a Primitive exist on the same element, the default behavior is to return the Group. Set this to true to return the Primitive instead."
+						}
+					],
+					"returnType": "Mavo.Node",
+					"returnDescription": "The corresponding Mavo node or `undefined` if none exists."
 				}
 			]
 		},
