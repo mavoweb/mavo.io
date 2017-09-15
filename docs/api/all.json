@@ -115,6 +115,15 @@
 					"argument": [
 						{}
 					]
+				},
+				{
+					"name": "get",
+					"static": true,
+					"role": "function",
+					"description": "Get the Mavo node that corresponds to a particular DOM element, if one exists.",
+					"argument": [
+						{}
+					]
 				}
 			]
 		},
