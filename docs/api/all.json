@@ -278,6 +278,48 @@
 			]
 		},
 		{
+			"name": "Mavo.Script",
+			"filename": "mavoscript.js",
+			"description": "Static class with methods for implementing [MavoScript](mavoscript)",
+			"member": [
+				{
+					"name": "addUnaryOperator",
+					"static": true,
+					"role": "function",
+					"description": "Add a unary operator to the expression syntax.",
+					"argument": [
+						{}
+					]
+				},
+				{
+					"name": "addBinaryOperator",
+					"static": true,
+					"role": "function",
+					"description": "Add a binary operator to the expression syntax.",
+					"argument": [
+						{}
+					]
+				}
+			]
+		},
+		{
+			"name": "Mavo.Functions",
+			"filename": "functions.js",
+			"description": "Static, contains all functions available in [MavoScript](mavoscript)",
+			"member": [
+				{
+					"name": "_Trap",
+					"type": "Proxy",
+					"static": true,
+					"role": "property",
+					"description": "Proxy against which expressions are evaluated (via `with`). This is second priority, after lookup in data has failed. It's used for things like case-insensitive functions and unquoted strings.",
+					"argument": [
+						{}
+					]
+				}
+			]
+		},
+		{
 			"name": "Mavo.Permissions",
 			"filename": "permissions.js",
 			"description": "Permissions such as edit, save, add, delete etc.",
@@ -348,6 +390,9 @@
 			]
 		},
 		{
+			"name": "Mavo.UI.Popup",
+			"filename": "ui.popup.js",
+			"description": "Class for the little tooltip-like popups for editing attributes.",
 			"member": [
 				{
 					"static": false,
