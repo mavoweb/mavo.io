@@ -514,6 +514,43 @@
 					"argument": [
 						{}
 					]
+				},
+				{
+					"name": "sneak",
+					"static": false,
+					"role": "function",
+					"description": "Sneak some code past the observer, whether it's active or not.",
+					"argument": [
+						{
+							"name": "callback",
+							"type": "Function",
+							"description": "Code to run"
+						}
+					],
+					"returnDescription": "Return value of the callback"
+				},
+				{
+					"name": "destroy",
+					"static": false,
+					"role": "function",
+					"description": "Stop & destroy this observer.",
+					"argument": [
+						{}
+					]
+				},
+				{
+					"name": "sneak",
+					"static": true,
+					"role": "function",
+					"description": "Same as the instance method, but can be used whether the observer exists or not. If the observer does not exist, the callback is still executed.",
+					"argument": [
+						{
+							"name": "observer",
+							"type": "Mavo.Observer",
+							"description": "The observer to call `sneak()` on"
+						}
+					],
+					"returnDescription": "Return value of the callback"
 				}
 			]
 		}
