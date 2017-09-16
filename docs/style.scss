@@ -243,9 +243,19 @@ table.attributes {
 	}
 }
 
+@keyframes target {
+
+}
+
 [mv-app="api"] {
 	h2, h3, h4, p {
 		margin: 0;
+	}
+
+	.filter {
+		padding: 1em;
+		margin: 1em 0;
+		background: rgba(0,0,0,.05);
 	}
 
 	[property=mavoClass] {
@@ -253,13 +263,17 @@ table.attributes {
 		border: 1px solid #eee;
 		padding: .8em 1em;
 
-		& > header {
+		& > summary {
 			display: flex;
 			align-items: baseline;
 
 			h2 {
 				font-size: 200%;
 				margin-right: .3em;
+
+				a {
+					color: inherit;
+				}
 			}
 
 			p {
@@ -288,22 +302,30 @@ table.attributes {
 
 	[property=member] {
 		border: 1px solid rgba(0,0,0,.1);
+		border-left: .3em solid var(--color);
 		padding: 0 .8em 0;
 		margin: .3em 0;
 		background: color-image(hsla(0,0%,100%,.95)) var(--color);
 		background-clip: border-box;
-		box-shadow: .3em 0 var(--color) inset;
 
-		header {
+		a {
+			color: var(--color);
+		}
+
+		& > summary {
 			display: flex;
 			align-items: center;
 			justify-content: flex-end;
 			padding: .3em .5em;
-			margin: 0 -.75em 0 -.5em;
+			margin: 0 -.75em 0 -.8em;
 			background: color-image(hsla(0,0%,100%,.85)) var(--color);
 
 			h4 {
 				flex: 1;
+
+				a {
+					color: inherit;
+				}
 			}
 		}
 
@@ -322,6 +344,10 @@ table.attributes {
 
 		&.role-function {
 			--color: $blue;
+
+			[property=name]::after {
+				content: "()"
+			}
 		}
 
 		&.role-constructor {
@@ -329,20 +355,73 @@ table.attributes {
 		}
 
 		[property=role],
-		[property=static] {
+		[property=static],
+		[property=optional] {
 			margin-left: .5em;
 			padding: .15em .5em;
 			border-radius: .3em;
-			background: var(--color);
+			background-color: var(--color);
 			color: white;
 			font-weight: bold;
 			text-transform: uppercase;
 			font-size: 80%;
+			white-space: nowrap;
 		}
 
 		[property=static] {
 			background: black;
 		}
+
+		table {
+			width: 100%;
+			table-layout: auto;
+
+			th:last-child {
+				width: 60%;
+			}
+
+			td:first-child {
+				white-space: nowrap;
+			}
+
+			tfoot {
+				border-top: 3px solid var(--color);
+
+				td:first-child {
+					font-weight: bold;
+				}
+			}
+		}
+
+		details {
+			summary {
+				text-transform: uppercase;
+				font-size: 80%;
+				font-weight: bold;
+				color: hsla(0,0%,30%,.5);
+				text-shadow: 0 0 var(--color);
+			}
+		}
+
+		p:not(:empty) + details {
+			margin-top: .5em;
+		}
+	}
+
+	@keyframes target {
+		to {
+			box-shadow: 0 0 10em .1em transparent;
+		}
+	}
+
+	[property=mavoClass].mv-target-within {
+		box-shadow: 0 0 1em .1em orange;
+		animation: target 1s 1s both;
+	}
+
+	[property=optional] {
+		background-image: color-image(hsla(0,0%,90%,.5));
+		color: var(--color);
 	}
 
 	[property=type],
@@ -350,20 +429,7 @@ table.attributes {
 	.type {
 		font-family: $mono-font;
 		font-weight: bold;
-	}
-
-	details {
-		summary {
-			text-transform: uppercase;
-			font-size: 80%;
-			font-weight: bold;
-			color: hsla(0,0%,30%,.5);
-			text-shadow: 0 0 var(--color);
-		}
-	}
-
-	p:not(:empty) + details {
-		margin-top: .5em;
+		white-space: nowrap;
 	}
 
 	&:not([mv-mode=edit]) .hide-on-read {
