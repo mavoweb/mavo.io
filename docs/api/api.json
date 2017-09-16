@@ -42,11 +42,47 @@
 					]
 				},
 				{
+					"name": "index",
+					"type": "Number",
+					"static": false,
+					"role": "property",
+					"description": "Index among other mavos in the page, 1 is first",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "id",
+					"type": "String",
+					"static": false,
+					"role": "property",
+					"description": "Unique id for this Mavo app. This usually comes from the `mv-app` attribute. However, if there are duplicate ids in `mv-app`, then a number is appended. If `mv-app` is empty, then the id is generated from by concatenating string \"mavo\" and the app's [index](#Mavo#index)",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
 					"name": "inProgress",
 					"role": "accessor",
 					"type": "String",
 					"static": false,
 					"description": "Name of event that is currently in progress (e.g. `\"Loading\"`, `\"Saving\"` etc), if any, `false` otherwise. Setting this triggers the progress indicator UI.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "locale",
+					"type": "Mavo.Locale",
+					"static": false,
+					"role": "property",
+					"description": "The locale for this Mavo app, depending on any `lang` attribute defined either on the app or an ancestor. If none is found, the default is English.",
 					"argument": [
 						{
 							"optional": false
