@@ -115,9 +115,22 @@
 				},
 				{
 					"name": "autoSaveDelay",
+					"type": "Number",
 					"static": false,
 					"role": "property",
 					"description": "Throttle delay for autosaving. Taken from the value of `mv-autosave`, defaults to 3s if none.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "expressions",
+					"type": "Mavo.Expressions",
+					"static": false,
+					"role": "property",
+					"description": "[Mavo.Expressions](#Mavo.Expressions) object corresponding to this instance.",
 					"argument": [
 						{
 							"optional": false
