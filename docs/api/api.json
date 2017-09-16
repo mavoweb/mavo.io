@@ -42,6 +42,18 @@
 					]
 				},
 				{
+					"name": "root",
+					"type": "Mavo.Group",
+					"static": false,
+					"role": "property",
+					"description": "Root Mavo node (always a group).",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
 					"name": "index",
 					"type": "Number",
 					"static": false,
@@ -131,6 +143,18 @@
 					"static": false,
 					"role": "property",
 					"description": "[Mavo.Expressions](#Mavo.Expressions) object corresponding to this instance.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "permissions",
+					"type": "Mavo.Permissions",
+					"static": false,
+					"role": "property",
+					"description": "[Mavo.Permissions](#Mavo.Permissions) object that corresponds to the permissions in this Mavo (taken from its backend(s)). In the future, individual Mavo nodes may have their own permissions, but right now permissions are app-wide.",
 					"argument": [
 						{
 							"optional": false
