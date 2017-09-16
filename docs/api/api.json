@@ -90,6 +90,41 @@
 					]
 				},
 				{
+					"name": "autoEdit",
+					"type": "Boolean",
+					"static": false,
+					"role": "property",
+					"description": "Should this Mavo start in edit mode? Corresponds to the `mv-autoedit` class.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "autoSave",
+					"type": "Boolean",
+					"static": false,
+					"role": "property",
+					"description": "Should we save automatically? Corresponds to whether the `mv-autosave` attribute is present.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "autoSaveDelay",
+					"static": false,
+					"role": "property",
+					"description": "Throttle delay for autosaving. Taken from the value of `mv-autosave`, defaults to 3s if none.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
 					"name": "getData",
 					"type": "Object",
 					"static": false,
