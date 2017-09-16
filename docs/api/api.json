@@ -162,6 +162,30 @@
 					]
 				},
 				{
+					"name": "bar",
+					"type": "Mavo.UI.Bar",
+					"static": false,
+					"role": "property",
+					"description": "[Mavo.UI.Bar](#Mavo.UI.Bar) object that corresponds to the Mavo toolbar for this app.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "needsEdit",
+					"type": "Boolean",
+					"static": false,
+					"role": "property",
+					"description": "True if there is any property that may require an edit button (e.g. forms do not), false otherwise.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
 					"name": "getData",
 					"type": "Object",
 					"static": false,
