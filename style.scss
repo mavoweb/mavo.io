@@ -94,7 +94,11 @@ body > header nav iframe {
 	padding: 5em calc(50vw - #{$content-width/2}) 6em;
 	clip-path: polygon(0% 0%, 100% 4em, 100% calc(100% - 7em), 0% 100%);
 	font-weight: 400;
-	margin: 0 -1rem;
+	margin: 0 -2rem;
+
+	@media (max-width: 1150px) {
+		margin: 0 -1rem;
+	}
 
 	article {
 		box-sizing: border-box;
