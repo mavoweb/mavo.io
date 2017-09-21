@@ -55,15 +55,6 @@
 			</tr>
 		</thead>
 		<tr>
-			<td><code>$url</code></td>
-			<td>
-				Current page URL. Also: <ul>
-					<li><code>$url.foo</code> will be "bar" if you have a <code>?foo=bar</code> URL parameter (and so on)</li>
-					<li><code>$url.path</code> will contain the URL path as a list</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
 			<td><code>$now</code></td>
 			<td>Current date and time</td>
 		</tr>
@@ -462,13 +453,23 @@ images/photo.jpg?foo=bar#baz")</code></td>
 		</thead>
 		<tbody>
 			<tr>
+				<td><code>url(param)</code></td>
+				<td>Print out the value of the <code>foo</code> parameter from the current page URL. This matches both parameters like <code>example.com/index.html?foo=bar</code> and <code>example.com/index.html/foo/bar</code> with the former having priority over the latter.</td>
+				<td><code>url("foo")</code></td>
+			</tr>
+			<tr>
+				<td><code>url()</code></td>
+				<td>Print out the URL of the current page.</td>
+				<td><code>url()</code></td>
+			</tr>
+			<tr>
 				<td><code>if(test, ifyes)</code></td>
-				<td>Print out some text if the test passes, otherwise nothing.</td>
+				<td>Print out <code>ifyes</code> if <code>test</code> is non-empty, otherwise nothing.</td>
 				<td><code>if(rating > 3, good)</code></td>
 			</tr>
 			<tr>
 				<td><code>if(test, ifyes, ifno)</code></td>
-				<td>Print out different text depending on a condition</td>
+				<td>Print out <code>ifyes</code> if <code>test</code> is non-empty, otherwise <code>ifno</code>.</td>
 				<td><code>if(rating > 3, good, bad)</code></td>
 			</tr>
 		</tbody>
