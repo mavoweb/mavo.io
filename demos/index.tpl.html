@@ -31,6 +31,9 @@
 		<li><a href="https://drafts.csswg.org/issues?spec=css-images&doc=cr-2012">W3C CSS WG, Disposition of Comments tool</a></li>
 		<li><a href="http://lea.verou.me/speaking/">Speaking | Lea Verou</a></li>
 		<li><a href="http://svgees.us/talks.html">Chris Lilley: Talks</a></li>
+		<li><a href="http://forkgasm.com">Recipe blog</a></li>
+		<li><a href="http://www.ekia.net/">Martial Arts School website</a></li>
+		<li><a href="http://mattfredfry.com/calculator/">Calculators</a></li>
 	</ul>
 	<p>Made a cool Mavo app? We'd love to see it and feature it here, please <a href="http://github.com/mavoweb/mavo/issues">get in touch</a>!</p>
 </section>
@@ -42,8 +45,17 @@ $.events(document.body, "mouseenter mouseleave focus blur", function(evt) {
 		var video = $("video", evt.target);
 
 		if (video && !video.error) {
-			var play = evt.type === "mouseenter" || evt.type === "focus";
-			video[play? "play" : "pause"]();
+			if (evt.type === "mouseenter" || evt.type === "focus") {
+				// https://stackoverflow.com/questions/36803176/how-to-prevent-the-play-request-was-interrupted-by-a-call-to-pause-error	
+				var isPlaying = video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2;
+
+				if (!isPlaying) {
+					video.play();
+				}
+			}
+			else {
+				video.pause();
+			}
 		}
 	}
 }, true);
