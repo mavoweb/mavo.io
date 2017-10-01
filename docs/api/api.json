@@ -250,6 +250,30 @@
 					]
 				},
 				{
+					"name": "uid",
+					"type": "Number",
+					"static": false,
+					"role": "property",
+					"description": "A number unique to this Mavo Node. Useful for debugging.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "property",
+					"type": "String",
+					"static": false,
+					"role": "property",
+					"description": "The property name of this node, if any. This is only `null` for the root node, any other node should have a property name.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
 					"name": "element",
 					"type": "Element",
 					"static": false,
