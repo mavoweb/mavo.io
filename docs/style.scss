@@ -345,7 +345,7 @@ table.attributes {
 		&.role-function {
 			--color: $blue;
 
-			[property=name]::after {
+			& > summary [property=name]::after {
 				content: "()"
 			}
 		}
