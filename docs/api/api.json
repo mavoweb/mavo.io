@@ -358,6 +358,45 @@
 					]
 				},
 				{
+					"name": "modes",
+					"type": "String",
+					"static": false,
+					"role": "property",
+					"description": "If this node is restricted to a specific mode (`\"read\"` or `\"edit\"`), this property will contain that mode, otherwise it will be `null`.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "mode",
+					"static": false,
+					"role": "property",
+					"description": "Current mode, `\"read\"` or `\"edit\"`.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "getData",
+					"static": false,
+					"role": "function",
+					"description": "Return the current data of this node as a JS object. This is the data used in expressions or for storing.",
+					"argument": [
+						{
+							"name": "options",
+							"optional": false,
+							"type": "Object",
+							"description": "Options object. The supported options are:\n\n- **live** (`Boolean`): `true` if we want data for expressions, `false` if we want data for saving.\n- **forceObjects** (`Boolean`): Force all primitives to be objects (which have a reference back to the Mavo node they came from). If `false`, only collection items are forced to be objects, and only in expressions."
+						}
+					],
+					"returnType": "Object",
+					"returnDescription": "The current data of this object"
+				},
+				{
 					"name": "get",
 					"static": true,
 					"role": "function",
