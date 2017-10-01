@@ -298,11 +298,59 @@
 					]
 				},
 				{
+					"name": "group",
+					"type": "Mavo.Group",
+					"static": false,
+					"role": "property",
+					"description": "The group that this node belongs to. If this node is a group, this will be equal to the node itself.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "parentGroup",
+					"type": "Mavo.Group",
+					"static": false,
+					"role": "property",
+					"description": "The parent group of this node. This will be the same as `group`, unless the node is a group, in which case it will be equal to its parent.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "alias",
+					"type": "String",
+					"static": false,
+					"role": "property",
+					"description": "The value of the `mv-alias` attribute, if one is present, `null` otherwise.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
 					"name": "template",
 					"type": "Mavo.Node",
 					"static": false,
 					"role": "property",
 					"description": "A reference to the first Mavo node like this one that was ever created. This is `null` for properties that are not inside any collection, or for the first item of a collection across all its instances. I.e. even if a collection is nested within another collection, there is only one template per collection.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "copies",
+					"type": "Array",
+					"static": false,
+					"role": "property",
+					"description": "If this node is a template for other nodes (i.e. the first of its kind, see above), this will be an array of all nodes whose `template` property refers to this one.",
 					"argument": [
 						{
 							"optional": false
