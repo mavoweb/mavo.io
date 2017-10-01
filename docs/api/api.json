@@ -229,14 +229,23 @@
 		{
 			"name": "Mavo.Node",
 			"filename": "node.js",
-			"description": "Every property corresponds to an instance of this class, i.e. a node in the Mavo tree. ",
+			"description": "Every property corresponds to an instance of this class, i.e. a node in the Mavo tree.  This is an abstract class, and is never instantiated directly. It's the class that `Mavo.Group`, `Mavo.Collection`, and `Mavo.Primitive` all inherit from.",
 			"member": [
 				{
 					"static": false,
 					"role": "constructor",
 					"argument": [
 						{
-							"optional": false
+							"optional": false,
+							"name": "element",
+							"type": "Element",
+							"description": "The DOM element that corresponds to this node"
+						},
+						{
+							"name": "mavo",
+							"optional": false,
+							"type": "Mavo",
+							"description": "The Mavo instance that this node belongs to."
 						}
 					]
 				},
@@ -245,7 +254,19 @@
 					"type": "Element",
 					"static": false,
 					"role": "property",
-					"description": "The DOM element that this Mavo Node corresponds to.",
+					"description": "The DOM element that represents this Mavo Node in the HTML. Same as the `element` argument that was passed to the constructor.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "mavo",
+					"type": "Mavo",
+					"static": false,
+					"role": "property",
+					"description": "The Mavo instance that this node belongs to. Same as the `mavo` argument that was passed to the constructor.",
 					"argument": [
 						{
 							"optional": false
