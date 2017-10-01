@@ -7,22 +7,22 @@ container.style.color = 'red';
 
 var msg = document.createElement('pre');
 msg.innerText = [
-  'Message: ' + message,
-  'URL: ' + url,
-  'Line: ' + lineNo,
-  'Column: ' + colNo,
-  'Stack: ' + (error && error.stack)
+	'Message: ' + message,
+	'URL: ' + url,
+	'Line: ' + lineNo,
+	'Column: ' + colNo,
+	'Stack: ' + (error && error.stack)
 ].join('\n');
 
 container.appendChild(msg);
 
 if (document.readyState != "complete") {
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelector("body section").appendChild(container);
-    })
+	document.addEventListener("DOMContentLoaded", function() {
+		document.querySelector("body section").appendChild(container);
+	})
 }
 else {
-    document.querySelector("body section").appendChild(container);
+	document.querySelector("body section").appendChild(container);
 }
 };
 </script>
@@ -31,13 +31,13 @@ else {
 <head>
 	<meta charset="UTF-8">
 	<title>Testing Page - Mavo Documentation</title>
-	<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css" />
+	<link rel="stylesheet" href="../mavo/dist/mavo.css" />
 	<link rel="stylesheet" href="./css/style.css" />
 	<link rel="icon" href="/favicon.ico">
 
 	<link rel='stylesheet' href='/docs/style.css'>
 
-	<script src="https://dev.mavo.io/dist/mavo.es5.js"></script>
+	<script src="../mavo/dist/mavo.js"></script>
 </head>
 
 
@@ -55,13 +55,13 @@ else {
 <h2>Testing page</h2>
 
 <section>
-    <div mv-app="appName" mv-storage="local">
-    	<ul>
-    		<li property="thing" mv-multiple>
-    			<input type="checkbox" property="done">
-    			<span property="name" class="['done']">a thing</span>
-    		</li>
-    </div>
+	<div mv-app="appName" mv-storage="local" style="background: [red]">
+		foo
+	</div>
+	<script>
+	$.ready().then(a => console.log($('[mv-app="appName"]').getAttribute("style")))
+
+	</script>
 </section>
 
 
