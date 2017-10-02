@@ -290,7 +290,7 @@
 					"type": "Mavo",
 					"static": false,
 					"role": "property",
-					"description": "The Mavo instance that this node belongs to. Same as the `mavo` argument that was passed to the constructor.",
+					"description": "The Mavo instance that this node belongs to. Same as the `mavo` argument that was passed to its constructor.",
 					"argument": [
 						{
 							"optional": false
@@ -906,12 +906,33 @@
 			"member": [
 				{
 					"static": false,
+					"role": "constructor",
+					"argument": [
+						{
+							"name": "url",
+							"optional": false,
+							"type": "String",
+							"description": "The raw value of the `mv-storage`/`mv-source` etc attribute."
+						},
+						{
+							"name": "options",
+							"optional": false,
+							"type": "Object",
+							"description": "Options object. Current options are **mavo** and **format**."
+						}
+					]
+				},
+				{
+					"static": false,
 					"role": "property",
 					"argument": [
 						{
 							"optional": false
 						}
-					]
+					],
+					"name": "mavo",
+					"type": "Mavo",
+					"description": "The Mavo instance that this node belongs to. Same as the `mavo` argument that was passed to its constructor."
 				}
 			]
 		},
@@ -927,7 +948,10 @@
 						{
 							"optional": false
 						}
-					]
+					],
+					"name": "mavo",
+					"type": "Mavo",
+					"description": "The Mavo instance that this node belongs to. Same as the `mavo` argument that was passed to its constructor."
 				}
 			]
 		},
@@ -943,7 +967,10 @@
 						{
 							"optional": false
 						}
-					]
+					],
+					"name": "mavo",
+					"type": "Mavo",
+					"description": "The Mavo instance that this node belongs to. Same as the `mavo` argument that was passed to its constructor."
 				}
 			]
 		},
@@ -959,7 +986,10 @@
 						{
 							"optional": false
 						}
-					]
+					],
+					"name": "mavo",
+					"type": "Mavo",
+					"description": "The Mavo instance that this node belongs to. Same as the `mavo` argument that was passed to its constructor."
 				}
 			]
 		},
@@ -975,7 +1005,9 @@
 						{
 							"optional": false
 						}
-					]
+					],
+					"name": "mavo",
+					"description": "The Mavo instance that this node belongs to. Same as the `mavo` argument that was passed to its constructor."
 				}
 			]
 		},
