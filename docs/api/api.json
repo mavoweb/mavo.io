@@ -650,7 +650,65 @@
 						{
 							"optional": false
 						}
+					],
+					"name": "expression",
+					"type": "String",
+					"description": "The expression that this object is about, e.g. `\"foo + 5\"`."
+				},
+				{
+					"name": "identifiers",
+					"type": "Array",
+					"static": false,
+					"role": "property",
+					"description": "Any identifiers used in the expression. This is used to determine when to re-evaluate it.",
+					"argument": [
+						{
+							"optional": false
+						}
 					]
+				},
+				{
+					"name": "function",
+					"type": "Function",
+					"static": false,
+					"role": "property",
+					"description": "The compiled JS function for this expression.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "eval",
+					"static": false,
+					"role": "function",
+					"description": "The latest value from evaluating this expression. Be wary of using this: since a single `Mavo.Expression` object can be used by multiple expressions, the usefulness of this value is very short-lived.",
+					"argument": [
+						{
+							"name": "data",
+							"optional": false,
+							"type": "Object",
+							"description": "The data to use as context"
+						}
+					],
+					"returnDescription": "Expression value or `Error` object if that produced an error"
+				},
+				{
+					"name": "changedBy",
+					"static": false,
+					"role": "function",
+					"description": "The previous value from evaluating this expression. Be wary of using this: since a single `Mavo.Expression` object can be used by multiple expressions, the usefulness of this value is very short-lived.",
+					"argument": [
+						{
+							"name": "event",
+							"optional": false,
+							"type": "Event",
+							"description": "Is this expression changed by this datachange event?"
+						}
+					],
+					"returnType": "Boolean",
+					"returnDescription": "`true` if expression needs to be re-evaluated, `false` if not."
 				}
 			]
 		},
