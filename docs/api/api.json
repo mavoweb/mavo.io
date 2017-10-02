@@ -767,10 +767,133 @@
 			"member": [
 				{
 					"static": false,
-					"role": "property",
+					"role": "function",
+					"argument": [
+						{
+							"optional": false,
+							"name": "values",
+							"type": "Object",
+							"description": "Name-value pairs"
+						}
+					],
+					"name": "set",
+					"description": "Set multiple permissions at once"
+				},
+				{
+					"name": "on",
+					"static": false,
+					"role": "function",
+					"description": "Set a bunch of permissions to true. Chainable.",
 					"argument": [
 						{
 							"optional": false
+						}
+					]
+				},
+				{
+					"name": "off",
+					"static": false,
+					"role": "function",
+					"description": "Set a bunch of permissions to false. Chainable.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "can",
+					"static": false,
+					"role": "function",
+					"description": "Fired once at least one of the actions passed can be performed. Kind of like a Promise that can be resolved multiple times.",
+					"argument": [
+						{
+							"name": "actions",
+							"optional": false,
+							"type": "String | Array<String>"
+						},
+						{
+							"name": "callback",
+							"optional": false,
+							"type": "Function"
+						},
+						{
+							"name": "cannot",
+							"optional": true,
+							"type": "Function"
+						}
+					]
+				},
+				{
+					"name": "cannot",
+					"static": false,
+					"role": "function",
+					"description": "Fired once **none** of the actions can be performed",
+					"argument": [
+						{
+							"name": "actions",
+							"optional": false,
+							"type": "String | Array<String>"
+						},
+						{
+							"name": "callback",
+							"optional": false,
+							"type": "Function"
+						}
+					]
+				},
+				{
+					"name": "observe",
+					"static": false,
+					"role": "function",
+					"description": "Schedule a callback for when a set of permissions changes value",
+					"argument": [
+						{
+							"name": "actions",
+							"optional": false,
+							"type": "String | Array<String>"
+						},
+						{
+							"name": "value",
+							"optional": false,
+							"type": "Boolean"
+						},
+						{
+							"name": "callback",
+							"optional": false,
+							"type": "Functions"
+						}
+					]
+				},
+				{
+					"name": "is",
+					"static": false,
+					"role": "function",
+					"description": "Compare a set of permissions with true or false. If comparing with true, we want at least one to be true, i.e. OR. If comparing with false, we want ALL to be false, i.e. NOR.",
+					"argument": [
+						{
+							"name": "actions",
+							"optional": false,
+							"type": "String | Array<String>"
+						},
+						{
+							"name": "able",
+							"optional": false,
+							"type": "Boolean"
+						}
+					]
+				},
+				{
+					"name": "onchange",
+					"static": false,
+					"role": "function",
+					"description": "Monitor all changes on all permissions.",
+					"argument": [
+						{
+							"name": "callback",
+							"optional": false,
+							"type": "Function",
+							"description": "Called on any permission change. Its context will be this `Mavo.Permissions` object and its parameter a `{action, value}` object."
 						}
 					]
 				}
