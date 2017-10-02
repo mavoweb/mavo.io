@@ -388,13 +388,41 @@
 					"argument": [
 						{
 							"name": "options",
-							"optional": false,
+							"optional": true,
 							"type": "Object",
 							"description": "Options object. The supported options are:\n\n- **live** (`Boolean`): `true` if we want data for expressions, `false` if we want data for saving.\n- **forceObjects** (`Boolean`): Force all primitives to be objects (which have a reference back to the Mavo node they came from). If `false`, only collection items are forced to be objects, and only in expressions."
 						}
 					],
 					"returnType": "Object",
 					"returnDescription": "The current data of this object"
+				},
+				{
+					"name": "walk",
+					"static": false,
+					"role": "function",
+					"description": "Execute a callback on every node of the Mavo tree. If callback returns (strict) false, walk stops.",
+					"argument": [
+						{
+							"name": "callback",
+							"optional": false,
+							"type": "Functions",
+							"description": "The callback to execute on every node. It’s called with the current node, and the current node’s path as its arguments."
+						},
+						{
+							"name": "path",
+							"optional": true,
+							"type": "Array",
+							"description": "Prepend the path passed to `callback` with this."
+						},
+						{
+							"name": "options",
+							"optional": true,
+							"type": "Object",
+							"description": "Options object. Currently only supports one option: **descentReturn** (`Boolean`). By default, if `callback` returns `false`, the walk stops immediately. However, if descentReturn is `true`, the walk doesn’t stop, it just does not descend deeper."
+						}
+					],
+					"returnType": "Boolean",
+					"returnDescription": "`false` if was stopped via a `false` callback return value, true otherwise"
 				},
 				{
 					"name": "get",
@@ -475,7 +503,8 @@
 						{
 							"optional": false
 						}
-					]
+					],
+					"description": "The current value of the node."
 				}
 			]
 		},
