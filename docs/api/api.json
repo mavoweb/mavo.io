@@ -519,7 +519,20 @@
 							"optional": false
 						}
 					],
+					"type": "String | Number | Boolean",
 					"description": "The current value of the node."
+				},
+				{
+					"name": "editor",
+					"type": "Element",
+					"static": false,
+					"role": "property",
+					"description": "DOM element used to edit this node",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
 				}
 			]
 		},
