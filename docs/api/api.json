@@ -425,6 +425,21 @@
 					"returnDescription": "`false` if was stopped via a `false` callback return value, true otherwise"
 				},
 				{
+					"name": "walkUp",
+					"static": false,
+					"role": "function",
+					"description": "Execute a callback for each of this node’s ancestors.",
+					"argument": [
+						{
+							"name": "callback",
+							"optional": false,
+							"type": "Function",
+							"description": "The callback to execute. The current ancestor node is passed as a first argument. If it returns anything other than `undefined`, the ascent stops and the function returns that value."
+						}
+					],
+					"returnDescription": "The return value of **callback**, or `undefined` if the ascent finished."
+				},
+				{
 					"name": "get",
 					"static": true,
 					"role": "function",
