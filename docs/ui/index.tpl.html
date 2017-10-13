@@ -171,6 +171,15 @@
 	</p>
 
 	<p>For a list of ids and phrases that you can copy as a starting point, use <a href="https://github.com/mavoweb/mavo/blob/master/src/locale.en.js">src/locale.en.js</a>, however note that plugins can also define their own phrases.</p>
+
+	<section class="advanced language-javascript">
+		<h2>Customizing text via JavaScript</h2>
+
+		<p>You can write your own localization plugin, by using <code>Mavo.Locale.register(languageCode, phrases)</code>.
+			For an example, you can look at the <a href="https://plugins.mavo.io/locale-el/mavo-locale-el.js">Greek localization plugin</a>.</p>
+
+		<p>If you go that route, please consider adding your plugin to the <a href="https://plugins.mavo.io">Plugins directory</a> so that others can benefit too! Don’t worry if it's not perfect, others can improve it via pull requests!</p>
+	</section>
 </section>
 
 @@include('_footer-docs.html')

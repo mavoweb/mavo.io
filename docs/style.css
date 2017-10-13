@@ -92,9 +92,11 @@ body > header + h2 {
 body > section#intro p::before {
   content: "In a nutshell"; }
 
-section.advanced > h1 {
+section.advanced > h1,
+section.advanced > h2 {
   color: black; }
-  section.advanced > h1::before {
+  section.advanced > h1::before,
+  section.advanced > h2::before {
     content: "☠️ Advanced";
     display: inline-block;
     vertical-align: text-bottom;

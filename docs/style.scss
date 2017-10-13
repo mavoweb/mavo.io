@@ -139,7 +139,8 @@ body > section#intro {
 	}
 }
 
-section.advanced > h1 {
+section.advanced > h1,
+section.advanced > h2 {
 	color: black;
 
 	&::before {
