@@ -213,9 +213,8 @@ main > section {
 
 	.mv-item-bar {
 		position: static;
-		opacity: 1;
+		opacity: 1 !important;
 		border: 0;
-		pointer-events: auto;
 
 		&:not(:hover):not(:focus) {
 			mix-blend-mode: multiply;

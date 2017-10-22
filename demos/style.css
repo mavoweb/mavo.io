@@ -32,7 +32,8 @@ article[property="demo"] {
     max-height: 0;
     transition: 1s; }
   article[property="demo"]:hover > div,
-  article[property="demo"]:focus > div {
+  article[property="demo"]:focus > div,
+  article[property="demo"][mv-mode="edit"] > div {
     padding-bottom: 1em;
     max-height: 10rem; }
   article[property="demo"] h1 {

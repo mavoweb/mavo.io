@@ -132,7 +132,7 @@ main {
 	.mv-item-bar.mv-ui {
 		position: static;
 		pointer-events: auto;
-		opacity: 1;
+		opacity: 1 !important;
 		mix-blend-mode: multiply;
 		border: 0;
 	}

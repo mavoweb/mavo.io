@@ -149,9 +149,8 @@ main > section > h1 {
       content: none; }
   [property=segment] .mv-item-bar {
     position: static;
-    opacity: 1;
-    border: 0;
-    pointer-events: auto; }
+    opacity: 1 !important;
+    border: 0; }
     [property=segment] .mv-item-bar:not(:hover):not(:focus) {
       mix-blend-mode: multiply; }
   [property=segment] h1 {

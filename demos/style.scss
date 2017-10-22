@@ -39,7 +39,8 @@ article[property="demo"] {
 	}
 
 	&:hover > div,
-	&:focus > div {
+	&:focus > div,
+	&[mv-mode="edit"] > div {
 		padding-bottom: 1em;
 		max-height: 10rem;
 	}
