@@ -44,6 +44,72 @@
 </section>
 
 <section>
+	<h1>mv-multiple</h1>
+
+	<p>The usual way to create a collection is to add the <code>mv-multiple</code> attribute to a property, like so:</p>
+
+	<section class="example side-by-side">
+		<script type="text/plain">
+			<div property="person" mv-multiple>
+				<span property="firstName">Lea</span>
+				<span property="lastName">Verou</span>
+			</div>
+		</script>
+	</section>
+
+	<p>However, you could also specify the property name as a value of <code>mv-multiple</code>, like so:</p>
+
+	<section class="example side-by-side">
+		<script type="text/plain">
+			<div mv-multiple="person">
+				<span property="firstName">Lea</span>
+				<span property="lastName">Verou</span>
+			</div>
+		</script>
+	</section>
+</section>
+
+<section>
+	<h1>Collectiion editing controls</h1>
+
+	<p>Collections automatically get controls for adding new items:
+
+	<ul>
+		<li>An <def>item bar</def> for deleting each item, adding an item before it, clone it, or rearrange it. This <a href="/docs/ui/#item-controls">can be customized</a>.</li>
+		<li>A button for adding new items at the end of a collection. This <a href="/docs/ui/#add-new-item-button">can be customized</a>.</li>
+		<li>Keyboard shortcuts for adding (Cmd + Enter, or just Enter on single-line textfields) and deleting (Cmd + backspace) items.</li>
+	</ul>
+</section>
+
+<section>
+	<h1><def id="simple-collections">Simple collections</def></h1>
+
+	<p>Simple collections are collections of properties <strong>that do not contain other properties.</strong>.
+		In contrast, <def>complex collections</def> are collections of groups, i.e. collections where each item contains multiple properties.
+		There are a few UI differences between these two:
+	</p>
+
+	<ul>
+		<li>In complex collections, the item bar is placed <strong>inside</strong> each item, at the end (unless <a href="/docs/ui/#item-controls">customized</a>).
+			In simple collections, the item bar is placed <strong>after</strong> each item and has a class of <code>mv-adjacent</code> and <a href="/docs/#css-variables">a few CSS Variables for positioning that</a>.</li>
+		<li>In complex collections, dragging to rearrange is achieved via a handle in the itembar. In simple collections, the whole item is draggable.</li>
+	</ul>
+
+	<p>Try out the difference below:</p>
+
+	<section class="example side-by-side">
+		<script type="text/plain">
+			<div property="complexPerson" mv-multiple>
+				<span property="firstName">Lea</span>
+				<span property="lastName">Verou</span>
+			</div>
+
+			<div property="simplePerson" mv-multiple>Lea Verou</div>
+		</script>
+	</section>
+</section>
+
+<section>
 	<h1>mv-accepts</h1>
 
 	<p>By default, collection items can only be dragged either within the same collection, or to collections of the same type.

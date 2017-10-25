@@ -1,4 +1,8 @@
 @charset "UTF-8";
+def {
+  font-weight: bold;
+  font-style: italic; }
+
 h1 > a {
   color: inherit; }
 
