@@ -56,7 +56,7 @@
 		</thead>
 		<tr>
 			<td><code>$now</code></td>
-			<td>Current date and time. Mostly useful with <a href="#date-and-time-functions">date and time functions</a>. Updated every 1 second.</td>
+			<td>Current date and time as number of milliseconds since January 1st, 1970. Mostly useful with <a href="#date-and-time-functions">date and time functions</a> or the <code>mod</code> operator. Updated every 100ms.</td>
 		</tr>
 		<tr>
 			<td><code>$hash</code></td>
@@ -131,7 +131,10 @@
 	<section>
 		<h1>Functions with operators</h1>
 
-		<p>In most cases, you don't need to use a function for the following, you can just use the syntax in the first column.</p>
+		<p>Usually, you don't need to use a function for the following, you can just use the syntax in the first column.
+			However, functions may still be useful for applying the operation between all values from a collection. E.g. <code>add(age)</code>
+			where "age" is a property inside a collection will add all ages together (basically the same as <code>sum(age)</code>).
+		</p>
 
 		<table>
 			<thead>
@@ -161,6 +164,11 @@
 					<td><code>a / b</code></td>
 					<td><code>div(a, b)</code></td>
 					<td>Division. Note that division by 0 will show up as ±∞ or <code>NaN</code> if it’s 0/0.</td>
+				</tr>
+				<tr>
+					<td><code>a mod b</code></td>
+					<td><code>mod(a, b)</code></td>
+					<td>Remainder of a / b.</td>
 				</tr>
 				<tr>
 					<td><code>a and b</code></td>
@@ -522,6 +530,10 @@ images/photo.jpg?foo=bar#baz")</code></td>
 			<tr>
 				<td><code>||</code> operator for logical or</td>
 				<td><code>or</code> operator for logical or</td>
+			</tr>
+			<tr>
+				<td><code>%</code> operator for remainder</td>
+				<td><code>mod</code> operator for remainder</td>
 			</tr>
 			<tr>
 				<td><code>if</code> is a control structure</td>
