@@ -59,6 +59,84 @@
 	<p>Mavo can also be taught about new element types with different ways to be edited (e.g. rich text), via <a href="https://plugins.mavo.io">plugins</a>.</p>
 </section>
 
+<section id="mv-edit">
+	<h1>Customize editing: The mv-edit attribute</h1>
+
+	<p>In some cases, you may want to customize how a property is edited.
+		For example, instead of using a text field, you may want to restrict choices to those in a <code>&lt;select></code> menu.
+	For those cases, you can do one of two things:</p>
+
+	<ul>
+		<li>Link to a form control via <code>mv-edit</code> <em>(recommended)</em></li>
+		<li>Nest a form control directly inside your property</li>
+	</ul>
+
+	<p>The value of <code>mv-edit</code> is a CSS selector. If the CSS selector matches multiple elements on the page, the first one will be used.
+		The element you linked to remains intact. Instead, it is cloned for the editing.
+		If the original element changes (e.g. perhaps that's also populated by Mavo! It could even be an entirely separate Mavo app, like in <a href="/demos/talks/">this demo</a>), a new clone is created.
+	</p>
+
+	<p>In addition to using the element for editing, its default value also becomes the property’s default value (unless <code>mv-default</code> is set of course).</p>
+
+	<section class="example">
+		<script type="text/plain">
+			I’m from
+			<img src="/demos/talks/flags/[country].png" />
+			<span property="country" mv-edit="#countries"></span>
+
+			<div hidden>
+				<select id="countries">
+					<option value="gr">Greece</option>
+					<option value="gb">United Kingdom</option>
+					<option value="us">United States</option>
+				</select>
+			</div>
+		</script>
+	</section>
+</section>
+
+<section id="mv-edit-star">
+	<h1>The mv-edit-* family of attributes</h1>
+
+	<p>In some cases, you don’t want to entirely replace the element used for editing by default, but merely to set a few attributes on it.
+	For example, to change an <code>&lt;input></code> type, or to add autocomplete via <code>&lt;datalist></code>.
+	For that, you can use <code>mv-edit-attributeName="value"</code> and <code>attributeName="value"</code> will be set on the default editing control.</p>
+
+	<section class="example">
+		<script type="text/plain">
+			I’m from
+			<span property="country" mv-edit-list="countries2">Greece</span>
+
+			<div>
+				<datalist id="countries2">
+					<option>Greece</option>
+					<option>United Kingdom</option>
+					<option>United States</option>
+				</datalist>
+			</div>
+		</script>
+	</section>
+</section>
+
+<section id="mv-default">
+	<h1>Default values: The mv-default attribute</h1>
+
+	<p>The <code>mv-default</code> attribute lets you set default values for properties that have no data yet.
+		If it’s used with no value, the default value is the data in your HTML.
+	</p>
+
+	<p><code>mv-default</code> is dynamic: When it changes, if the current value of the property matches the previous default, it will be updated as well.
+	You can take advantage of that and use <code>mv-default</code> to even keep properties in sync, like in the example below (for a real-world demo of this pattern, check out the <a href="/demos/svgpath">SVG Path builder</a>):</p>
+
+	<section class="example">
+		<script type="text/plain">
+			<p>Note that changing the first number changes the second, until you edit the second and make it different:</p>
+			<input type="number" property="x" mv-default="5" />
+			<input type="number" property="y" mv-default="[x]" />
+		</script>
+	</section>
+</section>
+
 <section>
 	<h1>The mv-attribute attribute</h1>
 
