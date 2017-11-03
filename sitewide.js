@@ -9,7 +9,7 @@ if (!self.document) {
 
 			if (url.indexOf("get.mavo.io/mavo.") > -1 || url.indexOf("dev.mavo.io/dist/mavo.") > -1) {
 				var newURL = url.replace(/.+?(get|dev)\.mavo\.io\/(dist\/)?/, "http://localhost:8000/dist/") + "?" + Date.now();
-				
+
 				var response = fetch(new Request(newURL), evt.request)
 					.then(r => r.status < 400? r : Promise.reject())
 					.catch(err => fetch(evt.request)); // if that fails, return original request
@@ -87,7 +87,8 @@ $$(".example-container > iframe").forEach(iframe => {
 
 if (/^\/demos\/\w+\/$/.test(location.pathname)) {
 	$.fetch(location.href).then(xhr => {
-		var html = Mavo.match(xhr.responseText, /<main[\S\s]+<\/main>/i);
+		console.log(xhr.responseText);
+		var html = Mavo.match(xhr.responseText, /<main[\S\s]+<\/main>[\S\s]*(?=<\/section>\s+<footer)/i).trim();
 		var pre;
 
 		html = `<html lang="en">
