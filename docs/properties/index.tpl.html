@@ -78,7 +78,7 @@
 
 	<p>In addition to using the element for editing, its default value also becomes the property’s default value (unless <code>mv-default</code> is set of course).</p>
 
-	<section class="example">
+	<section class="example side-by-side">
 		<script type="text/plain">
 			I’m from
 			<img src="/demos/talks/flags/[country].png" />
@@ -103,6 +103,7 @@
 	For that, you can use <code>mv-edit-attributeName="value"</code> and <code>attributeName="value"</code> will be set on the default editing control.</p>
 
 	<section class="example">
+		<p>Edit the country and type "United" to see a list of suggestions:</p>
 		<script type="text/plain">
 			I’m from
 			<span property="country" mv-edit-list="countries2">Greece</span>
@@ -128,9 +129,9 @@
 	<p><code>mv-default</code> is dynamic: When it changes, if the current value of the property matches the previous default, it will be updated as well.
 	You can take advantage of that and use <code>mv-default</code> to even keep properties in sync, like in the example below (for a real-world demo of this pattern, check out the <a href="/demos/svgpath">SVG Path builder</a>):</p>
 
-	<section class="example">
+	<section class="example side-by-side">
+		<p>Note that changing the first number changes the second, until you edit the second and make it different:</p>
 		<script type="text/plain">
-			<p>Note that changing the first number changes the second, until you edit the second and make it different:</p>
 			<input type="number" property="x" mv-default="5" />
 			<input type="number" property="y" mv-default="[x]" />
 		</script>
