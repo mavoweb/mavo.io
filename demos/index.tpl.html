@@ -5,7 +5,7 @@
 <h2>Demos</h2>
 
 <section mv-app="demos" mv-storage="https://github.com/mavoweb/mavo.io/demos/demos.json">
-	<meta property="tagFilter" content="[$url.tag]">
+	<meta property="tagFilter" content="[url('tag')]">
 	<p class="notice" mv-if="tagFilter">
 		Some demos are hidden. <a href="?">Show All.</a>
 	</p>
@@ -46,7 +46,7 @@ $.events(document.body, "mouseenter mouseleave focus blur", function(evt) {
 
 		if (video && !video.error) {
 			if (evt.type === "mouseenter" || evt.type === "focus") {
-				// https://stackoverflow.com/questions/36803176/how-to-prevent-the-play-request-was-interrupted-by-a-call-to-pause-error	
+				// https://stackoverflow.com/questions/36803176/how-to-prevent-the-play-request-was-interrupted-by-a-call-to-pause-error
 				var isPlaying = video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2;
 
 				if (!isPlaying) {
