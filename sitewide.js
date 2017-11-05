@@ -87,7 +87,6 @@ $$(".example-container > iframe").forEach(iframe => {
 
 if (/^\/demos\/\w+\/$/.test(location.pathname)) {
 	$.fetch(location.href).then(xhr => {
-		console.log(xhr.responseText);
 		var html = Mavo.match(xhr.responseText, /<main[\S\s]+<\/main>[\S\s]*(?=<\/section>\s+<footer)/i).trim();
 		var pre;
 
