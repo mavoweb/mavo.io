@@ -480,42 +480,43 @@ body > section table {
         border: 0;
         width: 100%;
         min-height: 100%; }
-  @media (min-width: 1000px) {
-    .example.side-by-side > .demo-container {
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-flow: row;
-      flex-flow: row;
-      -ms-flex-align: stretch;
-      align-items: stretch;
-      -ms-flex-pack: stretch;
-      justify-content: stretch;
-      position: relative; } }
-  .example.side-by-side > h1,
-  .example.side-by-side > h2,
-  .example.side-by-side h6,
-  .example.side-by-side > header {
-    margin: 0;
-    margin-bottom: .5em; }
-  .example.side-by-side pre {
-    -webkit-clip-path: none;
-    clip-path: none;
-    margin: 0 1em 0 0;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    border-radius: .3em;
-    font-size: 87%;
-    resize: horizontal; }
-    @media (max-width: 1000px) {
-      .example.side-by-side pre {
-        margin-bottom: 1em; } }
-    .example.side-by-side pre code {
-      -moz-tab-size: 2;
-      tab-size: 2; }
-  .example.side-by-side .example-container {
-    margin: 0;
-    -ms-flex: 1;
-    flex: 1;
-    min-width: 30%; }
+  .example.side-by-side {
+    margin-bottom: 0; }
+    @media (min-width: 1000px) {
+      .example.side-by-side > .demo-container {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-flow: row;
+        flex-flow: row;
+        -ms-flex-align: stretch;
+        align-items: stretch;
+        -ms-flex-pack: stretch;
+        justify-content: stretch;
+        position: relative; } }
+    .example.side-by-side > h1,
+    .example.side-by-side > h2,
+    .example.side-by-side h6,
+    .example.side-by-side > header {
+      margin: 0;
+      margin-bottom: .5em; }
+    .example.side-by-side pre {
+      -webkit-clip-path: none;
+      clip-path: none;
+      margin: 0 1em 0 0;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: .3em;
+      font-size: 87%;
+      resize: horizontal; }
+      .example.side-by-side pre code {
+        -moz-tab-size: 2;
+        tab-size: 2; }
+    .example.side-by-side .example-container {
+      margin: 0;
+      -ms-flex: 1;
+      flex: 1;
+      min-width: 30%; }
+    .example.side-by-side pre, .example.side-by-side .example-container {
+      margin-bottom: 1rem; }
 
 .docs > body > section:first-of-type:not([id]),
 body > section#intro {

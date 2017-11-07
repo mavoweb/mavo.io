@@ -612,6 +612,8 @@ body > section table {
 	}
 
 	&.side-by-side {
+		margin-bottom: 0;
+
 		@media (min-width: 1000px) {
 			& > .demo-container {
 				display: flex;
@@ -638,10 +640,6 @@ body > section table {
 			font-size: 87%;
 			resize: horizontal;
 
-			@media (max-width: 1000px) {
-				margin-bottom: 1em;
-			}
-
 			code {
 				tab-size: 2;
 			}
@@ -651,6 +649,10 @@ body > section table {
 			margin: 0;
 			flex: 1;
 			min-width: 30%;
+		}
+
+		pre, .example-container {
+			margin-bottom: 1rem;
 		}
 	}
 
