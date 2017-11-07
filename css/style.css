@@ -462,6 +462,11 @@ body > section table {
     padding: 1.2em 1em 1em;
     border: 1px solid rgba(0, 0, 0, 0.3);
     margin: 1em 0 0; }
+    .example .example-container iframe:only-child {
+      display: block;
+      width: 100%;
+      min-height: 100%;
+      border: none; }
     .example .example-container input[type="number"] {
       font-size: 150%;
       max-width: 2em; }
@@ -475,11 +480,6 @@ body > section table {
       display: inline-block; }
     .example .example-container.embedded {
       padding: 0; }
-      .example .example-container.embedded iframe {
-        display: block;
-        border: 0;
-        width: 100%;
-        min-height: 100%; }
   .example.side-by-side {
     margin-bottom: 0; }
     @media (min-width: 1000px) {

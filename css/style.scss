@@ -580,6 +580,13 @@ body > section table {
 		border: 1px solid rgba(0,0,0,.3);
 		margin: 1em 0 0;
 
+		iframe:only-child {
+			display: block;
+			width: 100%;
+			min-height: 100%;
+			border: none;
+		}
+
 		input[type="number"] {
 			font-size: 150%;
 			max-width: 2em;
@@ -601,13 +608,6 @@ body > section table {
 
 		&.embedded {
 			padding: 0;
-
-			iframe {
-				display: block;
-				border: 0;
-				width: 100%;
-				min-height: 100%;
-			}
 		}
 	}
 
