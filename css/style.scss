@@ -564,7 +564,7 @@ body > section table {
 		font-size: 150%;
 	}
 
-	& > h6 {
+	h6 {
 		font: bold 120% $heading-font;
 
 		&::before {
@@ -576,7 +576,7 @@ body > section table {
 	.example-container {
 		position: relative;
 		transform: scale(1);
-		padding: 2.5em 2em 2em;
+		padding: 1.2em 1em 1em;
 		border: 1px solid rgba(0,0,0,.3);
 		margin: 1em 0 0;
 
@@ -611,42 +611,49 @@ body > section table {
 		}
 	}
 
-	@media (min-width: 1000px) {
-		&.side-by-side {
-			display: flex;
-			flex-flow: row wrap;
-			align-items: stretch;
-			justify-content: stretch;
-			position: relative;
-
-			& > h1,
-			& > h6,
-			& > header {
-				margin: 0;
-				flex: none;
-				width: 100%;
-				margin-bottom: .5em;
-			}
-
-			pre {
-				clip-path: none;
-				margin: 0 1em 0 0;
-				border: 1px solid rgba(0,0,0,.05);
-				border-radius: .3em;
-				font-size: 87%;
-				overflow: visible;
-
-				code {
-					tab-size: 2;
-				}
-			}
-
-			.example-container {
-				margin: 0;
-				flex: 1;
+	&.side-by-side {
+		@media (min-width: 1000px) {
+			& > .demo-container {
+				display: flex;
+				flex-flow: row;
+				align-items: stretch;
+				justify-content: stretch;
+				position: relative;
 			}
 		}
+
+		& > h1,
+		& > h2,
+		h6,
+		& > header {
+			margin: 0;
+			margin-bottom: .5em;
+		}
+
+		pre {
+			clip-path: none;
+			margin: 0 1em 0 0;
+			border: 1px solid rgba(0,0,0,.05);
+			border-radius: .3em;
+			font-size: 87%;
+			resize: horizontal;
+
+			@media (max-width: 1000px) {
+				margin-bottom: 1em;
+			}
+
+			code {
+				tab-size: 2;
+			}
+		}
+
+		.example-container {
+			margin: 0;
+			flex: 1;
+			min-width: 30%;
+		}
 	}
+
 }
 
 .docs > body > section:first-of-type:not([id]),

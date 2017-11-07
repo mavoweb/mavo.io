@@ -451,15 +451,15 @@ body > section table {
   .example > header > h1 {
     color: #ff0080;
     font-size: 150%; }
-  .example > h6 {
+  .example h6 {
     font: bold 120% Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif; }
-    .example > h6::before {
+    .example h6::before {
       content: "🍭 ";
       font-size: 90%; }
   .example .example-container {
     position: relative;
     transform: scale(1);
-    padding: 2.5em 2em 2em;
+    padding: 1.2em 1em 1em;
     border: 1px solid rgba(0, 0, 0, 0.3);
     margin: 1em 0 0; }
     .example .example-container input[type="number"] {
@@ -481,39 +481,41 @@ body > section table {
         width: 100%;
         min-height: 100%; }
   @media (min-width: 1000px) {
-    .example.side-by-side {
+    .example.side-by-side > .demo-container {
       display: -ms-flexbox;
       display: flex;
-      -ms-flex-flow: row wrap;
-      flex-flow: row wrap;
+      -ms-flex-flow: row;
+      flex-flow: row;
       -ms-flex-align: stretch;
       align-items: stretch;
       -ms-flex-pack: stretch;
       justify-content: stretch;
-      position: relative; }
-      .example.side-by-side > h1,
-      .example.side-by-side > h6,
-      .example.side-by-side > header {
-        margin: 0;
-        -ms-flex: none;
-        flex: none;
-        width: 100%;
-        margin-bottom: .5em; }
+      position: relative; } }
+  .example.side-by-side > h1,
+  .example.side-by-side > h2,
+  .example.side-by-side h6,
+  .example.side-by-side > header {
+    margin: 0;
+    margin-bottom: .5em; }
+  .example.side-by-side pre {
+    -webkit-clip-path: none;
+    clip-path: none;
+    margin: 0 1em 0 0;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: .3em;
+    font-size: 87%;
+    resize: horizontal; }
+    @media (max-width: 1000px) {
       .example.side-by-side pre {
-        -webkit-clip-path: none;
-        clip-path: none;
-        margin: 0 1em 0 0;
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        border-radius: .3em;
-        font-size: 87%;
-        overflow: visible; }
-        .example.side-by-side pre code {
-          -moz-tab-size: 2;
-          tab-size: 2; }
-      .example.side-by-side .example-container {
-        margin: 0;
-        -ms-flex: 1;
-        flex: 1; } }
+        margin-bottom: 1em; } }
+    .example.side-by-side pre code {
+      -moz-tab-size: 2;
+      tab-size: 2; }
+  .example.side-by-side .example-container {
+    margin: 0;
+    -ms-flex: 1;
+    flex: 1;
+    min-width: 30%; }
 
 .docs > body > section:first-of-type:not([id]),
 body > section#intro {

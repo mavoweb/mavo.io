@@ -48,6 +48,11 @@ $$(".example:not(.manual)").forEach((example, i) => {
 
 	var code = $("script[type='text/plain']", example);
 
+	$.create({
+		className: "demo-container",
+		around: code
+	});
+
 	var container = $.create({
 		className: "example-container",
 		innerHTML: code.textContent,
@@ -56,8 +61,7 @@ $$(".example:not(.manual)").forEach((example, i) => {
 
 	var mavoRoot = $("[mv-app], [mv-storage]", container) || container;
 
-	if (!example.classList.contains("no-fixup")) {
-		mavoRoot.classList.add("debug-saving");
+	if (mavoRoot && !example.classList.contains("no-fixup")) {
 		mavoRoot.setAttribute("mv-storage", mavoRoot.getAttribute("mv-storage") || "local");
 		mavoRoot.setAttribute("mv-app", mavoRoot.getAttribute("mv-app") || "");
 	}
