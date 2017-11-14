@@ -1,0 +1,44 @@
+@import "../../css/_vars.scss";
+
+.countdown {
+
+	margin: 0;
+
+	li {
+		list-style: none;
+		display: inline;
+	}
+
+	// li:not([hidden]) ~ li::before {
+	// 	content: ", ";
+	// }
+
+	span {
+		font-weight: bold;
+	}
+}
+
+
+[property="event"] {
+	padding: 1em;
+	margin: 1em 0;
+	background: hsl(220, 10%, 90%);
+	text-align: center;
+	font-size: 200%;
+
+	p {
+		margin: 0;
+	}
+}
+
+[property="name"] {
+	font-size: 150%;
+}
+
+.date {
+	font-style: italic;
+}
+
+.mv-add-event {
+	font-size: 200%;
+}

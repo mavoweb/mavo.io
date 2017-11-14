@@ -1,0 +1,27 @@
+.countdown {
+  margin: 0; }
+  .countdown li {
+    list-style: none;
+    display: inline; }
+  .countdown span {
+    font-weight: bold; }
+
+[property="event"] {
+  padding: 1em;
+  margin: 1em 0;
+  background: #e3e5e8;
+  text-align: center;
+  font-size: 200%; }
+  [property="event"] p {
+    margin: 0; }
+
+[property="name"] {
+  font-size: 150%; }
+
+.date {
+  font-style: italic; }
+
+.mv-add-event {
+  font-size: 200%; }
+
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,25 @@
+@@include('_head-demo.html', {
+	"name": "Countdown"
+})
+
+<main mv-app="countdown" mv-storage="local" mv-mode="edit">
+	<article property="event" mv-multiple>
+		[if(difference < 0, 'It has been', 'It is')]
+		<ul class="countdown">
+			<li hidden="[!years]"><span property="years">[years(difference)]</span> years</li>
+			<li hidden="[!months]"><span property="months">[months(difference) mod 12]</span> months</li>
+			<li hidden="[!days]"><span property="days">[days(difference) mod 31]</span> days</li>
+			<li hidden="[!hours]"><span property="hours">[hours(difference) mod 24]</span> hours</li>
+			<li hidden="[!minutes]"><span property="minutes">[minutes(difference) mod 60]</span> minutes</li>
+			<li hidden="[!seconds]"><span property="seconds">[round(difference mod 60)]</span> seconds</li>
+		</ul>
+
+		<p>[if(difference < 0, since, until)]</p>
+
+		<strong property="name">The holidays!</strong>
+		<p class="date"><time property="dateTime" datetime="2017-12-23 08:00"></time></p>
+		<meta property="difference" content="[dateTime - $now]" />
+	</article>
+</main>
+
+@@include('_footer-demo.html')
