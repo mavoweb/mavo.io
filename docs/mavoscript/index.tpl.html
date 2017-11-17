@@ -18,40 +18,51 @@
 
 	<p>Special properties are available on every Mavo and start with a dollar ($) sign. Some of them have more information that you can access with a dot.</p>
 
-	<table>
+	<table mv-app>
 		<thead>
 			<tr>
 				<th>Property</th>
 				<th>Description</th>
+				<th>Current value(s)</th>
 			</tr>
 		</thead>
 		<tr>
 			<td><code>$now</code></td>
 			<td>Current date and time as number of milliseconds since January 1st, 1970. Mostly useful with <a href="#date-and-time-functions">date and time functions</a> or the <code>mod</code> operator. Updated every 100ms.</td>
+			<td>[$now]</td>
 		</tr>
 		<tr>
-			<td><code>$hash</code></td>
-			<td>The URL hash (without the <code>#</code> sign)</td>
-		</tr>
-		<tr>
-			<td><code>$mouse</code></td>
-			<td>Mouse coordinates relative to the viewport. Use <code>$mouse.x</code> and <code>$mouse.y</code> to get them.</td>
+			<td><code>$startup</code></td>
+			<td>The value of <code>$now</code> when the page loaded.</td>
+			<td>[$startup]</td>
 		</tr>
 		<tr>
 			<td><code>$today</code></td>
 			<td>Current date.</td>
+			<td>[$today]</td>
 		</tr>
 		<tr>
+			<td><code>$hash</code></td>
+			<td>The URL hash (without the <code>#</code> sign)</td>
+			<td>[$hash]</td>
+		</tr>
+		<tr>
+			<td><code>$mouse</code></td>
+			<td>Mouse coordinates relative to the viewport. Use <code>$mouse.x</code> and <code>$mouse.y</code> to get them.</td>
+			<td>[$mouse.x], [$mouse.y]</td>
+		</tr>
+
+		<tr>
 			<td><code>$index</code></td>
-			<td>If inside a collection, the closest item’s position in its collection, starting from 0.</td>
+			<td colspan="2">If inside a collection, the closest item’s position in its collection, starting from 0.</td>
 		</tr>
 		<tr>
 			<td><code>$previous</code></td>
-			<td>If inside a collection, the closest item’s previous item.</td>
+			<td colspan="2">If inside a collection, the closest item’s previous item.</td>
 		</tr>
 		<tr>
 			<td><code>$next</code></td>
-			<td>If inside a collection, the closest item’s next item.</td>
+			<td colspan="2">If inside a collection, the closest item’s next item.</td>
 		</tr>
 	</table>
 </section>
