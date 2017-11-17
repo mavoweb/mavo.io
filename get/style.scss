@@ -1,6 +1,4 @@
 .questions {
-
-
 	& > article {
 		flex: 1;
 		border: 1px solid rgba(0,0,0,.2);
@@ -20,6 +18,41 @@
 			font-size: 75%;
 			font-weight: bold;
 			color: hsl(0, 50%, 50%);
+		}
+	}
+}
+
+#releases {
+	[property="release"] {
+		h2 {
+			display: flex;
+			
+			& > a {
+				flex: 1;
+			}
+		}
+	}
+
+	[property="tag_name"] {
+		margin-right: .5ch;
+	}
+
+	[property="created_at"] {
+		font-style: italic;
+		opacity: .6;
+
+		&::before {
+			content: "on ";
+		}
+	}
+
+	[property="body"]:empty {
+		display: block;
+
+		&::before {
+			content: "(No description)";
+			font-style: italic;
+			opacity: .6;
 		}
 	}
 }

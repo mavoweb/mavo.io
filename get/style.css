@@ -16,4 +16,27 @@
     font-weight: bold;
     color: #bf4040; }
 
+#releases [property="release"] h2 {
+  display: -ms-flexbox;
+  display: flex; }
+  #releases [property="release"] h2 > a {
+    -ms-flex: 1;
+    flex: 1; }
+
+#releases [property="tag_name"] {
+  margin-right: .5ch; }
+
+#releases [property="created_at"] {
+  font-style: italic;
+  opacity: .6; }
+  #releases [property="created_at"]::before {
+    content: "on "; }
+
+#releases [property="body"]:empty {
+  display: block; }
+  #releases [property="body"]:empty::before {
+    content: "(No description)";
+    font-style: italic;
+    opacity: .6; }
+
 /*# sourceMappingURL=style.css.map */
