@@ -29,39 +29,47 @@ thead th:first-child {
 <section>
 	<h1>Core attributes</h1>
 	<p>These attributes are crucial. Most Mavo apps need them and elements with them are special.
-		The <em>Live?</em> column refers to whether Mavo will react to changes to this attribute (e.g. via <a href="/docs/expressions">expressions</a>).</p>
+
+	<p class="note">The <strong><em>Live?</em></strong> column refers to whether changes to the value of this attribute (e.g. via <a href="/docs/expressions">expressions</a> or even custom JavaScript) will have an effect.
+	To keep performance reasonable and Mavo small, Mavo is only monitoring changes in attributes for which this is useful.
+	If your use case requires a certain attribute to be live but it isn’t, <a href="https://twitter.com/mavoweb">let us know</a> and we might make it happen!
 
 	<table class="attributes">
 		<thead>
 			<tr>
-				<th>Attribute</th>
-				<th style="width: 65%;">Purpose</th>
-				<th>Live?</th>
+				<th style="width: 11%">Attribute</th>
+				<th style="width: 10%">On</th>
+				<th>Purpose</th>
+				<th style="width: 5%;">Live?</th>
 				<th style="width: 6em">Read more</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
 				<td><code>mv-app</code></td>
+				<td>Mavo root</td>
 				<td>Allows you to assign an id to your app, which is used in a number of places. The element with this attribute is called the <strong>Mavo root</strong>.</td>
 				<td></td>
 				<td><a href="/docs/primer/#mv-app">Primer</a></td>
 			</tr>
 			<tr>
-				<td><code>mv-storage</code></td>
-				<td>Tells Mavo where data is stored. It’s used on the Mavo root with any of the accepted values or optionally on individual properties to prevent them from being stored (<code>mv-storage="none"</code>).</td>
-				<td>✓</td>
-				<td><a href="/docs/storage">Storage</a></td>
-			</tr>
-			<tr>
 				<td><code>property</code></td>
+				<td></td>
 				<td>Names elements that will be saved, edited, or used in <a href="/docs/expressions">expressions</a>. Elements with this attribute are called <strong>Properties</strong>.</td>
 
 				<td></td>
 				<td><a href="/docs/properties">Properties</a></td>
 			</tr>
 			<tr>
+				<td><code>mv-storage</code></td>
+				<td>Mavo root, properties</td>
+				<td>Tells Mavo where data is stored. It’s used on the Mavo root with any of the accepted values or optionally on individual properties to prevent them from being stored (<code>mv-storage="none"</code>).</td>
+				<td>✓</td>
+				<td><a href="/docs/storage">Storage</a></td>
+			</tr>
+			<tr>
 				<td><code>typeof</code></td>
+				<td>Properties</td>
 				<td>The value of this property element is not an attribute or its text content, but the union of the values of the properties inside it.
 					This is almost always inferred from the structure of your properties and added automatically, but you can use it to force an element to be a group, or to declare the type of the group (e.g. <code>typeof="Person"</code>) for better semantic value.
 					Elements with this attribute are called <strong>groups</strong>.</td>
@@ -71,10 +79,11 @@ thead th:first-child {
 			</tr>
 			<tr>
 				<td><code>mv-multiple</code></td>
-				<td>Makes elements repeatable. Only has meaning on property elements. Elements with this attribute are called <strong>Collections</strong>.</td>
-
+				<td>Properties</td>
+				<td>Makes elements repeatable. Only has meaning on property elements, if there is no <code>property</code> attribute, one will be added automatically with a generated name like "collection".
+					Elements with this attribute are called <strong>Collections</strong>.</td>
 				<td></td>
-				<td><a href="/docs/primer">Primer</a></td>
+				<td><a href="/docs/collections">Collections</a></td>
 			</tr>
 
 		</tbody>
@@ -83,10 +92,12 @@ thead th:first-child {
 
 <section>
 	<h1>Other attributes</h1>
-	<p>These are attributes you can use to further customize your Mavo app.
-		The <em>Live?</em> column refers to whether Mavo will react to changes to this attribute (e.g. via <a href="/docs/expressions">expressions</a>).
-		<strong>“Initially”</strong> means that you can use expressions to set the value of that attribute until Mavo uses it, but it will not respond to future changes to the attribute.
-	</p>
+	<p>These are attributes you can use to further customize your Mavo app.</p>
+
+	<p class="note">The <strong><em>Live?</em></strong> column refers to whether changes to the value of this attribute (e.g. via <a href="/docs/expressions">expressions</a> or even custom JavaScript) will have an effect.
+	To keep performance reasonable and Mavo small, Mavo is only monitoring changes in attributes for which this is useful.
+	<strong>“Initially”</strong> means that you can use expressions to set the value of that attribute until Mavo uses it, but nothing will happen if it changes after that point.
+	If your use case requires a certain attribute to be live but it isn’t, <a href="https://twitter.com/mavoweb">let us know</a> and we might make it happen!
 
 	<table class="attributes">
 		<thead>
@@ -102,7 +113,7 @@ thead th:first-child {
 			<tr>
 				<td><code>mv-attribute</code></td>
 				<td>Properties, elements with <code>mv-value</code></td>
-				<td>Override the defaults for which attribute holds the data for this element. For no attribute (element content), specify <code>"null"</code>.</td>
+				<td>Override the defaults for which attribute holds the data for this element. For no attribute (element content), specify <code>"none"</code>.</td>
 				<td></td>
 				<td><a href="/docs/properties">Properties</a></td>
 
@@ -251,6 +262,11 @@ thead th:first-child {
 				<td>Mavo will start in edit mode (no need to click the Edit button). Useful for apps that are almost always in edit mode, but still need a read mode (if read mode is not needed at all, use <code>mv-mode</code> instead).</td>
 			</tr>
 			<tr>
+				<td><code>mv-fixed</code></td>
+				<td>Mavo toolbar</td>
+				<td>Style the toolbar as fixed at the top of the screen (always visible).</td>
+			</tr>
+			<tr>
 				<td><code>mv-logged-in</code></td>
 				<td></td>
 				<td>Only show element to logged in users.</td>
@@ -284,7 +300,7 @@ thead th:first-child {
 			</tr>
 			<tr>
 				<td><code>mv-clicked</code></td>
-				<td>Properties that are <code>&lt;button></code> elements or have a <code>.counter</code></td>
+				<td>Properties that are <code>&lt;button></code> elements or have a <code>counter</code> class.</td>
 				<td>The number of times the button has been clicked.</td>
 			</tr>
 			<tr>
@@ -314,10 +330,6 @@ thead th:first-child {
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td><code>mv-focus-within</code></td>
-				<td>Any element is focused or contains an element that is. Shim for <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-within"><code>:focus-within</code></a></td>
-			</tr>
 			<tr>
 				<td><code>mv-target-within</code></td>
 				<td>Any element that matches the CSS <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:target"><code>:target</code></a> pseudo-class or contains an element that does.</td>
