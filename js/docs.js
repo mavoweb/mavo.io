@@ -55,3 +55,9 @@ if (!document.body.classList.contains("no-toc")) {
 		before: $("body > section:first-of-type")
 	});
 }
+
+$$("ul.index > li > a").forEach(function(a) {
+	if (a.pathname.replace(/\/$/, "") === location.pathname.replace(/\/$/, "")) {
+		a.parentNode.remove();
+	}
+});
