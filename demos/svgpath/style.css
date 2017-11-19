@@ -1,5 +1,5 @@
 @charset "UTF-8";
-body > header h1 a, body > header h1 button, .editor > h1 details summary {
+body > header h1 a, body > header h1 button, body > header h1 .mv-button, .editor > h1 details summary {
   display: inline-block;
   vertical-align: bottom;
   padding: .4em .8em;
@@ -13,7 +13,7 @@ body > header h1 a, body > header h1 button, .editor > h1 details summary {
   font-size: .8rem;
   line-height: 1.25;
   font-weight: bold; }
-  body > header h1 a:hover, body > header h1 button:hover, .editor > h1 details summary:hover, body > header h1 a:focus, body > header h1 button:focus, .editor > h1 details summary:focus {
+  body > header h1 a:hover, body > header h1 button:hover, body > header h1 .mv-button:hover, .editor > h1 details summary:hover, body > header h1 a:focus, body > header h1 button:focus, body > header h1 .mv-button:focus, .editor > h1 details summary:focus {
     background: #737b8c; }
 
 body {
@@ -39,12 +39,13 @@ body > header {
   color: white; }
   body > header .mv-bar {
     display: inline; }
-    body > header .mv-bar .mv-revert::before {
-      content: "❌ "; }
-    body > header .mv-bar .mv-save::before {
-      content: "💾 "; }
     body > header .mv-bar .mv-clear::before {
-      content: "🗑️ "; }
+      content: "❌ ";
+      vertical-align: 0; }
+    body > header .mv-bar .mv-export::before {
+      content: "⬇️ "; }
+    body > header .mv-bar .mv-import::before {
+      content: "⬆️ "; }
   body > header h1 {
     -ms-flex: 1;
     flex: 1;
@@ -52,14 +53,14 @@ body > header {
     font-size: 130%;
     line-height: 1;
     letter-spacing: -.05em; }
-    body > header h1 a, body > header h1 button {
+    body > header h1 a, body > header h1 button, body > header h1 .mv-button {
       padding: .5em .6em .3em;
       border: 0;
       background: white;
       letter-spacing: normal; }
-      body > header h1 a:hover, body > header h1 a:active, body > header h1 a:focus, body > header h1 button:hover, body > header h1 button:active, body > header h1 button:focus {
+      body > header h1 a:hover, body > header h1 a:active, body > header h1 a:focus, body > header h1 button:hover, body > header h1 button:active, body > header h1 button:focus, body > header h1 .mv-button:hover, body > header h1 .mv-button:active, body > header h1 .mv-button:focus {
         background: rgba(255, 255, 255, 0.4); }
-      body > header h1 a:not(:hover):not(:active):not(:focus), body > header h1 button:not(:hover):not(:active):not(:focus) {
+      body > header h1 a:not(:hover):not(:active):not(:focus), body > header h1 button:not(:hover):not(:active):not(:focus), body > header h1 .mv-button:not(:hover):not(:active):not(:focus) {
         color: #737b8c; }
   body > header input[type=number] {
     background: rgba(255, 255, 255, 0.3);

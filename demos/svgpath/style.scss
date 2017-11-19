@@ -42,16 +42,25 @@ body > header {
 	.mv-bar {
 		display: inline;
 
-		.mv-revert::before {
-			content: "❌ ";
-		}
-
-		.mv-save::before {
-			content: "💾 ";
-		}
+		// .mv-save::before {
+		// 	content: "💾 ";
+		// }
 
 		.mv-clear::before {
-			content: "🗑️ ";
+			content: "❌ ";
+			vertical-align: 0;
+		}
+
+		.mv-export {
+			&::before {
+				content: "⬇️ ";
+			}
+		}
+
+		.mv-import {
+			&::before {
+				content: "⬆️ ";
+			}
 		}
 	}
 
@@ -62,7 +71,7 @@ body > header {
 		line-height: 1;
 		letter-spacing: -.05em;
 
-		a, button {
+		a, button, .mv-button {
 			@extend %button;
 			padding: .5em .6em .3em;
 			border: 0;
