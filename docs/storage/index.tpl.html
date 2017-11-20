@@ -42,7 +42,7 @@
 		<figcaption>Mavo takes care of authentication when using Github as your storage backend.</figcaption>
 	</figure>
 
-	<p>The Github backend provides remote storage, which is useful if you need to share data with other people.
+	<p>The Github backend provides remote storage, which is useful if you need to share data with other people and a history of all edits, which is useful for recovering past data if you regret your changes at any point.
 		Mavo will provide login controls and will not allow any edits until the viewer has logged in.
 		If the file and/or repo does not exist, Mavo will create it upon saving.
 	</p>
@@ -57,29 +57,44 @@
 
 	<p>
 		<strong>You don’t need to understand how Github works to use it for storing your data.</strong>
-		If you don’t know what a repo or a branch is, do not worry. Just sign up for a <a href="http://github.com">Github</a> account, and specify <code>https://github.com/[username]</code> as the value of the <code>mv-storage</code> attribute.
-		Mavo will automatically create an <code>mv-data</code> repo for you and a file to store your data named <code>[appname].json</code> where <code>[appname]</code> is the <a href="/docs/primer/#mv-app">name of your app</a>.
+		If you don’t know what a repo or a branch is, do not worry. Just sign up for a <a href="http://github.com">Github</a> account, and specify <code>https://github.com/<em>USERNAME</em></code> as the value of the <code>mv-storage</code> attribute.
+		Mavo will automatically create an <code>mv-data</code> repo for you and a file to store your data named <code><em>APP_ID</em>.json</code> where <code><em>APP_ID</em></code> is the <a href="/docs/primer/#mv-app">name of your app</a>.
 	</p>
 
 	<p>If you <em>do</em> understand how Github works, you can specify where your data should be stored with more precision:</p>
 
 	<dl>
-		<dt><code>https://github.com/[username]/[reponame]</code></dt>
-		<dd>Mavo will create a file called <code>[appname].json</code> in that repository.</dd>
+		<dt><code>https://github.com/<em>USERNAME</em>/<em>REPO_NAME</em></code></dt>
+		<dd>Mavo will create a file called <code><em>APP_ID</em>.json</code> in that repository.</dd>
 
-		<dt><code>https://github.com/[username]/[reponame]/[filename]</code></dt>
+		<dt><code>https://github.com/<em>USERNAME</em>/<em>REPO_NAME</em>/<em>FILE_NAME</em></code></dt>
 		<dd>Mavo will assume a default branch of <code>master</code></dd>
 
-		<dt><code>https://github.com/[username]/[reponame]/blob/[branch]/[filename]</code></dt>
+		<dt><code>https://github.com/<em>USERNAME</em>/<em>REPO_NAME</em>/blob/<em>BRANCH</em>/<em>FILE_NAME</em></code></dt>
 		<dd>The URL Github gives you when using its file browser. As specific as it gets, Mavo makes no assumptions.</dd>
 
-		<dt><code>https://raw.githubusercontent.com/[username]/[reponame]/[branch]/[filename]</code></dt>
+		<dt><code>https://raw.githubusercontent.com/<em>USERNAME</em>/<em>REPO_NAME</em>/<em>BRANCH</em>/<em>FILE_NAME</em></code></dt>
 		<dd>The URL that shows when you click the button <em>Raw</em> from the Github file browser.</dd>
 	</dl>
 
-	<p class="note">Note that <em>[filename]</em> above could include a path, e.g. <code>foo/bar/baz.json</code>.</p>
+	<p class="note">Terms in <em>UPPERCASE_AND_ITALIC</em> indicate that you are expected to replace them with the actual values (e.g. your username). Note that <em><em>FILE_NAME</em></em> above could include a path, e.g. <code>foo/bar/baz.json</code>.</p>
 
-	<p>Github Pages URLs (<code>https://[username].github.io/[reponame]/[filename]</code>) are not supported, because it’s impossible for Mavo to figure out where to save the data just from the Github Pages URL.</p>
+	<p>Github Pages URLs (<code>https://<em>USERNAME</em>.github.io/<em>REPO_NAME</em>/<em>FILE_NAME</em></code>) are not supported, because it’s impossible for Mavo to figure out where to save the data just from the Github Pages URL.</p>
+
+	<!-- <h2>Github Enterprise</h2>
+
+	<p>Mavo <em>should</em> work with Github Enterprise, although this has not been exhaustively tested. As always, if you run into any issues, please <a href="https://github.com/mavoweb/mavo/issues/new">report a bug</a>!</p>
+	<p>Because Github Enterprise could reside in any URL, it’s impossible for Mavo to tell just by looking at the URL. Therefore, you should also set <code>mv-storage=id="github"</code> alongside <code>mv-storage</code> (same for <code>mv-source</code> or <code>mv-init</code>).</p>
+
+	<script type="text/plain" class="language-markup">
+		<div mv-app
+		     mv-storage="https://github.mit.edu/haystack/site-2007/data.json"
+		     mv-storage-id="github">
+			...
+		</div>
+	</script>
+
+	<p class="warning">Note that if your Github Enterprise site requires some kind of special authentication (e.g. certificates), Mavo may not work with it.</p> -->
 </section>
 
 <section>
@@ -148,7 +163,7 @@
 		For example, here is <a href="/demos/todo?storage=local">the To-Do list from the demos with a local data store</a>.
 	</p>
 	<p>
-		While the <code>storage</code>, <code>source</code>, and <code>init</code> URL parameters only work for the first Mavo app on the page, you can use <code>[appname]-storage</code>, <code>[appname]-source</code>, and <code>[appname]-init</code> for any Mavo app, regardless of its placement on the page.
+		While the <code>storage</code>, <code>source</code>, and <code>init</code> URL parameters only work for the first Mavo app on the page, you can use <code><em>APP_ID</em>-storage</code>, <code><em>APP_ID</em>-source</code>, and <code><em>APP_ID</em>-init</code> for any Mavo app, regardless of its placement on the page.
 		For example, here is <a href="/demos/todo?todo-storage=local">the local To-Do list again</a>, using URL parameters that include the app name.
 	</p>
 </section>
