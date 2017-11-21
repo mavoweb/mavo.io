@@ -937,6 +937,69 @@
 			]
 		},
 		{
+			"name": "Mavo.Plugins",
+			"description": "Static class with helpers for loading or creating plugins.",
+			"member": [
+				{
+					"name": "url",
+					"type": "String",
+					"static": true,
+					"role": "property",
+					"description": "Domain from which Plugins are loaded. Default value is `\"https://plugins.mavo.io\"`.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "loaded",
+					"type": "Object",
+					"static": true,
+					"role": "property",
+					"description": "Plugins currently loaded.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "plugins",
+					"type": "Set",
+					"static": false,
+					"role": "property",
+					"description": "ids of plugins loaded or loading via the `mv-plugins` attribute.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "load",
+					"static": true,
+					"role": "function",
+					"description": "Load all plugins called via the `mv-plugins` attribute. Mostly used internally.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "register",
+					"static": true,
+					"role": "function",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "Mavo.UI.Bar",
 			"filename": "ui.bar.js",
 			"description": "Class for the Mavo toolbar.",
