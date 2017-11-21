@@ -1,7 +1,7 @@
 @@include('_head-docs.html', {
 	"title": "Writing Plugins"
 })
-<body class="language-markup">
+<body class="language-javascript">
 
 @@include('_header.html')
 
@@ -22,256 +22,141 @@
 </section>
 
 <section>
+	<h1>Declaring a plugin</h1>
+
+	<p>You need to call <code>Mavo.Plugins.register(<em>PLUGIN_ID</em>)</code>, where <em>PLUGIN_ID</em> is an alphanumeric unique name for your plugin (e.g. <code>"clear"</code> or <code>"locale-el"</code>).
+		People will be using this id in the <code>mv-plugins</code> attribute, so pick a good one!
+	</p>
+
+	<p>Name your file <code>mavo-<em>PLUGIN_ID</em>.js</code> so that <code>mv-plugins</code> knows where to find it.</p>
+
+	<p>This is the minium required, but <code>Mavo.Plugins.register()</code> also provides other conveniences which you can read about in the <a href="/docs/api/#Mavo.Plugins">API Documentation</a>.</p>
+
+	<p>Once your plugin is ready, don’t forget to add it to the <a href="https://plugins.mavo.io">Plugin Directory</a> and help others too!</p>
+</section>
+
+<section>
 	<h1>High-level extension points</h1>
 
-	<section>
-		<h1>Adding a new backend</h1>
+	<p>If your plugin is about one of the following things, you don’t need to become fully accustomed with Mavo’s internals, you just call the corresponding method and/or create the required class.</p>
 
-		<p>Backends specify where Mavo apps write and read data.</p>
 
-		<p>You can add a new backend to Mavo by creating a new subclass of Mavo.Backend:</p>
-		<pre>
-			<code class='language-javascript'>
-		(function($) {
-
-		if (!self.Mavo) {
-			return;
-		}
-
-		var _ = Mavo.Backend.register($.Class({
-			extends: Mavo.Backend,
-			id: "newMavoBackend", // your backend's name goes here
-
-			// more code goes here
-
-		}));
-
-		})(Bliss);
-			</code>
-		</pre>
-
-		<p>In order for Mavo to "find" your backend, add a <b>test</b> function, which checks the url to see which backend the Mavo app specified.</p>
-
-		<pre>
-			<code class='language-javascript'>
-		static: {
-			test: function(url) {
-				if(someConditionOnURL) { // add your condition here
-					return url;
-				}
-				else {
-					return false;
-				}
-			},
-		}
-			</code>
-		</pre>
-
-		<h2>Authentication</h2>
-
-		<p>Add authentication to your backend by implementing login and logout functions.</p>
-
-		<p>Before writing login and logout functions, add an <b>isAuthenticated</b> function that checks whether the user is already authenticated. (This will prevent users from being signed out every time they refresh the page.)</p>
-
-		<pre>
-			<code class='language-javascript'>
-		isAuthenticated: function() {
-			return !!this.accessToken;
-		},
-			</code>
-		</pre>
-
-		Another helpful function you may write is the <b>getUser</b> function, which sets the user field of your backend class. Although optional, the getUser function might be helpful for writing your login and logout functions.
-
-		<pre>
-			<code class='language-javascript'>
-		getUser: function() {
-			if (this.user) {
-				return Promise.resolve(this.user);
-			}
-
-			return this.request("user").then(info => {
-				this.user = { // replace the following fields with how you get username, name, profile picture, etc
-					username: info.getUsernameHere,
-					name: info.getNameHere,
-					avatar: info.getProfilePictureHere,
-					info
-				};
-
-				$.fire(this.mavo.element, "mavo:login", { backend: this });
-			});
-		},
-			</code>
-		</pre>
-
-		We can now use the isAuthenticated and getUser functions in our login and logout functions. For <b>login</b>, we first check whether a user is already authenticated, and if not, display a sign-in popup.
-
-		<pre>
-			<code class='language-javascript'>
-		login: function(passive) {
-			return this.ready.then(() => {
-				if(this.isAuthenticated()) {
-					return Promise.resolve();
-				}
-
-				return (new Promise((resolve, reject) => {
-					if (passive) {
-						if (this.accessToken) {
-							resolve(this.accessToken);
-						}
-					}
-
-					// add code here for displaying a sign-in popup
-				}))
-			});
-		},
-			</code>
-		</pre>
-
-		If you're using the oAuth protocol, an example login function would be
-
-		<pre>
-			<code class='language-javascript'>
-		login: function(passive) {
-		return this.oAuthenticate(passive)
-			.then(() => this.getUser())
-			.then(u => {
-				if (this.user) {
-					this.permissions.logout = true;
-
-					// add code for editing permissions here
-				}
-			});
-		},
-			</code>
-		</pre>
-
-		The <b>logout</b> function removes permissions, and deletes the user and accessToken. If you use the oAuth protocol, then logging out will look similar to:
-
-		<pre>
-			<code class='language-javascript'>
-		logout: function() {
-			return this.oAuthLogout().then(() => {
-				this.user = null; // clear any potential variables here
-			});
-		},
-			</code>
-		</pre>
-
-		If you're not using the oAuth protocol, an example logout function is:
-
-		<pre>
-			<code class='language-javascript'>
-		logout: function() {
-			if (this.isAuthenticated()) {
-				delete this.accessToken;
-				this.user = null;
-				this.permissions.off(["edit", "add", "delete", "save"]).on("login");
-				this.mavo.element._.fire("mavo:logout", {backend: this});
-			}
-			return Promise.resolve();
-		},
-			</code>
-		</pre>
-
-		<p>Finally, don't forget to call login in the <b>constructor</b>:</p>
-
-		<pre>
-			<code class='language-javascript'>
-		constructor: function() {
-			this.permissions.on(["read", "login"]); // be default, all users can read
-			this.login(true);
-		},
-			</code>
-		</pre>
-
-		<h2>Reading from storage</h2>
-
-		<p>Write a <b>get</b> function to specify how your backend reads data in. This function's implementation will vary widely from backend to backend.</p>
-
-		<pre>
-			<code class='language-javascript'>
-			get: function() {
-				// add code for reading in data from storage here
-			},
-			</code>
-		</pre>
-
-		<h2>Writing to storage</h2>
-
-		<p>Write a <b>put</b> or <b>store</b> function to specify how your backend writes data to a location.  Most likely, you will override <b> load</b>.</p>
-
-		<pre>
-			<code class='language-javascript'>
-		put: function(serialized, path = this.path, o = {}) {
-				// add code for writing serialized data to storage here
-		},
-			</code>
-		</pre>
-
-		However, you can override <b>store</b> if you don't need to seralize - in other words, your backend can store objects.
-
-		<pre>
-			<code class='language-javascript'>
-				store: function(data, {path, format = this.format} = {}) {
-				 // add code for writing unseralized data to storage here
-			},
-			</code>
-		</pre>
-	</section>
-	<section>
-		<h1>Adding a new element type</h1>
-	</section>
-
-	<section>
-		<h1>Adding a new toolbar button</h1>
-	</section>
+	<ul>
+		<li><a href="/docs/storage/#creating-your-own-storage-backend">Adding a new type of storage backend</a></li>
+		<li><a href="/docs/formats/#creating-your-own-formats">Adding a new data format</a></li>
+		<li><strong>Adding a new element type:</strong> <code>Mavo.Elements.register()</code>, details coming soon</li>
+		<li><strong>Adding a new toolbar button:</strong> Add a new property on <code>Mavo.UI.Bar.controls</code>, details coming soon</li>
+		<li><strong>Adding a new MavoScript function:</strong> Add a new function on <code>Mavo.Functions</code></li>
+	</ul>
 </section>
 
 <section>
 	<h1>Hooks</h1>
 
-	<p>Hooks are used as ways to execute specified code during various points of Mavo's execution.</p>
-	<p>The name of the hook gives a summary of where the hook will be executed (For example: the <code>group-init-start</code> hook executes after the constructor for a Mavo group has been called, but before any of the code within the constructor has been called) </p>
+	<p>Hooks are used as ways to execute custom code during various points of Mavo's execution.
+		The name of the hook gives a summary of where the hook will be executed and usually follows the scheme <code>"<em>CLASS_NAME</em>-<em>METHOD_NAME</em>-<em>LOCATION</em>"</code>.
+
+	<p>Some examples:</p>
+
+	<table>
+		<thead>
+			<th>Hook name</th>
+			<th>Executes</th>
+			<th>Definition</th>
+		</thead>
+		<tr>
+			<td><code>init-start</code></td>
+			<td>At the start of the <code>Mavo</code> constructor, after a few properties have been initialized.</td>
+			<td><a href="https://github.com/mavoweb/mavo/blob/master/src/mavo.js#L58">mavo.js</a></td>
+		</tr>
+		<tr>
+			<td><code>node-init-start</code></td>
+			<td>At the start of the <code>Mavo.Node</code> constructor, after a few properties have been initialized.</td>
+			<td><a href="https://github.com/mavoweb/mavo/blob/master/src/node.js#L45">node.js</a></td>
+		</tr>
+		<tr>
+			<td><code>group-init-start</code></td>
+			<td>At the start of the <code>Mavo.Group</code> constructor, after its parent constructor (<code>Mavo.Node</code>) has been called.</td>
+			<td><a href="https://github.com/mavoweb/mavo/blob/master/src/group.js#L11">group.js</a></td>
+		</tr>
+
+		<tr>
+			<td><code>node-getdata-end</code></td>
+			<td>Called right before <code>getData()</code> returns its value, to give plugins a chance to intercept and manipulate it.
+			Note that a hook can be called multiple times in different places.</td>
+			<td>
+				<a href="https://github.com/mavoweb/mavo/blob/master/src/collection.js#L80">collection.js</a>
+				<a href="https://github.com/mavoweb/mavo/blob/master/src/group.js#L125">group.js</a>
+				<a href="https://github.com/mavoweb/mavo/blob/master/src/primitive.js#L236">primitive.js</a>
+			</td>
+		</tr>
+	</table>
+
+	<p class="note">Links to the source code might not link to the exact hook definition as the code changes. Look a few lines above or below, it should be close.</p>
+
 	<section>
-		<h1>Adding a hook</h1>
-		<p>You can add a hook by calling <code>Mavo.hooks.add("hook-name", callback)</code>.  This will take the code in the <code>callback</code> function, and run it where <code>Mavo.hooks.run("hook-name", data)</code> is placed.</p>
-		<p>It is common to want to add multiple hooks without calling <code>Mavo.hooks.add</code> multiple times.  To do so, you can use the <code>hooks</code> attribute of the object passed into <code>Mavo.Plugins.register</code>.</p>
-		<p>As an example:
-			<pre>
-				Mavo.Plugins.register("plugin-name", {
-					ready: ...,
-					init: ...,
-					hooks: {
-						"hook1-name": function(data) {
-							// hook 1 callback
-						},
-						"hook2-name": function(data) {
-							// hook 2 callback
-						}
+		<h1>Adding code to a hook</h1>
+		<p>You can add a hook by calling <code>Mavo.hooks.add("hook-name", callback)</code>. If you have multiple hooks, you can also pass an object, like so:</p>
+
+		<pre><code>
+			Mavo.hooks.add({
+				"hook1-name": function(env) {
+					// hook 1 callback
+				},
+				"hook2-name": function(env) {
+					// hook 2 callback
+				}
+			});
+		</code></pre>
+
+		<p>You could also add code to hooks as one of the options in <code>Mavo.Plugins.register()</code>:</p>
+
+		<pre><code>
+			Mavo.plugins.register("myplugin", {
+				hooks: {
+					"hook1-name": function(env) {
+						// hook 1 callback
+					},
+					"hook2-name": function(env) {
+						// hook 2 callback
 					}
 				}
-			</pre>
+			});
+		</code></pre>
+
+		<p>The <code>env</code> object differs depending on the hook.
+			For hooks run in instance methods of classes, <code>env</code> is an object that contains references to all important local variables so you can modify them in your plugin.
+			If there are none, it just refers to the current instance.
+			The context of the function (the <code>this</code> variable) is the current instance.
+			This means that you could use a custom build of Mavo to experiment, then copy over your code to hooks without having to make changes to it.
 		</p>
 	</section>
-	<section>
-		<h1>Where exactly are hooks run</h1>
-		<p><code>Mavo.hooks.run("hook-name", data)</code> defines exactly where a hook will be called.  The <code>data</code> param will be passed as a param into the callback passed into <code>Mavo.hooks.add</code>.</p>
-		<p>This is not code that should need to be written for a plugin, but if you're curious exactly where a hook's code will be run, you can find out by looking for calls to <code>Mavo.hooks.run</code> in the codebase</p>
-	</section>
+
 	<section>
 		<h1>Available hooks</h1>
-		<p>Below we summarize hooks available for you to use, and where the hook will be called</p>
-		<p>TODO</p>
+
+		<p>Mavo calls <code>Mavo.hooks.run("hook-name", data)</code> to run the code added at a hook.
+			Therefore, you can <a href="https://github.com/mavoweb/mavo/search?utf8=%E2%9C%93&q=Mavo.hooks.run%28&type=">search Mavo’s code for <code>Mavo.hooks.run(</code></a> and you will find all available hooks as well as where in the code they are executed.</p>
+
+		<p>You never need to run <code>Mavo.hooks.run()</code> yourself, unless you want to create hooks for your own plugin, i.e. allow other people to create plugins of your plugin ("metaplugins"? "pluginception"? 😜).
+		In that case please prefix the hook names with your plugin id, to prevent collisions with other plugins.</p>
 	</section>
-</section>
 
-<section id="architecture">
-	<h1>Architecture Overview</h1>
+	<section>
+		<h1>Limitations</h1>
 
-	<p><strong>Danny, edit this</strong></p>
+		<p>Hooks cannot change the return value of a function, unless the calling code has enabled that via a property on <code>env</code>.
+			For example, in the <code>node-getdata-end</code> hook described above, all you need to do to change the return value is modify <code>env.data</code>.
 
-	<p>Now that you understand the basics, learn more about Mavo’s internals in the <a href="/docs/api">API Reference</a>.</p>
+		<p>In the future this may become possible, so avoid returning non-undefined values from your callbacks to make sure your plugin doesn’t break when this is enabled.</p>
+	</section>
+
+	<section>
+		<h1>Need a hook that doesn’t exist yet?</h1>
+
+		<p><a href="https://github.com/mavoweb/mavo/issues/new">Let us know</a> and chances are we’ll add it pretty soon.
+		Make sure to describe what you’re trying to do!</p>
+	</section>
 </section>
 
 @@include('_footer-docs.html')
