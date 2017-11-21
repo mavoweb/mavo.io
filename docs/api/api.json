@@ -938,6 +938,7 @@
 		},
 		{
 			"name": "Mavo.Plugins",
+			"filename": "plugins.js",
 			"description": "Static class with helpers for loading or creating plugins.",
 			"member": [
 				{
