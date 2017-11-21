@@ -991,9 +991,19 @@
 					"name": "register",
 					"static": true,
 					"role": "function",
+					"description": "Register a new plugin.",
 					"argument": [
 						{
-							"optional": false
+							"name": "id",
+							"optional": false,
+							"type": "String",
+							"description": "Plugin id that will be used to call it via `mv-plugins`."
+						},
+						{
+							"name": "options",
+							"optional": true,
+							"type": "Object",
+							"description": "Options object. The supported options are:\n\n- **ready** (`Promise`):\n- **dependencies** (`Array<Promise>`): \n- **init** (`Function`): Function to execute after all dependencies have loaded.\n-**hooks** (`Object`): Object with hook names and functions.\n-**extend** (`Object`): Want to add properties and methods to existing Mavo classes (or override existing methods)? Use this option! Keys are Mavo classe names without `Mavo.` (e.g. `\"Primitive\"`, \"Collection\" etc) and `\"Mavo\"` for the `Mavo` class."
 						}
 					]
 				}
