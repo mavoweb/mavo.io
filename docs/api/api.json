@@ -1003,7 +1003,7 @@
 							"name": "options",
 							"optional": true,
 							"type": "Object",
-							"description": "Options object. The supported options are:\n\n- **ready** (`Promise`):\n- **dependencies** (`Array<Promise>`): \n- **init** (`Function`): Function to execute after all dependencies have loaded.\n-**hooks** (`Object`): Object with hook names and functions.\n-**extend** (`Object`): Want to add properties and methods to existing Mavo classes (or override existing methods)? Use this option! Keys are Mavo classe names without `Mavo.` (e.g. `\"Primitive\"`, \"Collection\" etc) and `\"Mavo\"` for the `Mavo` class."
+							"description": "Options object. The supported options are:\n\n- **ready** (`Promise`):\n- **dependencies** (`Array<Promise>`): \n- **init** (`Function`): Function to execute after all dependencies have loaded.\n-**hooks** (`Object`): Object with [hook](/docs/plugins/#hooks) names and functions.\n-**extend** (`Object`): Want to add properties and methods to existing Mavo classes (or override existing methods)? Use this option! Keys are Mavo classe names without `Mavo.` (e.g. `\"Primitive\"`, \"Collection\" etc) and `\"Mavo\"` for the `Mavo` class."
 						}
 					]
 				}
