@@ -18,6 +18,10 @@ html {
 	@media (max-width:700px) {
 		font-size: 11px;
 	}
+
+	@media print {
+		background: none;
+	}
 }
 
 body {
