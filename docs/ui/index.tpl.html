@@ -56,20 +56,105 @@
 	<p>The Mavo toolbar is the dark toolbar that you get by default on every Mavo app, with controls like Edit, Save, Clear etc.
 		By default it is added inside the Mavo root, at the beginning.</p>
 
+	<h2>The mv-bar attribute: Remove buttons, enable optional buttons, change order, hide the toolbar</h2>
+
+	The <code>mv-bar</code> attribute controls which buttons are going to appear, if any.
+	It’s typically specified on the Mavo root.
+	Buttons are represented by their ids.
+	You can find the ids of the built-in buttons below, but keep in mind that <a href="https://plugins.mavo.io">Plugins</a> may add more:</code>
+
+	<table>
+		<thead>
+			<th>id</th>
+			<th>Default?</th>
+			<th>Button</th>
+		</thead>
+		<tr>
+			<td>status</td>
+			<td>✓</td>
+			<td>Displays currently logged in info for backends that support login</td>
+		</tr>
+		<tr>
+			<td>edit</td>
+			<td>✓</td>
+			<td>Edit button</td>
+		</tr>
+		<tr>
+			<td>save</td>
+			<td>✓</td>
+			<td>Save button</td>
+		</tr>
+		<tr>
+			<td>import</td>
+			<td></td>
+			<td>Upload a JSON file and override current data.</td>
+		</tr>
+		<tr>
+			<td>export</td>
+			<td></td>
+			<td>Download current data as a JSON file.</td>
+		</tr>
+		<tr>
+			<td>login</td>
+			<td>✓</td>
+			<td>Login button</td>
+		</tr>
+		<tr>
+			<td>logout</td>
+			<td>✓</td>
+			<td>Logout button</td>
+		</tr>
+	</table>
+
+	<p>Just including a series of ids in the <code>mv-bar</code> attribute <strong>restricts the toolbar to these buttons, in that order</strong>.</p>
+
+	<section class="example side-by-side">
+		<script type="text/plain">
+			<div mv-app mv-storage="local" mv-bar="import export edit save">
+				<div property="name">Lea</div>
+			</div>
+		</script>
+	</section>
+
+	<p>However, often we only want to <strong>add or remove a few buttons to the default set</strong>.
+		With the syntax above, we would need to remember all default ids and their default order in order to specify the buttons we want.
+		This is why <code>mv-bar</code> also supports a <strong>relative</strong> syntax: by starting the value with <code>with</code>
+		all values are interpreted as relative to the default set of buttons.
+		You can then remove buttons by using a <code>no-</code> prefix and add buttons by just specifying their ids.
+	</p>
+
+	<section class="example side-by-side">
+		<p>Note that the edit button is still there, even though we didn't have to explicitly specify it.</p>
+		<script type="text/plain">
+			<div mv-app mv-storage="local" mv-bar="with import export no-save">
+				<div property="name">Lea</div>
+			</div>
+		</script>
+	</section>
+
+	<p class="note">The <code>with</code> keyword can be omitted if there’s at least one <code>no-*</code>.</p>
+
+	<p class="tip">Want to <strong>hide the Mavo bar from logged out users</strong>? Use <code>mv-bar="no-login"</code>.
+		You can still log in without a Mavo toolbar, by adding <code>?login</code> to the page URL.
+		Note that browsers often block popups more aggressively when they are not triggered by a click so you may need to manually approve the authentication popup when using this.
+	</p>
+
+	<h2>Hide the toolbar completely</h2>
+
+	<p>Use <code>mv-bar="none"</code>.
+		You can then use classes like <code>mv-status</code>, <code>mv-edit</code>, <code>mv-save</code>, <code>mv-clear</code>, <code>mv-login</code>, <code>mv-logout</code> etc on your own buttons to provide the corresponding functionality.
+		However, note that if you choose to go this route, <strong>these buttons will be always shown</strong>, regardless of whether the user has permission for the corresponding action.
+		You can use an <code>mv-permissions</code> attribute selector to fix this.
+
 	<h2>Change its placement and/or use your own HTML element for it</h2>
 
 	<p>Just use <code>class="mv-bar mv-ui"</code> on your desired element.
 
-	<h2>Custom button elements</h2>
-
-	<p>Follow the process above for using a custom toolbar element, and include your custom button inside it with the appropriate <code>mv-[button id]</code> class.
-		For example, to have a Clear button with the text "Delete All" instead of "Clear", you could do:</p>
-
 	<section class="example side-by-side">
 		<script type="text/plain">
 			<div mv-app mv-storage="local">
-				<div class="mv-bar mv-ui">
-					<button class="mv-clear">Delete All</button>
+				<div class="mv-bar mv-ui" style="background: blue">
+					YOLO
 				</div>
 				<div property="name">Lea</div>
 			</div>
@@ -78,38 +163,36 @@
 
 	<h2>Remove default styling</h2>
 
-	<p>Follow the process above for using a custom toolbar element, and omit the <code>mv-ui</code> class.
-		This is useful when you want a completely different styling and would rather start from a blank state.
-		You can see an example of custom toolbar styling on the <a href="/demos/svgpath">SVG Paths</a> demo.</p>
+	<p>Follow the process above for using a custom toolbar element, and omit the <code>mv-ui</code> class:
 
-	<h2>Change button order or restrict buttons to a subset</h2>
-
-	<p>You can also use the <code>mv-bar</code> attribute on your Mavo root to customize which controls can appear and in what order.
-		The default value is  <code>"status edit save clear login logout"</code> which includes all controls available by default.
-		<a href="https://plugins.mavo.io">Plugins</a> can extend the list of available controls.
-		If you only want to hide a few buttons and not actually change the order or restrict the set of buttons displayed, read the following section.
-
-	<h2>Hide certain buttons</h2>
-
-	<p>You can use <code>no-</code> in front of a button id in <code>mv-bar</code> to hide the corresponding button.
-		For example, to hide the login button, you can use <code>no-login</code> the value:</p>
-
+	<section class="example side-by-side">
 		<script type="text/plain">
-			<div mv-app mv-bar="no-login">
-				...
+			<div mv-app mv-storage="local">
+				<div class="mv-bar">YOLO</div>
+				<div property="name">Lea</div>
 			</div>
 		</script>
+	</section>
 
-	<p>Conveniently, the toolbar will not be visible when it has no buttons, so this essentially <strong>hides the toolbar for logged out users</strong>.
-	You can still log in without a Mavo toolbar, by adding <code>?login</code> to the page URL.
-	Note that browsers often block popups more aggressively when they are not triggered by a click so you may need to manually approve the authentication popup when using this.</p>
+	<p>This is useful when you want a completely different styling and would rather start from a blank state.
+		You can see a real example of custom toolbar styling on the <a href="/demos/svgpath">SVG Paths</a> demo.</p>
 
-	<h2>Hide the toolbar completely</h2>
 
-	<p>Use <code>mv-bar="none"</code>.
-		You can then use classes like <code>mv-status</code>, <code>mv-edit</code>, <code>mv-save</code>, <code>mv-clear</code>, <code>mv-login</code>, <code>mv-logout</code> on your own buttons to provide the corresponding functionality.
-		However, note that if you choose to go this route, <strong>these buttons will be always shown</strong>, regardless of whether the user has permission for the corresponding action.
-		You can use an <code>mv-permissions</code> attribute selector to fix this.
+	<h2>Custom button elements</h2>
+
+	<p>Follow the process above for using a custom toolbar element, and include your custom button inside it with the appropriate <code>mv-<em>BUTTON_ID</em></code> class.
+		For example, to have a Save button with the text "Store" instead of "Save", you could do:</p>
+
+	<section class="example side-by-side">
+		<script type="text/plain">
+			<div mv-app mv-storage="local">
+				<div class="mv-bar mv-ui">
+					<button class="mv-save">Store</button>
+				</div>
+				<div property="name">Lea</div>
+			</div>
+		</script>
+	</section>
 </section>
 
 <section>
