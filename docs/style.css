@@ -97,21 +97,25 @@ body > section#intro p::before {
   content: "In a nutshell"; }
 
 section.advanced > h1,
-section.advanced > h2 {
+section.advanced > h2,
+h1.advanced,
+h2.advanced {
   color: black; }
   section.advanced > h1::before,
-  section.advanced > h2::before {
+  section.advanced > h2::before,
+  h1.advanced::before,
+  h2.advanced::before {
     content: "☠️ Advanced";
     display: inline-block;
     vertical-align: text-bottom;
-    padding: .25em .5em .2em;
+    padding: .25em .5em .15em;
     margin-left: -.3em;
     margin-right: .3em;
     border-radius: .3em;
     color: white;
     font: bold 55%/1.5 Roboto, "Helvetica Neue", sans-serif;
     text-transform: uppercase;
-    vertical-align: .35em;
+    vertical-align: .3em;
     margin-right: .5em;
     background: rgba(0, 0, 0, 0.85); }
 

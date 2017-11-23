@@ -508,10 +508,10 @@ body > footer {
 	}
 }
 
-.warning:not(.notice) {
+.warning {
 	border-left-color: $orange;
 
-	&::before {
+	&:not(.notice)::before {
 		content: "Warning: ";
 		color: $orange;
 	}

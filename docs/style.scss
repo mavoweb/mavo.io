@@ -145,13 +145,15 @@ body > section#intro {
 }
 
 section.advanced > h1,
-section.advanced > h2 {
+section.advanced > h2,
+h1.advanced,
+h2.advanced {
 	color: black;
 
 	&::before {
 		content: "☠️ Advanced";
 		@include run-in;
-		vertical-align: .35em;
+		vertical-align: .3em;
 		margin-right: .5em;
 		background: rgba(0,0,0,.85);
 	}
