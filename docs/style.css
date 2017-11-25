@@ -124,38 +124,77 @@ h2.advanced {
   -webkit-text-decoration-style: dashed;
   text-decoration-style: dashed; }
 
-#toc {
+h2 .to-contents {
+  display: inline-block;
+  vertical-align: .2em;
+  padding: .2em .3em;
+  border-radius: .3em;
+  margin-left: .5em;
+  background: rgba(255, 255, 255, 0.8);
+  mix-blend-mode: screen;
+  color: black;
+  font-size: 60%;
+  text-decoration: none; }
+  h2 .to-contents:hover, h2 .to-contents:focus {
+    background: white; }
+  @media (min-width: 1300px) {
+    h2 .to-contents {
+      border: 0;
+      clip: rect(0 0 0 0);
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute; } }
+
+@media (min-width: 1300px) and (max-width: 1650px) {
+  .has-contents body > section,
+  .has-contents body > div {
+    margin-left: 21rem;
+    margin-right: auto; } }
+
+#contents {
   margin: 1em;
   overflow: hidden;
   border-radius: .4em;
   background: rgba(37, 175, 244, 0.2);
+  overflow: auto;
   font-weight: bold;
   font-size: 80%; }
   @media (min-width: 1300px) {
-    #toc {
+    #contents {
       position: fixed;
       left: 0;
       bottom: 0;
       z-index: 1;
-      max-width: calc(50vw - 525px - 3rem);
-      max-height: calc(100vh - 3em); } }
-  #toc summary, #toc ul {
+      max-width: 20rem;
+      max-height: calc(100vh - 7rem); } }
+  @media (min-width: 1300px) and (min-width: 1650px) {
+    #contents {
+      max-width: calc(50vw - 525px - 3rem); } }
+  #contents a {
+    display: block;
+    padding: .5em .8em; }
+  #contents ul {
+    list-style: none;
+    overflow: auto;
     margin: 0;
-    padding: .6rem; }
-  #toc summary {
+    padding: 0; }
+  #contents > ul > li > a {
     background: rgba(37, 175, 244, 0.6);
-    color: rgba(255, 255, 255, 0.8);
     text-transform: uppercase;
-    cursor: pointer; }
-    #toc summary:focus {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none; }
+    #contents > ul > li > a:hover, #contents > ul > li > a:focus {
       background: #ff9500;
       outline: none; }
-  #toc ul {
-    list-style: none;
-    overflow: auto; }
-  #toc a {
-    display: block;
-    margin: .3em 0; }
+  #contents ul ul {
+    padding: .5em 0; }
+    #contents ul ul a {
+      padding-top: .2em; }
+  #contents li.current > a {
+    background: #25aff4; }
 
 .learn-more {
   font-weight: bold;

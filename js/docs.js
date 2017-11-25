@@ -21,43 +21,56 @@ $$("body > section > h1, body > section section > h1").forEach(function (h1) {
 	});
 });
 
-// Build Table Of Contents for current page
-if (!document.body.classList.contains("no-toc")) {
-	let toc = [];
+(function(){
+	var index = $("#contents ul");
 
-	$$("body > section:not(.no-toc) > h1").forEach(function (h1) {
-		toc.push($.create("li", {
+	if (index) {
+		document.documentElement.classList.add("has-contents");
+
+		$.create("a", {
+			href: "#contents",
+			textContent: "☰",
+			title: "Jump to table of contents",
+			className: "to-contents",
+			inside: $("body > h2")
+		});
+	}
+
+	// Build Table Of Contents for current page
+	if (index && !document.body.classList.contains("no-toc")) {
+		let toc = [];
+
+		$$("body > section:not(.no-toc) > h1").forEach(function (h1) {
+			toc.push($.create("li", {
+				contents: {
+					tag: "a",
+					href: "#" + h1.parentNode.id,
+					textContent: h1.textContent
+				}
+			}));
+		});
+
+		for (var a of $$("li > a", index)) {
+			if (a.pathname.replace(/\/$/, "") === location.pathname.replace(/\/$/, "")) {
+				var currentPage = a.parentNode;
+				break;
+			}
+		}
+
+		currentPage = currentPage || $.create("li", {
+			className: "current",
+			start: index,
 			contents: {
 				tag: "a",
-				href: "#" + h1.parentNode.id,
-				textContent: h1.textContent
+				textContent: "On This Page"
 			}
-		}));
-	});
+		});
 
-	$.create("nav", {
-		id: "toc",
-		className: "no-toc",
-		contents: {
-			tag: "details",
-			open: true,
-			contents: [
-				{
-					tag: "summary",
-					textContent: "On This Page"
-				},
-				{
-					tag: "ul",
-					contents: toc
-				}
-			]
-		},
-		before: $("body > section:first-of-type")
-	});
-}
+		currentPage.classList.add("current");
 
-$$("ul.index > li > a").forEach(function(a) {
-	if (a.pathname.replace(/\/$/, "") === location.pathname.replace(/\/$/, "")) {
-		a.parentNode.remove();
+		$.create("ul", {
+			contents: toc,
+			inside: currentPage
+		});
 	}
-});
+})();

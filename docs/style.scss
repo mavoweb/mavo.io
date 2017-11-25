@@ -164,50 +164,113 @@ h2.advanced {
 	text-decoration-style: dashed;
 }
 
-#toc {
+h2 .to-contents {
+	// Hamburger menu
+	display: inline-block;
+	vertical-align: .2em;
+	padding: .2em .3em;
+	border-radius: .3em;
+	margin-left: .5em;
+	background: hsla(0,0%,100%,.8);
+	mix-blend-mode: screen;
+	color: black;
+	font-size: 60%;
+	text-decoration: none;
+
+	&:hover,
+	&:focus {
+		background: white;
+	}
+
+	@media (min-width: 1300px) {
+		// Hide except from screen readers
+		@include hide-accessibly;
+	}
+}
+
+.has-contents {
+	body > section,
+	body > div {
+		@media (min-width: 1300px) and (max-width: 1650px) {
+			margin-left: 21rem;
+			margin-right: auto;
+		}
+	}
+}
+
+#contents {
 	margin: 1em;
 	overflow: hidden;
 	border-radius: .4em;
 	background: rgba($blue, .2);
+	overflow: auto;
 	font-weight: bold;
 	font-size: 80%;
 
 	@media (min-width: 1300px) {
-		& {
-			position: fixed;
-			left: 0;
-			bottom: 0;
-			z-index: 1;
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		z-index: 1;
+
+		max-width: 20rem;
+
+		@media (min-width: 1650px) {
 			max-width: calc(50vw - #{$content-width/2} - 3rem);
-			max-height: calc(100vh - 3em);
 		}
+
+		max-height: calc(100vh - 7rem);
 	}
 
-	summary, ul {
+	a {
+		display: block;
+		padding: .5em .8em;
+	}
+
+	ul {
+		list-style: none;
+		overflow: auto;
 		margin: 0;
-		padding: .6rem;
+		padding: 0;
 	}
 
-	summary {
+	& > ul > li > a {
 		background: rgba($blue, .6);
-		color: rgba(white, .8);
 		text-transform: uppercase;
-		cursor: pointer;
+		color: rgba(white, .8);
+		text-decoration: none;
 
+		&:hover {
+
+		}
+
+		&:hover,
 		&:focus {
 			background: $orange;
 			outline: none;
 		}
 	}
 
-	ul {
-		list-style: none;
-		overflow: auto;
+	ul ul {
+		// On this page links
+		padding: .5em 0;
+
+		a {
+			padding-top: .2em;
+		}
 	}
 
-	a {
-		display: block;
-		margin: .3em 0;
+	li.current {
+		& > a {
+			background: $blue;
+			// display: flex;
+			//
+			// &::after {
+			// 	content: "▾";
+			// 	flex: 1;
+			// 	text-align: right;
+			// }
+		}
 	}
 }
 

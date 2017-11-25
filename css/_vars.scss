@@ -24,6 +24,17 @@ $content-width: 1050px;
 	text-transform: uppercase;
 }
 
+@mixin hide-accessibly {
+	border: 0;
+	clip: rect(0 0 0 0);
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+}
+
 @function tint($color, $percentage) {
 	@return mix(white, $color, $percentage);
 }
