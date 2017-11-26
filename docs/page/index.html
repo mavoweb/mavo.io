@@ -14,7 +14,10 @@
 </head>
 
 
-<body mv-app="docs" mv-storage="https://github.com/mavoweb/mavo.io/docs/docs.json" class="language-markup" mv-path="page/id=[url('docs')]" mv-plugins="markdown">
+<body class="language-[defaultLanguage]" mv-app="docs"
+      mv-storage="https://github.com/mavoweb/mavo.io/docs/docs.json" mv-github-commit-prefix=""
+      mv-path="page/id=[url('docs')]"
+      mv-plugins="markdown">
 
 <header>
 	<h1 class="logo">
@@ -35,15 +38,16 @@
 
 
 <h2>
+	<meta property="id" mv-default="[idify(title)]">
 	<span property="title"></span>
 </h2>
 
-<section>
-	<p property="summary"></p>
-</section>
+<section property="summary" id="intro" class="markdown"></section>
 
 <section>
 	<div class="mv-bar mv-ui" mv-bar="with export no-login"></div>
+
+	<meta property="defaultLanguage" mv-default="markup">
 </section>
 
 <section property="section" mv-multiple id="[id]">
@@ -68,7 +72,7 @@
 		document.title = evt.value + " - Mavo Documentation";
 	});
 </script>
-
+<script src="/js/markdown-docs.js"></script>
 <aside id="contents" class="no-toc">
 	<ul class="index">
 	<li><a href="/docs/primer">Primer</a></li>
