@@ -2,10 +2,10 @@
 <html lang="en" class="docs">
 <head>
 	<meta charset="UTF-8">
-	<title>Data Migration - Mavo Documentation</title>
+	<title> - Mavo Documentation</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css" />
-	<link rel="stylesheet" href="../../css/style.css" />
+	<link rel="stylesheet" href="../css/style.css" />
 	<link rel="icon" href="/favicon.ico">
 
 	<link rel='stylesheet' href='/docs/style.css'>
@@ -14,19 +14,19 @@
 </head>
 
 
-<body class="language-markup">
+<body mv-app="docs" mv-source="https://github.com/mavoweb/mavo.io/docs/docs.json" class="language-markup" mv-path="page/id=[url('docs')]" mv-plugins="markdown">
 
 <header>
 	<h1 class="logo">
-		<a href="/"><img src="../../logo.svg" alt="Mavo"></a>
+		<a href="/"><img src="../logo.svg" alt="Mavo"></a>
 	</h1>
 	<nav>
-	<a href="../../docs/primer">Get started</a>
-	<a href="../../docs">Docs</a>
-	<a href="../../demos">Demos</a>
-	<a href="../../faq">FAQ</a>
+	<a href="../docs/primer">Get started</a>
+	<a href="../docs">Docs</a>
+	<a href="../demos">Demos</a>
+	<a href="../faq">FAQ</a>
 	<a href="https://plugins.mavo.io">Plugins</a>
-	<a href="../../get">Get Mavo</a>
+	<a href="../get">Get Mavo</a>
 	<a href="https://play.mavo.io">Play!</a>
 	<a class="github-button" href="https://github.com/mavoweb/mavo" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star mavoweb/mavo on GitHub">Star</a>
 </nav>
@@ -34,37 +34,40 @@
 </header>
 
 
-<h2>Data Migration</h2>
+<h2>
+	<span property="title"></span>
+</h2>
 
 <section>
-	<p>
-		Often you want to change your Mavo HTML after you’ve saved data.
-		Mavo will try its best to associate your old data with your new app, but it may sometimes need a helping hand.
-	</p>
-</section>
-
-<section>
-	<h1>Single property ↔ Collection</h1>
-
-	<p>When converting a single property to/from a collection (i.e. adding or removing <code>mv-multiple</code>), you don’t need to do anything, Mavo automatically handles it.</p>
-
-	<p>If you are <strong>removing</strong> <code>mv-multiple</code> and your data contains multiple items, Mavo will only display the first item. However, the rest will be retained, in case you change your mind later.</p>
+	<p property="summary"></p>
 </section>
 
 <section>
-	<h1>Adding or removing properties</h1>
-
-	<p>Adding and removing properties from your HTML also works automatically.
-	In the case of removing a property from your HTML, its saved data will be retained, in case you change your mind in the future.
-	Therefore, if you decide to re-add it later, its data will still be there.</p>
+	<div class="mv-bar mv-ui" mv-bar="with export"></div>
 </section>
 
-<section id="mv-alias">
-	<h1>Renaming properties: The mv-alias attribute</h1>
+<section property="section" mv-multiple id="[id]">
+	<h1>
+		<meta property="id" mv-default="[idify(title)]">
+		<a href="#[id]">
+			<span property="title"></span>
+		</a>
+	</h1>
 
-	<p>When you rename properties, your old data is still stored under the previous property name and Mavo has no way of associating the two, since it cannot "see" the previous version of your HTML, only the current one.
-	You could help it rename the property by using <code>mv-alias="oldPropertyName"</code>. Then, to migrate your data, load your app, save, and then you can remove the <code>mv-alias</code> attribute from your HTML.</p>
+	<div property="content" class="markdown"></div>
 </section>
+
+<ul id="toc">
+	<li mv-multiple="toc" mv-value="section">
+		<a href="#[id]">[title]</a>
+	</li>
+</ul>
+
+<script>
+	$("h2 > [property=title]").addEventListener("mv-change", function(evt) {
+		document.title = evt.value + " - Mavo Documentation";
+	});
+</script>
 
 <aside id="contents" class="no-toc">
 	<ul class="index">
@@ -92,14 +95,14 @@
 		<h1>Explore</h1>
 
 		<ul>
-			<li><a href="../../docs/primer">Get started</a></li>
-			<li><a href="../../docs">Docs</a></li>
-			<li><a href="../../demos">Demos</a></li>
-			<li><a href="../../faq">FAQ</a></li>
+			<li><a href="../docs/primer">Get started</a></li>
+			<li><a href="../docs">Docs</a></li>
+			<li><a href="../demos">Demos</a></li>
+			<li><a href="../faq">FAQ</a></li>
 			<li><a href="https://plugins.mavo.io">Plugins</a></li>
-			<li><a href="../../get">Get Mavo</a></li>
+			<li><a href="../get">Get Mavo</a></li>
 			<li><a href="https://test.mavo.io">Testsuite</a></li>
-			<li><a href="../../credits">Credits</a></li>
+			<li><a href="../credits">Credits</a></li>
 		</ul>
 	</article>
 	<article>
@@ -115,11 +118,11 @@
 		</ul>
 	</article>
 
-	<a href="http://mit.edu" class="logo"><img src="../../img/logo-mit.svg" alt="MIT" /></a>
-	<a href="http://csail.mit.edu" class="logo"><img src="../../img/logo-csail.svg" alt="CSAIL" /></a>
+	<a href="http://mit.edu" class="logo"><img src="../img/logo-mit.svg" alt="MIT" /></a>
+	<a href="http://csail.mit.edu" class="logo"><img src="../img/logo-csail.svg" alt="CSAIL" /></a>
 </footer>
 
-<script src="../../js/prism.js"></script>
+<script src="../js/prism.js"></script>
 <script src="/sitewide.js"></script>
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 

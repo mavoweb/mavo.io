@@ -289,7 +289,7 @@ body > header {
 			display: none;
 		}
 
-		@supports(clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%)) {
+		@supports (clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%)) {
 			html:not(.home) & {
 				transform: rotate(-1deg);
 				transform-origin: right;
@@ -343,7 +343,8 @@ body > section > section > h1,
 }
 
 body > section,
-body > div {
+body > div,
+.mv-add-section {
 	width: $content-width;
 	max-width: 90vw;
 	margin: auto;

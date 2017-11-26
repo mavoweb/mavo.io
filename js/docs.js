@@ -4,7 +4,7 @@ $$('a[href^="#"]:empty:not([property])').forEach(function (a) {
 });
 
 // Give every section an id and make its heading a link
-$$("body > section > h1, body > section section > h1").forEach(function (h1) {
+$$("body:not([mv-app]) > section > h1, body:not([mv-app]) > section section > h1").forEach(function (h1) {
 	var section = h1.parentNode;
 	var text = h1.textContent;
 
@@ -38,17 +38,25 @@ $$("body > section > h1, body > section section > h1").forEach(function (h1) {
 
 	// Build Table Of Contents for current page
 	if (index && !document.body.classList.contains("no-toc")) {
-		let toc = [];
+		var tocUl = $("ul#toc");
 
-		$$("body > section:not(.no-toc) > h1").forEach(function (h1) {
-			toc.push($.create("li", {
-				contents: {
-					tag: "a",
-					href: "#" + h1.parentNode.id,
-					textContent: h1.textContent
-				}
-			}));
-		});
+		if (!tocUl) {
+			let toc = [];
+
+			$$("body > section:not(.no-toc) > h1").forEach(function (h1) {
+				toc.push($.create("li", {
+					contents: {
+						tag: "a",
+						href: "#" + h1.parentNode.id,
+						textContent: h1.textContent
+					}
+				}));
+			});
+
+			tocUl = $.create("ul", {
+				contents: toc
+			});
+		}
 
 		for (var a of $$("li > a", index)) {
 			if (a.pathname.replace(/\/$/, "") === location.pathname.replace(/\/$/, "")) {
@@ -67,10 +75,6 @@ $$("body > section > h1, body > section section > h1").forEach(function (h1) {
 		});
 
 		currentPage.classList.add("current");
-
-		$.create("ul", {
-			contents: toc,
-			inside: currentPage
-		});
+		currentPage.appendChild(tocUl);
 	}
 })();

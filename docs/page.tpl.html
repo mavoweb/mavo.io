@@ -1,0 +1,46 @@
+@@include('_head-docs.html', {
+	"title": ""
+})
+<body mv-app="docs" mv-source="https://github.com/mavoweb/mavo.io/docs/docs.json" class="language-markup" mv-path="page/id=[url('docs')]" mv-plugins="markdown">
+
+@@include('_header.html')
+
+<h2>
+	<span property="title"></span>
+</h2>
+
+<section>
+	<p property="summary"></p>
+</section>
+
+<section>
+	<div class="mv-bar mv-ui" mv-bar="with export"></div>
+</section>
+
+<section property="section" mv-multiple id="[id]">
+	<h1>
+		<meta property="id" mv-default="[idify(title)]">
+		<a href="#[id]">
+			<span property="title"></span>
+		</a>
+	</h1>
+
+	<div property="content" class="markdown"></div>
+</section>
+
+<ul id="toc">
+	<li mv-multiple="toc" mv-value="section">
+		<a href="#[id]">[title]</a>
+	</li>
+</ul>
+
+<script>
+	$("h2 > [property=title]").addEventListener("mv-change", function(evt) {
+		document.title = evt.value + " - Mavo Documentation";
+	});
+</script>
+
+@@include('_footer-docs.html')
+
+</body>
+</html>

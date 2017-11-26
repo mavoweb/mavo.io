@@ -293,14 +293,16 @@ body > section > section > h1,
   color: #ff0080; }
 
 body > section,
-body > div {
+body > div,
+.mv-add-section {
   width: 1050px;
   max-width: 90vw;
   margin: auto;
   padding: 1rem 0; }
   @media (max-width: 1150px) {
     body > section,
-    body > div {
+    body > div,
+    .mv-add-section {
       width: auto;
       max-width: 100vw;
       padding-left: 1rem;

@@ -1,0 +1,26 @@
+{
+	"page": [
+		{
+			"id": "migration",
+			"title": "Data Migration",
+			"summary": "Often you want to change your Mavo HTML after you’ve saved data.\nMavo will try its best to associate your old data with your new app, but it may sometimes need a helping hand.",
+			"section": [
+				{
+					"id": "single-property-collection",
+					"title": "Single property ↔ Collection",
+					"content": "When converting a single property to/from a collection (i.e. adding or removing `mv-multiple`), you don’t need to do anything, Mavo automatically handles it.\n\nIf you are **removing** `mv-multiple` and your data contains multiple items, Mavo will only display the first item. However, the rest will be retained, in case you change your mind later.\n\t"
+				},
+				{
+					"id": "adding-or-removing-properties",
+					"title": "Adding or removing properties",
+					"content": "Adding and removing properties from your HTML also works automatically. In the case of removing a property from your HTML, its saved data will be retained, in case you change your mind in the future. Therefore, if you decide to re-add it later, its data will still be there."
+				},
+				{
+					"id": "mv-alias",
+					"title": "Renaming properties: The mv-alias attribute",
+					"content": "When you rename properties, your old data is still stored under the previous property name and Mavo has no way of associating the two, since it cannot \"see\" the previous version of your HTML, only the current one. You could help it rename the property by using `mv-alias=\"oldPropertyName\"`. Then, to migrate your data, load your app, save, and then you can remove the `mv-alias` attribute from your HTML."
+				}
+			]
+		}
+	]
+}

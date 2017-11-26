@@ -354,4 +354,7 @@ table.attributes td:nth-last-child(2) {
   position: static;
   opacity: 1; }
 
+.mv-add-section {
+  font-size: 150%; }
+
 /*# sourceMappingURL=style.css.map */
