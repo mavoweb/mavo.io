@@ -262,6 +262,14 @@ body > header {
 		font-weight: 700;
 		margin-bottom: 1.5em;
 
+		@media (max-width: 900px) {
+			flex-wrap: wrap;
+
+			a {
+				min-width: 6em;
+			}
+		}
+
 		a {
 			display: block;
 			padding: 0 1em;

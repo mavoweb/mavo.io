@@ -234,6 +234,12 @@ body > header {
     display: flex;
     font-weight: 700;
     margin-bottom: 1.5em; }
+    @media (max-width: 900px) {
+      body > header nav {
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap; }
+        body > header nav a {
+          min-width: 6em; } }
     body > header nav a {
       display: block;
       padding: 0 1em;
