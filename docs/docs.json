@@ -23,6 +23,7 @@
 			]
 		},
 		{
+			"id": "plugins",
 			"title": "Writing Plugins",
 			"summary": "If you know JavaScript, you can make [plugins](http://plugins.mavo.io) that extend Mavo’s functionality and change how it works.",
 			"section": [
