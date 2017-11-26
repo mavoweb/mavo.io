@@ -1,7 +1,7 @@
 @@include('_head-docs.html', {
 	"title": ""
 })
-<body mv-app="docs" mv-source="https://github.com/mavoweb/mavo.io/docs/docs.json" class="language-markup" mv-path="page/id=[url('docs')]" mv-plugins="markdown">
+<body mv-app="docs" mv-storage="https://github.com/mavoweb/mavo.io/docs/docs.json" class="language-markup" mv-path="page/id=[url('docs')]" mv-plugins="markdown">
 
 @@include('_header.html')
 
@@ -14,7 +14,7 @@
 </section>
 
 <section>
-	<div class="mv-bar mv-ui" mv-bar="with export"></div>
+	<div class="mv-bar mv-ui" mv-bar="with export no-login"></div>
 </section>
 
 <section property="section" mv-multiple id="[id]">
