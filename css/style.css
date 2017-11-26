@@ -287,6 +287,7 @@ body > section > h1,
   color: #ff9500; }
 
 body > section > h2,
+body > section > div > h2,
 body > section > section > h1,
 .h2 {
   font: bold 150% Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
