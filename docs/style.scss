@@ -518,3 +518,10 @@ table.attributes {
 .mv-add-section {
 	font-size: 150%;
 }
+
+:not(pre) code em {
+	padding: .25em .4em .15em;
+	background: hsla(220,10%,50%,.125);
+	border-radius: .25em;
+	text-shadow: 0 -1px 1px white;
+}
