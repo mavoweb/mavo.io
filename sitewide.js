@@ -128,13 +128,19 @@ ${html}
 
 $$("pre > code a[aria-label]").forEach(a => a.target = "_blank");
 
-$$("section.advanced").forEach(section => {
-	var thing = section.getAttribute("data-required") || "JavaScript";
+$.events(document, "DOMContentLoaded mv-load", function(evt) {
+	$$("section.advanced").forEach(section => {
+		var heading = $("h1, h2", section);
 
-	$.create("p", {
-		className: "notice warning",
-		textContent: `This section requires an understanding of ${thing}. It is aimed at advanced users and plugin developers. You do not need to understand ${thing} to use Mavo!`,
-		after: $("h1, h2", section)
+		if (!heading.nextElementSibling.matches("p.notice.warning")) {
+			var thing = section.getAttribute("data-required") || "JavaScript";
+
+			$.create("p", {
+				className: "notice warning",
+				textContent: `This section requires an understanding of ${thing}. It is aimed at advanced users and plugin developers. You do not need to understand ${thing} to use Mavo!`,
+				after: heading
+			});
+		}
 	});
 })
 

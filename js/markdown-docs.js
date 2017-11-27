@@ -11,38 +11,7 @@ document.addEventListener("mv-markdown-render", function(evt) {
 	$$(`h2[id^=demo] + pre > code.language-markup,
 		h2[id^=demo] + p + pre > code.language-markup,
 		h2[id^=demo] + pre > code.language-html,
-			h2[id^=demo] + p + pre > code.language-html`, evt.target).forEach(function(code) {
-		var markup = code.textContent;
-		var pre = code.parentNode;
-
-		var iframe = $.create("iframe", {
-			srcdoc: `<!DOCTYPE html>
-<head>
-	<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css" />
-	<script src="https://dev.mavo.io/dist/mavo.js"></script>
-</head>
-<body>
-${markup}
-</body>
-`
-		});
-
-		$.create({
-			className: "example side-by-side",
-			around: pre
-		});
-
-		$.create({
-			className: "demo-container",
-			around: pre
-		});
-
-		$.create({
-			className: "example-container",
-			contents: iframe,
-			after: pre
-		});
-	});
+			h2[id^=demo] + p + pre > code.language-html`, evt.target).forEach(createLiveDemo);
 
 	// Highlight code areas
 	requestAnimationFrame(() => {
@@ -55,5 +24,38 @@ ${markup}
 		});
 	});
 });
+
+function createLiveDemo(code) {
+	var markup = code.textContent;
+	var pre = code.parentNode;
+
+	var iframe = $.create("iframe", {
+		srcdoc: `<!DOCTYPE html>
+<head>
+<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css" />
+<script src="https://dev.mavo.io/dist/mavo.js"></script>
+</head>
+<body>
+${markup}
+</body>
+`
+	});
+
+	$.create({
+		className: "example side-by-side",
+		around: pre
+	});
+
+	$.create({
+		className: "demo-container",
+		around: pre
+	});
+
+	$.create({
+		className: "example-container",
+		contents: iframe,
+		after: pre
+	});
+}
 
 })();

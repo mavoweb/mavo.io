@@ -144,18 +144,29 @@ body > section#intro {
 	}
 }
 
-section.advanced > h1,
-section.advanced > h2,
-h1.advanced,
-h2.advanced {
-	color: black;
+[property="advanced"] {
+	@include run-in;
+	vertical-align: .3em;
+	margin-right: .5em;
+	background: rgba(0,0,0,.85);
 
 	&::before {
-		content: "☠️ Advanced";
-		@include run-in;
-		vertical-align: .3em;
-		margin-right: .5em;
-		background: rgba(0,0,0,.85);
+		content: "☠️ ";
+	}
+}
+
+h1, h2 {
+	section.advanced > &,
+	&.advanced {
+		color: black;
+	}
+
+	section.advanced:not([property]) > &,
+	&.advanced {
+		&::before {
+			content: "☠️ Advanced";
+			@extend [property="advanced"];
+		}
 	}
 }
 
