@@ -16,10 +16,11 @@ document.addEventListener("mv-markdown-render", function(evt) {
 	$$(selector, evt.target).forEach(function createLiveDemo(code) {
 		var html = code.textContent;
 		var pre = code.parentNode;
+		var mavoURL = "https://dev.mavo.io/dist";
 		var demoHTML = `<!DOCTYPE html>
 <head>
-<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css" />
-<script src="https://dev.mavo.io/dist/mavo.js"></script>
+<link rel="stylesheet" href="${mavoURL}/mavo.css" />
+<script src="${mavoURL}/mavo.js"></script>
 </head>
 <body>
 ${html}
@@ -28,7 +29,7 @@ ${html}
 		var siblings = [], ps = pre;
 
 		do {
-			siblings.push(ps = ps.previousElementSibling);
+			siblings.unshift(ps = ps.previousElementSibling);
 		} while (ps && !ps.matches(demoHeading));
 
 		var iframe = $.create("iframe", {
@@ -60,6 +61,32 @@ ${html}
 				}
 			],
 			after: ps
+		});
+
+		var heading = siblings[0];
+		var play = $.create("form", {
+			action: "https://codepen.io/pen/define",
+			method: "POST",
+			target: "_blank",
+			contents: [
+				{
+					tag: "input",
+					type: "hidden",
+					name: "data",
+					value: Mavo.toJSON({
+						title: heading.textContent,
+						html: html,
+						css_external: mavoURL + "/mavo.css",
+						js_external: mavoURL + "/mavo.es5.js"
+					})
+				},
+				{
+					tag: "button",
+					textContent: "Play!",
+					title: "Play with this example on codepen.io"
+				}
+			],
+			inside: heading
 		});
 
 		$.start(siblings, container);

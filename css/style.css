@@ -156,6 +156,24 @@ button {
     background: var(--color);
     color: var(--background); }
 
+.plain-button, .example.side-by-side h6 form button {
+  display: inline-block;
+  vertical-align: .1em;
+  padding: .35em .5em .25em;
+  background: #e3e5e8;
+  border: none;
+  border-radius: .3em;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 75%;
+  font-weight: bold;
+  text-transform: uppercase; }
+  .plain-button:hover, .example.side-by-side h6 form button:hover {
+    background: #ff0080;
+    color: white; }
+  .plain-button:focus, .example.side-by-side h6 form button:focus {
+    background: #ff9500;
+    color: white; }
+
 .call-to-action.button {
   display: inline-block;
   width: -webkit-fit-content;
@@ -463,8 +481,8 @@ body > section table {
   .example h6 {
     font: bold 120% Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif; }
     .example h6::before {
-      content: "🍭 ";
-      font-size: 90%; }
+      content: "🍭";
+      margin-right: .2em; }
   .example .example-container {
     position: relative;
     transform: scale(1);
@@ -508,6 +526,23 @@ body > section table {
     .example.side-by-side > header {
       margin: 0;
       margin-bottom: .5em; }
+    .example.side-by-side h6 {
+      display: -ms-flexbox;
+      display: flex; }
+      .example.side-by-side h6 form {
+        margin-left: auto; }
+        .example.side-by-side h6 form button::before {
+          content: "✎";
+          display: inline-block;
+          margin-right: .3em; }
+
+@keyframes wiggle {
+  from {
+    transform: rotate(-10deg); }
+  to {
+    transform: rotate(10deg); } }
+        .example.side-by-side h6 form button:hover::before {
+          animation: .2s wiggle infinite alternate; }
     .example.side-by-side pre {
       -webkit-clip-path: none;
       clip-path: none;

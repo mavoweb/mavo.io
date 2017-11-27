@@ -180,6 +180,29 @@ button {
 	}
 }
 
+.plain-button {
+	display: inline-block;
+	vertical-align: .1em;
+	padding: .35em .5em .25em;
+	background: lighten($gray, 40%);
+	border: none;
+	border-radius: .3em;
+	font-family: $body-font;
+	font-size: 75%;
+	font-weight: bold;
+	text-transform: uppercase;
+
+	&:hover {
+		background: $magenta;
+		color: white;
+	}
+
+	&:focus {
+		background: $orange;
+		color: white;
+	}
+}
+
 .call-to-action.button {
 	display: inline-block;
 	width: fit-content;
@@ -578,8 +601,8 @@ body > section table {
 		font: bold 120% $heading-font;
 
 		&::before {
-			content: "🍭 ";
-			font-size: 90%;
+			content: "🍭";
+			margin-right: .2em;
 		}
 	}
 
@@ -640,6 +663,37 @@ body > section table {
 		& > header {
 			margin: 0;
 			margin-bottom: .5em;
+		}
+
+		h6 {
+			display: flex;
+
+			form {
+				margin-left: auto;
+
+				button {
+					@extend .plain-button;
+
+					&::before {
+						content: "✎";
+						display: inline-block;
+						margin-right: .3em;
+					}
+
+					@keyframes wiggle {
+						from {
+							transform: rotate(-10deg);
+						}
+						to {
+							transform: rotate(10deg);
+						}
+					}
+
+					&:hover::before {
+						animation: .2s wiggle infinite alternate;
+					}
+				}
+			}
 		}
 
 		pre {
