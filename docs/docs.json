@@ -49,6 +49,29 @@
 				}
 			],
 			"defaultLanguage": "javascript"
+		},
+		{
+			"id": "formats",
+			"title": "Storage Formats",
+			"summary": "By default, Mavo saves and reads data in JSON. While you don’t need to understand JSON to use Mavo, you may need to use a different file format at some point.  This is exactly what `mv-format` is for.",
+			"defaultLanguage": "markup",
+			"section": [
+				{
+					"id": "basic-usage",
+					"title": "Basic usage",
+					"content": "You can select a file format in one of two ways:\n\n1.  _Explicitly_, by using the `mv-format` attribute on your Mavo root. Its value is a keyword, depending on the format, e.g. `text`, `markdown`, `csv` etc.\n2.  _Implicitly_, depending on the extension of your file in `mv-storage`. E.g. if you use a URL to a CSV file, Mavo will automatically use the CSV format.\n\nOften, you need to specify a different format for the `mv-storage`, `mv-source`, and `mv-init` attributes. You can do this by using the `mv-storage-format`, `mv-source-format`, and `mv-init-format` attributes respectively."
+				},
+				{
+					"id": "available-formats",
+					"title": "Available formats",
+					"content": "Mavo comes with some formats out of the box, but you can add more via [Plugins](https://plugins.mavo.io/?tag=Format). Read the documenation of the format you’re using carefully, because formats may come with restrictions about the structure of your properties. These restrictions are only about which properties will be used for displaying and saving data. If you have more properties in your Mavo, they will just be ignored. For example, you can have additional properties that are read-only or contain expressions.\n\n# CSV\n\nUses the popular [PapaParse](http://papaparse.com/) library for reading and writing CSV, fetched dynamically via [cdnjs](https://cdnjs.com/).\n\n| Keyword | `csv` |\n| File extensions | *.csv, *.tsv |\n| Restrictions | Only one collection. Property names inside collection must correspond to headers in CSV file. |\n\n# Text\n\n| Keyword | `text` |\n| File extensions | *.txt |\n| Restrictions | Only one property. |"
+				},
+				{
+					"id": "creating-your-own-formats",
+					"title": "Creating your own formats",
+					"content": "To create your own formats, all you need is to create a class that extends from `Mavo.Formats.Base`. For information on how the `$.Class()` class helper works, look in [Bliss’ documentation](http://blissfuljs.com/docs.html#fn-Class).\n\n```\n\n\t\tMavo.Formats.MyFormat = $.Class({\n\t\t\t// Mandatory. You may instead extend another format, e.g. Mavo.Formats.Text\n\t\t\textends: Mavo.Formats.Base,\n\n\t\t\t// Initialization code (optional)\n\t\t\tconstructor: function(backend) {\n\t\t\t\t// ...\n\t\t\t},\n\n\t\t\tstatic: {\n\t\t\t\t// File extensions\n\t\t\t\textensions: [\".foo\", \".bar\"],\n\n\t\t\t\t// Any dependencies (optional)\n\t\t\t\tdependencies: [{\n\t\t\t\t\ttest: () => \"CoolLibrary\" in window, // is the library already loaded?\n\t\t\t\t\turl: \"URL/to/library\" // URL to fetch if the library is not loaded\n\t\t\t\t}],\n\n\t\t\t\t// must specify this if you’re using dependencies\n\t\t\t\tready: Mavo.Formats.Base.ready,\n\n\t\t\t\t// Mandatory: Convert a string to an object for rendering\n\t\t\t\t// serialized: The string, as it was read from the remote file\n\t\t\t\t// me: Instance of Mavo.MyFormat, optional\n\t\t\t\tparse: function (serialized, me) {\n\t\t\t\t\t// ...\n\t\t\t\t},\n\n\t\t\t\t// Mandatory: Convert an object to a string for saving\n\t\t\t\t// data: The object\n\t\t\t\t// me: Instance of Mavo.MyFormat, optional\n\t\t\t\tstringify: function (data, me) {\n\t\t\t\t\t// ...\n\t\t\t\t}\n\t\t\t}\n\t\t});\n\n```\n\nYou can see examples of format declarations in [src/formats.js](https://github.com/mavoweb/mavo/blob/master/src/formats.js)\n\nIf your format may be useful to other people, please consider adding it to the [Plugin directory](https://plugins.mavo.io)!"
+				}
+			]
 		}
 	]
 }
