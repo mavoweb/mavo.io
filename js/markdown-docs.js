@@ -77,7 +77,8 @@ ${html}
 						title: heading.textContent,
 						html: html,
 						css_external: mavoURL + "/mavo.css",
-						js_external: mavoURL + "/mavo.es5.js"
+						js_external: mavoURL + "/mavo.es5.js",
+						editors: "1100"
 					})
 				},
 				{
