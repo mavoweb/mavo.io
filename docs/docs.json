@@ -112,6 +112,43 @@
 					"content": "Your app needs to be in a different language? No problem! You can customize every bit of displayed text, whether that is to change the text displayed to your liking or to localize it to a different language.\n\n# Localization\n\nFirst check the [available locale plugins](https://plugins.mavo.io/?tag=Locale) in case your language is available. If not, you would have to write one yourself, using the methods outlined below.\n\n# Customizing text via HTML\n\nYou can use a `<datalist>` element to define your own phrases or localize text. The syntax is:\n\n```html\n<datalist class=\"mv-phrases\" lang=\"en\"> \n\t<option value=\"id\">Phrase text</option>\n\t...\n</datalist>\n```\n\nPlease note that the `lang` attribute is mandatory, even if you’re only overriding a few English phrases. Please note that `lang` is not a Mavo attribute, it’s an HTML attribute and its values are described in any HTML documentation.\n\nWarning: Please try to avoid locales with hyphens unless you absolutely need to. E.g. it's better to define a general French (`lang=\"fr\"`) locale and another Canadian French (Québécois) locale (`lang=\"fr-ca\"`) with only the phrases that are different. The reason is that any French dialect can fall back to general French, but not to a specific dialect of French, which means that even if you have defined a locale for `fr-ca`, apps with `lang=\"fr\"` will be displayed in English.\n\nWarning: Please note that this datalist element is **static**, i.e. changes to its contents via scripts or expressions will not be picked up.\n\nFor a list of ids and phrases that you can copy as a starting point, use [src/locale.en.js](https://github.com/mavoweb/mavo/blob/master/src/locale.en.js), however note that plugins can also define their own phrases.\n\n# Advanced: Customizing text via JavaScript\n\nYou can write your own localization plugin, by using `Mavo.Locale.register(languageCode, phrases)`. For an example, you can look at the [Greek localization plugin](https://plugins.mavo.io/locale-el/mavo-locale-el.js).\n\nIf you go that route, please consider adding your plugin to the [Plugins directory](https://plugins.mavo.io) so that others can benefit too! Don’t worry if it's not perfect, others can improve it via pull requests!"
 				}
 			]
+		},
+		{
+			"id": "primer",
+			"title": "Primer",
+			"language": "markup",
+			"section": [
+				{
+					"id": "using-mavo",
+					"advanced": false,
+					"title": "Using Mavo",
+					"content": "In order to use Mavo, you first need to [download or link to its JS and CSS files](/get) and include them in your page. If you have never done this before, you could put both in the `<head>` section, like this:\n\n```html\n<head>\n\t...\n\t<link rel=\"stylesheet\" href=\"https://get.mavo.io/mavo.css\"/>\n\t<script src=\"https://get.mavo.io/mavo.js\">&lt;/script>\n\t...\n</head>\n```"
+				},
+				{
+					"id": "mv-app",
+					"advanced": false,
+					"title": "Defining a mavo app: The mv-app attribute",
+					"content": "You enable Mavo functionality on an HTML structure with the `mv-app` attribute. Its value is a name for your app, which is used by Mavo in various places. The name must be unique to the page, just like an id. The element with that attribute is called the **Mavo root**.\n\n##### Example\n\n```html\n<div mv-app=\"mavoTest\">\n\tMy first Mavo app!\n</div>\n```\n\nNote that `mv-app` doesn’t really do much by itself. You can see how you can use Mavo attributes to do more useful things in the next sections.\n\nThe `mv-app` attribute can be used with or without a value. If the element already has an id, you don't need to repeat it in the `mv-app` attribute:\n\n```html\n<div mv-app id=\"mavoTest\">\n\tMy first Mavo app!\n</div>\n```\n\nIf you use `mv-app` without a value and there is no `id` or `name` attribute on the Mavo root, a name such as mavo1, mavo2 etc will be automatically generated. Since the generated name depends on the order of Mavo apps in the page, this means that if you rearrange them, the app names will change, which is flimsy and could lead to data loss. Therefore, it is **strongly recommended** that you name your Mavo apps."
+				},
+				{
+					"id": "mv-storage",
+					"advanced": false,
+					"title": "Storage: The mv-storage attribute",
+					"content": "The `mv-storage` attribute tells Mavo where to store any data. Its value is a valid URL or a keyword, like `local`.\n\n```html\n<div mv-app=\"storageTest\" mv-storage=\"local\">\n\tMy first Mavo app!\n</div>\n```\n\nWhat will be stored? Elements with a `property` attribute! We will learn about these in the next section.\n\n<p class=\"learn-more\">[Storage](/docs/storage)"
+				},
+				{
+					"id": "the-property-attribute",
+					"advanced": false,
+					"title": "The property attribute",
+					"content": "The `property` attribute tells Mavo **which elements are saved**. Its value should describe the element, similarly to a `id` or `class` attribute.\n\n##### Example\n\n```html\n<div mv-app=\"commentform\" mv-storage=\"local\" mv-autosave=\"0\">\n\t<label>\n\t\tEmail:\n\t\t<input type=\"email\" property=\"email\" value=\"foo@example.com\" />\n\t</label>\n\t<label>\n\t\tMessage:\n\t\t<textarea property=\"message\">\n\t\t\tEdit the form and notice how the values persist after you refresh!\n\t\t</textarea>\n\t</label>\n</div>\n```\n\nIf the `property` attribute is used on elements that are not form elements, they are made editable, and Mavo generates (customizable) controls for switching between edit and read mode:\n\n##### Example\n\n```html\n<div mv-app=\"nameDemo\" mv-storage=\"local\">\n\tName:\n\t<span property=\"firstName\">Lea</span>\n\t<span property=\"last_name\">Verou</span>\n</div>\n```\n\n<p class=\"learn-more\">[Properties](/docs/properties)"
+				},
+				{
+					"id": "mv-multiple",
+					"advanced": false,
+					"title": "Collections: The mv-multiple attribute",
+					"content": "Let’s assume we have a list of hobbies that we want to make editable. We _could_ add `property` attributes to every item:\n\n##### Example\n\n```html\nHobbies:\n<ul>\n\t<li property=\"hobby\">Eating</li>\n\t<li property=\"hobby\">Sleeping</li>\n\t<li property=\"hobby\">Purring</li>\n</ul>\n```\n\nThis works, but we cannot add new hobbies or delete existing ones. To do that, we need the `mv-multiple` attribute, which tells mavo that **this element can be multiplied**:\n\n##### Example: Simple collection\n\n```html\nHobbies:\n<ul>\n\t<li property=\"hobby\" mv-multiple>Eating</li>\n</ul>\n```\n\nNote: The `mv-multiple` attribute goes on **the element that will be multiplied, NOT the container of the collection**!\n\n* * *\n\nWe can use `property` and `mv-multiple` to create lists of more complex structures with multiple properties.\n\n##### Example: Complex collection\n\n```html\n<article property=\"pet\" mv-multiple>\n\t<h1 property=\"name\">Adam Catlace</h1>\n\tBorn on\n\t<time property=\"birthday\" datetime=\"2014-06-01\">1 Jun 2014</time>\n</article>\n```\n\nNote that in the example above, the `property` attribute on `<article>` does not actually make the entire `<article>` element editable, but instead acts as a **grouping element**. This will always happen when you use the `property` attribute on elements that contain other properties inside them. **Groups** have many interesting characteristics when combined with expressions, which we will see next.\n\n<p class=\"learn-more\">[Collections](/docs/collections)"
+				}
+			]
 		}
 	]
 }
