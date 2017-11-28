@@ -60,7 +60,7 @@ ${html}
 			onload: function(evt) {
 				updateIframeHeight();
 
-				$.events(iframe.contentDocument, "mv-change mv-edit mv-done", updateIframeHeight);
+				$.events(iframe.contentDocument, "mv-load mv-change mv-edit mv-done", updateIframeHeight);
 			}
 		});
 
