@@ -155,6 +155,44 @@
 					"content": "You can dynamically refer to the value of any property you have defined, anywhere in your Mavo app, by putting its name inside brackets (like this: `[propertyName]`).\n\n##### Example\n\nMove the slider and check how both expressions are updated:\n\n```html\n<p>Slider value: [strength]/100</p>\n<input type=\"range\" property=\"strength\" title=\"[strength]%\" />\n```\n\nWe can also do math with properties, e.g. divide by 100:\n\n##### Example\n\nMove the slider and check how both expressions are updated:\n\n```html\n<p>Slider value: [strength/100]</p>\n<input type=\"range\" property=\"strength\" title=\"[strength]%\" />\n```\n\nIf you set a `property` attribute on an element containing an expression, you can use that property in other expressions too, regardless of whether they come before or after the element.\n\n##### Example\n\nMaking a bare-bones HSL color picker with Mavo expressions:\n\n```html\n<div mv-app=\"colorpicker\" mv-storage=\"local\"\n     style=\"background-color: [color];\">\n\t<input type=\"range\" property=\"hue\" max=\"360\" />\n\t<input type=\"range\" property=\"saturation\" />\n\t<input type=\"range\" property=\"lightness\" />\n\n\t<input property=\"color\" readonly\n\t       value=\"hsl([hue], [saturation]%, [lightness]%)\" />\n</div>\n<style>\ninput { display: block; }\ndiv { padding: 1em; }\n</style>\n```\n\nThere are also [a number of math functions](/docs/mavoscript/#math-functions) you can use for more complicated tasks, akin to spreadsheets.\n\n* * *\n\nExpressions become very powerful when combined with lists. Try adding and removing items in the list below:\n\n##### Example: Expressions & Simple lists\n\n```html\n[count(hobby)] hobbies:\n<ul>\n\t<li property=\"hobby\" mv-multiple>Eating</li>\n</ul>\n```\n\n<p class=\"learn-more\">[Expressions](/docs/expressions)\n<p class=\"learn-more\">[MavoScript](/docs/mavoscript)"
 				}
 			]
+		},
+		{
+			"id": "properties",
+			"title": "Properties",
+			"language": "markup",
+			"summary": "The `property` attribute tells Mavo which elements are important, e.g. are saved, editable, used in expressions, or all three. Elements with this attribute are often referred to as _properties_ or _property elements_.",
+			"section": [
+				{
+					"id": "property-name-rules",
+					"advanced": false,
+					"title": "Property name rules",
+					"content": "Its value should describe the element, similarly to a `id` or `class` attribute. It can contain **only** letters, numbers and underscores (_). If it happens to be the same as the element’s `id` or `class` attributes, you don’t need to provide a value. For example, the following are all equivalent:\n\n<script type=\"text/plain\"><div property class=\"name\">Lea Verou</div> <div property id=\"name\">Lea Verou</div> <div property=\"name\">Lea Verou</div></script>\n\nIf you need inspiration for names, you could look at [schema.org](http://schema.org)."
+				},
+				{
+					"id": "editing",
+					"advanced": false,
+					"title": "Editing",
+					"content": "If the `property` attribute is used on elements that are not form elements, they are made editable, and Mavo generates a button for switching between modes:\n\n##### Example\n\n```html\n<span property=\"firstName\">Lea</span>\n<span property=\"last_name\">Verou</span>\n<span>- I don’t have a property attribute, so I’m not editable.</span>\n```\n\n* * *\n\nYou can put the `property` attribute on **any** HTML5 element, and Mavo knows how to make it editable:\n\n##### Example\n\n```html\n<meter property=\"rating\" min=\"1\" value=\"3\" max=\"5\"></meter>\n<time property=\"birthday\" datetime=\"2014-06-01\">1 Jun 2014</time>\n<img property=\"avatar\" src=\"http://i.imgur.com/LPeWcag.png\" />\n```\n\nMavo can also be taught about new element types with different ways to be edited (e.g. rich text), via [plugins](https://plugins.mavo.io)."
+				},
+				{
+					"id": "mv-edit",
+					"advanced": false,
+					"title": "Customize editing: The mv-edit attribute",
+					"content": "In some cases, you may want to customize how a property is edited. For example, instead of using a text field, you may want to restrict choices to those in a `<select>` menu. For those cases, you can do one of two things:\n\n*   Link to a form control via `mv-edit` _(recommended)_\n*   Nest a form control directly inside your property\n\nThe value of `mv-edit` is a CSS selector. If the CSS selector matches multiple elements on the page, the first one will be used. The element you linked to remains intact. Instead, it is cloned for the editing. If the original element changes (e.g. perhaps that's also populated by Mavo! It could even be an entirely separate Mavo app, like in [this demo](/demos/talks/)), a new clone is created.\n\nIn addition to using the element for editing, its default value also becomes the property’s default value (unless `mv-default` is set of course).\n\n##### Example\n\n```html\nI’m from\n<img src=\"/demos/talks/flags/[country].png\" />\n<span property=\"country\" mv-edit=\"#countries\"></span>\n\n<div hidden>\n\t<select id=\"countries\">\n\t\t<option value=\"gr\">Greece</option>\n\t\t<option value=\"gb\">United Kingdom</option>\n\t\t<option value=\"us\">United States</option>\n\t</select>\n</div>\n```"
+				},
+				{
+					"id": "mv-edit-star",
+					"advanced": false,
+					"title": "The mv-edit-* family of attributes",
+					"content": "In some cases, you don’t want to entirely replace the element used for editing by default, but merely to set a few attributes on it. For example, to change an `<input>` type, or to add autocomplete via `<datalist>`. For that, you can use `mv-edit-attributeName=\"value\"` and `attributeName=\"value\"` will be set on the default editing control.\n\n##### Example\n\nEdit the country and type \"United\" to see a list of suggestions:\n\n```html\nI’m from\n<span property=\"country\" mv-edit-list=\"countries2\">Greece</span>\n\n<div>\n\t<datalist id=\"countries2\">\n\t\t<option>Greece</option>\n\t\t<option>United Kingdom</option>\n\t\t<option>United States</option>\n\t</datalist>\n</div>\n```"
+				},
+				{
+					"id": "mv-default",
+					"advanced": false,
+					"title": "Default values: The mv-default attribute",
+					"content": "The `mv-default` attribute lets you set default values for properties that have no data yet. If it’s used with no value, the default value is the data in your HTML.\n\n`mv-default` is dynamic: When it changes, if the current value of the property matches the previous default, it will be updated as well. You can take advantage of that and use `mv-default` to even keep properties in sync, like in the example below (for a real-world demo of this pattern, check out the [SVG Path builder](/demos/svgpath)):\n\n##### Example\n\nNote that changing the first number changes the second, until you edit the second and make it different:\n\n```html\n<input type=\"number\" property=\"x\" mv-default=\"5\" />\n<input type=\"number\" property=\"y\" mv-default=\"[x]\" />\n```"
+				}
+			]
 		}
 	]
 }
