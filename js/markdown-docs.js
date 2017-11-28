@@ -17,10 +17,33 @@ document.addEventListener("mv-markdown-render", function(evt) {
 		var html = code.textContent;
 		var pre = code.parentNode;
 		var mavoURL = "https://dev.mavo.io/dist";
+		var css = "";
+
+		html = html.replace(/<style>([\S\s]+?)<\/style>\s*$/i, ($0, $1) => {
+			css = $1;
+			return "";
+		});
+
+		css = css.trim();
+
+		// Drop CSS from visible example
+		if (html != code.textContent) {
+			code.textContent = html;
+		}
+
+		if (html.indexOf("mv-app") === -1) {
+			html = `<div mv-app mv-storage="local">
+${html}
+</div>`;
+		}
+
 		var demoHTML = `<!DOCTYPE html>
 <head>
 <link rel="stylesheet" href="${mavoURL}/mavo.css" />
 <script src="${mavoURL}/mavo.js"></script>
+<style>
+${css}
+</style>
 </head>
 <body>
 ${html}
@@ -37,13 +60,15 @@ ${html}
 			onload: function(evt) {
 				updateIframeHeight();
 
-				iframe.contentDocument.addEventListener("mv-load", updateIframeHeight);
+				$.events(iframe.contentDocument, "mv-change mv-edit mv-done", updateIframeHeight);
 			}
 		});
 
 		function updateIframeHeight() {
-			var h = iframe.contentDocument.documentElement.offsetHeight;
-			iframe.style.height = h + "px";
+			requestAnimationFrame(function() {
+				var h = iframe.contentDocument.documentElement.offsetHeight;
+				iframe.style.height = h + "px";
+			});
 		}
 
 		var container = $.create("section", {
@@ -76,6 +101,7 @@ ${html}
 					value: Mavo.toJSON({
 						title: heading.textContent,
 						html: html,
+						css: css,
 						css_external: mavoURL + "/mavo.css",
 						js_external: mavoURL + "/mavo.es5.js",
 						editors: "1100"
