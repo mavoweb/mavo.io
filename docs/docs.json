@@ -191,6 +191,24 @@
 					"advanced": false,
 					"title": "Default values: The mv-default attribute",
 					"content": "The `mv-default` attribute lets you set default values for properties that have no data yet. If it’s used with no value, the default value is the data in your HTML.\n\n`mv-default` is dynamic: When it changes, if the current value of the property matches the previous default, it will be updated as well. You can take advantage of that and use `mv-default` to even keep properties in sync, like in the example below (for a real-world demo of this pattern, check out the [SVG Path builder](/demos/svgpath)):\n\n##### Example\n\nNote that changing the first number changes the second, until you edit the second and make it different:\n\n```html\n<input type=\"number\" property=\"x\" mv-default=\"5\" />\n<input type=\"number\" property=\"y\" mv-default=\"[x]\" />\n```"
+				},
+				{
+					"id": "mv-attribute",
+					"advanced": false,
+					"title": "The mv-attribute attribute",
+					"content": "Mavo automatically assumes that the data each property element holds is stored either as its content or in a \"primary\" attribute, different per element type. Most of the time this works great, and you don't have to think about it. However, sometimes this heuristic will fail. In those cases, you can correct Mavo's prediction by using the `mv-attribute` attribute. Its value is either the name of the attribute that holds data, or `none` for no attribute (element contents).\n\nFor example, an `<a>` element's primary data attribute is `href`. However, sometimes you want to make the content editable instead, and even reference it in the `href` attribute via an expression. You can use the `mv-attribute` for that:\n\n##### Example\n\n```html\n<a href=\"mailto:[email]\" property=\"email\" mv-attribute=\"none\">lea@mavo.io</a>\n```"
+				},
+				{
+					"id": "mv-mode",
+					"advanced": false,
+					"title": "The mv-mode attribute",
+					"content": "Possible values: `edit` or `read`.\n\nThe purpose of this attribute is twofold:\n\n1.  Mavo sets `mv-mode=\"edit\"` on properties when they are being edited. This allows you to customize your design in the editing state by using `[mv-mode=\"edit\"]` selectors\n2.  If you use `mv-mode=\"read\"` or `mv-mode=\"edit\"` on a property, Mavo applies that state and does not change it when the state of the rest of the app changes. You can change it yourself, via expressions.\n\nThe latter allows many cool things:\n\n*   Use `mv-mode=\"read\"` to create \"constants\": Properties that are saved but not edited.\n*   Use `mv-mode=\"edit\"` for properties (or entire apps, if you use it on the Mavo root) that don't make sense in read mode.\n*   Use `mv-mode=\"[if (condition, read, edit)]\"` on collection items, to edit them separately from the rest of the app (useful with large collection items such as blog posts)"
+				},
+				{
+					"id": "changing-properties-after-youve-stored-data",
+					"advanced": false,
+					"title": "Changing properties after you’ve stored data?",
+					"content": "Check out the [Data Migration](/docs/migration) page to make sure you maintain the association between your old data and your new HTML! Most of the time Mavo does it automatically, but there are cases where it needs a helping hand.\n"
 				}
 			]
 		}
