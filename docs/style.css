@@ -9,13 +9,6 @@ h1 > a {
 body > header + h2 {
   background: #82cf17; }
 
-.example.color-picker .example-container {
-  padding: 0; }
-  .example.color-picker .example-container > div:last-of-type {
-    padding: 2em; }
-  .example.color-picker .example-container input {
-    display: block; }
-
 .example.scoped-expressions .example-container [typeof] {
   padding: 1em;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -37,24 +30,6 @@ body > header + h2 {
   padding: 0; }
   .example.movie .example-container div[class] {
     padding: 2em; }
-
-.example.commentform label {
-  display: block; }
-
-.example.commentform label:first-of-type {
-  display: -ms-flexbox;
-  display: flex;
-  margin-bottom: 1em; }
-  .example.commentform label:first-of-type input {
-    -ms-flex: 1;
-    flex: 1; }
-
-.example.commentform textarea {
-  display: block;
-  box-sizing: border-box;
-  width: 100%;
-  padding: .3em;
-  font: inherit; }
 
 .example .mv-debug-storage {
   margin: 0;

@@ -14,18 +14,6 @@ body > header + h2 {
 }
 
 .example {
-	&.color-picker .example-container {
-		padding: 0;
-
-		& > div:last-of-type {
-			padding: 2em;
-		}
-
-		input {
-			display: block;
-		}
-	}
-
 	&.scoped-expressions .example-container {
 		[typeof] {
 			padding: 1em;
@@ -58,29 +46,6 @@ body > header + h2 {
 
 		div[class] {
 			padding: 2em;
-		}
-	}
-
-	&.commentform {
-		label {
-			display: block;
-		}
-
-		label:first-of-type {
-			display: flex;
-			margin-bottom: 1em;
-
-			input {
-				flex: 1;
-			}
-		}
-
-		textarea {
-			display: block;
-			box-sizing: border-box;
-			width: 100%;
-			padding: .3em;
-			font: inherit;
 		}
 	}
 
