@@ -211,6 +211,44 @@
 					"content": "Check out the [Data Migration](/docs/migration) page to make sure you maintain the association between your old data and your new HTML! Most of the time Mavo does it automatically, but there are cases where it needs a helping hand.\n"
 				}
 			]
+		},
+		{
+			"id": "collections",
+			"title": "Collections",
+			"language": "markup",
+			"summary": "_Collections_ are repeatable elements. They are specified by adding an `mv-multiple` attribute to properties. Mavo creates controls for adding, deleting, and rearranging items, as well as keyboard shortcuts for these.",
+			"section": [
+				{
+					"id": "mv-multiple",
+					"advanced": false,
+					"title": "The mv-multiple attribute",
+					"content": "The usual way to create a collection is to add the `mv-multiple` attribute to a property, like so:\n\n##### Example\n\n```html\n<div property=\"person\" mv-multiple>\n\t\t<span property=\"firstName\">Lea</span>\n\t\t<span property=\"lastName\">Verou</span>\n</div>\n```\n\nHowever, you could also specify the property name as a value of `mv-multiple`, like so:\n\n##### Example\n\n```html\n<div mv-multiple=\"person\">\n\t\t<span property=\"firstName\">Lea</span>\n\t\t<span property=\"lastName\">Verou</span>\n</div>\n```"
+				},
+				{
+					"id": "collection-editing-controls",
+					"advanced": false,
+					"title": "Collection editing controls",
+					"content": "Collections automatically get controls for adding new items:\n\n*   An <def>item bar</def> for deleting each item, adding an item before it, clone it, or rearrange it. This [can be customized](/docs/ui/#item-controls).\n*   A button for adding new items at the end of a collection. This [can be customized](/docs/ui/#add-new-item-button).\n*   Keyboard shortcuts for adding (Cmd + Enter, or just Enter on single-line textfields) and deleting (Cmd + backspace) items."
+				},
+				{
+					"id": "simple-and-complex-collections",
+					"advanced": false,
+					"title": "Simple and complex collections",
+					"content": "Simple collections are collections of properties **that do not contain other properties.**. In contrast, <def>complex collections</def> are collections of groups, i.e. collections where each item contains multiple properties. There are a few UI differences between these two:\n\n*   In complex collections, the item bar is placed **inside** each item, at the end (unless [customized](/docs/ui/#item-controls)). In simple collections, the item bar is placed **after** each item and has a class of `mv-adjacent` and [a few CSS Variables for positioning that](/docs/#css-variables).\n*   In complex collections, dragging to rearrange is achieved via a handle in the itembar. In simple collections, the whole item is draggable.\n\nTry out the difference below:\n\n##### Example\n\n```html\n<div property=\"complexPerson\" mv-multiple>\n\t<span property=\"firstName\">Lea</span>\n\t<span property=\"lastName\">Verou</span>\n</div>\n\n<div property=\"simplePerson\" mv-multiple>Lea Verou</div>\n```"
+				},
+				{
+					"id": "mv-accepts",
+					"advanced": false,
+					"title": "The mv-accepts attribute",
+					"content": "By default, collection items can only be dragged either within the same collection, or to collections of the same type. The `mv-accepts` attribute takes a space-separated list of property names as its value and is specified on properties with `mv-multiple`. When specified, the current collection can accept items from those other collections as well.\n\nNote that if you want to drag and drop items between two collections, you will need to specify `mv-accepts` twice, once on each collection.\n\nAn example of `mv-accepts` can be found in the [Decisions](/demos/decisions/) demo. Try dragging pros to cons or vice versa."
+				},
+				{
+					"id": "mv-order",
+					"advanced": false,
+					"title": "The mv-order attribute",
+					"content": "`mv-order=\"desc\"` does not sort the collection. Instead, it affects the behavior of the controls that add new items. The main add button of the collection is placed _before_ the collection, and inserts new items at the top. The add buttons on each item always add in the opposite direction than the main add button, so they add new items _after_ the item they are on.\n\nAn example of `mv-order=\"desc\"` can be found in the following demos:\n\n*   [Talks list](/demos/talks/)\n*   [Invoice Manager](/demos/invoice/)"
+				}
+			]
 		}
 	]
 }
