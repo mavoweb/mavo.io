@@ -166,7 +166,7 @@
 					"id": "property-name-rules",
 					"advanced": false,
 					"title": "Property name rules",
-					"content": "Its value should describe the element, similarly to a `id` or `class` attribute. It can contain **only** letters, numbers and underscores (_). If it happens to be the same as the element’s `id` or `class` attributes, you don’t need to provide a value. For example, the following are all equivalent:\n\n<script type=\"text/plain\"><div property class=\"name\">Lea Verou</div> <div property id=\"name\">Lea Verou</div> <div property=\"name\">Lea Verou</div></script>\n\nIf you need inspiration for names, you could look at [schema.org](http://schema.org)."
+					"content": "Its value should describe the element, similarly to a `id` or `class` attribute. It can contain **only** letters, numbers and underscores (_). If it happens to be the same as the element’s `id` or `class` attributes, you don’t need to provide a value. For example, the following are all equivalent:\n\n```html\n<div property class=\"name\">Lea Verou</div>\n<div property id=\"name\">Lea Verou</div>\n<div property=\"name\">Lea Verou</div>\n```\n\nIf you need inspiration for names, you could look at [schema.org](http://schema.org)."
 				},
 				{
 					"id": "editing",
