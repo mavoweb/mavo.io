@@ -352,7 +352,7 @@
 					"id": "mv-value",
 					"advanced": false,
 					"title": "The mv-value attribute",
-					"content": "We’ve seen in the introduction how `mv-value` can be used to create fallback content for expressions. However, it’s much more powerful than that. When used on a collection, mv-value renders its value **on the entire collection**, enabling you to create lists of items that depend on other lists.\n\nAs a simple example, note how these two lists are synchronized:\n\n##### Example\n\n```html\n<div><span property=\"list1\" mv-multiple mv-mode=\"edit\">[$index + 1]</span></div>\n<div><span property=\"list2\" mv-multiple mv-value=\"list1\"></span></div>\n```"
+					"content": "We’ve seen in the introduction how `mv-value` can be used to create fallback content for expressions. However, it’s much more powerful than that. When used on a collection, mv-value renders its value **on the entire collection**, enabling you to create lists of items that depend on other lists.\n\nAs a simple example, note how these two lists are synchronized:\n\n##### Example\n\n```html\n<div><span property=\"list1\" mv-multiple mv-mode=\"edit\">[$index + 1]</span></div>\n<div><span property=\"list2\" mv-multiple mv-value=\"list1\"></span></div>\n<style>\n[mv-multiple] {\n\tdisplay: inline-block;\n\tpadding: .5em;\n\tborder: 1px solid rgba(0, 0, 0, .1);\n\tmargin: .5em .1em;\n}\n</style>\n```"
 				}
 			]
 		}
