@@ -19,12 +19,18 @@ document.addEventListener("mv-markdown-render", function(evt) {
 		var mavoURL = "https://dev.mavo.io/dist";
 		var css = "";
 
-		html = html.replace(/<style>([\S\s]+?)<\/style>\s*$/i, ($0, $1) => {
-			css = $1;
-			return "";
-		});
+		var styleTag = /<style>([\S\s]+?)<\/style>/ig, match;
 
-		css = css.trim();
+		while (match = styleTag.exec(html)) {
+			css += match[1];
+
+			if (!html.slice(styleTag.lastIndex).trim()) {
+				// <style> is at the end, remove
+				html = html.slice(0, styleTag.lastIndex - match[0].length);
+			}
+		}
+
+		styleTag.lastIndex = 0;
 
 		// Drop CSS from visible example
 		if (html != code.textContent) {
@@ -32,7 +38,7 @@ document.addEventListener("mv-markdown-render", function(evt) {
 		}
 
 		if (html.indexOf("mv-app") === -1) {
-			html = `<div mv-app mv-storage="local">
+			html = `<div mv-app>
 ${html}
 </div>`;
 		}
@@ -100,7 +106,7 @@ ${html}
 					name: "data",
 					value: Mavo.toJSON({
 						title: heading.textContent,
-						html: html,
+						html: html.replace(styleTag, ""),
 						css: css,
 						css_external: mavoURL + "/mavo.css",
 						js_external: mavoURL + "/mavo.es5.js",
