@@ -102,7 +102,6 @@ body > header + h2 {
 	}
 }
 
-.docs > body > section:first-of-type:not([id]),
 body > section#intro {
 	p::before {
 		content: "In a nutshell";

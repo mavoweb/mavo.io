@@ -120,6 +120,7 @@ pre, code {
 		background: transparent;
 		font-weight: bold;
 		color: hsl(220,10%,35%);
+		white-space: pre-wrap;
 	}
 
 	pre > code a[aria-label],
@@ -726,7 +727,6 @@ body > section table {
 
 }
 
-.docs > body > section:first-of-type:not([id]),
 body > section#intro {
 	font-size: 200%;
 	hyphens: manual;
@@ -743,6 +743,11 @@ body > section#intro {
 		@include run-in;
 		background: hsl(220, 10%, 70%);
 	}
+}
+
+body > section.mv-bar.mv-ui {
+	width: max-content;
+	margin: auto;
 }
 
 /**

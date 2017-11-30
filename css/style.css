@@ -102,7 +102,8 @@ pre {
 :not(pre) > code {
   background: transparent;
   font-weight: bold;
-  color: #505662; }
+  color: #505662;
+  white-space: pre-wrap; }
 
 pre > code a[aria-label],
 pre > code mark[aria-label] {
@@ -565,19 +566,15 @@ body > section table {
     .example.side-by-side pre, .example.side-by-side .example-container {
       margin-bottom: 1rem; }
 
-.docs > body > section:first-of-type:not([id]),
 body > section#intro {
   font-size: 200%;
   -webkit-hyphens: manual;
   -ms-hyphens: manual;
   hyphens: manual; }
-  .docs > body > section:first-of-type:not([id]) p:first-child,
   body > section#intro p:first-child {
     margin-top: 0; }
-  .docs > body > section:first-of-type:not([id]) p:last-child,
   body > section#intro p:last-child {
     margin-bottom: 0; }
-  .docs > body > section:first-of-type:not([id]) p::before,
   body > section#intro p::before {
     display: inline-block;
     vertical-align: text-bottom;
@@ -589,6 +586,12 @@ body > section#intro {
     font: bold 55%/1.5 Roboto, "Helvetica Neue", sans-serif;
     text-transform: uppercase;
     background: #abb0ba; }
+
+body > section.mv-bar.mv-ui {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  margin: auto; }
 
 /**
  * Syntax highlighting

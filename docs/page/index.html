@@ -14,8 +14,9 @@
 </head>
 
 
-<body class="language-[defaultLanguage]" mv-app="docs"
-      mv-storage="https://github.com/mavoweb/mavo.io/docs/docs.json" mv-github-commit-prefix=""
+<body class="language-[language] page-[url('docs')]" mv-app="docs"
+      mv-storage="https://github.com/mavoweb/mavo.io/docs/docs.json" mv-source="/docs/docs.json"
+	  mv-github-commit-prefix="([url('docs')] docs) "
       mv-path="page/id=[url('docs')]">
 
 <header>
@@ -37,15 +38,12 @@
 
 
 <h2>
+	<meta property="language" mv-default="markup">
 	<meta property="id" mv-default="[idify(title)]">
 	<span property="title"></span>
 </h2>
 
-<section>
-	<div class="mv-bar mv-ui" mv-bar="with no-login"></div>
-
-	<meta property="language" mv-default="markup">
-</section>
+<section class="mv-bar mv-ui" mv-bar="with no-login"></section>
 
 <section property="summary" id="intro" class="markdown"></section>
 
