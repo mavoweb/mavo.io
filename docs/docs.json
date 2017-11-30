@@ -249,6 +249,20 @@
 					"content": "`mv-order=\"desc\"` does not sort the collection. Instead, it affects the behavior of the controls that add new items. The main add button of the collection is placed _before_ the collection, and inserts new items at the top. The add buttons on each item always add in the opposite direction than the main add button, so they add new items _after_ the item they are on.\n\nAn example of `mv-order=\"desc\"` can be found in the following demos:\n\n*   [Talks list](/demos/talks/)\n*   [Invoice Manager](/demos/invoice/)"
 				}
 			]
+		},
+		{
+			"id": "mavoscript",
+			"title": "MavoScript",
+			"language": "markup",
+			"summary": "_MavoScript_ is Mavo's simple expression language, used in [Mavo expressions](/docs/expressions).",
+			"section": [
+				{
+					"id": "special-properties",
+					"advanced": false,
+					"title": "Special Properties",
+					"content": "Special properties are available on every Mavo and start with a dollar ($) sign. Some of them have more information that you can access with a dot.\n\n| Property | Description | \n| --- | --- | \n| `$now` | Current date and time as number of milliseconds since January 1st, 1970\\. Mostly useful with [date and time functions](#date-and-time-functions) or the `mod` operator. | \n| `$startup` | The value of `$now` when the page loaded. | \n| `$today` | Current date. | \n| `$hash` | The URL hash (without the `#` sign) | \n| `$mouse` | Mouse coordinates relative to the viewport. Use `$mouse.x` and `$mouse.y` to get them. | \n| `$index` | If inside a collection, the closest item’s position in its collection, starting from 0. |\n| `$previous` | If inside a collection, the closest item’s previous item. |\n| `$next` | If inside a collection, the closest item’s next item. |\n\n##### Example: $now\n\nColor clock that circles all hues every minute.\n\n```html\n<div mv-app=colorClock  style=\"background: hsl([hue], 100%, 80%)\">\n\t<span property=\"hue\">[$now * 6 / 1000 mod 360]</span>\n\t<time>[time($now)]</time>\n</div>\n<style>\nbody {\n\tfont: bold 100% Helvetica Neue, sans-serif;\n\tmargin: 0;\n}\n\ndiv { \n\tdisplay: flex;\n\tflex-flow: column;\n\theight: 100vh;\n\tpadding: 1em;\n\tbox-sizing: border-box;\n}\n\ntime {\n\tfont-size: 500%;\n\tflex: 1;\n}\n\nspan {\n\topacity: .5;\n}\n</style>\n```"
+				}
+			]
 		}
 	]
 }
