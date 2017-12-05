@@ -390,7 +390,7 @@
 					"id": "html-element",
 					"advanced": false,
 					"title": "HTML Element",
-					"content": "To store data in another HTML element in the page, use an `mv-storage` value of `#ELEMENT_ID` where `ELEMENT_ID` is the id of the element you want to use to store data in.\n\n##### Example\n\n```html\n<pre id=\"data\">{\n\t\"firstName\": \"Lea\",\n\t\"lastName\": \"Verou\"\n}</pre>\n<div mv-app=\"elementStorage\" mv-storage=\"#data\">\n\t<span property=\"firstName\">David</span>\n\t<span property=\"lastName\">Karger</span>\n</div>\n```\n\nNote that unless you take extra steps to persist the content of that element, **the data will be lost after a page refresh**. This storage adapter is mainly useful for debugging purposes or to combine Mavo with other libraries."
+					"content": "To store data in another HTML element in the page, use an `mv-storage` value of `#ELEMENT_ID` where `ELEMENT_ID` is the id of the element you want to use to store data in.\n\n##### Example\n\n```html\n<pre id=\"data\">{\n\t\"firstName\": \"Lea\",\n\t\"lastName\": \"Verou\"\n}</pre>\n<div mv-app=\"elementStorage\" mv-storage=\"#data\">\n\t<span property=\"firstName\">David</span>\n\t<span property=\"lastName\">Karger</span>\n</div>\n```\n\nWarning: Note that unless you take extra steps to persist the content of that element, **the data will be lost after a page refresh**. This storage adapter is mainly useful for debugging purposes or to combine Mavo with other libraries."
 				},
 				{
 					"id": "mv-source",
