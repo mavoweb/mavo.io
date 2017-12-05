@@ -68,7 +68,7 @@
 	<h1>Mavo Release History</h1>
 
 	<article property="release" mv-multiple mv-if="!prerelease">
-		<h2>
+		<h2 id="[tag_name]">
 			<a property="html_url" target="_blank">
 				<span property="tag_name"></span>
 				<span mv-if="name and name != tag_name">
@@ -78,7 +78,7 @@
 			<time property="created_at"></time>
 		</h2>
 
-		<div property="body" class="markdown"></div>
+		<div property="body" mv-markdown-options="headerLevelStart: 3"></div>
 
 		<p mv-if="$next.tag_name">
 			<a href="https://github.com/mavoweb/mavo/compare/[$next.tag_name]...[tag_name]" target="_blank">▸ Full changelog</a>

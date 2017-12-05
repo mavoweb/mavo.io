@@ -1,4 +1,4 @@
-(function() {
+(function($, $$) {
 
 Mavo.hooks.add("markdown-render-before", function(env) {
 	env.markdown = env.markdown.replace(/^(Note|Tip|Warning): /mig, function($0, $1) {
@@ -137,4 +137,4 @@ ${html}
 	});
 });
 
-})();
+})(Bliss, Bliss.$);

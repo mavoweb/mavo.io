@@ -35,6 +35,8 @@ if (parent && parent !== window && new URL(location).searchParams.get("full") ==
 	document.documentElement.classList.add("lite")
 }
 
+var $$ = $.$;
+
 // Create the live examples
 $$(".example:not(.manual)").forEach((example, i) => {
 	example.id = example.id || "example" + (i + 1);

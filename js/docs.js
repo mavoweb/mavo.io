@@ -1,3 +1,5 @@
+(function($, $$){
+
 // Print out URL for empty non-local links
 $$('a[href^="#"]:empty:not([property])').forEach(function (a) {
 	a.textContent = a.getAttribute("href").slice(1);
@@ -78,3 +80,5 @@ $$("body:not([mv-app]) > section > h1, body:not([mv-app]) > section section > h1
 		currentPage.appendChild(tocUl);
 	}
 })();
+
+})(Bliss, Bliss.$)
