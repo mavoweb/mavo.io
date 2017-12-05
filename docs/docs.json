@@ -355,6 +355,32 @@
 					"content": "We’ve seen in the introduction how `mv-value` can be used to create fallback content for expressions. However, it’s much more powerful than that. When used on a collection, mv-value renders its value **on the entire collection**, enabling you to create lists of items that depend on other lists.\n\nAs a simple example, note how these two lists are synchronized:\n\n##### Example\n\n```html\n<div><span property=\"list1\" mv-multiple mv-mode=\"edit\">[$index + 1]</span></div>\n<div><span property=\"list2\" mv-multiple mv-value=\"list1\"></span></div>\n<style>\n[mv-multiple] {\n\tdisplay: inline-block;\n\tpadding: .5em;\n\tborder: 1px solid rgba(0, 0, 0, .1);\n\tmargin: .5em .1em;\n}\n</style>\n```"
 				}
 			]
+		},
+		{
+			"language": "markup",
+			"id": "storage",
+			"title": "Storage",
+			"summary": "The `mv-storage` attribute tells Mavo where to store data, and `mv-source` where to read it from, if different.",
+			"section": [
+				{
+					"id": "disabling-storage",
+					"advanced": false,
+					"title": "Disabling storage",
+					"content": "To disable storage, just don't include an `mv-storage` attribute, or specify `mv-storage=\"none\"`. You could also disable storage on a per-property basis, by specifying `mv-storage=\"none\"` on individual properties. This is useful when you don't need a property's value to be saved. Properties whose values are specified via expressions have `mv-storage=\"none\"` by default."
+				},
+				{
+					"id": "local-storage",
+					"advanced": false,
+					"title": "Local storage",
+					"content": "You can save your data in the browser’s `localStorage`, by using the keyword `local` as the value of the `mv-storage` attribute (`mv-storage=\"local\"`).\n\nThis can be useful if you are not planning to share your data with other people. Please note that most `localStorage` implementations have a limit of 4MB. Also, `localStorage` is bound by the same-origin policy. This means that if you change your URL, your data will be left behind!"
+				},
+				{
+					"id": "github",
+					"advanced": false,
+					"title": "Github",
+					"content": "<figure>\n\t<video src=\"/videos/gh-auth.mp4\" controls></video>\n\t<figcaption>Mavo takes care of authentication when using Github as your storage backend.</figcaption>\n</figure>\n\nThe Github backend provides remote storage, which is useful if you need to share data with other people and a history of all edits, which is useful for recovering past data if you regret your changes at any point. Mavo will provide login controls and will not allow any edits until the viewer has logged in. If the file and/or repo does not exist, Mavo will create it upon saving.\n\nIf the logged in user **does have commit permission** (i.e. is either the creator of the repo or added as a collaborator), saving will directly save back to Github. If the logged in user **does not have commit permissions**, the data will be stored in their own profile and they will be prompted to send an _\"edit suggestion\"_ to the original owner of the data. Editing suggestions are sent as [pull requests](https://help.github.com/articles/about-pull-requests/), with a link to view the new data in the Mavo app (by using the [`storage` URL parameter described below](#url-params)). Currently reviewing the changes between the new and old data (i.e. the _diff_) requires the ability to read JSON (unless you’re using a different format for your data). Future Mavo versions may introduce a graphical way for this as well.\n\n**You don’t need to understand how Github works to use it for storing your data.** If you don’t know what a repo or a branch is, do not worry. Just sign up for a [Github](http://github.com) account, and specify `https://github.com/_USERNAME_` as the value of the `mv-storage` attribute. Mavo will automatically create an `mv-data` repo for you and a file to store your data named `_APP_ID_.json` where `_APP_ID_` is the [name of your app](/docs/primer/#mv-app).\n\nIf you _do_ understand how Github works, you can specify where your data should be stored with more precision:\n\n<dl>\n\n<dt>`https://github.com/_USERNAME_/_REPO_NAME_`</dt>\n\n<dd>Mavo will create a file called `_APP_ID_.json` in that repository.</dd>\n\n<dt>`https://github.com/_USERNAME_/_REPO_NAME_/_FILE_NAME_`</dt>\n\n<dd>Mavo will assume a default branch of `master`</dd>\n\n<dt>`https://github.com/_USERNAME_/_REPO_NAME_/blob/_BRANCH_/_FILE_NAME_`</dt>\n\n<dd>The URL Github gives you when using its file browser. As specific as it gets, Mavo makes no assumptions.</dd>\n\n<dt>`https://raw.githubusercontent.com/_USERNAME_/_REPO_NAME_/_BRANCH_/_FILE_NAME_`</dt>\n\n<dd>The URL that shows when you click the button _Raw_ from the Github file browser.</dd>\n\n</dl>\n\nTerms in _UPPERCASE_AND_ITALIC_ indicate that you are expected to replace them with the actual values (e.g. your username). Note that __FILE_NAME__ above could include a path, e.g. `foo/bar/baz.json`.\n\nGithub Pages URLs (`https://_USERNAME_.github.io/_REPO_NAME_/_FILE_NAME_`) are not supported, because it’s impossible for Mavo to figure out where to save the data just from the Github Pages URL."
+				}
+			]
 		}
 	]
 }
