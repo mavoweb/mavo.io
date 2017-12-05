@@ -122,7 +122,7 @@ ${html}
 			inside: heading
 		});
 
-		$.start(siblings, container);
+		$.start(siblings.reverse(), container);
 	});
 
 	// Highlight code areas
