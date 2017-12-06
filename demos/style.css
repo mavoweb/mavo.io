@@ -56,7 +56,7 @@ a[property="tag"] {
   text-transform: uppercase;
   font-size: 75%; }
 
-html:not(.lite) main {
+html:not(.lite) body:not(.has-demo-bar) main {
   padding: 1rem;
   margin: 1rem 1rem 2rem;
   border-radius: .5rem;
@@ -90,5 +90,59 @@ html:not(.lite) main {
   min-height: 100vh;
   padding: 1em;
   box-sizing: border-box; }
+
+body.has-demo-bar {
+  margin-top: 3rem; }
+
+.demo-bar.demo-bar.demo-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: -ms-flexbox;
+  display: flex;
+  padding: .4em .2em;
+  background: black;
+  color: white;
+  font: bold 1rem/1.5 Roboto, "Helvetica Neue", sans-serif; }
+  .demo-bar.demo-bar.demo-bar > * {
+    min-width: 1em;
+    padding: .3em .7em;
+    border: none;
+    border-radius: .2em;
+    margin: 0 .2em;
+    background: rgba(255, 255, 255, 0.15);
+    text-align: center;
+    font: inherit;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer; }
+    .demo-bar.demo-bar.demo-bar > *.previous {
+      margin-right: auto; }
+    .demo-bar.demo-bar.demo-bar > *.next {
+      margin-left: auto; }
+    .demo-bar.demo-bar.demo-bar > *.home:not(:hover) {
+      filter: grayscale(100%); }
+  .demo-bar.demo-bar.demo-bar > [href]:hover,
+  .demo-bar.demo-bar.demo-bar > :enabled:hover {
+    background: #ff0080; }
+  .demo-bar.demo-bar.demo-bar > a:not([href]),
+  .demo-bar.demo-bar.demo-bar > :disabled {
+    opacity: .5;
+    cursor: not-allowed; }
+
+.tippy-popper .tippy-tooltip.tippy-tooltip {
+  background: white;
+  color: black;
+  padding: .5rem;
+  border-radius: .5rem;
+  box-shadow: 0.1em 0.1em 2em rgba(0, 0, 0, 0.2);
+  transform-origin: top; }
+  .tippy-popper .tippy-tooltip.tippy-tooltip pre {
+    line-height: 1.5;
+    max-height: 80vh;
+    background-attachment: local; }
+  .tippy-popper .tippy-tooltip.tippy-tooltip .tippy-arrow {
+    border-bottom-color: white; }
 
 /*# sourceMappingURL=style.css.map */

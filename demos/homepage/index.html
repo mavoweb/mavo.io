@@ -1,46 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" class="demos single">
+<html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Editable Homepage &bull; Mavo Demos</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css" />
-	<link rel="stylesheet" href="../../css/style.css" />
-	<link rel="icon" href="/favicon.ico">
 
-	<link rel='stylesheet' href='/demos/style.css'><link rel='stylesheet' href='style.css'>
+<meta charset="UTF-8">
+<title>Editable Homepage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css">
+<script src="https://dev.mavo.io/dist/mavo.js"></script>
+<link rel="stylesheet" href="style.css">
 
-	<script src="https://dev.mavo.io/dist/mavo.es5.js"></script>
 </head>
 
-
-<body>
-
-<header>
-	<h1 class="logo">
-		<a href="/"><img src="../../logo.svg" alt="Mavo"></a>
-	</h1>
-	<nav>
-	<a href="../../docs/primer">Get started</a>
-	<a href="../../docs">Docs</a>
-	<a href="../../demos">Demos</a>
-	<a href="../../faq">FAQ</a>
-	<a href="https://plugins.mavo.io">Plugins</a>
-	<a href="../../get">Get Mavo</a>
-	<a href="https://play.mavo.io">Play!</a>
-	<a class="github-button" href="https://github.com/mavoweb/mavo" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star mavoweb/mavo on GitHub">Star</a>
-</nav>
-
-</header>
-
-
-<h2>Demos</h2>
-
-<section>
-	<h1>Editable Homepage</h1>
-
-
-<main mv-app="homepage" mv-storage="https://github.com/mavoweb/data" mv-plugins="tinymce">
+<body mv-app="homepage" mv-storage="https://github.com/mavoweb/data" mv-plugins="tinymce">
 
 <h1>
 	<img property="image" src="images/photo.jpg" alt="">
@@ -58,51 +29,7 @@
 	<a property class="wikipedia" href="https://en.wikipedia.org/wiki/Grumpy_Cat" target="_blank" title="Wikipedia">W</a>
 </div>
 
-</main>
-
-</section>
-
-<footer>
-	<p>
-		Made with &hearts; by <a href="http://lea.verou.me">Lea Verou</a> and <a href="https://github.com/mavoweb/mavo/graphs/contributors">all these awesome people</a>.
-		Proudly hosted by <a href="https://www.netlify.com" class="netlify">Netlify</a>.
-	</p>
-	<article>
-		<h1>Explore</h1>
-
-		<ul>
-			<li><a href="../../docs/primer">Get started</a></li>
-			<li><a href="../../docs">Docs</a></li>
-			<li><a href="../../demos">Demos</a></li>
-			<li><a href="../../faq">FAQ</a></li>
-			<li><a href="https://plugins.mavo.io">Plugins</a></li>
-			<li><a href="../../get">Get Mavo</a></li>
-			<li><a href="https://test.mavo.io">Testsuite</a></li>
-			<li><a href="../../credits">Credits</a></li>
-		</ul>
-	</article>
-	<article>
-		<h1>Social Mavo</h1>
-
-		<ul>
-			<li><a href="https://twitter.com/mavoweb">Follow @mavoweb on Twitter</a></li>
-			<li><a href="https://gitter.im/mavoweb">Chat with us on Gitter</a></li>
-			<li>
-				<a href="https://github.com/mavoweb/mavo">Github</a>
-				<a class="github-button" href="https://github.com/mavoweb/mavo" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star mavoweb/mavo on GitHub">Star</a>
-			</li>
-		</ul>
-	</article>
-
-	<a href="http://mit.edu" class="logo"><img src="../../img/logo-mit.svg" alt="MIT" /></a>
-	<a href="http://csail.mit.edu" class="logo"><img src="../../img/logo-csail.svg" alt="CSAIL" /></a>
-</footer>
-
-<script src="../../js/prism.js"></script>
-<script src="/sitewide.js"></script>
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-
+<script src="/js/demo.js"></script>
 
 </body>
 </html>
-

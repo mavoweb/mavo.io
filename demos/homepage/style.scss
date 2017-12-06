@@ -1,68 +1,80 @@
-main {
+@import "../../css/_vars.scss";
+
+@font-face {
+	font-family: 'Mavo Icons';
+	src: url('https://mavo.io/css/fonts/mavo-icons.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body {
 	padding: 1em;
 	max-width: 90vw;
 	margin: auto;
 	text-align: center;
 	box-shadow: none;
+	font: 100%/1.5 $body-font;
+}
 
-	h1 {
-		font-weight: normal;
-		font-size: 250%;
+a {
+	text-decoration: none;
+}
+
+h1 {
+	font: 250%/1 $heading-font;
+}
+
+img[property=image] {
+	display: block;
+	margin: 0 auto .5em;
+	max-width: 5em;
+	border-radius: 50%;
+}
+
+p[property=description] {
+	text-align: justify;
+	hyphens: auto;
+	font-kerning: normal;
+	max-width: 30em;
+	margin: 1em auto;
+
+	a {
+		color: hsl(200, 50%, 50%);
 	}
+}
 
-	img[property=image] {
-		display: block;
-		margin: 0 auto .5em;
-		max-width: 5em;
+.links {
+	margin: 2em 0;
+
+	a {
+		display: inline-block;
+		width: 1.5em;
+		padding: .3em;
+		margin: .2em;
+		background: var(--color);
+		color: white;
+		font: 150%/1.5 Mavo Icons;
 		border-radius: 50%;
-	}
+		text-align: center;
 
-	p[property=description] {
-		text-align: justify;
-		hyphens: auto;
-		font-kerning: normal;
-		max-width: 30em;
-		margin: 1em auto;
-
-		a {
-			color: hsl(200, 50%, 50%);
+		&:hover,
+		&:focus {
+			color: var(--color);
+			background: white;
+			box-shadow: 0 0 0 .2em var(--color);
+			text-decoration: none;
 		}
 	}
 
-	.links {
-		margin: 2em 0;
-
-		a {
-			display: inline-block;
-			width: 1.5em;
-			padding: .3em;
-			margin: .2em;
-			background: var(--color);
-			color: white;
-			font: 150%/1.5 Mavo Icons;
-			border-radius: 50%;
-			text-align: center;
-
-			&:hover,
-			&:focus {
-				color: var(--color);
-				background: white;
-				box-shadow: 0 0 0 .2em var(--color);
-				text-decoration: none;
-			}
-		}
-
-		a.twitter {
-			--color: #1da1f2;
-		}
-
-		a.facebook {
-			--color: #3b5998
-		}
-
-		a.wikipedia {
-			--color: #636466;
-		}
+	a.twitter {
+		--color: #1da1f2;
 	}
 
+	a.facebook {
+		--color: #3b5998
+	}
+
+	a.wikipedia {
+		--color: #636466;
+	}
 }

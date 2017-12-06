@@ -3,9 +3,9 @@ $background: hsl(220,8%,60%);
 $sans: Helvetica Neue, sans-serif;
 $serif: Baskerville, Palatino Linotype, Palatino, serif;
 
-main {
+body {
 	background: $background;
-	font: 120% $sans;
+	font: 100% $sans;
 	text-align: center;
 
 	a {
@@ -36,6 +36,7 @@ main {
 	// Restaurant
 	& > article {
 		$padding: 2.5em;
+		font-size: 120%;
 
 		max-width: 35em;
 		padding: $padding;

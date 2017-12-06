@@ -35,8 +35,6 @@ if (parent && parent !== window && new URL(location).searchParams.get("full") ==
 	document.documentElement.classList.add("lite")
 }
 
-var $$ = $.$;
-
 // Create the live examples
 $$(".example:not(.manual)").forEach((example, i) => {
 	example.id = example.id || "example" + (i + 1);
@@ -90,43 +88,6 @@ $$(".example-container > iframe").forEach(iframe => {
 		});
 	});
 });
-
-if (/^\/demos\/\w+\/$/.test(location.pathname)) {
-	$.fetch(location.href).then(xhr => {
-		var html = Mavo.match(xhr.responseText, /<main[\S\s]+<\/main>[\S\s]*(?=<\/section>\s+<footer)/i).trim();
-		var pre;
-
-		html = `<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>${document.title}</title>
-	<script src="https://get.mavo.io/mavo.js"></script>
-	<link rel="stylesheet" href="https://get.mavo.io/mavo.css">
-	<link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-${html}
-
-</body>
-`;
-
-		$.create("section", {
-			id: "code",
-			contents: [
-				{tag: "h1", textContent: "Mavo HTML"},
-				pre = $.create({
-					tag: "pre",
-					contents: {tag: "code", textContent: html},
-					className: "language-markup"
-				})
-			],
-			after: $("body > section:last-of-type")
-		});
-
-		Prism.highlightElement(pre);
-	});
-}
 
 $$("pre > code a[aria-label]").forEach(a => a.target = "_blank");
 

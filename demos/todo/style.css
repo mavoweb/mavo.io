@@ -2,26 +2,26 @@
   font-family: "Marker Felt";
   src: local("Marker Felt"), url("Marker-Felt.woff"); }
 
-main {
+body {
   padding: 1em;
   background: url(img/wood.png) #4e2e0e;
   text-align: center;
   font: 100% Helvetica Neue, sans-serif;
   color: white; }
-  main * {
+  body * {
     margin: 0;
     padding: 0;
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
     color: inherit; }
-  main a {
+  body a {
     text-decoration: none; }
 
 @keyframes transform {
   from {
     transform: rotate(8deg); } }
-  main ul {
+  body ul {
     position: relative;
     z-index: 1;
     display: block;
@@ -34,7 +34,7 @@ main {
     background: #fffef0;
     font-size: 120%;
     text-align: left; }
-    main ul::before, main ul::after {
+    body ul::before, body ul::after {
       content: '';
       position: absolute;
       top: 0;
@@ -46,22 +46,22 @@ main {
       box-shadow: inherit;
       transform: rotate(-3deg);
       animation: transform 0.4s cubic-bezier(0.25, 0.1, 0.4, 1.5); }
-    main ul::after {
+    body ul::after {
       transform: rotate(2deg); }
-  main :checked + [property=taskTitle] {
+  body :checked + [property=taskTitle] {
     font-style: italic;
     text-decoration: line-through;
     color: gray;
     mix-blend-mode: multiply; }
-  main input::-webkit-input-placeholder {
+  body input::-webkit-input-placeholder {
     font-style: italic;
     color: #999;
     mix-blend-mode: multiply; }
-  main input::-moz-placeholder {
+  body input::-moz-placeholder {
     font-style: italic;
     color: #999;
     mix-blend-mode: multiply; }
-  main button.mv-add-task {
+  body button.mv-add-task {
     padding: .2em .5em;
     margin-top: 1em;
     border-radius: .3em;
@@ -73,31 +73,31 @@ main {
     font-weight: bold;
     cursor: pointer;
     font-size: 120%; }
-  main button.mv-add:hover {
+  body button.mv-add:hover {
     background-color: orange; }
-  main button.mv-add:active {
+  body button.mv-add:active {
     box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.8) inset;
     background-image: none; }
-  main > header {
+  body > header {
     display: block;
     margin: 2em 0 3em;
     text-shadow: 0 -1px 3px black;
     opacity: .9;
     font-size: 120%; }
-    main > header > h1 {
+    body > header > h1 {
       font-weight: 100;
       font-size: 400%;
       font-family: inherit;
       opacity: .6; }
-    main > header > p {
+    body > header > p {
       margin-top: .5em; }
-  main body > footer {
+  body body > footer {
     display: block;
     margin-top: 3em;
     font-size: small; }
-  main .auth-controls, main .progress {
+  body .auth-controls, body .progress {
     mix-blend-mode: multiply; }
-  main .mv-item-bar.mv-ui {
+  body .mv-item-bar.mv-ui {
     position: static;
     pointer-events: auto;
     opacity: 1 !important;

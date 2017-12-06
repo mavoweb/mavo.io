@@ -74,36 +74,14 @@ dd + dt {
 ul {
   padding-left: 1em; }
 
-pre, code {
-  background: whitesmoke;
-  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-  -moz-tab-size: 4;
-  tab-size: 4;
-  -webkit-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;
-  white-space: pre; }
-
-/* Code blocks */
-pre {
+section pre {
   padding: 1em 1.5em;
   margin: .5em -1.5em;
-  overflow: auto;
-  background: #f9fafb;
-  background: linear-gradient(to bottom, #f6f8f9 50%, #f3f5f7 0) 0 0/3em 3em content-box border-box;
   -webkit-clip-path: polygon(0 0, 100% 0.5em, calc(100% - .5em) calc(100% - 1em), 0 100%);
   clip-path: polygon(0 0, 100% 0.5em, calc(100% - .5em) calc(100% - 1em), 0 100%); }
   @supports not ((-webkit-clip-path: polygon(0 0)) or (clip-path: polygon(0 0))) {
-    pre {
+    section pre {
       border-radius: .5em; } }
-  pre > code {
-    background: transparent; }
-
-:not(pre) > code {
-  background: transparent;
-  font-weight: bold;
-  color: #505662;
-  white-space: pre-wrap; }
 
 pre > code a[aria-label],
 pre > code mark[aria-label] {
@@ -592,6 +570,33 @@ body > section.mv-bar.mv-ui {
   width: -moz-max-content;
   width: max-content;
   margin: auto; }
+
+pre, code {
+  background: whitesmoke;
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  -moz-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+  white-space: pre; }
+
+code {
+  background: transparent; }
+
+/* Code blocks */
+pre {
+  padding: 1em;
+  margin: 0;
+  overflow: auto;
+  background: #f9fafb;
+  background: linear-gradient(to bottom, #f6f8f9 50%, #f3f5f7 0) 0 0/3em 3em content-box border-box;
+  text-align: left; }
+
+:not(pre) > code {
+  font-weight: bold;
+  color: #505662;
+  white-space: pre-wrap; }
 
 /**
  * Syntax highlighting

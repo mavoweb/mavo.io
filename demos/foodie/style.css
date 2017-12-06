@@ -1,13 +1,13 @@
 @charset "UTF-8";
-main {
+body {
   background: #9196a1;
-  font: 120% Helvetica Neue, sans-serif;
+  font: 100% Helvetica Neue, sans-serif;
   text-align: center; }
-  main a {
+  body a {
     color: inherit; }
-    main a:not(:hover):not(:focus) {
+    body a:not(:hover):not(:focus) {
       text-decoration: none; }
-  main > h1 {
+  body > h1 {
     position: relative;
     width: -webkit-fit-content;
     width: -moz-fit-content;
@@ -16,20 +16,21 @@ main {
     color: white;
     font: italic 400% Baskerville, Palatino Linotype, Palatino, serif;
     text-transform: lowercase; }
-    main > h1 span {
+    body > h1 span {
       display: inline-block;
       margin-left: .1em;
       color: rgba(0, 0, 0, 0.6);
       font: bold 75% Helvetica Neue, sans-serif;
       letter-spacing: -.05em; }
-  main > article {
+  body > article {
+    font-size: 120%;
     max-width: 35em;
     padding: 2.5em;
     margin: 2em auto;
     background: white;
     color: black;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3); }
-    main > article > header {
+    body > article > header {
       position: relative;
       width: 100%;
       padding: inherit;
@@ -40,7 +41,7 @@ main {
       color: white;
       text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.5);
       overflow: hidden; }
-      main > article > header::before {
+      body > article > header::before {
         content: "";
         position: absolute;
         top: -1em;
@@ -50,66 +51,66 @@ main {
         background: center / cover;
         background-image: inherit;
         filter: brightness(0.8) blur(0.8em); }
-      main > article > header > a {
+      body > article > header > a {
         display: block; }
-      main > article > header img {
+      body > article > header img {
         width: 5em;
         height: 5em;
         border: none;
         border-radius: 5em;
         object-fit: cover;
         box-shadow: 0 0 0 0.3em rgba(255, 255, 255, 0.4); }
-      main > article > header img:not([src]), main > article > header img[src=""] {
+      body > article > header img:not([src]), body > article > header img[src=""] {
         background: linear-gradient(to bottom right, transparent 49%, rgba(0, 0, 0, 0.2) 0, rgba(0, 0, 0, 0.2) 51%, transparent 0), linear-gradient(to bottom left, transparent 49%, rgba(0, 0, 0, 0.2) 0, rgba(0, 0, 0, 0.2) 51%, transparent 0) rgba(255, 255, 255, 0.1); }
-      main > article > header > a, main > article > header > p, main > article > header > img {
+      body > article > header > a, body > article > header > p, body > article > header > img {
         position: relative;
         z-index: 1; }
-      main > article > header h1 {
+      body > article > header h1 {
         margin: 0;
         font-size: 250%;
         font-weight: 300; }
-        main > article > header h1 + p {
+        body > article > header h1 + p {
           text-align: center; }
-      main > article > header meter {
+      body > article > header meter {
         width: 8em;
         height: 1.6em;
         margin-right: 0; }
-        main > article > header meter::-webkit-meter-bar {
+        body > article > header meter::-webkit-meter-bar {
           background: radial-gradient(closest-side circle at 60% 50%, rgba(255, 255, 255, 0.2) 90%, transparent) 0 0;
           background-size: 1.6em 100%; }
-        main > article > header meter::-webkit-meter-optimum-value, main > article > header meter::-webkit-meter-suboptimum-value {
+        body > article > header meter::-webkit-meter-optimum-value, body > article > header meter::-webkit-meter-suboptimum-value {
           background: radial-gradient(closest-side circle at 60% 50%, white 90%, transparent) 0 0;
           background-size: 1.6em 100%; }
-    main > article > section {
+    body > article > section {
       text-align: left; }
-      main > article > section > h1 {
+      body > article > section > h1 {
         padding: .3rem .5rem;
         border-bottom: .2em solid;
         color: rgba(5, 0, 10, 0.4);
         line-height: 1;
         font-weight: normal; }
-      main > article > section > article {
+      body > article > section > article {
         padding: 1em;
         margin: .6em 0;
         border: 1px solid rgba(0, 0, 0, 0.1);
         font-family: Baskerville, Palatino Linotype, Palatino, serif; }
-        main > article > section > article > header {
+        body > article > section > article > header {
           display: -ms-flexbox;
           display: flex;
           background: rgba(0, 0, 0, 0.1);
           padding: 0.5em;
           margin: -1em;
           margin-bottom: 1em; }
-          main > article > section > article > header > h1 {
+          body > article > section > article > header > h1 {
             -ms-flex: 1;
             flex: 1;
             width: 100%;
             padding: 0.5em;
             margin: 0;
             font: bold 100% Helvetica Neue, sans-serif; }
-            main > article > section > article > header > h1 div {
+            body > article > section > article > header > h1 div {
               font-weight: normal; }
-          main > article > section > article > header > p {
+          body > article > section > article > header > p {
             display: -ms-flexbox;
             display: flex;
             -ms-flex-align: center;
@@ -127,7 +128,7 @@ main {
             -webkit-hyphens: none;
             -ms-hyphens: none;
             hyphens: none; }
-            main > article > section > article > header > p span {
+            body > article > section > article > header > p span {
               -ms-flex: 1;
               flex: 1;
               padding-left: .2em;
@@ -135,24 +136,24 @@ main {
               margin-left: .2em;
               font-size: 350%;
               line-height: 1; }
-        main > article > section > article > section > h1 {
+        body > article > section > article > section > h1 {
           margin: .5em 0;
           color: rgba(0, 0, 0, 0.5);
           font: bold 100% Helvetica Neue, sans-serif; }
-        main > article > section > article > section ul {
+        body > article > section > article > section ul {
           list-style: none;
           margin: 0;
           padding-left: 1.4em; }
-        main > article > section > article > section li::before {
+        body > article > section > article > section li::before {
           content: "🍴";
           position: absolute;
           right: 100%;
           margin-right: .5em; }
-        main > article > section > article > section li p:first-of-type {
+        body > article > section > article > section li p:first-of-type {
           font-style: italic; }
-        main > article > section > article > section li + li {
+        body > article > section > article > section li + li {
           margin-top: .3em; }
-        main > article > section > article > section meter {
+        body > article > section > article > section meter {
           display: inline-block;
           vertical-align: middle;
           width: 8em;
@@ -160,26 +161,26 @@ main {
           margin-right: .3em;
           background: transparent;
           border: 1px solid; }
-          main > article > section > article > section meter[min="1"] {
+          body > article > section > article > section meter[min="1"] {
             border-left: 1.6em solid; }
-          main > article > section > article > section meter::-webkit-meter-bar {
+          body > article > section > article > section meter::-webkit-meter-bar {
             background: transparent;
             border: 1px solid; }
-          main > article > section > article > section meter::-webkit-meter-optimum-value, main > article > section > article > section meter::-webkit-meter-suboptimum-value {
+          body > article > section > article > section meter::-webkit-meter-optimum-value, body > article > section > article > section meter::-webkit-meter-suboptimum-value {
             background: currentColor; }
-  main > .mv-add {
+  body > .mv-add {
     padding: .4em .6em;
     border: 1px solid rgba(0, 0, 0, 0.05);
     background: #757c8a;
     color: white;
     font-size: 120%;
     border-radius: .2em; }
-    main > .mv-add:hover {
+    body > .mv-add:hover {
       background: #5e636e; }
-  main footer {
+  body footer {
     margin-top: 2em;
     color: #6a707c; }
-  main #data {
+  body #data {
     display: block;
     font: 100%/1.5 Consolas, Monaco, monospace;
     white-space: pre;
@@ -191,13 +192,13 @@ main {
     tab-size: 4;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3) inset;
     text-align: left; }
-  main #data:empty {
+  body #data:empty {
     visibility: hidden; }
-  main ::-webkit-input-placeholder {
+  body ::-webkit-input-placeholder {
     color: rgba(117, 117, 117, 0.6); }
-  main :-ms-input-placeholder {
+  body :-ms-input-placeholder {
     color: rgba(117, 117, 117, 0.6); }
-  main ::placeholder {
+  body ::placeholder {
     color: rgba(117, 117, 117, 0.6); }
 
 /*# sourceMappingURL=style.css.map */
