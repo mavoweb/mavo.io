@@ -35,38 +35,7 @@ if (parent && parent !== window && new URL(location).searchParams.get("full") ==
 	document.documentElement.classList.add("lite")
 }
 
-// Create the live examples
-$$(".example:not(.manual)").forEach((example, i) => {
-	example.id = example.id || "example" + (i + 1);
-
-	if (!$("h1, h2, h3, h4, h5, h6", example)) {
-		$.create("h6", {
-			textContent: "Example",
-			start: $("header", example) || example
-		});
-	}
-
-	var code = $("script[type='text/plain']", example);
-
-	$.create({
-		className: "demo-container",
-		around: code
-	});
-
-	var container = $.create({
-		className: "example-container",
-		innerHTML: code.textContent,
-		after: code
-	});
-
-	var mavoRoot = $("[mv-app], [mv-storage]", container) || container;
-
-	if (mavoRoot && !example.classList.contains("no-fixup")) {
-		mavoRoot.setAttribute("mv-storage", mavoRoot.getAttribute("mv-storage") || "local");
-		mavoRoot.setAttribute("mv-app", mavoRoot.getAttribute("mv-app") || "");
-	}
-});
-
+// Resize iframes to fit
 $$(".example-container > iframe").forEach(iframe => {
 	$.events(iframe, "DOMFrameContentLoaded load", () => {
 		var root = iframe.contentDocument.documentElement;
@@ -91,6 +60,7 @@ $$(".example-container > iframe").forEach(iframe => {
 
 $$("pre > code a[aria-label]").forEach(a => a.target = "_blank");
 
+// Add notice to advanced sections
 $.events(document, "DOMContentLoaded mv-load", function(evt) {
 	$$("section.advanced").forEach(section => {
 		var heading = $("h1, h2", section);
