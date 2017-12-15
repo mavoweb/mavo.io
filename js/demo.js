@@ -93,7 +93,7 @@ if (!parent || parent === window) {
 							className: "language-markup",
 							inside: pre
 						});
-console.log(pre);
+
 						Prism.highlightElement(code);
 
 						return pre;
