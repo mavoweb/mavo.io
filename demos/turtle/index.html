@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<title>Turtle</title>
+<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css">
+<script src="https://dev.mavo.io/dist/mavo.js"></script>
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body mv-app="turtle" mv-storage="local" mv-plugins="clear" mv-autosave="0">
+
+<header>
+	<h1>
+		🐢
+	</h1>
+
+	<div class="mv-bar" mv-bar="with import export clear"></div>
+	<details>
+		<summary class="button">JS</summary>
+		<div>
+			<textarea>[code]</textarea>
+		</div>
+	</details>
+
+	<section>
+		<input type="number" property="width" value="1000" class="mv-autosize" /> &times;
+		<input type="number" property="height" value="1000" class="mv-autosize" />
+	</section>
+</header>
+
+<main>
+<section class="editor">
+	<ol>
+		<li property="instruction" mv-multiple mv-mode="edit">
+
+			<select property="type" class="mv-autosize">
+				<option value="move">Move</option>
+				<option value="turn">Turn</option>
+				<option value="color">Change color</option>
+				<option value="up">Put brush up</option>
+				<option value="down">Put brush down</option>
+				<option value="repeat">Repeat the following</option>
+			</select>
+
+			<label mv-if="type = turn">
+				<input type="number" property="angle" value="20" class="mv-autosize" />
+				degrees
+
+				<meta property="js" content='ctx.rotate((Math.PI / 180) * [angle]);
+'>
+			</label>
+
+			<label mv-if="type = move">
+				forward
+				<input type="number" property="steps" value="100" class="mv-autosize" />
+				steps
+
+				<meta property="js" content='
+ctx.beginPath();
+ctx.moveTo(0, 0);
+ctx.lineTo([steps], 0);
+ctx.translate([steps], 0);
+ctx.stroke();
+'>
+			</label>
+
+			<label mv-if="type = 'color'">
+				to
+				<input type="color" property="color" />
+				<meta property="js" content='var color = ctx.strokeStyle = "[color]";
+'>
+			</label>
+
+			<label mv-if="type = 'repeat'">
+				<input type="number" property="times" class="mv-autosize" />
+				times:
+				<meta property="js" content='for (let i=0; i<[times]; i++) {
+	[replace(join(instruction.js, "\\n"), "\\n", "\\n\\t")]
+}'>
+			</label>
+
+			<div mv-if="type = 'up'">
+				<meta property="js" content='ctx.strokeStyle = "transparent";' mv-mode="read">
+			</div>
+			<div mv-if="type = 'down'">
+				<meta property="js" content='ctx.strokeStyle = color;' mv-mode="read">
+			</div>
+
+			<div class="mv-item-bar mv-ui"></div>
+			<ol mv-if="type = 'repeat'">
+				<li property="instruction" mv-multiple mv-like="instruction"></li>
+			</ol>
+		</li>
+	</ol>
+	<meta property="code" content="[join(js, '\\n')]" />
+
+	<footer>
+		Concept & design heavily inspired <br> from Nicky Case’s awesome <a href="http://ncase.me/joy-demo/turtle/" target="_blank">Joy of Turtle</a>
+	</footer>
+</section>
+<section class="preview">
+	<iframe srcdoc='
+<head>
+<style>
+	body {
+		margin: 0;
+	}
+	canvas {
+		width: 100vmin;
+		height: 100vmin;
+		display: block;
+	}
+</style>
+</head>
+<body>
+<canvas width="[width]" height="[height]" id="canvas"></canvas>
+<script>
+var ctx = canvas.getContext("2d");
+ctx.lineWidth = 8;
+try {
+ctx.translate([width/2], [width/2]);
+[code]
+} catch(e) {}
+</script>
+</body>
+	' frameborder="0"></iframe>
+</section>
+
+</main>
+
+<script src="/js/demo.js"></script>
+<script>
+// Fix Chrome bug
+document.addEventListener("mv-load", evt => {
+	var iframe = $("iframe");
+	setTimeout(e => iframe.srcdoc = iframe.srcdoc, 90);
+})
+</script>
+
+</body>
+</html>
