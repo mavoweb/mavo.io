@@ -381,6 +381,20 @@
 					]
 				},
 				{
+					"name": "render",
+					"static": false,
+					"role": "function",
+					"description": "Render data onto this node",
+					"argument": [
+						{
+							"name": "data",
+							"optional": false,
+							"type": "Object",
+							"description": "The data to render. `Mavo.Group` objects expect objects, `Mavo.Collection` objects expect arrays, `Mavo.Primitive` objects expect strings, numbers or booleans. However, any object will try to reasonably render anything you throw at it. You can read [these heuristics here](https://mavo.io/docs/migration)."
+						}
+					]
+				},
+				{
 					"name": "getData",
 					"static": false,
 					"role": "function",
@@ -499,6 +513,32 @@
 					"argument": [
 						{
 							"optional": false
+						}
+					]
+				},
+				{
+					"name": "add",
+					"static": false,
+					"role": "function",
+					"description": "Add a new item to the collection",
+					"argument": [
+						{
+							"name": "item",
+							"optional": true,
+							"type": "Mavo.Node",
+							"description": "Mavo node, if one already exists. Otherwise, it will be created"
+						},
+						{
+							"name": "index",
+							"optional": true,
+							"type": "Number",
+							"description": "Index in the collection. If not provided, the item will be added in the beginning or start of the collection (depending on whether it’s bottom-up)."
+						},
+						{
+							"name": "options",
+							"optional": true,
+							"type": "Object",
+							"description": "Options object. Only current option is `silent` if we want the addition to not update expressions or fire any events."
 						}
 					]
 				}
@@ -1238,6 +1278,5 @@
 				}
 			]
 		}
-	],
-	"collapse": {}
+	]
 }
