@@ -1113,7 +1113,7 @@
 							"name": "options",
 							"optional": true,
 							"type": "Object",
-							"description": "Options to customize the behavior of the message:\n\n| Name | Type | Description |\n| ---------|--------|---------|\nclasses | `String` | Space-separated list of classes to add to the message \ndismiss | `String | Array<String> | Object` | If the message is dismissable, what should dismiss it? Options: `\"button\"`: x close button, `\"timeout\"` (after 5s or whatever specified), `\"submit\"` (submit event — useful if the message contains a form)"
+							"description": "Options to customize the behavior of the message:\n\n| Name | Type | Description |\n| ---------|--------|---------|\nclasses | `String` | Space-separated list of classes to add to the message \ndismiss | `String or Array<String> or Object` | If the message is dismissable, what should dismiss it? Options: `\"button\"`: x close button, `\"timeout\"` (after 5s or whatever specified), `\"submit\"` (submit event — useful if the message contains a form)"
 						}
 					]
 				},
