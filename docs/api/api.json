@@ -15,7 +15,8 @@
 							"optional": false
 						}
 					],
-					"role": "constructor"
+					"role": "constructor",
+					"name": "new Mavo"
 				},
 				{
 					"name": "treeBuilt",
@@ -247,7 +248,8 @@
 							"type": "Mavo",
 							"description": "The Mavo instance that this node belongs to."
 						}
-					]
+					],
+					"name": "new Mavo.Node"
 				},
 				{
 					"name": "uid",
@@ -960,7 +962,8 @@
 							"type": "Object",
 							"description": "Options object. Current options are **mavo** and **format**."
 						}
-					]
+					],
+					"name": "new Mavo.Backend"
 				},
 				{
 					"static": false,
@@ -1106,16 +1109,17 @@
 						{
 							"name": "message",
 							"optional": false,
-							"type": "String",
-							"description": "HTML of the message"
+							"type": "String | Object",
+							"description": "HTML of the message as a string or HTML element reference or anything that Bliss’ [`$.contents()`](http://blissfuljs.com/docs.html#fn-contents) accepts."
 						},
 						{
 							"name": "options",
 							"optional": true,
 							"type": "Object",
-							"description": "Options to customize the behavior of the message:\n\n| Name | Type | Description |\n| ---------|--------|---------|\nclasses | `String` | Space-separated list of classes to add to the message \ndismiss | `String or Array<String> or Object` | If the message is dismissable, what should dismiss it? Options: `\"button\"`: x close button, `\"timeout\"` (after 5s or whatever specified), `\"submit\"` (submit event — useful if the message contains a form)"
+							"description": "Options to customize the behavior of the message:\n\n| Name | Type | Description |\n| ---------|--------|---------|\nclasses | `String` | Class(es) to add to the message (space-separated). You may find `mv-inline` useful here. \ndismiss | `String` or `Array<String>` or `Object` | If the message is dismissable, what should dismiss it? Options: `\"button\"`: x close button, `\"timeout\"` (after 5s or whatever specified), `\"submit\"` (submit event — useful if the message contains a form)"
 						}
-					]
+					],
+					"name": "new Mavo.UI.Message"
 				},
 				{
 					"static": false,
@@ -1182,7 +1186,8 @@
 							"description": "Configuration object with any extra options to pass to `MutationObserver#observe()` ",
 							"optional": false
 						}
-					]
+					],
+					"name": "new Mavo.Observer"
 				},
 				{
 					"name": "observer",
