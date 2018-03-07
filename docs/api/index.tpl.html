@@ -53,7 +53,7 @@
 			<meta property="id" content="[mavoClass.name][if(static, '.', '#')][name]" />
 
 			<summary>
-				<h4><a href="#[id]" property="name" mv-attribute="none" data-arguments="[join(argument.summary, ', ')]"></a></h4>
+				<h4><a href="#[id]" property="name" mv-default="[if(role = 'constructor', 'new ' & mavoClass.name)]" mv-attribute="none" data-arguments="[join(argument.summary, ', ')]"></a></h4>
 				<span property="type" mv-if="role != 'constructor' and role != 'function'" foo="role != 'function'"></span>
 				<span class="type">[returnType]</span>
 				<span property="static" class="mv-toggle" mv-if="role != 'constructor'">Static</span>

@@ -390,16 +390,25 @@ table.attributes {
 
 		&.role-function {
 			--color: $blue;
-
-			& > summary [property=name]::after {
-				content: "(" attr(data-arguments) ")";
-				opacity: .5;
-			}
 		}
 
 		&.role-constructor {
 			--color: $green;
+
+			[property=name] {
+				color: rgba(0,0,0,.5);
+			}
 		}
+
+		&.role-function,
+		&.role-constructor {
+			& > summary [property=name]::after {
+				content: "(" attr(data-arguments) ")";
+				color: rgba(0,0,0,.5);
+			}
+		}
+
+
 
 		[property=role],
 		[property=static],

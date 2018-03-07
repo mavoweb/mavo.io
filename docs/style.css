@@ -263,11 +263,13 @@ table.attributes td:nth-last-child(2) {
     --color: #ff9500; }
   [mv-app="api"] [id="api"] [property=member].role-function {
     --color: #25aff4; }
-    [mv-app="api"] [id="api"] [property=member].role-function > summary [property=name]::after {
-      content: "(" attr(data-arguments) ")";
-      opacity: .5; }
   [mv-app="api"] [id="api"] [property=member].role-constructor {
     --color: #82cf17; }
+    [mv-app="api"] [id="api"] [property=member].role-constructor [property=name] {
+      color: rgba(0, 0, 0, 0.5); }
+  [mv-app="api"] [id="api"] [property=member].role-function > summary [property=name]::after, [mv-app="api"] [id="api"] [property=member].role-constructor > summary [property=name]::after {
+    content: "(" attr(data-arguments) ")";
+    color: rgba(0, 0, 0, 0.5); }
   [mv-app="api"] [id="api"] [property=member] [property=role],
   [mv-app="api"] [id="api"] [property=member] [property=static],
   [mv-app="api"] [id="api"] [property=member] [property=optional] {
