@@ -293,7 +293,7 @@ table.attributes {
 
 }
 
-[mv-app="api"] {
+[mv-app="api"] [id="api"]{
 	h2, h3, h4, p {
 		margin: 0;
 	}
@@ -392,7 +392,8 @@ table.attributes {
 			--color: $blue;
 
 			& > summary [property=name]::after {
-				content: "()"
+				content: "(" attr(data-arguments) ")";
+				opacity: .5;
 			}
 		}
 

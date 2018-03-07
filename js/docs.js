@@ -45,7 +45,9 @@ $$("body:not([mv-app]) > section > h1, body:not([mv-app]) > section section > h1
 		if (!tocUl) {
 			let toc = [];
 
-			$$("body > section:not(.no-toc) > h1").forEach(function (h1) {
+			var headingSelector = document.body.dataset.toc || "h1";
+
+			$$(`body > section:not(.no-toc) > ${headingSelector}`).forEach(function (h1) {
 				toc.push($.create("li", {
 					contents: {
 						tag: "a",
@@ -81,4 +83,4 @@ $$("body:not([mv-app]) > section > h1, body:not([mv-app]) > section section > h1
 	}
 })();
 
-})(Bliss, Bliss.$)
+})(Bliss, Bliss.$);

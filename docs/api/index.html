@@ -14,7 +14,9 @@
 </head>
 
 
-<body class="language-javascript">
+<body class="language-javascript" mv-app="api"
+         mv-storage="https://github.com/mavoweb/mavo.io/docs/api/api.json"
+         mv-plugins="markdown" mv-github-commit-prefix="(API) ">
 
 <header>
 	<h1 class="logo">
@@ -40,16 +42,12 @@
 	<p>
 		If you are interested in <a href="/docs/plugins">writing plugins</a> or contributing to Mavo,
 		you will need to understand a bit about its internals.
+		<br>This is a work in progress and is not yet complete. Wanna help? Log in and edit!
 	</p>
 </section>
 
-<section mv-app="api"
-         mv-storage="https://github.com/mavoweb/mavo.io/docs/api/api.json"
-         mv-plugins="markdown" mv-github-commit-prefix="(API) ">
+<section id="api">
 	<div class="mv-bar mv-ui mv-fixed"></div>
-	<h1>API Reference</h1>
-
-	<p>This is a work in progress. Wanna help? Log in and edit!</p>
 
 	<div property="collapse" mv-storage="none" class="filter">
 		Collapse all:
@@ -67,7 +65,7 @@
 		</label>
 	</div>
 
-	<details property="mavoClass" open="[!collapse.classes]" mv-multiple id="[name]">
+	<details property="mavoClass" open="[!collapse.classes or $hash = name]" mv-multiple id="[name]">
 		<summary>
 			<h2><a href="#[name]" property="name" mv-attribute="none">Mavo</a></h2>
 			<p class="[if(!parent, 'hide-on-read')] inherits">
@@ -84,7 +82,7 @@
 			<meta property="id" content="[mavoClass.name][if(static, '.', '#')][name]" />
 
 			<summary>
-				<h4><a href="#[id]" property="name" mv-attribute="none"></a></h4>
+				<h4><a href="#[id]" property="name" mv-attribute="none" data-arguments="[join(argument.summary, ', ')]"></a></h4>
 				<span property="type" mv-if="role != 'constructor' and role != 'function'" foo="role != 'function'"></span>
 				<span class="type">[returnType]</span>
 				<span property="static" class="mv-toggle" mv-if="role != 'constructor'">Static</span>
@@ -114,6 +112,7 @@
 							<td>
 								<span property="name"></span>
 								<span property="optional" class="mv-toggle">Optional</span>
+								<meta property="summary" mv-value="if(optional, '[' & name & ']', name)">
 							</td>
 							<td property="type"></td>
 							<td property="description" class="markdown"></td>
@@ -131,8 +130,13 @@
 			<meta property="isVoid" content="[count(argument.name) = 0]">
 		</details>
 	</details>
-</section>
 
+	<ul id="toc">
+		<li mv-multiple="toc" mv-value="mavoClass">
+			<a href="#[name]">[name]</a>
+		</li>
+	</ul>
+</section>
 
 <aside id="contents" class="no-toc">
 	<ul class="index">
