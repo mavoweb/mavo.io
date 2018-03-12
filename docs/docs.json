@@ -290,7 +290,7 @@
 					"id": "other-functions",
 					"advanced": false,
 					"title": "Other Functions",
-					"content": "| Function | What it does | Example |\n| --- | --- | --- |\n| `url(param)` | Print out the value of the `foo` parameter from the current page URL. This matches both parameters like `example.com/index.html?foo=bar` and `example.com/index.html/foo/bar` with the former having priority over the latter. | `url(\"foo\")` |\n| `url()` | Print out the URL of the current page. | `url()` |\n| `if(test, ifyes)` | Print out `ifyes` if `test` is non-empty, otherwise nothing. | `if(rating > 3, good)` |\n| `if(test, ifyes, ifno)` | Print out `ifyes` if `test` is non-empty, otherwise `ifno`. | `if(rating > 3, good, bad)` |"
+					"content": "| Function | What it does | Example |\n| --- | --- | --- |\n| `url(param)` | Print out the value of the `foo` parameter from the current page URL. This matches both parameters like `example.com/index.html?foo=bar` and `example.com/index.html/foo/bar` with the former having priority over the latter. | `url(\"foo\")` |\n| `url()` | Print out the URL of the current page. | `url()` |\n| `if(test, ifyes)` | Print out `ifyes` if `test` is non-empty, otherwise nothing. | `if(rating > 3, good)` |\n| `if(test, ifyes, ifno)` | Print out `ifyes` if `test` is non-empty, otherwise `ifno`. | `if(rating > 3, good, bad)` |\n| `group(key1: value1, key2: value2, ...)`  | Create data just like the data that comes from groups. Experimental, only available via dev.mavo.io | `group(name: 'Lea', age: 32)` |"
 				},
 				{
 					"id": "mavoscript-vs-javascript",
