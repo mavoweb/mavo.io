@@ -451,10 +451,16 @@
 					"content": "You can change the values of other properties with the `set()` function. The first argument is what you want to change, and the second is the new value(s). Note that you can use this to change multiple properties at once, since [property names in exactly the same way as expressions](https://mavo.io/docs/expressions):\n\n##### Example\n\n```html\n<div mv-app mv-source=\"https://test.mavo.io/data/people.json\">\n\t<button mv-action=\"set(name, 'Chris')\">Set all names to Chris</button>\n\t<div property=\"cat\" mv-multiple>\n\t\t<div property=\"name\"></div>\n\t\t<div property=\"age\"></div>\n\t</div>\n</div>\n```"
 				},
 				{
-					"id": "adding-items-to-collections-the-add-function",
+					"id": "adding-new-collection-items-the-add-function",
 					"advanced": false,
-					"title": "Adding items to collections: The add() function",
+					"title": "Adding new collection items: The add() function",
 					"content": "# First argument: Where to add a new item?\n\nThe first argument of the `add()` function refers to the collection the new item should be added to. This could be either the collection itself (when using its property name from the outside) or a specific collection item.\n\n# Second argument: What values should the new item have? (optional)\n\nThe second argument refers to the values you want the new item to have. This could be specified in a number of ways:\n\n- another property, to copy that property’s value\n- You can create data yourself, dynamically, by using the `group()` and `list()` functions, as well as numbers, text, and `true` and `false` keywords. E.g. `group(name: 'Lea', age: 32, hobbies: list('cooking', 'coding', 'design'))`\n- You can combine the two, e.g. `group(person, age: 34)` would copy all values from `person` except `age`, which would be set to 34.\n\nIf you provide multiple values, you will get multiple new items.\n\n# Third argument: Where should the new item(s) be inserted? (optional)\n\nThe third argument is the position (starting from 0) that you want the new item to be added in. \nIf not provided, then the new item will be inserted:\n\n- In the start or end of the collection, depending on its [order](/docs/collections#mv-order).\n- If your first argument was a collection **item**, then it will be inserted before or after that item, depending on the collection [order](/docs/collections#mv-order).\n\n##### Example\n\n```html\n<div mv-app mv-source=\"https://test.mavo.io/data/people.json\">\n\t<button mv-action=\"add(cat, group(name: 'Grumpy Cat', age: 5))\">\n\t\tAdd Grumpy Cat\n\t</button>\n\t<table>\n\t\t<tr property=\"cat\" mv-multiple>\n\t\t\t<td property=\"name\"></td>\n\t\t\t<td property=\"age\"></td>\n\t\t\t<td><button mv-action=\"add(cat, cat)\">Duplicate item</button></td>\n\t\t</tr>\n\t</table>\n</div>\n```"
+				},
+				{
+					"id": "deleting-items-the-delete-function",
+					"advanced": false,
+					"title": "Deleting items: The delete() function",
+					"content": "The `delete()` (or `clear()` — same thing) function only takes one type of argument: What you want to delete. If this is one or more collection items, they are removed from their respective collections. If it's other properties, their values are cleared. You can mix and match both types.\n\n##### Example\n\n```html\n<div mv-app mv-source=\"https://test.mavo.io/data/people.json\">\n\t<button mv-action=\"clear(cat)\">Clear</button>\n\t<button mv-action=\"delete(cat where age > 3)\">Delete older cats</button>\n\t<table>\n\t\t<tr property=\"cat\" mv-multiple>\n\t\t\t<td property=\"name\"></td>\n\t\t\t<td property=\"age\"></td>\n\t\t\t<td><button mv-action=\"delete(cat)\">Delete cat</button></td>\n\t\t</tr>\n\t</table>\n</div>\n```"
 				}
 			]
 		}
