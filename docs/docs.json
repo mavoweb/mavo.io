@@ -439,22 +439,28 @@
 			"summary": "Custom actions are a generalization of the editing controls that Mavo generates, and can be very powerful.",
 			"section": [
 				{
-					"id": "the-mv-action-attribute",
+					"id": "mv-action",
 					"advanced": false,
 					"title": "The mv-action attribute",
 					"content": "You define a custom action by setting the `mv-action` attribute on any element inside your Mavo app. The action is performed every time the element is clicked. You can use any of the [expression functions](/docs/mavoscript) and syntax that you are familiar with, plus a few more:\n\n- `set(property, value)` to change one or more properties\n- `add(collection)` to add a new blank item to a collection\n- `add(collection, data)` to add an item with pre-filled data to a collection.\n- `add(collection, data, index)` to add an item at a specific position.\n- `delete(property)` to delete collection items or clear property values\n- `move(item, index)` to move item to a different place\n- `move(item, collection)` to move item to a different collection\n- `move(item, collection, index)` to move item to a different collection in a specific place\n\nNote: Just like `mv-if` and `mv-value`, brackets are not required inside `mv-action`. If you include brackets, they will be interpreted as part of your expression.\n\n##### Example\n\n```html\n<div mv-app>\n\t<div property=\"count\">0</div>\n\t<button mv-action=\"set(count, count + 1)\">Increment</button>\n\t<button mv-action=\"set(count, 0)\">Reset</button>\n</div>\n```"
 				},
 				{
-					"id": "changing-properties-the-set-function",
+					"id": "set",
 					"advanced": false,
 					"title": "Changing properties: The set() function",
 					"content": "You can change the values of other properties with the `set()` function. The first argument is what you want to change, and the second is the new value(s). Note that you can use this to change multiple properties at once, since [property names in exactly the same way as expressions](https://mavo.io/docs/expressions):\n\n##### Example\n\n```html\n<div mv-app mv-source=\"https://test.mavo.io/data/people.json\">\n\t<button mv-action=\"set(name, 'Chris')\">Set all names to Chris</button>\n\t<div property=\"cat\" mv-multiple>\n\t\t<div property=\"name\"></div>\n\t\t<div property=\"age\"></div>\n\t</div>\n</div>\n```"
 				},
 				{
-					"id": "adding-items-to-collections-the-add-function",
+					"id": "add",
 					"advanced": false,
 					"title": "Adding items to collections: The add() function",
 					"content": "# First argument: Where to add a new item?\n\nThe first argument of the `add()` function refers to the collection the new item should be added to. This could be either the collection itself (when using its property name from the outside) or a specific collection item.\n\n# Second argument: What values should the new item have? (optional)\n\nThe second argument refers to the values you want the new item to have. This could be specified in a number of ways:\n\n- another property, to copy that property’s value\n- You can create data yourself, dynamically, by using the `group()` and `list()` functions, as well as numbers, text, and `true` and `false` keywords. E.g. `group(name: 'Lea', age: 32, hobbies: list('cooking', 'coding', 'design'))`\n- You can combine the two, e.g. `group(person, age: 34)` would copy all values from `person` except `age`, which would be set to 34.\n\nIf you provide multiple values, you will get multiple new items.\n\n# Third argument: Where should the new item(s) be inserted? (optional)\n\nThe third argument is the position (starting from 0) that you want the new item to be added in. \nIf not provided, then the new item will be inserted:\n\n- In the start or end of the collection, depending on its [order](/docs/collections#mv-order).\n- If your first argument was a collection **item**, then it will be inserted before or after that item, depending on the collection [order](/docs/collections#mv-order).\n\n##### Example\n\n```html\n<div mv-app mv-source=\"https://test.mavo.io/data/people.json\">\n\t<button mv-action=\"add(cat, group(name: 'Grumpy Cat', age: 5))\">\n\t\tAdd Grumpy Cat\n\t</button>\n\t<table>\n\t\t<tr property=\"cat\" mv-multiple>\n\t\t\t<td property=\"name\"></td>\n\t\t\t<td property=\"age\"></td>\n\t\t\t<td><button mv-action=\"add(cat, cat)\">Duplicate item</button></td>\n\t\t</tr>\n\t</table>\n</div>\n```"
+				},
+				{
+					"id": "move",
+					"advanced": false,
+					"title": "Moving items: The move() function",
+					"content": "While the `add()` function creates new items, the `move()` function moves existing items around, either to a different place in the same collection, or to a new collection.\n\n# First argument: What to move?\n\nThe first argument refers to the item(s) you are moving. This could be one or more items.\n\n# Second argument: Where to move to? (optional)\n\nIf moving to a different collection, this should point to that collection or one of its items.\n\n# Third argument: Where to put it? (optional)\n\nIf you want the item to be placed in a specific position, provide it here as a number (starting from 0).\n\n##### Example\n\n```html\n<div mv-app mv-source=\"https://test.mavo.io/data/people.json\">\n\t<table>\n\t\t<tr property=\"person\" mv-multiple>\n\t\t\t<td property=\"name\"></td>\n\t\t\t<td property=\"age\"></td>\n\t\t\t<td><button mv-action=\"move(person, 0)\">Move item to top</button></td>\n\t\t</tr>\n\t\t<tr property=\"cat\" mv-multiple>\n\t\t\t<td property=\"name\"></td>\n\t\t\t<td property=\"age\"></td>\n\t\t\t<td><button mv-action=\"move(cat, person)\">Move cat to people</button></td>\n\t\t</tr>\n\t</table>\n</div>\n```"
 				}
 			]
 		}
