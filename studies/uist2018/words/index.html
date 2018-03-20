@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Word game!</title>
+	<link rel="stylesheet" href="../../../../mavo/dist/mavo.css">
+	<link rel="stylesheet" href="style.css">
+	<script src="../../../../mavo/dist/mavo.js"></script>
+</head>
+<body mv-app="words" mv-bar="none">
+	<h1>Word game!</h1>
+
+	Sentence:
+	<div class="sentence [if(join(orderedWord, ' ') = solution, correct)]" mv-mode="edit">
+		<button class="clear" mv-action="delete(orderedWord)">Clear</button>
+		<button class="clear" mv-action="delete(last(orderedWord))">Undo</button>
+
+		<span property="orderedWord" mv-multiple mv-accepts="word" mv-optional mv-mode="read"></span>
+	</div>
+
+	<span property="word" mv-multiple mv-value="shuffle(split(solution))" mv-action="add(orderedWord, word)"></span>
+
+	<details>
+		<summary>Solution</summary>
+		<div property="solution" mv-mode="edit">Je suis une femme</div>
+	</details>
+</body>
+</html>

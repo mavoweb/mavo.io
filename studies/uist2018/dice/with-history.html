@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Dice!</title>
+	<link rel="stylesheet" href="../../../../mavo/dist/mavo.css">
+	<link rel="stylesheet" href="style.css">
+	<script src="../../../../mavo/dist/mavo.js"></script>
+</head>
+<body mv-app="dice" mv-mode="read">
+	<div class="history">
+		<div property="diceHistory" class="dice number-[diceHistory]" mv-multiple mv-optional></div>
+	</div>
+	<div property="dice" class="dice number-[dice]">6</div>
+	<button mv-action="add(diceHistory, dice), set(dice, random(1, 6))">Roll dice</button>
+</body>
+</html>

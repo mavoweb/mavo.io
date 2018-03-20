@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Stopwatch</title>
+	<link rel="stylesheet" href="../../../../mavo/dist/mavo.css">
+	<link rel="stylesheet" href="style.css">
+	<script src="../../../../mavo/dist/mavo.js"></script>
+</head>
+<body mv-app="stopwatch" class="[if(running, 'running')]" mv-mode="read">
+	<meta property="running">
+	<meta property="start" />
+	<meta property="elapsed" content="[if (start, ($now - start)/1000, 0)]">
+	<meta property="previousElapsed" content="0">
+
+
+	<div property="timer" class="timer" mv-mode="read" mv-if="running">[minutes(elapsed)]:[digits(2, elapsed mod 60, 3)]</div>
+	<div property="ended" class="timer" mv-if="!running">0:00.000</div>
+
+	<div class="buttons">
+		<button mv-action="set(running, true), set(start, $now - previousElapsed * 1000)">Start</button>
+		<button mv-action="set(running, false), set(previousElapsed, elapsed), set(ended, timer), set(start, 0)">Pause</button>
+	</div>
+</body>
+</html>

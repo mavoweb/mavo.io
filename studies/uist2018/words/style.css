@@ -1,0 +1,59 @@
+body {
+	background: hsl(220, 10%, 96%);
+	font: 150%/1.5 Helvetica Neue, sans-serif;
+}
+
+button {
+	font: inherit;
+}
+
+.sentence {
+	border: 1px dashed hsl(220, 10%, 50%);
+	padding: .3em;
+	overflow: hidden;
+	margin-bottom: 1em;
+}
+
+	.sentence button {
+		background: rgba(0,0,0,.5);
+		color: white;
+		border: none;
+		border-radius: .2em;
+		font-weight: bold;
+		margin: .1em 0 .1em .2em;
+		padding: .2em .6em;
+		cursor: pointer;
+	}
+
+	.sentence button:hover {
+		background: black;
+	}
+
+[property="orderedWord"],
+[property="word"] {
+	display: inline-block;
+	padding: .1em .4em;
+	margin: .2em;
+	background: white;
+	box-shadow: 0 .05em .05em hsla(220, 10%, 50%, .5);
+}
+
+[property="word"] {
+	cursor: pointer;
+}
+
+.clear {
+	float: right;
+}
+
+.correct {
+	background: yellowgreen;
+}
+
+details {
+	margin-top: 1em;
+}
+
+.mv-bar.mv-ui {
+	display: inline-flex;
+}

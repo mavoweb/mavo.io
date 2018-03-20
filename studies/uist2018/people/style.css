@@ -1,0 +1,71 @@
+body {
+	font: 100%/1.5 Helvetica Neue, sans-serif;
+}
+
+button {
+	font: inherit;
+}
+
+h2 {
+	margin: 0;
+	line-height: 1;
+}
+
+main {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-auto-flow: column;
+}
+
+.animal {
+	border: 1px solid;
+	border-color: hsl(var(--color), calc(var(--lightness, 90%) - 20%));
+	background: hsl(var(--color), var(--lightness, 90%));
+	padding: .5em;
+	margin: .5em;
+}
+
+	.animal::before {
+		float: left;
+		font-size: 90px;
+		margin-right: 1rem;
+	}
+
+[property="person"],
+.mv-add-person {
+	grid-column: 1;
+}
+
+[property="person"] {
+	--color: 200, 100%;
+	--lightness: 95%;
+}
+
+	[property="person"]::before {
+		content: "🧑"
+	}
+
+[property="cat"],
+.mv-add-cat {
+	grid-column: 2;
+}
+
+[property="cat"] {
+	--color: 50, 100%;
+}
+
+	[property="cat"]::before {
+		content: "😺"
+	}
+
+
+[property="hobby"] {
+	padding: .35em .5em;
+	background: hsl(var(--color), calc(var(--lightness, 90%) - 20%));
+	margin: 0 .2em;
+	border-radius: .2em;
+}
+
+[property="name"] {
+	color: hsl(var(--color), calc(var(--lightness, 90%) - 65%));
+}
