@@ -1,19 +1,20 @@
 {
 	"function": [
 		{
-			"name": "a + b",
-			"category": "numbers",
+			"name": "+",
+			"category": "math",
 			"role": "operator",
 			"description": "Addition",
 			"argument": [
 				{
 					"optional": false
 				}
-			]
+			],
+			"id": "+"
 		},
 		{
 			"name": "count",
-			"category": "numbers",
+			"category": "math",
 			"role": "function",
 			"description": "Count how many items in a list actually have a value. Ignores 0, false, \"\", empty.",
 			"argument": [
@@ -25,7 +26,8 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "The count"
+			"returnDescription": "The count",
+			"id": "count"
 		},
 		{
 			"name": "$now",
@@ -38,7 +40,7 @@
 				}
 			],
 			"demo": "# Example: $now\n\nColor clock that circles all hues every minute.\n\n```html\n<div mv-app=colorClock  style=\"background: hsl([hue], 100%, 80%)\">\n\t<span property=\"hue\">[$now * 6 / 1000 mod 360]</span>\n\t<time>[time($now)]</time>\n</div>\n<style>\nbody {\n\tfont: bold 100% Helvetica Neue, sans-serif;\n\tmargin: 0;\n}\n\ndiv { \n\tdisplay: flex;\n\tflex-flow: column;\n\theight: 100vh;\n\tpadding: 1em;\n\tbox-sizing: border-box;\n}\n\ntime {\n\tfont-size: 500%;\n\tflex: 1;\n}\n\nspan {\n\topacity: .5;\n}\n</style>\n```",
-			"opened": true
+			"id": "$now"
 		}
 	]
 }
