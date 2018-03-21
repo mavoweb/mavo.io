@@ -645,31 +645,31 @@ body > section table {
 
 		h6 {
 			display: flex;
+		}
 
-			form {
-				margin-left: auto;
+		form {
+			margin-left: auto;
 
-				button {
-					@extend .plain-button;
+			.play {
+				@extend .plain-button;
 
-					&::before {
-						content: "✎";
-						display: inline-block;
-						margin-right: .3em;
+				&::before {
+					content: "✎";
+					display: inline-block;
+					margin-right: .3em;
+				}
+
+				@keyframes wiggle {
+					from {
+						transform: rotate(-10deg);
 					}
-
-					@keyframes wiggle {
-						from {
-							transform: rotate(-10deg);
-						}
-						to {
-							transform: rotate(10deg);
-						}
+					to {
+						transform: rotate(10deg);
 					}
+				}
 
-					&:hover::before {
-						animation: .2s wiggle infinite alternate;
-					}
+				&:hover::before {
+					animation: .2s wiggle infinite alternate;
 				}
 			}
 		}

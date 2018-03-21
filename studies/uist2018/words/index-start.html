@@ -13,13 +13,13 @@
 
 	Sentence:
 	<div class="sentence [if(join(orderedWord, ' ') = solution, correct)]" mv-mode="edit">
-		<button class="clear" mv-action="delete(orderedWord)">Clear</button>
-		<button class="clear" mv-action="delete(last(orderedWord))">Undo</button>
+		<button class="clear">Clear</button>
+		<button class="clear">Undo</button>
 
 		<span property="orderedWord" mv-multiple mv-accepts="word" mv-optional mv-mode="read"></span>
 	</div>
 
-	<span property="word" mv-multiple mv-value="split(solution)" mv-action="add(orderedWord, word)"></span>
+	<span property="word" mv-multiple mv-value="split(solution)"></span>
 
 	<details>
 		<summary>Solution</summary>

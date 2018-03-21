@@ -135,7 +135,7 @@ button {
     background: var(--color);
     color: var(--background); }
 
-.plain-button, .example.side-by-side h6 form button {
+.plain-button, .example.side-by-side form .play {
   display: inline-block;
   vertical-align: .1em;
   padding: .35em .5em .25em;
@@ -146,10 +146,10 @@ button {
   font-size: 75%;
   font-weight: bold;
   text-transform: uppercase; }
-  .plain-button:hover, .example.side-by-side h6 form button:hover {
+  .plain-button:hover, .example.side-by-side form .play:hover {
     background: #ff0080;
     color: white; }
-  .plain-button:focus, .example.side-by-side h6 form button:focus {
+  .plain-button:focus, .example.side-by-side form .play:focus {
     background: #ff9500;
     color: white; }
 
@@ -508,20 +508,20 @@ body > section table {
     .example.side-by-side h6 {
       display: -ms-flexbox;
       display: flex; }
-      .example.side-by-side h6 form {
-        margin-left: auto; }
-        .example.side-by-side h6 form button::before {
-          content: "✎";
-          display: inline-block;
-          margin-right: .3em; }
+    .example.side-by-side form {
+      margin-left: auto; }
+      .example.side-by-side form .play::before {
+        content: "✎";
+        display: inline-block;
+        margin-right: .3em; }
 
 @keyframes wiggle {
   from {
     transform: rotate(-10deg); }
   to {
     transform: rotate(10deg); } }
-        .example.side-by-side h6 form button:hover::before {
-          animation: .2s wiggle infinite alternate; }
+      .example.side-by-side form .play:hover::before {
+        animation: .2s wiggle infinite alternate; }
     .example.side-by-side pre {
       -webkit-clip-path: none;
       clip-path: none;

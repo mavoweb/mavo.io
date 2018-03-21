@@ -57,3 +57,7 @@ details {
 .mv-bar.mv-ui {
 	display: inline-flex;
 }
+
+.mv-message:not(.mv-inline) {
+	font-size: 80%;
+}

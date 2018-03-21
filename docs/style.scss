@@ -293,7 +293,8 @@ table.attributes {
 
 }
 
-[mv-app="api"] [id="api"]{
+[mv-app="api"] [id="api"],
+[mv-app="functions"] [id="functions"] {
 	h2, h3, h4, p {
 		margin: 0;
 	}
@@ -346,7 +347,8 @@ table.attributes {
 		}
 	}
 
-	[property=member] {
+	[property=member],
+	[property=function] {
 		border: 1px solid rgba(0,0,0,.1);
 		border-left: .3em solid var(--color);
 		padding: 0 .8em 0;
@@ -367,8 +369,6 @@ table.attributes {
 			background: color-image(hsla(0,0%,100%,.85)) var(--color);
 
 			h4 {
-				flex: 1;
-
 				a {
 					color: inherit;
 				}
@@ -380,7 +380,19 @@ table.attributes {
 			margin: .5em 0;
 		}
 
-		&.role-property {
+		.description-preview {
+			display: inline-block;
+			margin: 0 .3em;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			max-width: 35em;
+			font-style: italic;
+			opacity: .5;
+		}
+
+		&.role-property,
+		&.role-operator {
 			--color: $magenta;
 		}
 
@@ -392,12 +404,13 @@ table.attributes {
 			--color: $blue;
 		}
 
-		&.role-constructor {
+		&.role-constructor,
+		&.role-variable {
 			--color: $green;
+		}
 
-			[property=name] {
-				color: rgba(0,0,0,.5);
-			}
+		&.role-constructor [property=name] {
+			color: rgba(0,0,0,.5);
 		}
 
 		&.role-function,
@@ -408,7 +421,21 @@ table.attributes {
 			}
 		}
 
+		&.role-operator {
+			&:not(.unary) > summary [property=name]::before {
+				content: "a ";
+				color: rgba(0,0,0,.5);
+			}
 
+			& > summary [property=name]::after {
+				content: " b";
+				color: rgba(0,0,0,.5);
+			}
+
+			&.unary > summary [property=name]::after {
+				content: "a"
+			}
+		}
 
 		[property=role],
 		[property=static],
@@ -483,13 +510,18 @@ table.attributes {
 	[property=type],
 	[property=returnType],
 	.type {
-		font-family: $mono-font;
 		font-weight: bold;
 		white-space: nowrap;
 	}
 
-	&:not([mv-mode=edit]) .hide-on-read {
-		display: none;
+	td[property].mv-empty {
+		display: table-cell;
+	}
+
+	[property=category] {
+		font-weight: bold;
+		white-space: nowrap;
+		margin-left: auto;
 	}
 
 	[property=argument] {
@@ -498,6 +530,22 @@ table.attributes {
 			opacity: 1;
 		}
 	}
+
+	[property=opened] {
+		display: none;
+	}
+}
+
+[mv-app="api"] [id="api"] {
+	[property=type],
+	[property=returnType],
+	.type {
+		font-family: $mono-font;
+	}
+}
+
+[mv-app]:not([mv-mode=edit]) .hide-on-read {
+	display: none;
 }
 
 .mv-add-section {

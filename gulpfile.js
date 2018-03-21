@@ -12,6 +12,7 @@ var autoprefixer = require("gulp-autoprefixer");
 var sourcemaps = require("gulp-sourcemaps");
 var fileinclude = require("gulp-file-include");
 var notify = require("gulp-notify");
+var replace = require("gulp-replace");
 
 gulp.task("sass", function() {
 	return gulp.src(["**/*.scss", "!node_modules/**"])
@@ -46,9 +47,17 @@ gulp.task("html", function() {
 		}));
 });
 
+gulp.task("study", function() {
+	gulp.src(["studies/uist2018/*/index.html", "!studies/uist2018/people/index.html"], { base: "./" })
+		.pipe(replace(/ mv-action=".+?"/g, ""))
+		.pipe(rename({ suffix: "-start" }))
+		.pipe(gulp.dest("."));
+});
+
 gulp.task("watch", function() {
 	gulp.watch(["**/*.scss"], ["sass"]);
 	gulp.watch(["**/*.tpl.html", "./templates/*.html"], ["html"]);
+	gulp.watch(["studies/uist2018/*/index.html", "!studies/uist2018/people/index.html"], ["study"]);
 });
 
 gulp.task("default", ["sass", "html"]);

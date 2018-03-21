@@ -12,17 +12,14 @@
 	<meta property="running">
 	<meta property="start" />
 	<meta property="elapsed" content="[if (start, $now - start, 0)]">
-	<meta property="previousElapsed" content="0">
 
-	<div property="timer" class="timer" mv-if="running">
-		[minutes(elapsed)]:[digits(2, seconds(elapsed))].[digits(3, elapsed mod 1000)]
-	</div>
+	<div property="timer" class="timer">[minutes(elapsed)]:[digits(2, elapsed mod 60, 3)]</div>
 	<div property="ended" class="timer" mv-if="!running">0:00.000</div>
 
 	<div class="buttons">
-		<button mv-action="set(running, true), set(start, $now - previousElapsed)">Start</button>
-		<button mv-action="add(lap, timer)">Lap</button>
-		<button mv-action="set(running, false), set(previousElapsed, elapsed), set(ended, timer)">Pause</button>
+		<button>Start</button>
+		<button>Lap</button>
+		<button>Pause</button>
 	</div>
 	<div class="history">
 		<div property="lap" mv-multiple mv-optional mv-order="desc">

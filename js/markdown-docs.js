@@ -9,9 +9,10 @@ Mavo.hooks.add("markdown-render-before", function(env) {
 document.addEventListener("mv-markdown-render", function(evt) {
 	// Create live demos
 	var s = Mavo.selectors;
+
 	var demoHeading = "h2[id^=demo], h6";
 	var selector = s.and(demoHeading, " + pre, + p + pre");
-	selector = s.and(selector, "> code.language-markup, > code.language-html")
+	selector = s.and(selector, "> code.language-markup, > code.language-html");
 
 	$$(selector, evt.target).forEach(function createLiveDemo(code) {
 		var html = code.textContent;
@@ -105,7 +106,7 @@ ${html}
 					type: "hidden",
 					name: "data",
 					value: Mavo.toJSON({
-						title: heading.textContent,
+						title: heading? heading.textContent : "Demo",
 						html: html.replace(styleTag, ""),
 						css: css,
 						css_external: mavoURL + "/mavo.css",
@@ -116,6 +117,7 @@ ${html}
 				{
 					tag: "button",
 					textContent: "Play!",
+					className: "play",
 					title: "Play with this example on codepen.io"
 				}
 			],
