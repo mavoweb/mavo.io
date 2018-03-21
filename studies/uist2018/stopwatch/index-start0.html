@@ -14,7 +14,6 @@
 	<meta property="elapsed" content="[if (start, $now - start, 0)]">
 
 	<div property="timer" class="timer">[minutes(elapsed)]:[digits(2, elapsed mod 60, 3)]</div>
-	<div property="ended" class="timer" mv-if="!running">0:00.000</div>
 
 	<div class="buttons">
 		<button>Start</button>
