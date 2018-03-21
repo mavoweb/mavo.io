@@ -1,0 +1,31 @@
+{
+	"function": [
+		{
+			"name": "count",
+			"category": "numbers",
+			"role": "function",
+			"description": "Count how many items in a list actually have a value. Ignores 0, false, \"\", empty.",
+			"argument": [
+				{
+					"name": "list",
+					"optional": false,
+					"type": "List",
+					"description": "The list of values to count."
+				}
+			],
+			"returnType": "Number",
+			"returnDescription": "The count"
+		},
+		{
+			"name": "$now",
+			"category": "datetime",
+			"role": "variable",
+			"description": "Current date and time as number of milliseconds since January 1st, 1970\\. Mostly useful with [date and time functions](?category=datetime) or the `mod` operator.",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
+		}
+	]
+}
