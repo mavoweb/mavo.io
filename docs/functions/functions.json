@@ -13,6 +13,54 @@
 			"id": "+"
 		},
 		{
+			"id": "-",
+			"name": "-",
+			"category": "math",
+			"role": "operator",
+			"description": "Subtraction",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
+		},
+		{
+			"id": "*",
+			"name": "*",
+			"category": "math",
+			"role": "operator",
+			"description": "Multiplication",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
+		},
+		{
+			"id": "/",
+			"name": "/",
+			"category": "math",
+			"role": "operator",
+			"description": "Division",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
+		},
+		{
+			"id": "mod",
+			"name": "mod",
+			"category": "math",
+			"role": "operator",
+			"description": "Remainder of a / b",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
+		},
+		{
 			"name": "count",
 			"category": "math",
 			"role": "function",
