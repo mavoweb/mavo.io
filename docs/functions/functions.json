@@ -53,11 +53,76 @@
 			"unary": false
 		},
 		{
-			"id": "mod",
-			"name": "mod",
-			"category": "math",
+			"id": ">=",
+			"name": ">=",
+			"category": "logical",
 			"role": "operator",
-			"description": "Remainder of a / b",
+			"description": "Check if a is greater than or equal to b",
+			"argument": [
+				{
+					"optional": false
+				}
+			],
+			"unary": false
+		},
+		{
+			"id": ">=",
+			"name": ">=",
+			"category": "logical",
+			"role": "operator",
+			"description": "Check if a is greater than or equal to b",
+			"argument": [
+				{
+					"optional": false
+				}
+			],
+			"unary": false
+		},
+		{
+			"id": ">=",
+			"name": ">=",
+			"category": "logical",
+			"role": "operator",
+			"description": "Check if a is greater than or equal to b",
+			"argument": [
+				{
+					"optional": false
+				}
+			],
+			"unary": false
+		},
+		{
+			"id": ">=",
+			"name": ">=",
+			"category": "logical",
+			"role": "operator",
+			"description": "Check if a is greater than or equal to b",
+			"argument": [
+				{
+					"optional": false
+				}
+			],
+			"unary": false
+		},
+		{
+			"id": ">=",
+			"name": ">=",
+			"category": "logical",
+			"role": "operator",
+			"description": "Check if a is greater than or equal to b",
+			"argument": [
+				{
+					"optional": false
+				}
+			],
+			"unary": false
+		},
+		{
+			"id": ">=",
+			"name": ">=",
+			"category": "logical",
+			"role": "operator",
+			"description": "Check if a is greater than or equal to b",
 			"argument": [
 				{
 					"optional": false
