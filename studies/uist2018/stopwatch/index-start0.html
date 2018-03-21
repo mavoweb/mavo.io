@@ -13,7 +13,9 @@
 	<meta property="start" />
 	<meta property="elapsed" content="[if (start, $now - start, 0)]">
 
-	<div property="timer" class="timer">[minutes(elapsed)]:[digits(2, elapsed mod 60, 3)]</div>
+	<div property="timer" class="timer">
+		[minutes(elapsed)]:[digits(2, seconds(elapsed))].[digits(3, elapsed mod 1000)]
+	</div>
 
 	<div class="buttons">
 		<button>Start</button>
