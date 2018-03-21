@@ -196,6 +196,33 @@
 			"unary": false
 		},
 		{
+			"name": "group",
+			"id": "group",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Creates data that mimics the kind of data produced by a group. ",
+			"argument": [
+				{
+					"name": "key1: value1",
+					"optional": false,
+					"type": "Key:value pair or group data",
+					"description": "First key-value pair or other group data."
+				},
+				{
+					"name": "key2: value2",
+					"optional": true,
+					"type": "Key:value pair or group data",
+					"description": "Second key-value pair or other group data."
+				},
+				{
+					"name": "...",
+					"optional": false,
+					"description": "You can provide as many as you want"
+				}
+			]
+		},
+		{
 			"name": "average",
 			"id": "average",
 			"unary": false,
@@ -251,7 +278,7 @@
 		},
 		{
 			"name": "count",
-			"category": "math",
+			"category": "lists",
 			"role": "function",
 			"description": "Count how many items in a list actually have a value. Ignores 0, false, \"\", empty.",
 			"argument": [
@@ -271,13 +298,13 @@
 			"name": "first",
 			"id": "first",
 			"unary": false,
-			"category": "math",
+			"category": "lists",
 			"role": "function",
 			"description": "Get the first item(s) in a list of values.",
 			"argument": [
 				{
 					"name": "n",
-					"optional": false,
+					"optional": true,
 					"type": "Number",
 					"description": "How many items to return? Defaults to 1."
 				},
@@ -294,13 +321,13 @@
 			"name": "last",
 			"id": "last",
 			"unary": false,
-			"category": "math",
+			"category": "lists",
 			"role": "function",
 			"description": "Get the last item(s) in a list of values.",
 			"argument": [
 				{
 					"name": "n",
-					"optional": false,
+					"optional": true,
 					"type": "Number",
 					"description": "How many items to return? Defaults to 1."
 				},
@@ -312,6 +339,46 @@
 				}
 			],
 			"returnDescription": "If n is not provided or is 1, the last item. Otherwise, a list of the first n items."
+		},
+		{
+			"name": "shuffle",
+			"id": "shuffle",
+			"unary": false,
+			"category": "lists",
+			"role": "function",
+			"description": "Shuffle the list, i.e. randomize the order of items.",
+			"argument": [
+				{
+					"name": "list",
+					"optional": false,
+					"type": "List",
+					"description": "The list to shuffle."
+				}
+			],
+			"returnDescription": "A new, shuffled version of the list provided."
+		},
+		{
+			"name": "join",
+			"id": "join",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "Combine multiple values into one text value, optionally separated by a different text value.",
+			"argument": [
+				{
+					"name": "list",
+					"optional": false,
+					"type": "List",
+					"description": "The pieces you want to join"
+				},
+				{
+					"name": "glue",
+					"optional": true,
+					"type": "Text",
+					"description": "What to put between the joined pieces of text. Defaults to nothing, i.e. the pieces are just concatenated. Provide `', '` to get a comma-separated list."
+				}
+			],
+			"returnType": "Text"
 		},
 		{
 			"name": "$now",
