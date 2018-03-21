@@ -196,24 +196,22 @@
 			"unary": false
 		},
 		{
-			"name": "group",
-			"id": "group",
+			"name": "list",
+			"id": "list",
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Creates data that mimics the kind of data produced by a group. ",
+			"description": "Creates a list of values, just like the kind of thing you get when you use collection properties (or properties inside them).",
 			"argument": [
 				{
-					"name": "key1: value1",
+					"name": "value1",
 					"optional": false,
-					"type": "Key:value pair or group data",
-					"description": "First key-value pair or other group data."
+					"description": "First value"
 				},
 				{
-					"name": "key2: value2",
+					"name": "value2",
 					"optional": true,
-					"type": "Key:value pair or group data",
-					"description": "Second key-value pair or other group data."
+					"description": "Second value"
 				},
 				{
 					"name": "...",
@@ -221,13 +219,14 @@
 					"description": "You can provide as many as you want"
 				}
 			],
-			"returnType": "Group data"
+			"returnType": "List",
+			"returnDescription": "A list with all values you provided."
 		},
 		{
 			"name": "group",
 			"id": "group",
 			"unary": false,
-			"category": "math",
+			"category": "other",
 			"role": "function",
 			"description": "Creates data that mimics the kind of data produced by a group. ",
 			"argument": [
@@ -410,10 +409,40 @@
 			"returnType": "Text"
 		},
 		{
+			"name": "random",
+			"id": "random",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Generate a random number.",
+			"argument": [
+				{
+					"name": "min",
+					"optional": true,
+					"type": "Number",
+					"description": "Minimum allowed number. Defaults to 0."
+				},
+				{
+					"name": "max",
+					"optional": true,
+					"type": "Number",
+					"description": "Maximum allowed number. Defaults to 100."
+				},
+				{
+					"name": "step",
+					"optional": true,
+					"type": "Number",
+					"description": "Step, i.e. allowed increment. Defaults to 1, which returns integers."
+				}
+			],
+			"returnType": "Number",
+			"returnDescription": "The random number."
+		},
+		{
 			"name": "$now",
 			"category": "datetime",
 			"role": "variable",
-			"description": "Current date and time as number of milliseconds since January 1st, 1970\\. Mostly useful with [date and time functions](?category=datetime) or the `mod` operator.",
+			"description": "Current date and time as number of milliseconds since January 1st, 1970. Note that using `$now` in expressions makes them update automatically as `$now` changes. Mostly useful in conjunction with [date and time functions](?category=datetime) or the `mod` operator.",
 			"argument": [
 				{
 					"optional": false
