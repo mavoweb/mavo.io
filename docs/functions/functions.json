@@ -157,17 +157,43 @@
 			"unary": false
 		},
 		{
-			"name": "!",
-			"id": "!",
-			"category": "logical",
+			"name": "where",
+			"id": "where",
+			"category": "lists",
 			"role": "operator",
-			"description": "Check if a doesn’t have a value",
+			"description": "Filter a based on b. Both a and b should be lists.",
 			"argument": [
 				{
 					"optional": false
 				}
 			],
-			"unary": true
+			"unary": false
+		},
+		{
+			"name": "where",
+			"id": "where",
+			"category": "lists",
+			"role": "operator",
+			"description": "Filter a based on b. Both a and b should be lists.",
+			"argument": [
+				{
+					"optional": false
+				}
+			],
+			"unary": false
+		},
+		{
+			"name": "where",
+			"id": "where",
+			"category": "lists",
+			"role": "operator",
+			"description": "Filter a based on b. Both a and b should be lists.",
+			"argument": [
+				{
+					"optional": false
+				}
+			],
+			"unary": false
 		},
 		{
 			"name": "count",
