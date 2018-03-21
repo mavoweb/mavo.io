@@ -61,6 +61,42 @@
 			]
 		},
 		{
+			"name": "and",
+			"id": "and",
+			"category": "logical",
+			"role": "operator",
+			"argument": [
+				{
+					"optional": false
+				}
+			],
+			"description": "Check that both a and b have a value"
+		},
+		{
+			"name": "or",
+			"id": "or",
+			"category": "logical",
+			"role": "operator",
+			"description": "Check that at least a or b have a value",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
+		},
+		{
+			"name": "!",
+			"id": "!",
+			"category": "logical",
+			"role": "operator",
+			"description": "Check if a doesn’t have a value",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
+		},
+		{
 			"name": "count",
 			"category": "math",
 			"role": "function",
