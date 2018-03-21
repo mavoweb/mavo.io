@@ -199,7 +199,7 @@
 			"name": "list",
 			"id": "list",
 			"unary": false,
-			"category": "math",
+			"category": "lists",
 			"role": "function",
 			"description": "Creates a list of values, just like the kind of thing you get when you use collection properties (or properties inside them).",
 			"argument": [
