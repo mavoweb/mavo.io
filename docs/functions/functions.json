@@ -220,7 +220,36 @@
 					"optional": false,
 					"description": "You can provide as many as you want"
 				}
-			]
+			],
+			"returnType": "Group data"
+		},
+		{
+			"name": "group",
+			"id": "group",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Creates data that mimics the kind of data produced by a group. ",
+			"argument": [
+				{
+					"name": "key1: value1",
+					"optional": false,
+					"type": "Key:value pair or group data",
+					"description": "First key-value pair or other group data."
+				},
+				{
+					"name": "key2: value2",
+					"optional": true,
+					"type": "Key:value pair or group data",
+					"description": "Second key-value pair or other group data."
+				},
+				{
+					"name": "...",
+					"optional": false,
+					"description": "You can provide as many as you want"
+				}
+			],
+			"returnType": "Group data"
 		},
 		{
 			"name": "average",
