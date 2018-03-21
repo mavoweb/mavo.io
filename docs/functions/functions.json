@@ -196,6 +196,60 @@
 			"unary": false
 		},
 		{
+			"name": "average",
+			"id": "average",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Calculate the average of all numbers in the list.",
+			"argument": [
+				{
+					"name": "list",
+					"optional": false,
+					"type": "List of numbers",
+					"description": "The numbers to average"
+				}
+			],
+			"returnType": "Number",
+			"returnDescription": "The average"
+		},
+		{
+			"name": "sum",
+			"id": "sum",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Sum all numbers in the list.",
+			"argument": [
+				{
+					"name": "list",
+					"optional": false,
+					"type": "List of numbers",
+					"description": "The numbers to sum"
+				}
+			],
+			"returnType": "Number",
+			"returnDescription": "The sum"
+		},
+		{
+			"name": "min",
+			"id": "min",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Calculate the minimum of all numbers in the list.",
+			"argument": [
+				{
+					"name": "list",
+					"optional": false,
+					"type": "List of numbers",
+					"description": "The numbers you are trying to find the min of."
+				}
+			],
+			"returnType": "Number",
+			"returnDescription": "The minimum number"
+		},
+		{
 			"name": "count",
 			"category": "math",
 			"role": "function",
@@ -212,6 +266,52 @@
 			"returnDescription": "The count",
 			"id": "count",
 			"unary": false
+		},
+		{
+			"name": "first",
+			"id": "first",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Get the first item(s) in a list of values.",
+			"argument": [
+				{
+					"name": "n",
+					"optional": false,
+					"type": "Number",
+					"description": "How many items to return? Defaults to 1."
+				},
+				{
+					"name": "list",
+					"optional": false,
+					"type": "List",
+					"description": "The list to return items from."
+				}
+			],
+			"returnDescription": "If n is not provided or is 1, the first item. Otherwise, a list of the first n items."
+		},
+		{
+			"name": "last",
+			"id": "last",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Get the last item(s) in a list of values.",
+			"argument": [
+				{
+					"name": "n",
+					"optional": false,
+					"type": "Number",
+					"description": "How many items to return? Defaults to 1."
+				},
+				{
+					"name": "list",
+					"optional": false,
+					"type": "List",
+					"description": "The list to return items from."
+				}
+			],
+			"returnDescription": "If n is not provided or is 1, the last item. Otherwise, a list of the first n items."
 		},
 		{
 			"name": "$now",
