@@ -19,7 +19,7 @@
 		<span property="orderedWord" mv-multiple mv-accepts="word" mv-optional mv-mode="read"></span>
 	</div>
 
-	<span property="word" mv-multiple mv-value="split(solution)" mv-action="add(orderedWord, word)"></span>
+	<span property="word" mv-multiple mv-value="shuffle(split(solution))" mv-action="add(orderedWord, word)"></span>
 
 	<details>
 		<summary>Solution</summary>
