@@ -10,7 +10,8 @@
 					"optional": false
 				}
 			],
-			"id": "+"
+			"id": "+",
+			"unary": false
 		},
 		{
 			"id": "-",
@@ -22,7 +23,8 @@
 				{
 					"optional": false
 				}
-			]
+			],
+			"unary": false
 		},
 		{
 			"id": "*",
@@ -34,7 +36,8 @@
 				{
 					"optional": false
 				}
-			]
+			],
+			"unary": false
 		},
 		{
 			"id": "/",
@@ -46,7 +49,8 @@
 				{
 					"optional": false
 				}
-			]
+			],
+			"unary": false
 		},
 		{
 			"id": "mod",
@@ -58,7 +62,8 @@
 				{
 					"optional": false
 				}
-			]
+			],
+			"unary": false
 		},
 		{
 			"name": "and",
@@ -70,7 +75,8 @@
 					"optional": false
 				}
 			],
-			"description": "Check that both a and b have a value"
+			"description": "Check that both a and b have a value",
+			"unary": false
 		},
 		{
 			"name": "or",
@@ -82,7 +88,8 @@
 				{
 					"optional": false
 				}
-			]
+			],
+			"unary": false
 		},
 		{
 			"name": "!",
@@ -94,7 +101,8 @@
 				{
 					"optional": false
 				}
-			]
+			],
+			"unary": true
 		},
 		{
 			"name": "count",
@@ -111,7 +119,8 @@
 			],
 			"returnType": "Number",
 			"returnDescription": "The count",
-			"id": "count"
+			"id": "count",
+			"unary": false
 		},
 		{
 			"name": "$now",
@@ -124,7 +133,8 @@
 				}
 			],
 			"demo": "# Example: $now\n\nColor clock that circles all hues every minute.\n\n```html\n<div mv-app=colorClock  style=\"background: hsl([hue], 100%, 80%)\">\n\t<span property=\"hue\">[$now * 6 / 1000 mod 360]</span>\n\t<time>[time($now)]</time>\n</div>\n<style>\nbody {\n\tfont: bold 100% Helvetica Neue, sans-serif;\n\tmargin: 0;\n}\n\ndiv { \n\tdisplay: flex;\n\tflex-flow: column;\n\theight: 100vh;\n\tpadding: 1em;\n\tbox-sizing: border-box;\n}\n\ntime {\n\tfont-size: 500%;\n\tflex: 1;\n}\n\nspan {\n\topacity: .5;\n}\n</style>\n```",
-			"id": "$now"
+			"id": "$now",
+			"unary": false
 		}
 	]
 }
