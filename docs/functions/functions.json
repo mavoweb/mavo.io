@@ -857,6 +857,76 @@
 			"returnDescription": "The converted text"
 		},
 		{
+			"name": "search",
+			"id": "search",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "Case-insensitive search",
+			"argument": [
+				{
+					"name": "haystack",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look in"
+				},
+				{
+					"name": "needle",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look for"
+				}
+			],
+			"returnType": "Number",
+			"returnDescription": "Position of the first match if found, or -1 if not found."
+		},
+		{
+			"name": "starts",
+			"id": "starts",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Check if text starts with another bit of text",
+			"argument": [
+				{
+					"name": "haystack",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look in"
+				},
+				{
+					"name": "needle",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look for"
+				}
+			],
+			"returnDescription": "True if it does, false otherwise."
+		},
+		{
+			"name": "ends",
+			"id": "ends",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Check if text ends with another bit of text",
+			"argument": [
+				{
+					"name": "haystack",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look in"
+				},
+				{
+					"name": "needle",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look for"
+				}
+			],
+			"returnDescription": "True if it does, false otherwise."
+		},
+		{
 			"name": "url",
 			"id": "url",
 			"unary": false,
