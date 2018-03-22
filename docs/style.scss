@@ -369,6 +369,7 @@ table.attributes {
 			background: color-image(hsla(0,0%,100%,.85)) var(--color);
 
 			h4 {
+				white-space: nowrap;
 				a {
 					color: inherit;
 				}

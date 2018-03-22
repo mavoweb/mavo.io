@@ -272,11 +272,16 @@ table.attributes td:nth-last-child(2) {
     padding: .3em .5em;
     margin: 0 -.75em 0 -.8em;
     background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)) var(--color); }
-    [mv-app="api"] [id="api"] [property=member] > summary h4 a,
-    [mv-app="api"] [id="api"] [property=function] > summary h4 a,
-    [mv-app="functions"] [id="functions"] [property=member] > summary h4 a,
-    [mv-app="functions"] [id="functions"] [property=function] > summary h4 a {
-      color: inherit; }
+    [mv-app="api"] [id="api"] [property=member] > summary h4,
+    [mv-app="api"] [id="api"] [property=function] > summary h4,
+    [mv-app="functions"] [id="functions"] [property=member] > summary h4,
+    [mv-app="functions"] [id="functions"] [property=function] > summary h4 {
+      white-space: nowrap; }
+      [mv-app="api"] [id="api"] [property=member] > summary h4 a,
+      [mv-app="api"] [id="api"] [property=function] > summary h4 a,
+      [mv-app="functions"] [id="functions"] [property=member] > summary h4 a,
+      [mv-app="functions"] [id="functions"] [property=function] > summary h4 a {
+        color: inherit; }
   [mv-app="api"] [id="api"] [property=member] [property=description],
   [mv-app="api"] [id="api"] [property=member] details,
   [mv-app="api"] [id="api"] [property=function] [property=description],
