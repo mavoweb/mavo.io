@@ -444,13 +444,13 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Get the year of a date as a 4 digit number.",
+			"description": "Get the year of a date/time as a 4 digit number.",
 			"argument": [
 				{
 					"name": "date",
 					"optional": false,
-					"type": "Date",
-					"description": "The date whose year we want to get."
+					"type": "Date/Time",
+					"description": "The date/time whose year we want to get."
 				}
 			],
 			"returnType": "Number"
@@ -461,13 +461,13 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Get the year of a date as a number. You can add `.name` to the returned value to get the month name (e.g. \"February\"). You can also use `.shortname` to get a shorter name, like \"Feb\". Both of these are dependent on the document language.",
+			"description": "Get the month of a date/time as a number from 1 to 12. You can add `.name` to the returned value to get the month name (e.g. \"February\"). You can also use `.shortname` to get a shorter name, like \"Feb\". Both of these are dependent on the document language.",
 			"argument": [
 				{
 					"name": "date",
 					"optional": false,
-					"type": "Date",
-					"description": "The date whose month we want to get."
+					"type": "Date/Time",
+					"description": "The date/time whose month we want to get."
 				}
 			],
 			"returnType": "Number"
@@ -478,13 +478,13 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Get the weekday of a date as a number from 1 to 7. You can add `.name` to the returned value to get the weekday name (e.g. \"Monday\"), dependent on the document language.",
+			"description": "Get the weekday of a date/time as a number from 1 to 7. You can add `.name` to the returned value to get the weekday name (e.g. \"Monday\"), dependent on the document language.",
 			"argument": [
 				{
 					"name": "date",
 					"optional": false,
-					"type": "Date",
-					"description": "The date whose weekday we want to get."
+					"type": "Date/Time",
+					"description": "The date/time whose weekday we want to get."
 				}
 			],
 			"returnType": "Number"
@@ -495,11 +495,16 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
+			"description": "Get the weekday of a date/time as a number from 1 to 31.",
 			"argument": [
 				{
-					"optional": false
+					"name": "date",
+					"optional": false,
+					"type": "Date/Time",
+					"description": "The date/time whose day we want to get."
 				}
-			]
+			],
+			"returnType": "Number"
 		},
 		{
 			"name": "hour",
@@ -507,11 +512,16 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
+			"description": "Get the hour of a date/time as a number from 0 to 23.",
 			"argument": [
 				{
-					"optional": false
+					"name": "date",
+					"optional": false,
+					"type": "Datetime",
+					"description": "The date/time whose hour we want to get."
 				}
-			]
+			],
+			"returnType": "Number"
 		},
 		{
 			"name": "minute",
@@ -519,11 +529,16 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
+			"description": "Get the minute of a date/time as a number from 0 to 59.",
 			"argument": [
 				{
-					"optional": false
+					"name": "date",
+					"optional": false,
+					"type": "Date/Time",
+					"description": "The date/time whose minute we want to get."
 				}
-			]
+			],
+			"returnType": "Number"
 		},
 		{
 			"name": "second",
@@ -531,9 +546,13 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
+			"description": "Get the seconds of a date/time as a number from 0 to 59.",
 			"argument": [
 				{
-					"optional": false
+					"name": "date",
+					"optional": false,
+					"type": "Date/Time",
+					"description": "The date/time whose seconds we want to get."
 				}
 			]
 		},
@@ -543,11 +562,16 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
+			"description": "Get a date (without time) in ISO format (e.g. 1986-13-06).",
 			"argument": [
 				{
-					"optional": false
+					"name": "date",
+					"optional": false,
+					"type": "Date/Time",
+					"description": "The date/time that we want to format"
 				}
-			]
+			],
+			"returnType": "Text"
 		},
 		{
 			"name": "time",
@@ -555,11 +579,16 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
+			"description": "Get a the time part of a date/time (without date information) in ISO format (e.g. 13:00).",
 			"argument": [
 				{
-					"optional": false
+					"name": "date",
+					"optional": false,
+					"type": "Date/Time",
+					"description": "The date/time that we want to format"
 				}
-			]
+			],
+			"returnType": "Text"
 		},
 		{
 			"name": "seconds",
