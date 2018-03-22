@@ -187,7 +187,7 @@
 			"id": "&",
 			"category": "text",
 			"role": "operator",
-			"description": "Filter a based on b. Both a and b should be lists.",
+			"description": "Join two pieces of text, e.g. 'cat' & 's' becomes 'cats'",
 			"argument": [
 				{
 					"optional": false
