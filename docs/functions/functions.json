@@ -596,11 +596,17 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
+			"description": "Converts a number of milliseconds to a number of seconds. Essentially equivalent to dividing by 1000.",
 			"argument": [
 				{
-					"optional": false
+					"name": "ms",
+					"optional": false,
+					"type": "Number",
+					"description": "Number of milliseconds"
 				}
-			]
+			],
+			"returnType": "Number",
+			"returnDescription": "Number of seconds"
 		},
 		{
 			"name": "minutes",
