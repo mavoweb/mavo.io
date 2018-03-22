@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Shopping list</title>
+	<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css">
+	<link rel="stylesheet" href="style.css">
+	<script src="https://dev.mavo.io/dist/mavo.js"></script>
+</head>
+<body mv-app="shopping" mv-storage="local">
+	<fieldset>
+		<legend>Common items</legend>
+		<div property="commonItem" mv-multiple mv-optional mv-action="add(commonItem, item)"></div>
+		<div class="none-yet" mv-if="count(commonItem) = 0">No common items yet</div>
+	</fieldset>
+
+	<ul>
+		<li property="item" mv-multiple>
+			<input type="checkbox" property="bought">
+			<span property="name">Garlic</span>
+			<button class="add-to-common" mv-action="add(item, commonItem)">+ common items</button>
+		</li>
+	</ul>
+</body>
+</html>

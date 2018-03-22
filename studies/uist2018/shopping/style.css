@@ -1,0 +1,80 @@
+html {
+	background: hsl(220, 10%, 96%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+}
+
+body {
+	font: 120%/1.5 Helvetica Neue, sans-serif;
+	padding: 0;
+}
+
+button {
+	font: inherit;
+	font-weight: bold;
+	background: hsl(220, 10%, 90%);
+	border: 1px solid rgba(0,0,0,.1);
+	padding: 0 .4em;
+	cursor: pointer;
+}
+
+fieldset {
+	border: 1px solid rgba(0,0,0,.15);
+	border-radius: .3em;
+}
+
+.none-yet {
+	font-style: italic;
+	opacity: .5;
+}
+
+ul {
+	width: 20em;
+	font-size: 200%;
+	padding: 0;
+}
+
+[property=item] {
+	display: flex;
+	align-items: center;
+	list-style: none;
+	padding: .1em .5em;
+	background: white;
+	margin: 1px;
+	box-shadow: 0 .05em .05em hsla(220, 10%, 50%, .5);
+}
+
+[property=name] {
+	margin-left: .3em;
+}
+
+:checked + [property=name] {
+	text-decoration: line-through;
+	font-style: italic;
+	opacity: .5;
+}
+
+[property=commonItem]  {
+	display: inline-block;
+	padding: .1em .4em;
+	margin: .2em;
+	background: white;
+	box-shadow: 0 .05em .05em hsla(220, 10%, 50%, .5);
+	cursor: pointer;
+}
+
+.add-to-common {
+	font-size: 50%;
+	margin-left: auto;
+	font-weight: normal;
+}
+
+.mv-add-item {
+	margin-top: .5em;
+}
+
+.mv-add-commonItem {
+	margin-left: .5em;
+}
