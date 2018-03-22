@@ -917,7 +917,7 @@
 			"name": "$hash",
 			"id": "$hash",
 			"unary": false,
-			"category": "datetime",
+			"category": "other",
 			"role": "variable",
 			"description": "Current URL hash (without the `#` sign). Updates automatically when the hash changes.",
 			"argument": [
@@ -930,7 +930,7 @@
 			"name": "$mouse",
 			"id": "$mouse",
 			"unary": false,
-			"category": "datetime",
+			"category": "other",
 			"role": "variable",
 			"description": "Mouse coordinates relative to the viewport. Use `$mouse.x` and `$mouse.y` to get them.",
 			"argument": [
@@ -944,7 +944,7 @@
 			"name": "$index",
 			"id": "$index",
 			"unary": false,
-			"category": "datetime",
+			"category": "lists",
 			"role": "variable",
 			"description": "If inside a collection, the closest item’s position in its collection, starting from 0.",
 			"argument": [
@@ -957,7 +957,7 @@
 			"name": "$previous",
 			"id": "$previous",
 			"unary": false,
-			"category": "datetime",
+			"category": "lists",
 			"role": "variable",
 			"description": "If inside a collection, the closest item’s previous item.",
 			"argument": [
@@ -970,7 +970,7 @@
 			"name": "$next",
 			"id": "$next",
 			"unary": false,
-			"category": "datetime",
+			"category": "lists",
 			"role": "variable",
 			"description": "If inside a collection, the closest item’s next item.",
 			"argument": [
@@ -983,7 +983,7 @@
 			"name": "$item",
 			"id": "$item",
 			"unary": false,
-			"category": "datetime",
+			"category": "lists",
 			"role": "variable",
 			"description": "If inside a collection, the closest item. Same as using the property name.",
 			"argument": [
@@ -996,7 +996,7 @@
 			"name": "$all",
 			"id": "$all",
 			"unary": false,
-			"category": "datetime",
+			"category": "lists",
 			"role": "variable",
 			"description": "If inside a collection, the collection (since the collection property will give you the current item)",
 			"argument": [
