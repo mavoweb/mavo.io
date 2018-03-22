@@ -53,11 +53,37 @@
 			"unary": false
 		},
 		{
-			"id": ">=",
-			"name": ">=",
+			"id": "<",
+			"name": "<",
 			"category": "logical",
 			"role": "operator",
-			"description": "Check if a is greater than or equal to b",
+			"description": "Check if a is smaller than b",
+			"argument": [
+				{
+					"optional": false
+				}
+			],
+			"unary": false
+		},
+		{
+			"id": ">",
+			"name": ">",
+			"category": "logical",
+			"role": "operator",
+			"description": "Check if a is greater than b",
+			"argument": [
+				{
+					"optional": false
+				}
+			],
+			"unary": false
+		},
+		{
+			"id": "<=",
+			"name": "<=",
+			"category": "logical",
+			"role": "operator",
+			"description": "Check if a is smaller than or equal to b",
 			"argument": [
 				{
 					"optional": false
@@ -79,11 +105,11 @@
 			"unary": false
 		},
 		{
-			"id": ">=",
-			"name": ">=",
+			"id": "=",
+			"name": "=",
 			"category": "logical",
 			"role": "operator",
-			"description": "Check if a is greater than or equal to b",
+			"description": "Check if a is equal to b",
 			"argument": [
 				{
 					"optional": false
@@ -92,43 +118,30 @@
 			"unary": false
 		},
 		{
-			"id": ">=",
-			"name": ">=",
+			"id": "!",
+			"name": "!",
 			"category": "logical",
 			"role": "operator",
-			"description": "Check if a is greater than or equal to b",
+			"description": "Check if a does not have a value",
 			"argument": [
 				{
 					"optional": false
 				}
 			],
-			"unary": false
+			"unary": true
 		},
 		{
-			"id": ">=",
-			"name": ">=",
+			"id": "!",
+			"name": "!",
 			"category": "logical",
 			"role": "operator",
-			"description": "Check if a is greater than or equal to b",
+			"description": "Check if a does not have a value",
 			"argument": [
 				{
 					"optional": false
 				}
 			],
-			"unary": false
-		},
-		{
-			"id": ">=",
-			"name": ">=",
-			"category": "logical",
-			"role": "operator",
-			"description": "Check if a is greater than or equal to b",
-			"argument": [
-				{
-					"optional": false
-				}
-			],
-			"unary": false
+			"unary": true
 		},
 		{
 			"name": "and",
@@ -170,22 +183,9 @@
 			"unary": false
 		},
 		{
-			"name": "where",
-			"id": "where",
-			"category": "lists",
-			"role": "operator",
-			"description": "Filter a based on b. Both a and b should be lists.",
-			"argument": [
-				{
-					"optional": false
-				}
-			],
-			"unary": false
-		},
-		{
-			"name": "where",
-			"id": "where",
-			"category": "lists",
+			"name": "&",
+			"id": "&",
+			"category": "text",
 			"role": "operator",
 			"description": "Filter a based on b. Both a and b should be lists.",
 			"argument": [
