@@ -409,6 +409,28 @@
 			"returnType": "Text"
 		},
 		{
+			"name": "split",
+			"id": "split",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "The opposite of `join()`, this takes a text value and turns it into a list, by breaking it down at the specified separators.",
+			"argument": [
+				{
+					"name": "text",
+					"optional": false,
+					"type": "Text",
+					"description": "The text to split."
+				},
+				{
+					"name": "separator",
+					"optional": true,
+					"type": "Text",
+					"description": "Where to split the text. Defaults to whitespace."
+				}
+			]
+		},
+		{
 			"name": "random",
 			"id": "random",
 			"unary": false,
