@@ -174,7 +174,7 @@
 			"id": "where",
 			"category": "lists",
 			"role": "operator",
-			"description": "Filter a based on b. Both a and b should be lists.",
+			"description": "Filter a based on b. Both a and b should be lists.\nFor example, `event where type = 'conference'` will return only events whose type is \"conference\".",
 			"argument": [
 				{
 					"optional": false
@@ -194,6 +194,34 @@
 				}
 			],
 			"unary": false
+		},
+		{
+			"name": "if",
+			"id": "if",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Get a different value based on a test. For example, `if(rating > 3, 'good', 'bad')` returns `'good'` if the rating is bigger than 3 and `'bad'` otherwise.\nAny parameters can also be lists of values, in which case the `if()` is applied on each element individually (i.e. first the first element of each list, then the second, then the third etc).",
+			"argument": [
+				{
+					"name": "test",
+					"optional": false,
+					"type": "Anything",
+					"description": "The condition to test for. "
+				},
+				{
+					"name": "iftrue",
+					"optional": true,
+					"type": "Anything",
+					"description": "What to return if the test passes. Defaults to the test itself."
+				},
+				{
+					"name": "iffalse",
+					"optional": true,
+					"type": "Anything",
+					"description": "What to return if the test doesn’t pass. Defaults to \"\" (empty text)."
+				}
+			]
 		},
 		{
 			"name": "list",
@@ -858,6 +886,119 @@
 			"demo": "# Example: $now\n\nColor clock that circles all hues every minute.\n\n```html\n<div mv-app=colorClock  style=\"background: hsl([hue], 100%, 80%)\">\n\t<span property=\"hue\">[$now * 6 / 1000 mod 360]</span>\n\t<time>[time($now)]</time>\n</div>\n<style>\nbody {\n\tfont: bold 100% Helvetica Neue, sans-serif;\n\tmargin: 0;\n}\n\ndiv { \n\tdisplay: flex;\n\tflex-flow: column;\n\theight: 100vh;\n\tpadding: 1em;\n\tbox-sizing: border-box;\n}\n\ntime {\n\tfont-size: 500%;\n\tflex: 1;\n}\n\nspan {\n\topacity: .5;\n}\n</style>\n```",
 			"id": "$now",
 			"unary": false
+		},
+		{
+			"name": "$startup",
+			"id": "$startup",
+			"unary": false,
+			"category": "datetime",
+			"role": "variable",
+			"description": "The value of `$now` when the page loaded.",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
+		},
+		{
+			"name": "$today",
+			"id": "$today",
+			"unary": false,
+			"category": "datetime",
+			"role": "variable",
+			"description": "Current date.",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
+		},
+		{
+			"name": "$hash",
+			"id": "$hash",
+			"unary": false,
+			"category": "datetime",
+			"role": "variable",
+			"description": "Current URL hash (without the `#` sign). Updates automatically when the hash changes.",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
+		},
+		{
+			"name": "$mouse",
+			"id": "$mouse",
+			"unary": false,
+			"category": "datetime",
+			"role": "variable",
+			"description": "Mouse coordinates relative to the viewport. Use `$mouse.x` and `$mouse.y` to get them.",
+			"argument": [
+				{
+					"optional": false
+				}
+			],
+			"demo": "##### Example: $mouse\n\n```html\n<div mv-app style=\"background: radial-gradient(at [$mouse.x]px [$mouse.y]px, white, black)\">\n\t[$mouse.x] [$mouse.y]\n</div>\n<style>\nbody {\n\tfont: bold 100% Helvetica Neue, sans-serif;\n\tmargin: 0;\n}\n\ndiv { \n\theight: 100vh;\n\tpadding: 1em;\n\tbox-sizing: border-box;\n}\n</style>\n```"
+		},
+		{
+			"name": "$index",
+			"id": "$index",
+			"unary": false,
+			"category": "datetime",
+			"role": "variable",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
+		},
+		{
+			"name": "$previous",
+			"id": "$previous",
+			"unary": false,
+			"category": "datetime",
+			"role": "variable",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
+		},
+		{
+			"name": "$next",
+			"id": "$next",
+			"unary": false,
+			"category": "datetime",
+			"role": "variable",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
+		},
+		{
+			"name": "$item",
+			"id": "$item",
+			"unary": false,
+			"category": "datetime",
+			"role": "variable",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
+		},
+		{
+			"name": "$all",
+			"id": "$all",
+			"unary": false,
+			"category": "datetime",
+			"role": "variable",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
 		}
 	]
 }
