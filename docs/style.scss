@@ -5,6 +5,15 @@ def {
 	font-style: italic;
 }
 
+fieldset {
+	border: 1px solid rgba(0,0,0,.1);
+	border-radius: .3em;
+}
+
+select {
+	font: inherit;
+}
+
 h1 > a {
 	color: inherit;
 }
@@ -348,13 +357,17 @@ table.attributes {
 	}
 
 	[property=member],
-	[property=function] {
+	[property=term] {
 		border: 1px solid rgba(0,0,0,.1);
 		border-left: .3em solid var(--color);
 		padding: 0 .8em 0;
 		margin: .3em 0;
 		background: color-image(hsla(0,0%,100%,.95)) var(--color);
 		background-clip: border-box;
+
+		&.filtered {
+			display: none;
+		}
 
 		a {
 			color: var(--color);
@@ -535,6 +548,12 @@ table.attributes {
 	[property=opened] {
 		display: none;
 	}
+}
+
+[property=search] {
+	font-size: 150%;
+	width: 100%;
+	margin-bottom: .3em;
 }
 
 [mv-app="api"] [id="api"] {

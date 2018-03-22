@@ -19,26 +19,40 @@
 	<div class="mv-bar mv-ui mv-fixed"></div>
 
 	<div class="filter">
-		Search: <input type="search" property="search" mv-storage="none">
+		<input type="search" property="search" mv-storage="none" placeholder="🔍 Search">
+		<fieldset>
+			<legend>Filters</legend>
+			<select property="roleFilter">
+				<option value="">Show all terms</option>
+				<option value="function">Function</option>
+				<option value="variable">Special Property</option>
+				<option value="operator">Operator</option>
+			</select>
+			<select id="categories" property="categoryFilter">
+				<option value=""></option>
+				<option property="category" mv-multiple mv-group mv-value="list(
+					group(id: 'math', text: 'Math'),
+					group(id: 'lists', text: 'Lists'),
+					group(id: 'text', text: 'Text'),
+					group(id: 'datetime', text: 'Dates and Times'),
+					group(id: 'logical', text: 'Logical'),
+					group(id: 'other', text: 'Other'),
+				)" value="[id]">[text]</option>
+			</select>
+		</fieldset>
 	</div>
 	<button class="hide-on-read" mv-action="set(opened, true)">Expand All</button>
 
-	<details property="function" mv-multiple class="role-[role] [if(unary, 'unary')]" id="[id]" open="[opened or $hash = id]">
+	<details property="term" mv-multiple class="role-[role] [if(unary, 'unary')] [if(!and(shown), 'filtered')]" id="[id]" open="[opened or $hash = id]">
+		<meta property="shown" content="[!search or search(json(term), search) > -1]">
+		<meta property="shown" content="[!categoryFilter or categoryFilter = category]">
+		<meta property="shown" content="[!roleFilter or roleFilter = role]">
 		<summary>
 			<h4><a href="#[id]" property="name" mv-attribute="none" data-arguments="[join(argument.summary, ', ')]"></a></h4>
 			<span class="description-preview">[description]</span>
 			<meta property="id" mv-default="[name]" />
 			<meta property="unary" mv-if="role = 'operator'" datatype="boolean" />
-			<span property="category">
-				<select>
-					<option value="math">Math</option>
-					<option value="lists">Lists</option>
-					<option value="text">Text</option>
-					<option value="datetime">Dates and Times</option>
-					<option value="logical">Logical</option>
-					<option value="other">Other</option>
-				</select>
-			</span>
+			<span property="category" mv-edit="#categories"></span>
 			<span property="role">
 				<select>
 					<option value="function">Function</option>
@@ -91,6 +105,10 @@
 		</li> -->
 	</ul>
 </section>
+
+<div xhidden>
+
+</div>
 
 @@include('_footer-docs.html')
 <script src="/js/markdown-docs.js"></script>
