@@ -792,7 +792,7 @@
 			"name": "lowercase",
 			"id": "lowercase",
 			"unary": false,
-			"category": "math",
+			"category": "text",
 			"role": "function",
 			"description": "Converts all letters to lowercase.",
 			"argument": [
@@ -805,6 +805,23 @@
 			],
 			"returnType": "Text",
 			"returnDescription": "The converted text"
+		},
+		{
+			"name": "url",
+			"id": "url",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "If `param` is provided, returns the value of that parameter from the current page URL. This matches both parameters like `example.com/index.html?foo=bar` and `example.com/index.html/foo/bar` with the former having priority over the latter\nIf `param` is **not** provided, it returns the URL of the current page.",
+			"argument": [
+				{
+					"name": "param",
+					"optional": true,
+					"type": "Text",
+					"description": "The parameter to get."
+				}
+			],
+			"returnType": "Text"
 		},
 		{
 			"name": "$now",
