@@ -596,7 +596,7 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Converts a number of milliseconds to a number of seconds. Essentially equivalent to dividing by 1000.",
+			"description": "Converts a number of milliseconds to a number of seconds. Essentially equivalent to dividing by 1000 and then rounding down.",
 			"argument": [
 				{
 					"name": "ms",
@@ -614,7 +614,7 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Converts a number of milliseconds to a number of seconds. Essentially equivalent to dividing by 1000.",
+			"description": "Converts a number of milliseconds to a number of minutes. Essentially equivalent to dividing by 60 ×1000 and then rounding down.",
 			"argument": [
 				{
 					"name": "ms",
@@ -624,7 +624,7 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "Number of seconds"
+			"returnDescription": "Number of minutes"
 		},
 		{
 			"name": "hours",
@@ -632,7 +632,7 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Converts a number of milliseconds to a number of seconds. Essentially equivalent to dividing by 1000.",
+			"description": "Converts a number of milliseconds to a number of hours. Essentially equivalent to dividing by 60 × 60 ×1000 and then rounding down.",
 			"argument": [
 				{
 					"name": "ms",
@@ -642,7 +642,7 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "Number of seconds"
+			"returnDescription": "Number of hours"
 		},
 		{
 			"name": "days",
@@ -650,7 +650,7 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Converts a number of milliseconds to a number of seconds. Essentially equivalent to dividing by 1000.",
+			"description": "Converts a number of milliseconds to a number of days. Essentially equivalent to dividing by 24 × 60 × 60 ×1000 and then rounding down.",
 			"argument": [
 				{
 					"name": "ms",
@@ -660,7 +660,7 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "Number of seconds"
+			"returnDescription": "Number of days"
 		},
 		{
 			"name": "weeks",
@@ -668,7 +668,7 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Converts a number of milliseconds to a number of seconds. Essentially equivalent to dividing by 1000.",
+			"description": "Converts a number of milliseconds to a number of weeks. Essentially equivalent to dividing by 7 × 24 × 60 × 60 ×1000 and then rounding down.",
 			"argument": [
 				{
 					"name": "ms",
@@ -678,7 +678,7 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "Number of seconds"
+			"returnDescription": "Number of weeks"
 		},
 		{
 			"name": "months",
@@ -686,7 +686,7 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Converts a number of milliseconds to a number of seconds. Essentially equivalent to dividing by 1000.",
+			"description": "Converts a number of milliseconds to a number of months. Essentially equivalent to dividing by 30.4368 × 24 × 60 × 60 ×1000 and then rounding down.",
 			"argument": [
 				{
 					"name": "ms",
@@ -696,7 +696,7 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "Number of seconds"
+			"returnDescription": "Number of months"
 		},
 		{
 			"name": "years",
@@ -704,7 +704,7 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Converts a number of milliseconds to a number of years.",
+			"description": "Converts a number of milliseconds to a number of years. Essentially equivalent to dividing by 12 × 30.4368 × 24 × 60 × 60 ×1000 and then rounding down.",
 			"argument": [
 				{
 					"name": "ms",
