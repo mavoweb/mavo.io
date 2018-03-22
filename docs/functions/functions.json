@@ -938,7 +938,7 @@
 					"optional": false
 				}
 			],
-			"demo": "##### Example: $mouse\n\n```html\n<div mv-app style=\"background: radial-gradient(at [$mouse.x]px [$mouse.y]px, white, black)\">\n\t[$mouse.x] [$mouse.y]\n</div>\n<style>\nbody {\n\tfont: bold 100% Helvetica Neue, sans-serif;\n\tmargin: 0;\n}\n\ndiv { \n\theight: 100vh;\n\tpadding: 1em;\n\tbox-sizing: border-box;\n}\n</style>\n```"
+			"demo": "# Example\n\n```html\n<div mv-app style=\"background: radial-gradient(at [$mouse.x]px [$mouse.y]px, white, black)\">\n\t[$mouse.x] [$mouse.y]\n</div>\n<style>\nbody {\n\tfont: bold 100% Helvetica Neue, sans-serif;\n\tmargin: 0;\n}\n\ndiv { \n\theight: 100vh;\n\tpadding: 1em;\n\tbox-sizing: border-box;\n}\n</style>\n```"
 		},
 		{
 			"name": "$index",
@@ -946,6 +946,7 @@
 			"unary": false,
 			"category": "datetime",
 			"role": "variable",
+			"description": "If inside a collection, the closest item’s position in its collection, starting from 0.",
 			"argument": [
 				{
 					"optional": false
@@ -958,6 +959,7 @@
 			"unary": false,
 			"category": "datetime",
 			"role": "variable",
+			"description": "If inside a collection, the closest item’s previous item.",
 			"argument": [
 				{
 					"optional": false
@@ -970,6 +972,7 @@
 			"unary": false,
 			"category": "datetime",
 			"role": "variable",
+			"description": "If inside a collection, the closest item’s next item.",
 			"argument": [
 				{
 					"optional": false
@@ -982,6 +985,7 @@
 			"unary": false,
 			"category": "datetime",
 			"role": "variable",
+			"description": "If inside a collection, the closest item. Same as using the property name.",
 			"argument": [
 				{
 					"optional": false
@@ -994,6 +998,7 @@
 			"unary": false,
 			"category": "datetime",
 			"role": "variable",
+			"description": "If inside a collection, the collection (since the collection property will give you the current item)",
 			"argument": [
 				{
 					"optional": false
