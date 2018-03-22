@@ -448,7 +448,7 @@
 					"id": "set",
 					"advanced": false,
 					"title": "Changing properties: The set() function",
-					"content": "You can change the values of other properties with the `set()` function. The first argument is what you want to change, and the second is the new value(s). Note that you can use this to change multiple properties at once, since [property names in exactly the same way as expressions](https://mavo.io/docs/expressions):\n\n##### Example\n\n```html\n<div mv-app mv-source=\"https://test.mavo.io/data/people.json\">\n\t<button mv-action=\"set(name, 'Chris')\">Set all names to Chris</button>\n\t<div property=\"cat\" mv-multiple>\n\t\t<div property=\"name\"></div>\n\t\t<div property=\"age\"></div>\n\t</div>\n</div>\n```"
+					"content": "You can change the values of properties with the `set()` function. The first argument is what you want to change, and the second is the new value(s). Note that you can use this to change multiple properties at once, since [property names in actions work exactly the same way as in expressions](https://mavo.io/docs/expressions):\n\n##### Example\n\n```html\n<div mv-app mv-source=\"https://test.mavo.io/data/people.json\">\n\t<button mv-action=\"set(name, 'Chris')\">Set all names to Chris</button>\n\t<div property=\"cat\" mv-multiple>\n\t\t<div property=\"name\"></div>\n\t\t<div property=\"age\"></div>\n\t</div>\n</div>\n```"
 				},
 				{
 					"id": "add",
