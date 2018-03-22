@@ -118,17 +118,17 @@
 			"unary": false
 		},
 		{
-			"id": "!",
-			"name": "!",
+			"id": "!=",
+			"name": "!=",
 			"category": "logical",
 			"role": "operator",
-			"description": "Check if a does not have a value",
+			"description": "Check that a is *not* equal to b",
 			"argument": [
 				{
 					"optional": false
 				}
 			],
-			"unary": true
+			"unary": false
 		},
 		{
 			"id": "!",
