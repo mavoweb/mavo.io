@@ -17,7 +17,7 @@ main {
 	grid-auto-flow: column;
 }
 
-.animal {
+article {
 	border: 1px solid;
 	border-color: hsl(var(--color), calc(var(--lightness, 90%) - 20%));
 	background: hsl(var(--color), var(--lightness, 90%));
@@ -25,7 +25,7 @@ main {
 	margin: .5em;
 }
 
-	.animal::before {
+	article::before {
 		float: left;
 		font-size: 90px;
 		margin-right: 1rem;
