@@ -1,0 +1,56 @@
+html {
+	background: hsl(220, 10%, 96%);
+	font: 250%/1.5 Helvetica Neue, sans-serif;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+body {
+	display: flex;
+	flex-flow: column;
+	padding: 0;
+	margin: 0;
+	height: 100vh;
+}
+
+button {
+	font: inherit;
+	margin: .5em;
+	font-weight: bold;
+	background: hsl(220, 10%, 90%);
+	border: 1px solid rgba(0,0,0,.1);
+	padding: 0 .4em;
+	cursor: pointer;
+}
+
+.timer {
+	min-width: 4.2em;
+	font-size: 360%;
+	line-height: 1;
+}
+
+.formatted {
+	font-size: 50%;
+}
+
+.buttons {
+	display: flex;
+}
+
+	button {
+		flex: 1;
+		width: 5.5em;
+		white-space: nowrap;
+		background: hsl(75, 60%, 70%);
+	}
+
+	.pause {
+		background: hsl(0, 50%, 80%);
+	}
+
+.history {
+	flex: 1;
+	overflow: auto;
+}

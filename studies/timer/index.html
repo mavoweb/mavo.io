@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task timer</title>
+	<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css">
+	<link rel="stylesheet" href="style.css">
+	<script src="https://dev.mavo.io/dist/mavo.js"></script>
+</head>
+<body mv-app="stopwatch" class="[if(running, 'running')] if(start > 0, 'started')" mv-mode="read">
+	<meta property="running">
+	<meta property="start" />
+	<meta property="elapsed" content="[if (running, $now - start, 0)]">
+	<meta property="total" content="0"/>
+	<meta property="current" content="[total+elapsed]"/>
+
+
+	<div property="timer" class="timer">
+		[seconds(current)]
+	</div>
+	<div class="formatted">
+		[minutes(current)]:[digits(2, seconds(current))].[digits(2, current mod 1000)]
+	</div>
+
+	<div class="buttons">
+		<button class="start" mv-action="if(start, add(timer, lap)), set(start, $now), set(total, 0), set(running, true)">
+			[if(start, 'New task', 'Start')]
+		</button>
+
+		<button class="pause" mv-action="set(total,current), set(running,false)" disabled="[!start]" mv-if="running">Pause</button>
+		<button class="resume" mv-action="set(start, $now), set(running, true)" disabled="[!start]" mv-if="!running">Resume</button>
+	</div>
+	<div class="history">
+		<div property="lap" mv-multiple mv-optional mv-order="desc">
+	</div>
+</body>
+</html>
