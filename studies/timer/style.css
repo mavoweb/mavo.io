@@ -2,10 +2,10 @@ html {
 	background: hsl(220, 10%, 96%);
 	font: 250%/1.2 Helvetica Neue, sans-serif;
 	display: flex;
-	align-items: center;
 	justify-content: center;
 	text-align: center;
 	font-variant-numeric: tabular;
+	height: 100%;
 }
 
 body {
@@ -13,12 +13,13 @@ body {
 	flex-flow: column;
 	padding: 0;
 	margin: 0;
-	height: 100vh;
+	max-height: 100vh;
 }
 
 .timer {
 	font-size: 360%;
 	line-height: 1.1;
+	margin-top: 1rem;
 }
 
 .formatted {
