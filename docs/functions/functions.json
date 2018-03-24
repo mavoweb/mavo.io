@@ -946,7 +946,7 @@
 		{
 			"name": "$now",
 			"category": "datetime",
-			"role": "variable",
+			"role": "special",
 			"description": "Current date and time as number of milliseconds since January 1st, 1970. Note that using `$now` in expressions makes them update automatically as `$now` changes. Mostly useful in conjunction with [date and time functions](?category=datetime) or the `mod` operator.",
 			"argument": [
 				{
@@ -962,7 +962,7 @@
 			"id": "$startup",
 			"unary": false,
 			"category": "datetime",
-			"role": "variable",
+			"role": "special",
 			"description": "The value of `$now` when the page loaded.",
 			"argument": [
 				{
@@ -975,7 +975,7 @@
 			"id": "$today",
 			"unary": false,
 			"category": "datetime",
-			"role": "variable",
+			"role": "special",
 			"description": "Current date.",
 			"argument": [
 				{
@@ -988,7 +988,7 @@
 			"id": "$hash",
 			"unary": false,
 			"category": "other",
-			"role": "variable",
+			"role": "special",
 			"description": "Current URL hash (without the `#` sign). Updates automatically when the hash changes.",
 			"argument": [
 				{
@@ -1001,7 +1001,7 @@
 			"id": "$mouse",
 			"unary": false,
 			"category": "other",
-			"role": "variable",
+			"role": "special",
 			"description": "Mouse coordinates relative to the viewport. Use `$mouse.x` and `$mouse.y` to get them.",
 			"argument": [
 				{
@@ -1015,7 +1015,7 @@
 			"id": "$index",
 			"unary": false,
 			"category": "lists",
-			"role": "variable",
+			"role": "special",
 			"description": "If inside a collection, the closest item’s position in its collection, starting from 0.",
 			"argument": [
 				{
@@ -1028,7 +1028,7 @@
 			"id": "$previous",
 			"unary": false,
 			"category": "lists",
-			"role": "variable",
+			"role": "special",
 			"description": "If inside a collection, the closest item’s previous item.",
 			"argument": [
 				{
@@ -1041,7 +1041,7 @@
 			"id": "$next",
 			"unary": false,
 			"category": "lists",
-			"role": "variable",
+			"role": "special",
 			"description": "If inside a collection, the closest item’s next item.",
 			"argument": [
 				{
@@ -1054,7 +1054,7 @@
 			"id": "$item",
 			"unary": false,
 			"category": "lists",
-			"role": "variable",
+			"role": "special",
 			"description": "If inside a collection, the closest item. Same as using the property name.",
 			"argument": [
 				{
@@ -1067,7 +1067,7 @@
 			"id": "$all",
 			"unary": false,
 			"category": "lists",
-			"role": "variable",
+			"role": "special",
 			"description": "If inside a collection, the collection (since the collection property will give you the current item)",
 			"argument": [
 				{
