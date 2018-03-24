@@ -2,30 +2,30 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>People & cats</title>
+	<title>People</title>
 	<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css">
 	<link rel="stylesheet" href="style.css">
 	<script src="https://dev.mavo.io/dist/mavo.js"></script>
 </head>
-<body mv-app mv-source="https://test.mavo.io/data/people.json">
-	<h1>People and cats</h1>
+<body mv-app="people" mv-storage="https://github.com/mavoweb/test/data/people.json">
+	<h1>People</h1>
 	<button>Button outside collections</button>
 
 	<main>
-		<article property="person" mv-multiple>
+		<article property="man" mv-multiple>
 			<h2 property="name"></h2>
 			<p><span property="age"></span> years old
 			<p>Hobbies: <span property="hobby" mv-multiple></span>
 
-			<p><button>Button inside person</button>
+			<p><button>Button inside man</button>
 		</article>
 
-		<article property="cat" mv-multiple>
+		<article property="woman" mv-multiple>
 			<h2 property="name"></h2>
 			<p><span property="age"></span> years old
 			<p>Hobbies: <span property="hobby" mv-multiple></span>
 
-			<p><button>Button inside cat</button>
+			<p><button>Button inside woman</button>
 		</article>
 	</main>
 </body>

@@ -4,11 +4,16 @@ body {
 
 button {
 	font: inherit;
+	cursor: pointer;
 }
 
 h2 {
 	margin: 0;
 	line-height: 1;
+}
+
+p {
+	margin: 0;
 }
 
 main {
@@ -21,51 +26,79 @@ article {
 	border: 1px solid;
 	border-color: hsl(var(--color), calc(var(--lightness, 90%) - 20%));
 	background: hsl(var(--color), var(--lightness, 90%));
-	padding: .5em;
+	padding: 1rem;
 	margin: .5em;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-gap: .5em 2em;
 }
 
 	article::before {
-		float: left;
 		font-size: 90px;
-		margin-right: 1rem;
+		grid-column: 1;
+		grid-row: 1 / span 4;
 	}
 
-[property="person"],
-.mv-add-person {
+	article > * {
+		grid-column: 2;
+	}
+
+[property="man"],
+.mv-add-man {
 	grid-column: 1;
 }
 
-[property="person"] {
-	--color: 200, 100%;
-	--lightness: 95%;
+[property="man"] {
+	--color: 80, 60%;
+	--lightness: 80%;
 }
 
-	[property="person"]::before {
-		content: "🧑"
+	[property="man"]::before {
+		content: "👨🏼"
 	}
 
-[property="cat"],
-.mv-add-cat {
+[property="woman"],
+.mv-add-woman {
 	grid-column: 2;
 }
 
-[property="cat"] {
-	--color: 50, 100%;
+[property="woman"] {
+	--color: 200, 100%;
 }
 
-	[property="cat"]::before {
-		content: "😺"
+	[property="woman"]::before {
+		content: "👩🏽"
 	}
 
-
-[property="hobby"] {
-	padding: .35em .5em;
-	background: hsl(var(--color), calc(var(--lightness, 90%) - 20%));
+[property="hobby"],
+.mv-add-hobby {
+	display: inline-block;
+	vertical-align: middle;
 	margin: 0 .2em;
 	border-radius: .2em;
+	box-sizing: border-box;
 }
+
+[property="hobby"] {
+	background: hsl(var(--color), calc(var(--lightness, 90%) - 20%));
+	padding: .2em .5em;
+}
+
+.mv-add-hobby {
+	border: .1em dashed hsl(var(--color), calc(var(--lightness, 90%) - 30%));
+	background: transparent;
+	padding: .1em .4em;
+}
+
+	.mv-add-hobby:hover {
+		background: white;
+	}
 
 [property="name"] {
 	color: hsl(var(--color), calc(var(--lightness, 90%) - 65%));
+}
+
+article + .mv-add.mv-ui {
+	margin: .5em;
+	padding: .5em;
 }
