@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Task timer</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css">
 	<link rel="stylesheet" href="style.css">
 	<script src="https://dev.mavo.io/dist/mavo.js"></script>
@@ -14,6 +15,11 @@
 	<meta property="total" content="0"/>
 	<meta property="current" content="[total+elapsed]"/>
 
+	<div class="total">
+		<span>Total time</span>
+		<meta property="totalTime" content="[sum(lap.secs) * 1000 + current]">
+		[minutes(totalTime)]:[digits(2, seconds(totalTime))]
+	</div>
 
 	<div property="timer" class="timer">
 		[seconds(current)]
@@ -32,6 +38,9 @@
 	</div>
 	<div class="history">
 		<div property="lap" mv-multiple mv-optional mv-order="desc">
+			<span property="secs" datatype="number"></span>
+			<button class="delete" mv-action="delete($item)" title="Delete">-</button>
+		</div>
 	</div>
 </body>
 </html>
