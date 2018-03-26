@@ -11,7 +11,12 @@
 				}
 			],
 			"id": "+",
-			"unary": false
+			"unary": false,
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"id": "-",
@@ -24,7 +29,12 @@
 					"optional": false
 				}
 			],
-			"unary": false
+			"unary": false,
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"id": "*",
@@ -37,7 +47,12 @@
 					"optional": false
 				}
 			],
-			"unary": false
+			"unary": false,
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"id": "/",
@@ -50,7 +65,12 @@
 					"optional": false
 				}
 			],
-			"unary": false
+			"unary": false,
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"id": "<",
@@ -63,7 +83,12 @@
 					"optional": false
 				}
 			],
-			"unary": false
+			"unary": false,
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"id": ">",
@@ -76,7 +101,12 @@
 					"optional": false
 				}
 			],
-			"unary": false
+			"unary": false,
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"id": "<=",
@@ -89,7 +119,12 @@
 					"optional": false
 				}
 			],
-			"unary": false
+			"unary": false,
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"id": ">=",
@@ -102,7 +137,12 @@
 					"optional": false
 				}
 			],
-			"unary": false
+			"unary": false,
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"id": "=",
@@ -115,7 +155,12 @@
 					"optional": false
 				}
 			],
-			"unary": false
+			"unary": false,
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"id": "!=",
@@ -128,7 +173,12 @@
 					"optional": false
 				}
 			],
-			"unary": false
+			"unary": false,
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"id": "!",
@@ -141,7 +191,12 @@
 					"optional": false
 				}
 			],
-			"unary": true
+			"unary": true,
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "and",
@@ -154,7 +209,12 @@
 				}
 			],
 			"description": "Check that both a and b have a value",
-			"unary": false
+			"unary": false,
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "or",
@@ -167,7 +227,12 @@
 					"optional": false
 				}
 			],
-			"unary": false
+			"unary": false,
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "where",
@@ -180,7 +245,12 @@
 					"optional": false
 				}
 			],
-			"unary": false
+			"unary": false,
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "&",
@@ -193,7 +263,12 @@
 					"optional": false
 				}
 			],
-			"unary": false
+			"unary": false,
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "if",
@@ -221,6 +296,11 @@
 					"type": "Anything",
 					"description": "What to return if the test doesn’t pass. Defaults to \"\" (empty text)."
 				}
+			],
+			"shown": [
+				true,
+				true,
+				true
 			]
 		},
 		{
@@ -248,7 +328,12 @@
 				}
 			],
 			"returnType": "List",
-			"returnDescription": "A list with all values you provided."
+			"returnDescription": "A list with all values you provided.",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "group",
@@ -276,7 +361,12 @@
 					"description": "You can provide as many as you want"
 				}
 			],
-			"returnType": "Group data"
+			"returnType": "Group data",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "average",
@@ -294,7 +384,12 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "The average"
+			"returnDescription": "The average",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "sum",
@@ -312,7 +407,12 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "The sum"
+			"returnDescription": "The sum",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "min",
@@ -330,7 +430,12 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "The minimum number"
+			"returnDescription": "The minimum number",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "count",
@@ -348,7 +453,12 @@
 			"returnType": "Number",
 			"returnDescription": "The count",
 			"id": "count",
-			"unary": false
+			"unary": false,
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "first",
@@ -371,7 +481,12 @@
 					"description": "The list to return items from."
 				}
 			],
-			"returnDescription": "If n is not provided or is 1, the first item. Otherwise, a list of the first n items."
+			"returnDescription": "If n is not provided or is 1, the first item. Otherwise, a list of the first n items.",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "last",
@@ -379,7 +494,7 @@
 			"unary": false,
 			"category": "lists",
 			"role": "function",
-			"description": "Get the last item(s) in a list of values.",
+			"description": "Get the last item(s) in a list of values. \nFor example, assuming there is a collection with the name `event`, `last(event)` gets you the last event and `last(3, event)` gets you the last 3 events.",
 			"argument": [
 				{
 					"name": "n",
@@ -394,7 +509,12 @@
 					"description": "The list to return items from."
 				}
 			],
-			"returnDescription": "If n is not provided or is 1, the last item. Otherwise, a list of the first n items."
+			"returnDescription": "If n is not provided or is 1, the last item. Otherwise, a list of the first n items.",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "shuffle",
@@ -411,7 +531,12 @@
 					"description": "The list to shuffle."
 				}
 			],
-			"returnDescription": "A new, shuffled version of the list provided."
+			"returnDescription": "A new, shuffled version of the list provided.",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "join",
@@ -434,7 +559,12 @@
 					"description": "What to put between the joined pieces of text. Defaults to nothing, i.e. the pieces are just concatenated. Provide `', '` to get a comma-separated list."
 				}
 			],
-			"returnType": "Text"
+			"returnType": "Text",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "split",
@@ -456,6 +586,11 @@
 					"type": "Text",
 					"description": "Where to split the text. Defaults to whitespace."
 				}
+			],
+			"shown": [
+				true,
+				true,
+				true
 			]
 		},
 		{
@@ -486,7 +621,12 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "The random number."
+			"returnDescription": "The random number.",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "year",
@@ -503,7 +643,12 @@
 					"description": "The date/time whose year we want to get."
 				}
 			],
-			"returnType": "Number"
+			"returnType": "Number",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "month",
@@ -520,7 +665,12 @@
 					"description": "The date/time whose month we want to get."
 				}
 			],
-			"returnType": "Number"
+			"returnType": "Number",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "weekday",
@@ -537,7 +687,12 @@
 					"description": "The date/time whose weekday we want to get."
 				}
 			],
-			"returnType": "Number"
+			"returnType": "Number",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "day",
@@ -554,7 +709,12 @@
 					"description": "The date/time whose day we want to get."
 				}
 			],
-			"returnType": "Number"
+			"returnType": "Number",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "hour",
@@ -571,7 +731,12 @@
 					"description": "The date/time whose hour we want to get."
 				}
 			],
-			"returnType": "Number"
+			"returnType": "Number",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "minute",
@@ -588,7 +753,12 @@
 					"description": "The date/time whose minute we want to get."
 				}
 			],
-			"returnType": "Number"
+			"returnType": "Number",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "second",
@@ -604,6 +774,11 @@
 					"type": "Date/Time",
 					"description": "The date/time whose seconds we want to get."
 				}
+			],
+			"shown": [
+				true,
+				true,
+				true
 			]
 		},
 		{
@@ -621,7 +796,12 @@
 					"description": "The date/time that we want to format"
 				}
 			],
-			"returnType": "Text"
+			"returnType": "Text",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "time",
@@ -638,7 +818,12 @@
 					"description": "The date/time that we want to format"
 				}
 			],
-			"returnType": "Text"
+			"returnType": "Text",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "seconds",
@@ -656,7 +841,12 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "Number of seconds"
+			"returnDescription": "Number of seconds",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "minutes",
@@ -674,7 +864,12 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "Number of minutes"
+			"returnDescription": "Number of minutes",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "hours",
@@ -692,7 +887,12 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "Number of hours"
+			"returnDescription": "Number of hours",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "days",
@@ -710,7 +910,12 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "Number of days"
+			"returnDescription": "Number of days",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "weeks",
@@ -728,7 +933,12 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "Number of weeks"
+			"returnDescription": "Number of weeks",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "months",
@@ -746,7 +956,12 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "Number of months"
+			"returnDescription": "Number of months",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "years",
@@ -764,7 +979,12 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "Number of years"
+			"returnDescription": "Number of years",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "len",
@@ -782,7 +1002,12 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "The number of characters"
+			"returnDescription": "The number of characters",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "idify",
@@ -800,7 +1025,12 @@
 				}
 			],
 			"returnType": "Text",
-			"returnDescription": "The id"
+			"returnDescription": "The id",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "readable",
@@ -818,7 +1048,12 @@
 				}
 			],
 			"returnType": "Text",
-			"returnDescription": "The readable label."
+			"returnDescription": "The readable label.",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "uppercase",
@@ -836,7 +1071,12 @@
 				}
 			],
 			"returnType": "Text",
-			"returnDescription": "The converted text"
+			"returnDescription": "The converted text",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "lowercase",
@@ -854,7 +1094,12 @@
 				}
 			],
 			"returnType": "Text",
-			"returnDescription": "The converted text"
+			"returnDescription": "The converted text",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "search",
@@ -878,7 +1123,12 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "Position of the first match if found, or -1 if not found."
+			"returnDescription": "Position of the first match if found, or -1 if not found.",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "starts",
@@ -901,7 +1151,12 @@
 					"description": "Text to look for"
 				}
 			],
-			"returnDescription": "True if it does, false otherwise."
+			"returnDescription": "True if it does, false otherwise.",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "ends",
@@ -924,7 +1179,12 @@
 					"description": "Text to look for"
 				}
 			],
-			"returnDescription": "True if it does, false otherwise."
+			"returnDescription": "True if it does, false otherwise.",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "url",
@@ -941,7 +1201,12 @@
 					"description": "The parameter to get."
 				}
 			],
-			"returnType": "Text"
+			"returnType": "Text",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "$now",
@@ -955,7 +1220,12 @@
 			],
 			"demo": "# Example: $now\n\nColor clock that circles all hues every minute.\n\n```html\n<div mv-app=colorClock  style=\"background: hsl([hue], 100%, 80%)\">\n\t<span property=\"hue\">[$now * 6 / 1000 mod 360]</span>\n\t<time>[time($now)]</time>\n</div>\n<style>\nbody {\n\tfont: bold 100% Helvetica Neue, sans-serif;\n\tmargin: 0;\n}\n\ndiv { \n\tdisplay: flex;\n\tflex-flow: column;\n\theight: 100vh;\n\tpadding: 1em;\n\tbox-sizing: border-box;\n}\n\ntime {\n\tfont-size: 500%;\n\tflex: 1;\n}\n\nspan {\n\topacity: .5;\n}\n</style>\n```",
 			"id": "$now",
-			"unary": false
+			"unary": false,
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "$startup",
@@ -968,6 +1238,11 @@
 				{
 					"optional": false
 				}
+			],
+			"shown": [
+				true,
+				true,
+				true
 			]
 		},
 		{
@@ -981,6 +1256,11 @@
 				{
 					"optional": false
 				}
+			],
+			"shown": [
+				true,
+				true,
+				true
 			]
 		},
 		{
@@ -994,6 +1274,11 @@
 				{
 					"optional": false
 				}
+			],
+			"shown": [
+				true,
+				true,
+				true
 			]
 		},
 		{
@@ -1008,7 +1293,12 @@
 					"optional": false
 				}
 			],
-			"demo": "# Example\n\n```html\n<div mv-app style=\"background: radial-gradient(at [$mouse.x]px [$mouse.y]px, white, black)\">\n\t[$mouse.x] [$mouse.y]\n</div>\n<style>\nbody {\n\tfont: bold 100% Helvetica Neue, sans-serif;\n\tmargin: 0;\n}\n\ndiv { \n\theight: 100vh;\n\tpadding: 1em;\n\tbox-sizing: border-box;\n}\n</style>\n```"
+			"demo": "# Example\n\n```html\n<div mv-app style=\"background: radial-gradient(at [$mouse.x]px [$mouse.y]px, white, black)\">\n\t[$mouse.x] [$mouse.y]\n</div>\n<style>\nbody {\n\tfont: bold 100% Helvetica Neue, sans-serif;\n\tmargin: 0;\n}\n\ndiv { \n\theight: 100vh;\n\tpadding: 1em;\n\tbox-sizing: border-box;\n}\n</style>\n```",
+			"shown": [
+				true,
+				true,
+				true
+			]
 		},
 		{
 			"name": "$index",
@@ -1021,6 +1311,11 @@
 				{
 					"optional": false
 				}
+			],
+			"shown": [
+				true,
+				true,
+				true
 			]
 		},
 		{
@@ -1034,6 +1329,11 @@
 				{
 					"optional": false
 				}
+			],
+			"shown": [
+				true,
+				true,
+				true
 			]
 		},
 		{
@@ -1047,6 +1347,11 @@
 				{
 					"optional": false
 				}
+			],
+			"shown": [
+				true,
+				true,
+				true
 			]
 		},
 		{
@@ -1060,6 +1365,11 @@
 				{
 					"optional": false
 				}
+			],
+			"shown": [
+				true,
+				true,
+				true
 			]
 		},
 		{
@@ -1073,6 +1383,11 @@
 				{
 					"optional": false
 				}
+			],
+			"shown": [
+				true,
+				true,
+				true
 			]
 		}
 	]
