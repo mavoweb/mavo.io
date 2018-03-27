@@ -17,7 +17,7 @@
 
 	<div class="total">
 		<span>Total time</span>
-		<meta property="totalTime" content="[sum(lap.secs) * 1000 + current]">
+		<meta property="totalTime" content="[sum(lap) * 1000 + current]">
 		[minutes(totalTime)]:[digits(2, seconds(totalTime))]
 	</div>
 
@@ -38,7 +38,7 @@
 	</div>
 	<div class="history">
 		<div property="lap" mv-multiple mv-optional mv-order="desc">
-			<span property="secs" datatype="number"></span>
+
 			<button class="delete" mv-action="delete($item)" title="Delete">-</button>
 		</div>
 	</div>
