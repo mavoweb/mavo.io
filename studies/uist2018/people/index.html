@@ -9,7 +9,7 @@
 </head>
 <body mv-app="people" mv-storage="https://github.com/mavoweb/test/data/people.json">
 	<h1>People</h1>
-	<button>Button outside collections</button>
+	<button mv-action="">Button outside collections</button>
 
 	<main>
 		<article property="man" mv-multiple>
@@ -17,7 +17,7 @@
 			<p><span property="age"></span> years old
 			<p>Hobbies: <span property="hobby" mv-multiple></span>
 
-			<p><button>Button inside man</button>
+			<p><button mv-action="">Button inside man</button>
 		</article>
 
 		<article property="woman" mv-multiple>
@@ -25,7 +25,7 @@
 			<p><span property="age"></span> years old
 			<p>Hobbies: <span property="hobby" mv-multiple></span>
 
-			<p><button>Button inside woman</button>
+			<p><button mv-action="">Button inside woman</button>
 		</article>
 	</main>
 </body>
