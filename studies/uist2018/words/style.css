@@ -8,11 +8,22 @@ button {
 }
 
 .sentence {
+	display: flex;
 	border: 1px dashed hsl(220, 10%, 50%);
 	padding: .3em;
 	overflow: hidden;
 	margin-bottom: 1em;
 }
+
+	@media (max-width: 600px) {
+		.sentence {
+			display: block;
+		}
+	}
+
+	.buttons {
+		margin-left: auto;
+	}
 
 	.sentence button {
 		background: rgba(0,0,0,.5);

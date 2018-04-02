@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Word game!</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css">
 	<link rel="stylesheet" href="style.css">
 	<script src="https://dev.mavo.io/dist/mavo.js"></script>
@@ -12,10 +13,12 @@
 
 	Sentence:
 	<div class="sentence [if(join(orderedWord, ' ') = solution, correct)]" mv-mode="edit">
-		<button class="clear">Clear</button>
-		<button class="clear">Undo</button>
-
 		<span property="orderedWord" mv-multiple mv-accepts="word" mv-optional mv-mode="read"></span>
+
+		<div class="buttons">
+			<button class="clear">Clear</button>
+			<button class="clear">Undo</button>
+		</div>
 	</div>
 
 	<span property="word" mv-multiple mv-value="shuffle(split(solution))"></span>
