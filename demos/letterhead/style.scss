@@ -1,0 +1,292 @@
+$heading-font: 'Helvetica Neue', Raleway, sans-serif;
+
+/**
+ * Style
+ */
+@import url(http://fonts.googleapis.com/css?family=Raleway:100);
+
+* { margin:0; }
+
+html {
+	background: #9BA2B0;
+	font-size: 14px;
+
+	@media (max-width:950px) {
+		font-size: 12px;
+	}
+
+	@media (max-width:700px) {
+		font-size: 11px;
+	}
+
+	@media print {
+		background: none;
+	}
+}
+
+body {
+	text-align: center;
+	padding: 1em;
+
+	@media (max-width:600px) {
+		width: auto;
+		margin: 1em;
+	}
+}
+
+@page {
+	margin: 1in 1.25in;
+}
+
+h1, h3 {
+	font: 300 250% $heading-font;
+}
+
+h4 {
+	font-size: 150%;
+	margin-top: 1em;
+	page-break-after: avoid;
+}
+
+a {
+	color:inherit;
+
+	&:not(:hover) {
+		text-decoration: none;
+	}
+}
+
+p {
+	margin: .5em 0;
+}
+
+body > header,
+article.letter {
+	position: relative;
+	margin: 1em auto;
+	font: 100%/1.5 'Palatino Linotype', Palatino, serif;
+	hyphens: auto;
+	text-align: left;
+}
+
+body > header {
+	width: 64em;
+	padding: 1em;
+	color: white;
+	border: 1px solid hsla(0,0%,100%,.2);
+}
+
+article.letter {
+	width: 43em;
+	background: white;
+
+	@media print {
+		width: auto;
+	}
+}
+
+button {
+	cursor: pointer;
+}
+
+button.mv-add-letter {
+	font-size: 150%;
+	margin-bottom: .5em;
+	border: 0;
+}
+
+@media print {
+	body > header {
+		display: none;
+	}
+}
+
+	header > address {
+		& > h2 {
+			font-style: normal;
+
+			img {
+				float: left;
+				margin: .3em .7em 0 0;
+			}
+		}
+	}
+
+	.online {
+		float: right;
+		text-align: right;
+
+		a {
+			display: block;
+			font-weight: bold;
+		}
+	}
+
+.recipient {
+	display: flex;
+
+	& > div {
+		text-align: right;
+		flex: 1;
+	}
+
+		h2 {
+			font-size: 120%;
+		}
+}
+
+.company {
+	display: flex;
+
+	& > img {
+		margin-right: 1em;
+	}
+
+	& > div {
+		flex: 1;
+	}
+}
+
+address {
+	white-space: pre-line;
+}
+
+.show-all, button.mv-add-letter {
+	display: block;
+	width: fit-content;
+	padding: .5em 1em;
+	margin: 1em auto;
+	border-radius: .3em;
+	background: white;
+	font: bold 120%/1 heading-font;
+
+	@media print {
+		display: none;
+	}
+
+	&:hover {
+		text-decoration: none;
+		background: #f06;
+		color: white;
+	}
+}
+
+header > a {
+	display: block;
+	box-sizing: border-box;
+	background: #f06;
+	color: white;
+
+	h1 {
+		font-family: $heading-font;
+		font-weight: bold;
+	}
+}
+
+[mv-app]:not([mv-mode="edit"]) .recipient:not(.has-recipient) {
+	display: none;
+}
+
+[property=text] {
+	a {
+		$color: hsl(200, 50%, 40%);
+		color: $color;
+		text-decoration: underline;
+		text-decoration-color: rgba($color, .4);
+	}
+}
+
+// Letter selected
+body.mv-target-within {
+	article.letter:not(:target):not(.mv-target-within), .mv-add-letter {
+		display: none;
+	}
+
+	// Styles for selected letter
+	article.letter {
+		padding: 9em 9em 7em 13em;
+		box-shadow: 1px 1px 5px 2px rgba(0,0,0,.3);
+
+		@media print {
+			padding: 0 1em;
+			font-size: 10pt;
+			box-shadow: none;
+		}
+
+		[property=title] {
+			text-align: center;
+			margin: 1em 0 0;
+			font-size: 250%;
+		}
+
+		& > header {
+			padding-bottom: 1em;
+			border-bottom: 1px solid black;
+
+			& > a {
+				position: absolute;
+				top: 0;
+				left: 0;
+				font-weight: bold;
+				font-size: 60%;
+				padding: .3em .5em;
+
+				@media print {
+					display: none;
+				}
+			}
+		}
+
+		section, article {
+			margin: 3em 0 2em;
+		}
+	}
+}
+
+// No letter selected, styles for listing
+body:not(.mv-target-within) {
+	.show-all {
+		display: none;
+	}
+
+	article.letter {
+		display: flex;
+		width: 66em;
+		margin: 2px auto;
+
+		[property=title] {
+			align-self: center;
+			margin-left: .5em;
+			font-size: 150%;
+			font-weight: 400;
+		}
+
+		header .company, .recipient h1, [property=text] {
+			display: none;
+		}
+
+		header > a, .recipient {
+			padding: .5em 1em;
+		}
+
+		header {
+			& > a {
+				min-width: 4em;
+				height: 100%;
+
+				&:hover {
+					background: hsl(80, 60%, 50%);
+				}
+			}
+
+			h1 {
+				font-size: 150%;
+				font-weight: bold;
+			}
+		}
+
+		.recipient {
+			flex: 1;
+		}
+	}
+}

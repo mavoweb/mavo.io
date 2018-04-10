@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<title>My Documents</title>
+<link rel="stylesheet" href="https://get.mavo.io/mavo.css">
+<link rel="stylesheet" href="style.css">
+<script src="https://get.mavo.io/mavo.js"></script>
+
+</head>
+
+<body mv-storage="http://github.com/leaverou" mv-app="letterhead" mv-plugins="markdown">
+
+<header>
+	<h1>My documents</h1>
+
+	<div class="company">
+		<img property="companyLogo" src="http://lea.verou.me/logo.svg" />
+		<div>
+			<h2 property="companyName">Lea Verou</h2>
+			<address property="companyAddress">42 JavaScript Way
+			Boston, MA 02114
+			USA</address>
+		</div>
+		<div class="online">
+			<a property="companyURL" mv-attribute="null" href="[companyURL]" target="_blank">http://lea.verou.me</a>
+			<a property="companyEmail" mv-attribute="null" href="mailto:[companyEmail]">lea@verou.me</a>
+		</div>
+	</div>
+</header>
+
+<a href="#" class="show-all">↩ Back to all documents</a>
+
+<article class="letter" property="letter" mv-multiple id="letter[id]" mv-order="desc">
+	<header>
+		<a href="#letter[id]" title="Open letter"><h1>#<span property="id" mv-expressions="{ }">1</span></h1></a>
+		<div class="company">
+			<img src="[companyLogo]" />
+			<div>
+				<h2>[companyName]</h2>
+				<address>[companyAddress]</address>
+			</div>
+			<div class="online">
+				<a href="[companyURL]" target="_blank">[companyURL]</a>
+				<a href="mailto:[companyEmail]">[companyEmail]</a>
+			</div>
+		</div>
+	</header>
+
+	<h3 property=title>Title</h3>
+
+	<article class="recipient [if(name or address, 'has-recipient')]">
+		<h1>Recipient:</h1>
+		<div property="recipient">
+			<h2 property="name"></h2>
+			<address property="address"></address>
+		</div>
+	</article>
+
+	<section mv-markdown-options="headerLevelStart: 4" property="text">Text</section>
+</article>
+
+<script src="/js/demo.js"></script>
+</body>
+</html>
