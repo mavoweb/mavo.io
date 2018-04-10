@@ -122,4 +122,16 @@ li[property=task] {
     margin: .3em 0;
     font-family: Marker Felt, Helvetica Neue, sans-serif; }
 
+.clear-completed {
+  background: none;
+  border: none;
+  color: black;
+  float: right;
+  margin-top: 1.5em;
+  text-decoration: underline;
+  opacity: .6;
+  cursor: pointer; }
+  .clear-completed:hover {
+    opacity: 1; }
+
 /*# sourceMappingURL=style.css.map */

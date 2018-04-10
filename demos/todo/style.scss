@@ -158,3 +158,18 @@ li[property=task] {
 		font-family: Marker Felt, Helvetica Neue, sans-serif;
 	}
 }
+
+.clear-completed {
+	background: none;
+	border: none;
+	color: black;
+	float: right;
+	margin-top: 1.5em;
+	text-decoration: underline;
+	opacity: .6;
+	cursor: pointer;
+
+	&:hover {
+		opacity: 1;
+	}
+}
