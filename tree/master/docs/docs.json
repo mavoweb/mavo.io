@@ -2,7 +2,8 @@
 	"core-attribute": [
 		{
 			"path": "/docs/primer/#mv-app",
-			"link": "url"
+			"link": "url",
+			"attribute": "Test"
 		}
 	],
 	"other-attribute": [
