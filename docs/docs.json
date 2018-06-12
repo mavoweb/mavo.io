@@ -695,7 +695,42 @@
 		}
 	],
 	"generated-class": [
-		{}
+		{
+			"name": "mv-target-within",
+			"set-on": "Any element that matches the CSS `:target` pseudo-class or contains an element that does."
+		},
+		{
+			"name": "mv-ui",
+			"set-on": "Any (usually generated) controls for triggering Mavo-related actions"
+		},
+		{
+			"name": "mv-empty",
+			"set-on": "Properties with no value"
+		},
+		{
+			"name": "mv-deleted",
+			"set-on": "Collection items that have been deleted but the deletion is not yet saved"
+		},
+		{
+			"name": "mv-item-bar",
+			"set-on": "Buttons on collection items for deleting, adding, rearranging."
+		},
+		{
+			"name": "mv-highlight",
+			"set-on": "Highlighted collection items (e.g. when hovering over the delete button)"
+		},
+		{
+			"name": "mv-bar",
+			"set-on": "Mavo toolbar"
+		},
+		{
+			"name": "mv-editor",
+			"set-on": "Element used for editing a property"
+		},
+		{
+			"name": "mv-popup",
+			"set-on": "Generated popup for editing an attribute."
+		}
 	],
 	"css-attribute": [
 		{}
