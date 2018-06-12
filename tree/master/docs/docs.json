@@ -1,0 +1,25 @@
+{
+	"core-attribute": [
+		{
+			"path": "/docs/primer/#mv-app",
+			"link": "url"
+		}
+	],
+	"other-attribute": [
+		{
+			"readMore": "/docs/primer/#mv-app"
+		}
+	],
+	"class": [
+		{}
+	],
+	"generated-attribute": [
+		{}
+	],
+	"generated-class": [
+		{}
+	],
+	"css-attribute": [
+		{}
+	]
+}
