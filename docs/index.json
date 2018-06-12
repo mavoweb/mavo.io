@@ -548,7 +548,8 @@
 			"on": "Properties, elements with `mv-value`",
 			"purpose": "Override the defaults for which attribute holds the data for this element. For no attribute (element content), specify `\"none\"`.",
 			"path": "/docs/properties",
-			"link": "Properties"
+			"link": "Properties",
+			"live": "no"
 		},
 		{
 			"attribute": "mv-source",
