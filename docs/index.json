@@ -1,0 +1,753 @@
+{
+	"page": [
+		{
+			"id": "migration",
+			"title": "Data Migration",
+			"summary": "Often you want to change your Mavo HTML after you’ve saved data.\nMavo will try its best to associate your old data with your new app, but it may sometimes need a helping hand.",
+			"section": [
+				{
+					"id": "single-property-collection",
+					"title": "Single property ↔ Collection",
+					"content": "When converting a single property to/from a collection (i.e. adding or removing `mv-multiple`), you don’t need to do anything, Mavo automatically handles it.\n\nIf you are **removing** `mv-multiple` and your data contains multiple items, Mavo will only display the first item. However, the rest will be retained, in case you change your mind later.\n\t"
+				},
+				{
+					"id": "adding-or-removing-properties",
+					"title": "Adding or removing properties",
+					"content": "Adding and removing properties from your HTML also works automatically. In the case of removing a property from your HTML, its saved data will be retained, in case you change your mind in the future. Therefore, if you decide to re-add it later, its data will still be there."
+				},
+				{
+					"id": "mv-alias",
+					"title": "Renaming properties: The mv-alias attribute",
+					"content": "When you rename properties, your old data is still stored under the previous property name and Mavo has no way of associating the two, since it cannot \"see\" the previous version of your HTML, only the current one. You could help it rename the property by using `mv-alias=\"oldPropertyName\"`. Then, to migrate your data, load your app, save, and then you can remove the `mv-alias` attribute from your HTML."
+				}
+			]
+		},
+		{
+			"id": "plugins",
+			"title": "Writing Plugins",
+			"summary": "If you know JavaScript, you can make [plugins](http://plugins.mavo.io) that extend Mavo’s functionality and change how it works.",
+			"section": [
+				{
+					"id": "overview",
+					"title": "Overview",
+					"content": "Mavo was designed for extensibility from the beginning. There are both high level extensibility points for things that are most commonly extended (such as adding a new backend, or registering a new element type), but there are also _hooks_ in strategic places, as low-level extensibility points that allow you to **add your own code to Mavo’s internals**."
+				},
+				{
+					"id": "declaring-a-plugin",
+					"title": "Declaring a plugin",
+					"content": "You need to call `Mavo.Plugins.register(PLUGIN_ID)`, where _PLUGIN_ID_ is an alphanumeric unique name for your plugin (e.g. `\"clear\"` or `\"locale-el\"`). People will be using this id in the `mv-plugins` attribute, so pick a good one!\n\nName your file `mavo-PLUGIN_ID.js` so that `mv-plugins` knows where to find it.\n\nThis is the minium required, but `Mavo.Plugins.register()` also provides other conveniences which you can read about in the [API Documentation](/docs/api/#Mavo.Plugins).\n\nOnce your plugin is ready, don’t forget to add it to the [Plugin Directory](https://plugins.mavo.io) and help others too!"
+				},
+				{
+					"id": "high-level-extension-points",
+					"title": "High-level extension points",
+					"content": "If your plugin is about one of the following things, you don’t need to become fully accustomed with Mavo’s internals, you just call the corresponding method and/or create the required class.\n\n*   [Adding a new type of storage backend](/docs/storage/#creating-your-own-storage-backend)\n*   [Adding a new data format](/docs/formats/#creating-your-own-formats)\n*   **Adding a new element type:** `Mavo.Elements.register()`, details coming soon\n*   **Adding a new toolbar button:** Add a new property on `Mavo.UI.Bar.controls`, details coming soon\n*   **Adding a new MavoScript function:** Add a new function on `Mavo.Functions`"
+				},
+				{
+					"id": "hooks",
+					"title": "Hooks",
+					"content": "Hooks are used as ways to execute custom code during various points of Mavo's execution. The name of the hook gives a summary of where the hook will be executed and usually follows the scheme `\"CLASS_NAME-METHOD_NAME-LOCATION\"`.\n\nSome examples:\n\n| Hook name | Executes | Definition |\n| --- | --- | --- |\n| `init-start` | At the start of the `Mavo` constructor, after a few properties have been initialized. | [mavo.js](https://github.com/mavoweb/mavo/blob/master/src/mavo.js#L58) |\n| `node-init-start` | At the start of the `Mavo.Node` constructor, after a few properties have been initialized. | [node.js](https://github.com/mavoweb/mavo/blob/master/src/node.js#L45) |\n| `group-init-start` | At the start of the `Mavo.Group` constructor, after its parent constructor (`Mavo.Node`) has been called. | [group.js](https://github.com/mavoweb/mavo/blob/master/src/group.js#L11) |\n| `node-getdata-end` | Called right before `getData()` returns its value, to give plugins a chance to intercept and manipulate it. Note that a hook can be called multiple times in different places. | [collection.js](https://github.com/mavoweb/mavo/blob/master/src/collection.js#L80) [group.js](https://github.com/mavoweb/mavo/blob/master/src/group.js#L125) [primitive.js](https://github.com/mavoweb/mavo/blob/master/src/primitive.js#L236) |\n\nNote: Links to the source code might not link to the exact hook definition as the code changes. Look a few lines above or below, it should be close.\n\n## Adding code to a hook\n\nYou can add a hook by calling `Mavo.hooks.add(\"hook-name\", callback)`. If you have multiple hooks, you can also pass an object, like so:\n\n```\n\n\t\t\tMavo.hooks.add({\n\t\t\t\t\"hook1-name\": function(env) {\n\t\t\t\t\t// hook 1 callback\n\t\t\t\t},\n\t\t\t\t\"hook2-name\": function(env) {\n\t\t\t\t\t// hook 2 callback\n\t\t\t\t}\n\t\t\t});\n\n```\n\nYou could also add code to hooks as one of the options in `Mavo.Plugins.register()`:\n\n```\n\n\t\t\tMavo.plugins.register(\"myplugin\", {\n\t\t\t\thooks: {\n\t\t\t\t\t\"hook1-name\": function(env) {\n\t\t\t\t\t\t// hook 1 callback\n\t\t\t\t\t},\n\t\t\t\t\t\"hook2-name\": function(env) {\n\t\t\t\t\t\t// hook 2 callback\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t});\n\n```\n\nThe `env` object differs depending on the hook. For hooks run in instance methods of classes, `env` is an object that contains references to all important local variables so you can modify them in your plugin. If there are none, it just refers to the current instance. The context of the function (the `this` variable) is the current instance. This means that you could use a custom build of Mavo to experiment, then copy over your code to hooks without having to make changes to it.\n\n## Available hooks\n\nMavo calls `Mavo.hooks.run(\"hook-name\", data)` to run the code added at a hook. Therefore, you can [search Mavo’s code for `Mavo.hooks.run(`](https://github.com/mavoweb/mavo/search?utf8=%E2%9C%93&q=Mavo.hooks.run%28&type=) and you will find all available hooks as well as where in the code they are executed.\n\nYou never need to run `Mavo.hooks.run()` yourself, unless you want to create hooks for your own plugin, i.e. allow other people to create plugins of your plugin (\"metaplugins\"? \"pluginception\"? 😜). In that case please prefix the hook names with your plugin id, to prevent collisions with other plugins.\n\n## Limitations\n\nHooks cannot change the return value of a function, unless the calling code has enabled that via a property on `env`. For example, in the `node-getdata-end` hook described above, all you need to do to change the return value is modify `env.data`.\n\nIn the future this may become possible, so avoid returning non-undefined values from your callbacks to make sure your plugin doesn’t break when this is enabled.\n\n## Need a hook that doesn’t exist yet?\n\n[Let us know](https://github.com/mavoweb/mavo/issues/new) and chances are we’ll add it pretty soon. Make sure to describe what you’re trying to do!"
+				}
+			],
+			"language": "javascript"
+		},
+		{
+			"id": "formats",
+			"title": "Storage Formats",
+			"summary": "By default, Mavo saves and reads data in JSON. While you don’t need to understand JSON to use Mavo, you may need to use a different file format at some point.  This is exactly what `mv-format` is for.",
+			"section": [
+				{
+					"id": "basic-usage",
+					"title": "Basic usage",
+					"content": "You can select a file format in one of two ways:\n\n1.  _Explicitly_, by using the `mv-format` attribute on your Mavo root. Its value is a keyword, depending on the format, e.g. `text`, `markdown`, `csv` etc.\n2.  _Implicitly_, depending on the extension of your file in `mv-storage`. E.g. if you use a URL to a CSV file, Mavo will automatically use the CSV format.\n\nOften, you need to specify a different format for the `mv-storage`, `mv-source`, and `mv-init` attributes. You can do this by using the `mv-storage-format`, `mv-source-format`, and `mv-init-format` attributes respectively.",
+					"advanced": false
+				},
+				{
+					"id": "available-formats",
+					"title": "Available formats",
+					"content": "Mavo comes with some formats out of the box, but you can add more via [Plugins](https://plugins.mavo.io/?tag=Format). Read the documenation of the format you’re using carefully, because formats may come with restrictions about the structure of your properties. These restrictions are only about which properties will be used for displaying and saving data. If you have more properties in your Mavo, they will just be ignored. For example, you can have additional properties that are read-only or contain expressions.\n\n# CSV\n\nUses the popular [PapaParse](http://papaparse.com/) library for reading and writing CSV, fetched dynamically via [cdnjs](https://cdnjs.com/).\n\n| | |\n|------|------|\n| Keyword | `csv` |\n| File extensions | *.csv, *.tsv |\n| Restrictions | Only one collection. Property names inside collection must correspond to headers in CSV file. |\n\n# Text\n\n| | |\n|------|------|\n| Keyword | `text` |\n| File extensions | *.txt |\n| Restrictions | Only one property. |",
+					"advanced": false
+				},
+				{
+					"id": "creating-your-own-formats",
+					"title": "Creating your own formats",
+					"content": "To create your own formats, all you need is to create a class that extends from `Mavo.Formats.Base`. For information on how the `$.Class()` class helper works, look in [Bliss’ documentation](http://blissfuljs.com/docs.html#fn-Class).\n\n```\n\n\t\tMavo.Formats.MyFormat = $.Class({\n\t\t\t// Mandatory. You may instead extend another format, e.g. Mavo.Formats.Text\n\t\t\textends: Mavo.Formats.Base,\n\n\t\t\t// Initialization code (optional)\n\t\t\tconstructor: function(backend) {\n\t\t\t\t// ...\n\t\t\t},\n\n\t\t\tstatic: {\n\t\t\t\t// File extensions\n\t\t\t\textensions: [\".foo\", \".bar\"],\n\n\t\t\t\t// Any dependencies (optional)\n\t\t\t\tdependencies: [{\n\t\t\t\t\ttest: () => \"CoolLibrary\" in window, // is the library already loaded?\n\t\t\t\t\turl: \"URL/to/library\" // URL to fetch if the library is not loaded\n\t\t\t\t}],\n\n\t\t\t\t// must specify this if you’re using dependencies\n\t\t\t\tready: Mavo.Formats.Base.ready,\n\n\t\t\t\t// Mandatory: Convert a string to an object for rendering\n\t\t\t\t// serialized: The string, as it was read from the remote file\n\t\t\t\t// me: Instance of Mavo.MyFormat, optional\n\t\t\t\tparse: function (serialized, me) {\n\t\t\t\t\t// ...\n\t\t\t\t},\n\n\t\t\t\t// Mandatory: Convert an object to a string for saving\n\t\t\t\t// data: The object\n\t\t\t\t// me: Instance of Mavo.MyFormat, optional\n\t\t\t\tstringify: function (data, me) {\n\t\t\t\t\t// ...\n\t\t\t\t}\n\t\t\t}\n\t\t});\n\n```\n\nYou can see examples of format declarations in [src/formats.js](https://github.com/mavoweb/mavo/blob/master/src/formats.js)\n\nIf your format may be useful to other people, please consider adding it to the [Plugin directory](https://plugins.mavo.io)!",
+					"advanced": true
+				}
+			],
+			"language": "markup"
+		},
+		{
+			"id": "ui",
+			"title": "UI Customization",
+			"summary": "Almost all of the UI generated by Mavo is customizable. Find out how in this section.",
+			"section": [
+				{
+					"id": "styling-with-css",
+					"advanced": false,
+					"title": "Styling with CSS",
+					"content": "The easiest way to customize the UI is via CSS. You can find many style hooks in the [index](/docs).\n\nSome examples for common cases follow:\n\n# Style differently in edit mode\n\nGive an element with `property=\"foo\"` a yellow background when it is in edit mode:\n\n```css\n\n\t\t[property=\"foo\"][mv-mode=\"edit\"] {\n\t\t\tbackground: yellow;\n\t\t}\n\n```\n\n# Show something only to logged in users\n\n`mv-permissions` is an attribute set by Mavo on the Mavo root containing a space-separated list of available permissions. When a Mavo allows login but the current user is not logged in, `mv-permissions` will include the value `login`. You can use this in your CSS to style things differently based on whether the current user is logged in.\n\nFor example, let's say you have an `auth` class and you want to only show anything with that class to authenticated users. You can do this with this CSS:\n\n```css\n\n\t\t[mv-permissions~=\"login\"] .auth {\n\t\t\tdisplay: none;\n\t\t}\n\n```\n\nNote the [`~=` in the attribute selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors) above. This allows you to match for one value in a space-separated list, instead of the entire attribute.\n\nFor convenience, there are also `mv-logged-in` and `mv-logged-out` classes that you can use on your HTML to show things only to logged in or logged out users respectively."
+				},
+				{
+					"id": "bar",
+					"advanced": false,
+					"title": "Mavo toolbar",
+					"content": "The Mavo toolbar is the dark toolbar that you get by default on every Mavo app, with controls like Edit, Save, Clear etc. By default it is added inside the Mavo root, at the beginning.\n\n# The mv-bar attribute: Remove buttons, enable optional buttons, change order, hide the toolbar\n\nThe `mv-bar` attribute controls which buttons are going to appear, if any. It’s typically specified on the Mavo root. Buttons are represented by their ids. You can find the ids of the built-in buttons below, but keep in mind that [Plugins](https://plugins.mavo.io) may add more:\n\n| id | Default? | Button |\n| --- | --- | --- |\n| status | ✓ | Displays currently logged in info for backends that support login |\n| edit | ✓ | Edit button |\n| save | ✓ | Save button |\n| import | | Upload a JSON file and override current data. |\n| export | | Download current data as a JSON file. |\n| login | ✓ | Login button |\n| logout | ✓ | Logout button |\n\nJust including a series of ids in the `mv-bar` attribute **restricts the toolbar to these buttons, in that order**.\n\n##### Example\n\n```html\n<div mv-app mv-storage=\"local\" mv-bar=\"import export edit save\">\n\t<div property=\"name\">Lea</div>\n</div>\n```\n\nHowever, often we only want to **add or remove a few buttons to the default set**. With the syntax above, we would need to remember all default ids and their default order in order to specify the buttons we want. This is why `mv-bar` also supports a **relative** syntax: by starting the value with `with` all values are interpreted as relative to the default set of buttons. You can then remove buttons by using a `no-` prefix and add buttons by just specifying their ids.\n\nNote that the edit button is still there, even though we didn't have to explicitly specify it.\n\n##### Example\n\n```html\n<div mv-app mv-storage=\"local\" mv-bar=\"with import export no-save\"> \n\t<div property=\"name\">Lea</div>\n</div>\n```\n\nNote: The `with` keyword can be omitted if there’s at least one `no-*`.\n\nTip: Want to **hide the Mavo bar from logged out users**? Use `mv-bar=\"no-login\"`. You can still log in without a Mavo toolbar, by adding `?login` to the page URL. Note that browsers often block popups more aggressively when they are not triggered by a click so you may need to manually approve the authentication popup when using this.\n\n# Hide the toolbar completely\n\nUse `mv-bar=\"none\"`. You can then use classes like `mv-status`, `mv-edit`, `mv-save`, `mv-clear`, `mv-login`, `mv-logout` etc on your own buttons to provide the corresponding functionality. However, note that if you choose to go this route, **these buttons will be always shown**, regardless of whether the user has permission for the corresponding action. You can use an `mv-permissions` attribute selector to fix this.\n\n# Change its placement and/or use your own HTML element for it\n\nJust use `class=\"mv-bar mv-ui\"` on your desired element.\n\n##### Example\n\n```html\n<div mv-app mv-storage=\"local\">\n\t<div class=\"mv-bar mv-ui\" style=\"background: blue\">\n\t\tYOLO\n\t</div>\n\t<div property=\"name\">Lea</div>\n</div>\n```\n\n# Remove default styling\n\nFollow the process above for using a custom toolbar element, and omit the `mv-ui` class:\n\n##### Example\n\n```html\n<div mv-app mv-storage=\"local\"> \n\t<div class=\"mv-bar\">YOLO</div> \n\t<div property=\"name\">Lea</div> \n</div>\n```\n\nThis is useful when you want a completely different styling and would rather start from a blank state. You can see a real example of custom toolbar styling on the [SVG Paths](/demos/svgpath) demo.\n\n# Custom button elements\n\nFollow the process above for using a custom toolbar element, and include your custom button inside it with the appropriate `mv-BUTTON_ID` class. For example, to have a Save button with the text \"Store\" instead of \"Save\", you could do:\n\n##### Example\n\n```html\n<div mv-app mv-storage=\"local\">\n\t<div class=\"mv-bar mv-ui\">\n\t\t<button class=\"mv-save\">Store</button>\n\t</div>\n\t<div property=\"name\">Lea</div>\n</div>\n```"
+				},
+				{
+					"id": "item-controls",
+					"advanced": false,
+					"title": "Item controls",
+					"content": "These are the buttons that Mavo adds to each collection item for deleting it, moving it, or adding items before/after it. By default they are added as the last child of the collection item.\n\nTo change the placement of their container and/or use your own HTML element for it, just use `class=\"mv-item-bar mv-ui\"` on your desired element. Note that if you have nested collections, this will be associated with the collection that is the closest ancestor of the element.\n\nSimilarly to the Mavo toolbar, if you don’t want any of the default styling associated with these controls just omit the `mv-ui` class."
+				},
+				{
+					"id": "add-new-item-button",
+					"advanced": false,
+					"title": "Add new item button",
+					"content": "For every collection, a button to add new items is generated and placed before the collection if it has `mv-order=\"desc\"` or after it otherwise. The default label of the button is of the form \"Add [name]\", where _[name]_ is the name of your collection.\n\nOften you may want a custom label or a custom placement for this button. You can do this by using a class of `mv-add-PROPERTY_NAME` on your desired element, where _PROPERTY_NAME_ is the name of the collection you wish to associate it with. Alternatively, if the association is obvious, you can just use a class of `mv-add` instead.\n\nBoth of these classes are also present on the generated buttons and you can use them for styling."
+				},
+				{
+					"id": "localization",
+					"advanced": false,
+					"title": "Customizing Text & Localization",
+					"content": "Your app needs to be in a different language? No problem! You can customize every bit of displayed text, whether that is to change the text displayed to your liking or to localize it to a different language.\n\n# Localization\n\nFirst check the [available locale plugins](https://plugins.mavo.io/?tag=Locale) in case your language is available. If not, you would have to write one yourself, using the methods outlined below.\n\n# Customizing text via HTML\n\nYou can use a `<datalist>` element to define your own phrases or localize text. The syntax is:\n\n```html\n<datalist class=\"mv-phrases\" lang=\"en\"> \n\t<option value=\"id\">Phrase text</option>\n\t...\n</datalist>\n```\n\nPlease note that the `lang` attribute is mandatory, even if you’re only overriding a few English phrases. Please note that `lang` is not a Mavo attribute, it’s an HTML attribute and its values are described in any HTML documentation.\n\nWarning: Please try to avoid locales with hyphens unless you absolutely need to. E.g. it's better to define a general French (`lang=\"fr\"`) locale and another Canadian French (Québécois) locale (`lang=\"fr-ca\"`) with only the phrases that are different. The reason is that any French dialect can fall back to general French, but not to a specific dialect of French, which means that even if you have defined a locale for `fr-ca`, apps with `lang=\"fr\"` will be displayed in English.\n\nWarning: Please note that this datalist element is **static**, i.e. changes to its contents via scripts or expressions will not be picked up.\n\nFor a list of ids and phrases that you can copy as a starting point, use [src/locale.en.js](https://github.com/mavoweb/mavo/blob/master/src/locale.en.js), however note that plugins can also define their own phrases.\n\n# Advanced: Customizing text via JavaScript\n\nYou can write your own localization plugin, by using `Mavo.Locale.register(languageCode, phrases)`. For an example, you can look at the [Greek localization plugin](https://plugins.mavo.io/locale-el/mavo-locale-el.js).\n\nIf you go that route, please consider adding your plugin to the [Plugins directory](https://plugins.mavo.io) so that others can benefit too! Don’t worry if it's not perfect, others can improve it via pull requests!"
+				}
+			]
+		},
+		{
+			"id": "primer",
+			"title": "Primer",
+			"language": "markup",
+			"section": [
+				{
+					"id": "using-mavo",
+					"advanced": false,
+					"title": "Using Mavo",
+					"content": "In order to use Mavo, you first need to [download or link to its JS and CSS files](/get) and include them in your page. If you have never done this before, you could put both in the `<head>` section, like this:\n\n```html\n<head>\n\t...\n\t<link rel=\"stylesheet\" href=\"https://get.mavo.io/mavo.css\"/>\n\t<script src=\"https://get.mavo.io/mavo.js\"></script>\n\t...\n</head>\n```"
+				},
+				{
+					"id": "mv-app",
+					"advanced": false,
+					"title": "Defining a mavo app: The mv-app attribute",
+					"content": "You enable Mavo functionality on an HTML structure with the `mv-app` attribute. Its value is a name for your app, which is used by Mavo in various places. The name must be unique to the page, just like an id. The element with that attribute is called the **Mavo root**.\n\n##### Example\n\n```html\n<div mv-app=\"mavoTest\">\n\tMy first Mavo app!\n</div>\n```\n\nNote that `mv-app` doesn’t really do much by itself. You can see how you can use Mavo attributes to do more useful things in the next sections.\n\nThe `mv-app` attribute can be used with or without a value. If the element already has an id, you don't need to repeat it in the `mv-app` attribute:\n\n```html\n<div mv-app id=\"mavoTest\">\n\tMy first Mavo app!\n</div>\n```\n\nIf you use `mv-app` without a value and there is no `id` or `name` attribute on the Mavo root, a name such as mavo1, mavo2 etc will be automatically generated. Since the generated name depends on the order of Mavo apps in the page, this means that if you rearrange them, the app names will change, which is flimsy and could lead to data loss. Therefore, it is **strongly recommended** that you name your Mavo apps."
+				},
+				{
+					"id": "mv-storage",
+					"advanced": false,
+					"title": "Storage: The mv-storage attribute",
+					"content": "The `mv-storage` attribute tells Mavo where to store any data. Its value is a valid URL or a keyword, like `local`.\n\n```html\n<div mv-app=\"storageTest\" mv-storage=\"local\">\n\tMy first Mavo app!\n</div>\n```\n\nWhat will be stored? Elements with a `property` attribute! We will learn about these in the next section.\n\n<p class=\"learn-more\">[Storage](/docs/storage)"
+				},
+				{
+					"id": "property",
+					"advanced": false,
+					"title": "The property attribute",
+					"content": "The `property` attribute tells Mavo **which elements are saved**. Its value should describe the element, similarly to a `id` or `class` attribute.\n\n##### Example\n\n```html\n<div mv-app=\"commentform\" mv-storage=\"local\" mv-autosave=\"0\">\n\t<label>\n\t\tEmail:\n\t\t<input type=\"email\" property=\"email\" value=\"foo@example.com\" />\n\t</label>\n\t<label>\n\t\tMessage:\n\t\t<textarea property=\"message\">\n\t\t\tEdit the form and notice how the values persist after you refresh!\n\t\t</textarea>\n\t</label>\n</div>\n<style>\nlabel {\n\tdisplay: block;\n}\n\nlabel:first-of-type {\n\tdisplay: flex;\n\tmargin-bottom: 1em;\n}\n\ninput {\n\tflex: 1;\n}\n\ntextarea {\n\tdisplay: block;\n\tbox-sizing: border-box;\n\twidth: 100%;\n\tpadding: .3em;\n\tfont: inherit;\n}\n</style>\n```\n\nIf the `property` attribute is used on elements that are not form elements, they are made editable, and Mavo generates (customizable) controls for switching between edit and read mode:\n\n##### Example\n\n```html\n<div mv-app=\"nameDemo\" mv-storage=\"local\">\n\tName:\n\t<span property=\"firstName\">Lea</span>\n\t<span property=\"last_name\">Verou</span>\n</div>\n```\n\n<p class=\"learn-more\">[Properties](/docs/properties)"
+				},
+				{
+					"id": "mv-multiple",
+					"advanced": false,
+					"title": "Collections: The mv-multiple attribute",
+					"content": "Let’s assume we have a list of hobbies that we want to make editable. We _could_ add `property` attributes to every item:\n\n##### Example\n\n```html\nHobbies:\n<ul>\n\t<li property=\"hobby\">Eating</li>\n\t<li property=\"hobby\">Sleeping</li>\n\t<li property=\"hobby\">Purring</li>\n</ul>\n```\n\nThis works, but we cannot add new hobbies or delete existing ones. To do that, we need the `mv-multiple` attribute, which tells mavo that **this element can be multiplied**:\n\n##### Example: Simple collection\n\n```html\nHobbies:\n<ul>\n\t<li property=\"hobby\" mv-multiple>Eating</li>\n</ul>\n```\n\nNote: The `mv-multiple` attribute goes on **the element that will be multiplied, NOT the container of the collection**!\n\n* * *\n\nWe can use `property` and `mv-multiple` to create lists of more complex structures with multiple properties.\n\n##### Example: Collection of Groups\n\n```html\n<article property=\"pet\" mv-multiple>\n\t<h1 property=\"name\">Adam Catlace</h1>\n\tBorn on\n\t<time property=\"birthday\" datetime=\"2014-06-01\">1 Jun 2014</time>\n</article>\n```\n\nNote that in the example above, the `property` attribute on `<article>` does not actually make the entire `<article>` element editable, but instead acts as a **grouping element**. This will always happen when you use the `property` attribute on elements that contain other properties inside them. **Groups** have many interesting characteristics when combined with expressions, which we will see next.\n\n<p class=\"learn-more\">[Collections](/docs/collections)"
+				},
+				{
+					"id": "expressions",
+					"advanced": false,
+					"title": "Expressions",
+					"content": "You can dynamically refer to the value of any property you have defined, anywhere in your Mavo app, by putting its name inside brackets (like this: `[propertyName]`).\n\n##### Example\n\nMove the slider and check how both expressions are updated:\n\n```html\n<p>Slider value: [strength]/100</p>\n<input type=\"range\" property=\"strength\" title=\"[strength]%\" />\n```\n\nWe can also do math with properties, e.g. divide by 100:\n\n##### Example\n\nMove the slider and check how both expressions are updated:\n\n```html\n<p>Slider value: [strength/100]</p>\n<input type=\"range\" property=\"strength\" title=\"[strength]%\" />\n```\n\nIf you set a `property` attribute on an element containing an expression, you can use that property in other expressions too, regardless of whether they come before or after the element.\n\n##### Example\n\nMaking a bare-bones HSL color picker with Mavo expressions:\n\n```html\n<div mv-app=\"colorpicker\" mv-storage=\"local\"\n     style=\"background-color: [color];\">\n\t<input type=\"range\" property=\"hue\" max=\"360\" />\n\t<input type=\"range\" property=\"saturation\" />\n\t<input type=\"range\" property=\"lightness\" />\n\n\t<input property=\"color\" readonly\n\t       value=\"hsl([hue], [saturation]%, [lightness]%)\" />\n</div>\n<style>\ninput { display: block; }\ndiv { padding: 1em; }\n</style>\n```\n\nThere are also [a number of math functions](/docs/mavoscript/#math-functions) you can use for more complicated tasks, akin to spreadsheets.\n\n* * *\n\nExpressions become very powerful when combined with collections. Try adding and removing items in the list below:\n\n##### Example: Expressions & Simple lists\n\n```html\n<div mv-app=\"people\" class=\"mv-autoedit\" mv-source=\"https://test.mavo.io/data/creatures.json\">\n[count(person)] people, [average(age)] years old on average:\n<ul>\n\t<li property=\"person\" mv-multiple>\n\t\t<strong property=\"name\"></strong>\n\t\t<br><span property=\"age\"></span> years old\n\t\t<br>Next year I will be [age + 1] years old.\n\t</li>\n</ul>\n</div>\n```\n\nYou can use any property defined **anywhere** in your Mavo app, or even properties from other Mavo apps (by using `appid.propertyName`). **Its value depends on the placement of your expression**: Note that `age` outside the collection gives you all ages (so `average()` allows us to average them) where when we use `age` inside the person, it refers to **that person’s age only**.\n\n<p class=\"learn-more\">[Expressions](/docs/expressions)\n<p class=\"learn-more\">[All functions, symbols, special properties](/docs/functions)"
+				}
+			]
+		},
+		{
+			"id": "properties",
+			"title": "Properties",
+			"language": "markup",
+			"summary": "The `property` attribute tells Mavo which elements are important, e.g. are saved, editable, used in expressions, or all three. Elements with this attribute are often referred to as _properties_ or _property elements_.",
+			"section": [
+				{
+					"id": "property-name-rules",
+					"advanced": false,
+					"title": "Property name rules",
+					"content": "Its value should describe the element, similarly to a `id` or `class` attribute. It can contain **only** letters, numbers and underscores (_). If it happens to be the same as the element’s `id` or `class` attributes, you don’t need to provide a value. For example, the following are all equivalent:\n\n```html\n<div property class=\"name\">Lea Verou</div>\n<div property id=\"name\">Lea Verou</div>\n<div property=\"name\">Lea Verou</div>\n```\n\nIf you need inspiration for names, you could look at [schema.org](http://schema.org)."
+				},
+				{
+					"id": "editing",
+					"advanced": false,
+					"title": "Editing",
+					"content": "If the `property` attribute is used on elements that are not form elements, they are made editable, and Mavo generates a button for switching between modes:\n\n##### Example\n\n```html\n<span property=\"firstName\">Lea</span>\n<span property=\"last_name\">Verou</span>\n<span>- I don’t have a property attribute, so I’m not editable.</span>\n```\n\n* * *\n\nYou can put the `property` attribute on **any** HTML5 element, and Mavo knows how to make it editable:\n\n##### Example\n\n```html\n<meter property=\"rating\" min=\"1\" value=\"3\" max=\"5\"></meter>\n<time property=\"birthday\" datetime=\"2014-06-01\">1 Jun 2014</time>\n<img property=\"avatar\" src=\"http://i.imgur.com/LPeWcag.png\" />\n```\n\nMavo can also be taught about new element types with different ways to be edited (e.g. rich text), via [plugins](https://plugins.mavo.io)."
+				},
+				{
+					"id": "mv-edit",
+					"advanced": false,
+					"title": "Customize editing: The mv-edit attribute",
+					"content": "In some cases, you may want to customize how a property is edited. For example, instead of using a text field, you may want to restrict choices to those in a `<select>` menu. For those cases, you can do one of two things:\n\n*   Link to a form control via `mv-edit` _(recommended)_\n*   Nest a form control directly inside your property\n\nThe value of `mv-edit` is a CSS selector. If the CSS selector matches multiple elements on the page, the first one will be used. The element you linked to remains intact. Instead, it is cloned for the editing. If the original element changes (e.g. perhaps that's also populated by Mavo! It could even be an entirely separate Mavo app, like in [this demo](/demos/talks/)), a new clone is created.\n\nIn addition to using the element for editing, its default value also becomes the property’s default value (unless `mv-default` is set of course).\n\n##### Example\n\n```html\nI’m from\n<img src=\"/demos/talks/flags/[country].png\" />\n<span property=\"country\" mv-edit=\"#countries\"></span>\n\n<div hidden>\n\t<select id=\"countries\">\n\t\t<option value=\"gr\">Greece</option>\n\t\t<option value=\"gb\">United Kingdom</option>\n\t\t<option value=\"us\">United States</option>\n\t</select>\n</div>\n```"
+				},
+				{
+					"id": "mv-edit-star",
+					"advanced": false,
+					"title": "The mv-edit-* family of attributes",
+					"content": "In some cases, you don’t want to entirely replace the element used for editing by default, but merely to set a few attributes on it. For example, to change an `<input>` type, or to add autocomplete via `<datalist>`. For that, you can use `mv-edit-attributeName=\"value\"` and `attributeName=\"value\"` will be set on the default editing control.\n\n##### Example\n\nEdit the country and type \"United\" to see a list of suggestions:\n\n```html\nI’m from\n<span property=\"country\" mv-edit-list=\"countries2\">Greece</span>\n\n<div>\n\t<datalist id=\"countries2\">\n\t\t<option>Greece</option>\n\t\t<option>United Kingdom</option>\n\t\t<option>United States</option>\n\t</datalist>\n</div>\n```"
+				},
+				{
+					"id": "mv-default",
+					"advanced": false,
+					"title": "Default values: The mv-default attribute",
+					"content": "The `mv-default` attribute lets you set default values for properties that have no data yet. If it’s used with no value, the default value is the data in your HTML.\n\n`mv-default` is dynamic: When it changes, if the current value of the property matches the previous default, it will be updated as well. You can take advantage of that and use `mv-default` to even keep properties in sync, like in the example below (for a real-world demo of this pattern, check out the [SVG Path builder](/demos/svgpath)):\n\n##### Example\n\nNote that changing the first number changes the second, until you edit the second and make it different:\n\n```html\n<input type=\"number\" property=\"x\" mv-default=\"5\" />\n<input type=\"number\" property=\"y\" mv-default=\"[x]\" />\n```"
+				},
+				{
+					"id": "mv-attribute",
+					"advanced": false,
+					"title": "The mv-attribute attribute",
+					"content": "Mavo automatically assumes that the data each property element holds is stored either as its content or in a \"primary\" attribute, different per element type. Most of the time this works great, and you don't have to think about it. However, sometimes this heuristic will fail. In those cases, you can correct Mavo's prediction by using the `mv-attribute` attribute. Its value is either the name of the attribute that holds data, or `none` for no attribute (element contents).\n\nFor example, an `<a>` element's primary data attribute is `href`. However, sometimes you want to make the content editable instead, and even reference it in the `href` attribute via an expression. You can use the `mv-attribute` for that:\n\n##### Example\n\n```html\n<a href=\"mailto:[email]\" property=\"email\" mv-attribute=\"none\">lea@mavo.io</a>\n```"
+				},
+				{
+					"id": "mv-mode",
+					"advanced": false,
+					"title": "The mv-mode attribute",
+					"content": "Possible values: `edit` or `read`.\n\nThe purpose of this attribute is twofold:\n\n1.  Mavo sets `mv-mode=\"edit\"` on properties when they are being edited. This allows you to customize your design in the editing state by using `[mv-mode=\"edit\"]` selectors\n2.  If you use `mv-mode=\"read\"` or `mv-mode=\"edit\"` on a property, Mavo applies that state and does not change it when the state of the rest of the app changes. You can change it yourself, via expressions.\n\nThe latter allows many cool things:\n\n*   Use `mv-mode=\"read\"` to create \"constants\": Properties that are saved but not edited.\n*   Use `mv-mode=\"edit\"` for properties (or entire apps, if you use it on the Mavo root) that don't make sense in read mode.\n*   Use `mv-mode=\"[if (condition, read, edit)]\"` on collection items, to edit them separately from the rest of the app (useful with large collection items such as blog posts)"
+				},
+				{
+					"id": "changing-properties-after-youve-stored-data",
+					"advanced": false,
+					"title": "Changing properties after you’ve stored data?",
+					"content": "Check out the [Data Migration](/docs/migration) page to make sure you maintain the association between your old data and your new HTML! Most of the time Mavo does it automatically, but there are cases where it needs a helping hand.\n"
+				}
+			]
+		},
+		{
+			"id": "collections",
+			"title": "Collections",
+			"language": "markup",
+			"summary": "_Collections_ are repeatable elements. They are specified by adding an `mv-multiple` attribute to properties. Mavo creates controls for adding, deleting, and rearranging items, as well as keyboard shortcuts for these.",
+			"section": [
+				{
+					"id": "mv-multiple",
+					"advanced": false,
+					"title": "The mv-multiple attribute",
+					"content": "The usual way to create a collection is to add the `mv-multiple` attribute to a property, like so:\n\n##### Example\n\n```html\n<div property=\"person\" mv-multiple>\n\t\t<span property=\"firstName\">Lea</span>\n\t\t<span property=\"lastName\">Verou</span>\n</div>\n```\n\nHowever, you could also specify the property name as a value of `mv-multiple`, like so:\n\n##### Example\n\n```html\n<div mv-multiple=\"person\">\n\t\t<span property=\"firstName\">Lea</span>\n\t\t<span property=\"lastName\">Verou</span>\n</div>\n```"
+				},
+				{
+					"id": "collection-editing-controls",
+					"advanced": false,
+					"title": "Collection editing controls",
+					"content": "Collections automatically get controls for adding new items:\n\n*   An <def>item bar</def> for deleting each item, adding an item before it, clone it, or rearrange it. This [can be customized](/docs/ui/#item-controls).\n*   A button for adding new items at the end of a collection. This [can be customized](/docs/ui/#add-new-item-button).\n*   Keyboard shortcuts for adding (Cmd + Enter, or just Enter on single-line textfields) and deleting (Cmd + backspace) items."
+				},
+				{
+					"id": "simple-and-complex-collections",
+					"advanced": false,
+					"title": "Simple and complex collections",
+					"content": "Simple collections are collections of properties **that do not contain other properties.**. In contrast, <def>complex collections</def> are collections of groups, i.e. collections where each item contains multiple properties. There are a few UI differences between these two:\n\n*   In complex collections, the item bar is placed **inside** each item, at the end (unless [customized](/docs/ui/#item-controls)). In simple collections, the item bar is placed **after** each item and has a class of `mv-adjacent` and [a few CSS Variables for positioning that](/docs/#css-variables).\n*   In complex collections, dragging to rearrange is achieved via a handle in the itembar. In simple collections, the whole item is draggable.\n\nTry out the difference below:\n\n##### Example\n\n```html\n<div property=\"complexPerson\" mv-multiple>\n\t<span property=\"firstName\">Lea</span>\n\t<span property=\"lastName\">Verou</span>\n</div>\n\n<div property=\"simplePerson\" mv-multiple>Lea Verou</div>\n```"
+				},
+				{
+					"id": "mv-accepts",
+					"advanced": false,
+					"title": "The mv-accepts attribute",
+					"content": "By default, collection items can only be dragged either within the same collection, or to collections of the same type. The `mv-accepts` attribute takes a space-separated list of property names as its value and is specified on properties with `mv-multiple`. When specified, the current collection can accept items from those other collections as well.\n\nNote that if you want to drag and drop items between two collections, you will need to specify `mv-accepts` twice, once on each collection.\n\nAn example of `mv-accepts` can be found in the [Decisions](/demos/decisions/) demo. Try dragging pros to cons or vice versa."
+				},
+				{
+					"id": "mv-order",
+					"advanced": false,
+					"title": "The mv-order attribute",
+					"content": "`mv-order=\"desc\"` does not sort the collection. Instead, it affects the behavior of the controls that add new items. The main add button of the collection is placed _before_ the collection, and inserts new items at the top. The add buttons on each item always add in the opposite direction than the main add button, so they add new items _after_ the item they are on.\n\nAn example of `mv-order=\"desc\"` can be found in the following demos:\n\n*   [Talks list](/demos/talks/)\n*   [Invoice Manager](/demos/invoice/)"
+				}
+			]
+		},
+		{
+			"id": "mavoscript",
+			"title": "MavoScript",
+			"language": "markup",
+			"summary": "_MavoScript_ is Mavo's simple expression language, used in [Mavo expressions](/docs/expressions).",
+			"section": [
+				{
+					"id": "special-properties",
+					"advanced": false,
+					"title": "Special Properties",
+					"content": "Special properties are available on every Mavo and start with a dollar ($) sign. Some of them have more information that you can access with a dot.\n\n| Property | Description | \n| --- | --- | \n| `$now` | Current date and time as number of milliseconds since January 1st, 1970\\. Mostly useful with [date and time functions](#date-and-time-functions) or the `mod` operator. | \n| `$startup` | The value of `$now` when the page loaded. | \n| `$today` | Current date. | \n| `$hash` | The URL hash (without the `#` sign) | \n| `$mouse` | Mouse coordinates relative to the viewport. Use `$mouse.x` and `$mouse.y` to get them. | \n| `$index` | If inside a collection, the closest item’s position in its collection, starting from 0. |\n| `$previous` | If inside a collection, the closest item’s previous item. |\n| `$next` | If inside a collection, the closest item’s next item. |\n| `$item` | If inside a collection, the closest item. Same as using the property name. |\n| `$all` | If inside a collection, the collection (since the collection property will give you the *current* item) |\n\n##### Example: $now\n\nColor clock that circles all hues every minute.\n\n```html\n<div mv-app=colorClock  style=\"background: hsl([hue], 100%, 80%)\">\n\t<span property=\"hue\">[$now * 6 / 1000 mod 360]</span>\n\t<time>[time($now)]</time>\n</div>\n<style>\nbody {\n\tfont: bold 100% Helvetica Neue, sans-serif;\n\tmargin: 0;\n}\n\ndiv { \n\tdisplay: flex;\n\tflex-flow: column;\n\theight: 100vh;\n\tpadding: 1em;\n\tbox-sizing: border-box;\n}\n\ntime {\n\tfont-size: 500%;\n\tflex: 1;\n}\n\nspan {\n\topacity: .5;\n}\n</style>\n```\n\n##### Example: $mouse\n\n```html\n<div mv-app style=\"background: radial-gradient(at [$mouse.x]px [$mouse.y]px, white, black)\">\n\t[$mouse.x] [$mouse.y]\n</div>\n<style>\nbody {\n\tfont: bold 100% Helvetica Neue, sans-serif;\n\tmargin: 0;\n}\n\ndiv { \n\theight: 100vh;\n\tpadding: 1em;\n\tbox-sizing: border-box;\n}\n</style>\n```"
+				},
+				{
+					"id": "collection-functions",
+					"advanced": false,
+					"title": "Collection Functions",
+					"content": "The following functions are useful with properties that have multiple values, i.e. are on or inside a `mv-multiple` element.\n\n| Function | What it does |\n| --- | --- |\n| `count(property)` | Count how many items in a list actually have a value. |\n| `sum(property)` | Sum all numbers in the list. |\n| `average(property)` | Calculate the average of all numbers in the list. |\n| `min(property)` | Calculate the minimum of all numbers in the list. |\n| `max(property)` | Calculate the maximum of all numbers in the list. |\n| `last(property)` | Get the last item |\n| `shuffle(property)` | Shuffle the order of items and return a new list |"
+				},
+				{
+					"id": "operators",
+					"advanced": false,
+					"title": "Operators",
+					"content": "Operators let you express certain commonly needed calculations in a more readable way. Every operator that Mavo supports also corresponds  to a function, but there are very few cases where you need to use the function directly (namely, when you want to apply the operator to the items in a list. E.g. `multiply(age)` will multiply all ages together, which you cannot do by using the `*` operator.\n\n# Math operators\n\n| Expression | What it does | Function\n| --- | --- | --- |\n| `a + b` | Addition (`add()` in released versions) | `addition(a, b)`\n| `a - b`  | Subtraction | `subtract(a, b)`\n| `a * b` |  Multiplication |`multiply(a, b)`\n| `a / b` | Division. Note that division by 0 will show up as ±∞ or `NaN` if it’s 0/0. | `div(a, b)`\n| `a mod b` | Remainder of a / b.  | `mod(a, b)`|\n| `a and b` | Check that both a and b have a value |`and(a, b)` | \n| `a or b` |  Check that at least a or b have a value |`or(a, b)` |\n| `!a` | Check if a doesn’t have a value |`not(a)` | \n| `a < b` | Check if a is less than b |`lt(a, b)` | \n| `a <= b` |  Check if a is less than, or equal to b |`lte(a, b)` |\n| `a > b` | Check if a is greater than b |`gt(a, b)` | \n| `a >= b` |  Check if a is greater than, or equal to b |`gte(a, b)` |\n| `a = b` | Check if a is equal to b |`eq(a, b)` | \n\n# Other operators\n\n| Expression | What it does | Function\n| --- | --- | --- |\n| `text1 & text2` | Join two pieces of text, e.g. 'cat' & 's' becomes 'cats' | `concatenate()`\n| `list where criteria` | Drop any values from list that don’t match criteria, e.g. `person where age > 5` | `filter(list, criteria)`"
+				},
+				{
+					"id": "math-functions",
+					"advanced": false,
+					"title": "Math and logical Functions",
+					"content": "# Logical functions\n\nUsually, you don't need to use a function for the following, you can just use the syntax in the first column. However, functions may still be useful for applying the operation between all values from a collection. E.g. `multiply(age)` where \"age\" is a property inside a collection will multiply all ages together.\n\n| Function | What it does | Example |\n|-----|------|-------|\n| `if(test, ifyes)` | Print out `ifyes` if `test` is non-empty, otherwise nothing. | `if(rating > 3, good)` |\n| `if(test, ifyes, ifno)` | Print out `ifyes` if `test` is non-empty, otherwise `ifno`. | `if(rating > 3, good, bad)` |\n\nTip: If you have more operands you don’t need to nest these functions, just provide more parameters. E.g. you don’t need to do `add(a, add(b, c))`, `add(a, b, c)` will just work.\n\n# Advanced Math functions\n\nAll [JavaScript Math functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math) can be used in Mavo without having to type `Math.` before them. For example, to calculate the square root of 4, you don’t need to type `Math.sqrt(4)`, you can just type `sqrt(4)`."
+				},
+				{
+					"id": "text-functions",
+					"advanced": false,
+					"title": "Text Functions",
+					"content": "| Example | Result | What? / Why? |\n| --- | --- | --- |\n| `len('foo')` | 3 | \"foo\" is 3 characters long |\n| `search('abcd', 'cd')` | 2 | \"cd\" is in after the 2nd character in \"abcd\" |\n| `starts(\"abcd\", \"b\")` | false | \"abcd\" does not start with \"b\" |\n| `ends(\"abcd\", \"d\")` | true | \"abcd\" does end with \"d\" |\n| `replace(\"abbbc\", \"b\", \"d\")` | \"adddc\" | Replaced every \"b\" with \"d\" |\n| `replace(\"abbbbbbc\", \"bb\", \"b\", 3)` | \"abc\" | Replaced every \"bb\" with \"b\", then did it again on the result, then again (3 times total). |\n| `idify(\"Chicken Liver Pâté! 😋\")` | \"chicken-liver-pate\" | Converted the original text to something more appropriate for use in an id or class attribute. |\n| `readable(\"fooBar-baz\")` | \"Foo bar baz\" | Opposite of `idify()`: converts something id-like to something more human readable. |\n| `uppercase(\"Foo\")` | \"FOO\" | Converts all letters to uppercase. |\n| `lowercase(\"Foo\")` | \"foo\" | Converts all letters to lowercase. |\n| `from(\"foo.bar\", \".\")` | \"bar\" | Only get the text after the first \".\" |\n| `to(\"foo.bar\", \".\")` | \"foo\" | Only get the text before the first \".\" |\n| `between(\"foo@gmail.com\", \"@\", \".\")` | \"gmail\" | Get the text between \"@\" and \".\" |\n| `filename(\"http://mavo.io/demos/homepage/images/photo.jpg?foo=bar#baz\")` | \"photo.jpg\" | Get the filename part of a URL |\n| `join(multiple, \", \")` | Display multiple values as text, comma-separated |\n| `json(property)` | Get the value of a property (or any custom data) as JSON |"
+				},
+				{
+					"id": "date-and-time-functions",
+					"advanced": false,
+					"title": "Date and Time Functions",
+					"content": "The following examples assume you have defined a `<time property=\"date\">` property in your Mavo whose current value is June 13th, 1986 at 8:30:05pm.\n\n| Example | Result | What it does |\n| --- | --- | --- |\n| `year(date)` | 1986 | Returns the year of a date as a 4 digit number. |\n| `month(date)` | 6 | Returns the month of a date, as a 1-2 digit number from 1 to 12. |\n| `weekday(date)` | 5 | Returns the day of the week, as a number from 1 to 7\\. 1 is Monday, 7 is Sunday. |\n| `day(date)` | 13 | Returns the day of the month, as a 1-2 digit number from 1 to 31. |\n| `hour(date)` | 20 | Returns the hour part of the date, as a number in a 24-hour format. |\n| `minute(date)` | 30 | Returns the minute part of the date, as a 1-2 digit number. |\n| `second(date)` | 5 | Returns the second part of the date, as a 1-2 digit number. |\n| `date(date)` | 1986-06-13 | Returns the date part only (without any time information), in ISO format. |\n| `time(date)` | 20:30:05 | Returns the time part of the date only, in ISO format. |\n| `minutes('1986-06-13 21:40:45' - date)` | 71 | Converts a number of seconds to a number of minutes, rounded to the lowest integer. In this example, it gives us the number of minutes between the two dates, because subtracting two dates gives us the number of seconds between them. |\n| `hours('1986-06-13 21:40:45' - date)` | 1 | Converts a number of seconds to a number of hours, rounded to the lowest integer. In this example, it gives us the number of hours between the two dates, because subtracting two dates gives us the number of seconds between them. |\n| `days('1986-06-10 21:40:45' - date)` | 2 | Converts a number of seconds to a number of days, rounded to the lowest integer. In this example, it gives us the number of days between the two dates, because subtracting two dates gives us the number of seconds between them. |\n| `weeks('1986-06-01 21:40:45' - date)` | 1 | Converts a number of seconds to a number of weeks, rounded to the lowest integer. In this example, it gives us the number of weeks between the two dates, because subtracting two dates gives us the number of seconds between them. |\n| `months('1986-01-01' - date)` | 5 | Converts a number of seconds to a number of months, rounded to the lowest integer. In this example, it gives us the number of months between the two dates, because subtracting two dates gives us the number of seconds between them. |\n| `years('1980-06-14' - date)` | 5 | Converts a number of seconds to a number of years, rounded to the lowest integer. In this example, it gives us the number of years between the two dates, because subtracting two dates gives us the number of seconds between them. |\n\nMany of the functions for extracting date components (month, weekday, etc) also support alternative non-numeric forms, which you can access by using the dot notation: `name` and `shortname`.These depend on the document language, declared via the `lang` attribute (the following examples assume `lang=\"en-GB\"`).\n\n| Example | Result | What it does |\n| --- | --- | --- |\n| `weekday(date).name` | Friday | Returns the day of the week of a date, with its full name. |\n| `weekday(date).shortname` | Fri | Returns the day of the week of a date, as its shortened full name. |\n| `month(date).name` | June | Returns the month of a date, as its full name. |\n\nThese are just a few examples, most date component functions support multiple formats."
+				},
+				{
+					"id": "other-functions",
+					"advanced": false,
+					"title": "Other Functions",
+					"content": "| Function | What it does | Example |\n| --- | --- | --- |\n| `url(param)` | Print out the value of the `foo` parameter from the current page URL. This matches both parameters like `example.com/index.html?foo=bar` and `example.com/index.html/foo/bar` with the former having priority over the latter. | `url(\"foo\")` |\n| `url()` | Print out the URL of the current page. | `url()` |\n| `random(min, max, step)` | Get a random number between min and max in increments of step. If step is not provided, it’s 1, i.e. only integers are returned. | `random(1, 10, .2)` |\n| `group(key1: value1, key2: value2, ...)`  | Create data just like the data that comes from groups. Experimental, only available via dev.mavo.io | `group(name: 'Lea', age: 32)` |\n| `list(value1, value2, ...)` | Create lists of values, just like those that come from `mv-multiple` elements. The values could be anything. Experimental, only available via dev.mavo.io | `list(1, 'foo', true, group(name: 'Lea'))`"
+				},
+				{
+					"id": "mavoscript-vs-javascript",
+					"advanced": true,
+					"title": "MavoScript vs JavaScript",
+					"content": "MavoScript is based on a subset of JavaScript, with a few simplifications to make it easy to use even by people with no JavaScript knowledge. If a Mavo expression is more advanced than MavoScript, it is automatically parsed as JavaScript, allowing experienced web developers to do more with Mavo expressions.\n\nFor those who know JavaScript, these are a few key differences:\n\n| JavaScript | MavoScript |\n| --- | --- |\n| Math and logical operations with arrays produce nonsensical results | Array math & logical operations works element-wise. Operations between an array and a scalar are performed on every array element. This is why things like `count(rating > 3)` work in MavoScript, but wouldn't in JS. |\n| All strings have to be quoted | Strings that only consist of letters, numbers, and underscores don't need quotes. |\n| `==` operator for equality | `=` operator for equality |\n| `&&` operator for logical and | `and` operator for logical and |\n| `\\|\\|`  operator for logical or | `or` operator for logical or |\n| `%` operator for remainder | `mod` operator for remainder |\n| `if` is a control structure | `if()` is a function |\n| `a + b` might be addition or concatenation depending on types | `a + b` is always addition, `a & b` is concatenation |\n| Things like `3 > 2 > 1` return unexpected results (`false` in this case) | Every operator can have multiple operands, including `>`, so `3 > 2 > 1` has the same result as in math (`true`) |\n| `foo.bar.baz` will throw an error if either `foo` or `foo.bar` don’t exist. | If either `foo` or `foo.bar` don’t exist, `foo.bar.baz` will just return `\"\"`. |\n\nSince MavoScript does not support comments, an easy way to force JS mode is a `/* js */` comment in the start or end of the expression."
+				}
+			]
+		},
+		{
+			"id": "expressions",
+			"title": "Expressions",
+			"language": "markup",
+			"summary": "Expressions let you present the current value of properties in other elements and perform simple computations.",
+			"section": [
+				{
+					"id": "using-expressions",
+					"advanced": false,
+					"title": "Using Expressions",
+					"content": "By default, Mavo expressions are delineated by square brackets, e.g. `[5 + 5]`. We explored many different syntaxes and found that format to have the best readability. \n\nIf your HTML text contains brackets whose content you don’t want to be an expression, you can change the syntax with the `mv-expressions` attribute. For example, to switch to a double curly brace syntax (common in other systems), you can use `mv-expressions=\"{{ }}\"` and then expressions would be specified like `{{5 + 5}}`. To disable expressions in an element and its descendants altogether, use `mv-expressions=\"none\"`.\n\n"
+				},
+				{
+					"id": "mavoscript",
+					"advanced": false,
+					"title": "MavoScript",
+					"content": "Mavo’s **expression syntax** is called MavoScript. It is similar to spreadsheet formulas, but designed to be more readable and to accommodate nested relations (which spreadsheets cannot do).\n\nThey mostly consist of the following:\n\n# Property names\n\nYou use the value of a property you have defined by just typing its name. You can see some examples in the next section. You can use any property value from anywhere in your Mavo, or even in other Mavos (in that case, you'd need to add the app id before it, like `appid.propertyName`).\n\n##### Example\n\nMove the slider and check how both expressions are updated:\n\n```html\n<p>Slider value: [strength]/100</p>\n<input type=\"range\" property=\"strength\" title=\"[strength]%\" />\n```\n\nThe values of properties depend on where your expression is placed. When you use properties inside collections you get **all values** outside the collection, and **just the value of the current item** inside a collection item.\n\n# Function calls\n\nFunctions transform values into different values, for example they can do math on a number, or tell if you some text contains some other text. They are written with their name, and then a comma-separated list of parameters in parentheses, e.g. `min(2, 5)`.\n\n<p class=\"learn-more\">[All MavoScript functions](/docs/functions/?role=function)\n\n# Operators \n\nOperators are a shorter and more readable way to write common functions. For example, imagine if every time we wanted to subtract two numbers we had to write e.g. `subtract(2, 3)`. We would end up with a ton of parentheses for even simple expressions and it would be hard to understand what the expression actually does. Instead, we can write `2 - 3` instead, which is much shorter and more readable. Mavo supports all common math and logical operators, as well as some more like `where`.\n\n<p class=\"learn-more\">[All MavoScript operators](/docs/functions/?role=operator)\n\n# Special properties\n\nSpecial properties are available in every Mavo, and start with a dollar sign ($). They contain metadata, such as [the position of the current collection item (as a number starting from 0)](docs/functions/#$index) or [the current date/time](docs/functions/#$now). \n\n<p class=\"learn-more\">[All MavoScript special properties](/docs/functions/?role=special)\n\n# Raw data\n\nA lot of the data you will be using in expressions will come from your properties. However, sometimes you want to provide your own values as parameters. These can be:\n\n- **Numbers**, by just writing the number and using `.` as the decimal separator, e.g. `5` or `-0.3`. \n- The keyword `true` and the keyword `false` represent yes/no values. For example, `30 > 3` is equal to `true` because 30 is indeed larger than 3, and `3 > 30` is equal to `false` because 3 is not larger than 30.\n- Textual values, such as `\"cat\"` or `'Mary'`. You can use single quotes, double quotes, or even no quotes if the text contains only letters, numbers, and underscores. However, if you do that, beware of potential clashes with your property names!\n- Lists of values, just like those you get by referring a collection property from outside the collection, can be written as `list(value1, value2, value3, ...)`. You can read more about [`list()` here](/docs/functions/#list).\n- Grouped key-value pairs, just like the data you get when you reference a group can be created by using the `group()` function. E.g. `group(name: 'Vector', age: 12, hobby: list('Eating', 'Sleeping', 'Purring'))`\n\nIf you are more experienced, Mavo expressions can also be made to contain arbitrary JavaScript. You can read about some of the differences between JavaScript and MavoScript [at the end of this page](#mavoscript-vs-javascript)."
+				},
+				{
+					"id": "using-properties",
+					"advanced": false,
+					"title": "Using Properties",
+					"content": "We saw above that you can dynamically refer to the value of any property you have defined, anywhere, by putting its name inside brackets (like this: `[propertyName]`).\n\nWe can also do math with properties, e.g. divide by 100.\n\n##### Example\n\nMove the slider and check how both expressions are updated:\n\n```html\n<p>Slider value: [strength/100]</p>\n<input type=\"range\" property=\"strength\" title=\"[strength]%\" />\n```\n\nIf you set a `property` attribute on an element containing an expression, you can use that property in other expressions too, regardless of whether they come before or after the element.\n\n##### Example\n\nMaking a bare-bones HSL color picker with Mavo expressions:\n\n```html\n<div mv-app=\"colorpicker\" mv-storage=\"local\"\n     style=\"background-color: [color];\">\n\t<input type=\"range\" property=\"hue\" max=\"360\" />\n\t<input type=\"range\" property=\"saturation\" />\n\t<input type=\"range\" property=\"lightness\" />\n\n\t<input property=\"color\" readonly\n\t       value=\"hsl([hue], [saturation]%, [lightness]%)\" />\n</div>\n<style>\ninput { display: block; }\ndiv { padding: 1em; }\n</style>\n```\n\nTip: If you’re just using an element to hold an intermediate result so you can refer to it, we recommend using `<meta property=\"propertyName\" content=\"[expression]\" />` which is hidden outside edit mode, both semantically and visually.\n\nNote: Properties whose values are expressions are called _“computed properties”_ and are **not saved**."
+				},
+				{
+					"id": "expression-functions",
+					"advanced": false,
+					"title": "Expression Functions",
+					"content": "References and simple arithmetic are useful, but not always enough. For this purpose, Mavo defines a number of [useful functions](/docs/functions) you can use inside expressions, such as: `pow(base, exponent)`, `round(number, decimals)`, `sqrt(number)` and many more.\n\n##### Example\n\n```html\n<input property=\"base\" type=\"number\" value=\"2\" />\n<input property=\"exponent\" type=\"number\" value=\"3\" /> \n= [pow(base, exponent)]\n<style>\ndiv {\n\tfont: 300%/1.5 sans-serif;\n}\n\ninput {\n\tbackground: rgba(0,0,0,.05);\n\tborder: none;\n\ttext-align: center;\n\tmax-width: 2em;\n\tfont-size: 150%;\n}\n\n[property=\"exponent\"] {\n\tfont-size: 60%;\n\tvertical-align: top;\n}\n</style>\n```\n\nNote: If what you’re printing contains characters other than letters, numbers and underscores, you will need to use quotes around it, just like in CSS `font-family` or HTML attributes."
+				},
+				{
+					"id": "expressions-and-groups",
+					"advanced": false,
+					"title": "Expressions and Groups",
+					"content": "Groups are properties that contain other properties, or that explicitly have a `typeof` attribute (also called \"complex properties\", and they are analogous to objects in programming languages).\nIf there are groups and there are properties with the same name inside and outside the group, the value **closest to your expression** will be used, with child (inner) groups having priority over parent (outer) groups.\n\n##### Example\n\n```html\n<p>Hi, I’m [firstname] [lastname]</p> <!-- From inner group -->\n\n<div property=\"person\">\n\t<span property=\"firstname\">Lea</span>\n\t<span property=\"lastname\">Verou</span>\n\t<p>Hi, I’m [firstname] [lastname]</p>\n\n\t<div property=\"mother\">\n\t\t<span property=\"firstname\">Maria</span>\n\t\t<!-- Last name from parent group -->\n\t\t<p>Hi, I’m [firstname] [lastname]</p>\n\n\t\t<div property=\"mother\">\n\t\t\t<span property=\"firstname\">Areti</span>\n\t\t\t<!-- Last name from grandparent group -->\n\t\t\t<p>Hi, I’m [firstname] [lastname]</p>\n\t\t</div>\n\t</div>\n</div>\n<style>\n[typeof] {\n\tpadding: 1em;\n\tborder: 1px solid rgba(0,0,0,.2);\n\tbackground: rgba(0,0,0,.05);\n\tmargin: 1em;\n}\n</style>\n```"
+				},
+				{
+					"id": "expressions-and-collections",
+					"advanced": false,
+					"title": "Expressions and Collections",
+					"content": "Using a property with multiple values (i.e. referring to a property inside a list from outside the list) in an expression is not very useful on its own. However, there are functions that help you use such lists of values in interesting ways, such as `count(property)`, `sum(property)`, `average(property)` and [more](/docs/mavoscript/#list-functions).\n\n##### Example\n\nTry adding and removing elements!\n\n```html\n<div mv-app=\"catbook\" mv-storage=\"#data\">\n\t<h2>My cats</h2>\n\t<ul>\n\t\t<li property=\"cat\" mv-multiple>\n\t\t\t<div property=\"name\">Vector</div>\n\t\t\t<div property=\"age\">10</div>\n\t\t\t<!-- Note that expression inside list item refers to the value in the current item -->\n\t\t\t<p>Age in 2 years: [age + 2]</p>\n\t\t</li>\n\t</ul>\n\n\t<h2>My cats’ ages</h2>\n\t<ul>\n\t\t<li>All cat ages: [age]</li>\n\t\t<li>Number of cats: [count(cat)]</li>\n\t\t<li>Number of cats with age: [count(age)]</li>\n\t\t<li>Average cat age: [average(age)]</li> <!-- avg(age) also works -->\n\t\t<li>Sum of all ages (why? because we can): [SUM(age)]</li> <!-- caps don’t matter -->\n\t\t<li>Number of cats over 5 years old: [count(age > 5)]</li>\n\t</ul>\n</div>\n<script type=\"application/json\" id=\"data\">{\n\t\"cat\": [\n\t\t{\n\t\t\t\"name\": \"Vector\",\n\t\t\t\"age\": 12\n\t\t},\n\t\t{\n\t\t\t\"name\": \"Jean\"\n\t\t},\n\t\t{\n\t\t\t\"name\": \"Pixel\",\n\t\t\t\"age\": 6\n\t\t},\n\t\t{\n\t\t\t\"name\": \"Adam Catlace\",\n\t\t\t\"age\": 2.5\n\t\t},\n\t\t{\n\t\t\t\"name\": \"Eva\"\n\t\t},\n\t\t{\n\t\t\t\"name\": \"Chlebis\",\n\t\t\t\"age\": 8\n\t\t}\n\t]\n}</script>\n<style>\n[mv-multiple] {\n\tpadding: .5em;\n\tborder: 1px solid rgba(0, 0, 0, .1);\n\tmargin: .5em 0;\n}\n</style>\n```\n\nNote that if your expression is inside a list item, any properties inside that item will refer to their current values, whereas if your expression is outside the collection you will get all values.\n\n* * *\n\nYou can also do math or comparisons with lists. For example, `[sum(age + 5)]` will add 5 to every age and then sum the result. You can use either symbols (e.g. `+`, `*`, `>`, `==`) etc to perform these operations, or [their function counterparts](/docs/mavoscript/#math-functions)."
+				},
+				{
+					"id": "conditionals-if-and-the-mv-if-attribute",
+					"advanced": false,
+					"title": "Conditionals: if() and the mv-if attribute",
+					"content": "You can use the `if(condition, ifyes, ifno)` function to print out different text depending on a condition. The third parameter is optional: If you omit it, nothing will be printed out if the condition is false.\n\nThe `if()` function is very powerful, but can be confusing when all you want is to toggle content. For this, you can also use the `mv-if` attribute to hide or show content based on the value of an expression. Just like `mv-value`, `mv-if` does not require braces or other syntax. Besides readability, `mv-if` has another benefit: elements hidden with it are completely removed from the page, not just hidden.\n\n##### Example\n\n```html\n<style>\n.bad { background: #fdd; }\n.ok { background: #ffd; }\n.good { background: #dfc; }\n</style>\n<div mv-app class=\"[if(rating < 3, bad, if(rating > 3, good, ok))]\">\n\t<label>Rating:\n\t\t<input property=\"rating\" type=\"range\" min=\"1\" max=\"5\" />\n\t</label>\n\n\t<p mv-if=\"rating = 1\">Wow, you hated that movie!</p>\n\t<p mv-if=\"rating > 3\">Glad you liked it!</p>\n</div>\n<style>\ndiv { padding: 2em; }\n</style>\n```"
+				},
+				{
+					"id": "providing-fallbacks-the-mv-value-attribute",
+					"advanced": false,
+					"title": "Providing fallbacks: The mv-value attribute",
+					"content": "If you are concerned about the expression content being shown while the page loads, you can use the [`mv-value`](#mv-value) attribute instead, and provide a fallback as content.\n\n##### Example: Using mv-value\n\n```html\n<p>Slider value: <span mv-value=\"strength\">0</span>/100</p>\n<input type=\"range\" property=\"strength\" />\n```\n\nNote: `mv-value` does not require braces or whatever other syntax you have defined via `mv-expressions`. If you include them, they will be considered part of your expression. Also `mv-value` will work even when you specify `mv-expressions=\"none\"` (from v0.1.5).\n\nIf your expression contains a mistake, the expression itself will be shown instead of a result. If you’re using `mv-value` however, its fallback content will be shown instead.\n\n##### Example: Incorrect expressions\n\n```html\n[5 +]\n<div mv-value=\"5 +\">Fallback</div>\n```"
+				},
+				{
+					"id": "mv-value",
+					"advanced": false,
+					"title": "Dynamic collections with mv-value",
+					"content": "We’ve seen above how `mv-value` can be used to create fallback content for expressions. However, it’s much more powerful than that. When used on a collection, mv-value renders its value **on the entire collection**, enabling you to create lists of items that depend on other lists.\n\nAs a simple example, note how these two lists are synchronized:\n\n##### Example\n\n```html\n<div><span property=\"list1\" mv-multiple mv-mode=\"edit\">[$index + 1]</span></div>\n<div><span property=\"list2\" mv-multiple mv-value=\"list1\"></span></div>\n<style>\n[mv-multiple] {\n\tdisplay: inline-block;\n\tpadding: .5em;\n\tborder: 1px solid rgba(0, 0, 0, .1);\n\tmargin: .5em .1em;\n}\n</style>\n```"
+				},
+				{
+					"id": "mavoscript-vs-javascript",
+					"advanced": true,
+					"title": "MavoScript vs JavaScript",
+					"content": "MavoScript is based on a subset of JavaScript, with a few simplifications to make it easy to use even by people with no JavaScript knowledge. If a Mavo expression is more advanced than MavoScript, it is automatically parsed as JavaScript, allowing experienced web developers to do more with Mavo expressions.\n\nFor those who know JavaScript, these are a few key differences:\n\n| JavaScript | MavoScript |\n| --- | --- |\n| Math and logical operations with arrays produce nonsensical results | Array math & logical operations works element-wise. Operations between an array and a scalar are performed on every array element. This is why things like `count(rating > 3)` work in MavoScript, but wouldn't in JS. |\n| All strings have to be quoted | Strings that only consist of letters, numbers, and underscores don't need quotes. |\n| `==` operator for equality | `=` operator for equality |\n| `&&` operator for logical and | `and` operator for logical and |\n| `\\|\\|`  operator for logical or | `or` operator for logical or |\n| `%` operator for remainder | `mod` operator for remainder |\n| `if` is a control structure | `if()` is a function |\n| `a + b` might be addition or concatenation depending on types | `a + b` is always addition, `a & b` is concatenation |\n| Things like `3 > 2 > 1` return unexpected results (`false` in this case) | Every operator can have multiple operands, including `>`, so `3 > 2 > 1` has the same result as in math (`true`) |\n| `foo.bar.baz` will throw an error if either `foo` or `foo.bar` don’t exist. | If either `foo` or `foo.bar` don’t exist, `foo.bar.baz` will just return `\"\"`. |\n\nSince MavoScript does not support comments, an easy way to force JS mode is a `/* js */` comment in the start or end of the expression."
+				}
+			]
+		},
+		{
+			"language": "markup",
+			"id": "storage",
+			"title": "Storage",
+			"summary": "The `mv-storage` attribute tells Mavo where to store data, and `mv-source` where to read it from, if different.",
+			"section": [
+				{
+					"id": "disabling-storage",
+					"advanced": false,
+					"title": "Disabling storage",
+					"content": "To disable storage, just don't include an `mv-storage` attribute, or specify `mv-storage=\"none\"`. You could also disable storage on a per-property basis, by specifying `mv-storage=\"none\"` on individual properties. This is useful when you don't need a property's value to be saved. Properties whose values are specified via expressions have `mv-storage=\"none\"` by default."
+				},
+				{
+					"id": "local-storage",
+					"advanced": false,
+					"title": "Local storage",
+					"content": "You can save your data in the browser’s `localStorage`, by using the keyword `local` as the value of the `mv-storage` attribute (`mv-storage=\"local\"`).\n\nThis can be useful if you are not planning to share your data with other people. Please note that most `localStorage` implementations have a limit of 4MB. Also, `localStorage` is bound by the same-origin policy. This means that if you change your URL, your data will be left behind!"
+				},
+				{
+					"id": "github",
+					"advanced": false,
+					"title": "Github",
+					"content": "<figure>\n\t<video src=\"/videos/gh-auth.mp4\" controls></video>\n\t<figcaption>Mavo takes care of authentication when using Github as your storage backend.</figcaption>\n</figure>\n\nThe Github backend provides remote storage, which is useful if you need to share data with other people and a history of all edits, which is useful for recovering past data if you regret your changes at any point. Mavo will provide login controls and will not allow any edits until the viewer has logged in. If the file and/or repo does not exist, Mavo will create it upon saving.\n\nIf the logged in user **does have commit permission** (i.e. is either the creator of the repo or added as a collaborator), saving will directly save back to Github. If the logged in user **does not have commit permissions**, the data will be stored in their own profile and they will be prompted to send an _\"edit suggestion\"_ to the original owner of the data. Editing suggestions are sent as [pull requests](https://help.github.com/articles/about-pull-requests/), with a link to view the new data in the Mavo app (by using the [`storage` URL parameter described below](#url-params)). Currently reviewing the changes between the new and old data (i.e. the _diff_) requires the ability to read JSON (unless you’re using a different format for your data). Future Mavo versions may introduce a graphical way for this as well.\n\n**You don’t need to understand how Github works to use it for storing your data.** If you don’t know what a repo or a branch is, do not worry. Just sign up for a [Github](http://github.com) account, and specify `https://github.com/USERNAME` as the value of the `mv-storage` attribute. Mavo will automatically create an `mv-data` repo for you and a file to store your data named `APP_ID.json` where `APP_ID` is the [name of your app](/docs/primer/#mv-app).\n\nIf you _do_ understand how Github works, you can specify where your data should be stored with more precision:\n\n<dl>\n\t<dt><code>https://github.com/USERNAME/REPO_NAME</code></dt>\n\t<dd>Mavo will create a file called <code>APP_ID.json</code> in that repository.</dd>\n\n\t<dt><code>https://github.com/USERNAME/REPO_NAME/FILE_NAME</code></dt>\n\t<dd>Mavo will assume a default branch of <code>master</code></dd>\n\n\t<dt><code>https://github.com/USERNAME/REPO_NAME/blob/BRANCH/FILE_NAME</code></dt>\n\t<dd>The URL Github gives you when using its file browser. As specific as it gets, Mavo makes no assumptions.</dd>\n\n\t<dt><code>https://raw.githubusercontent.com/USERNAME/REPO_NAME/BRANCH/FILE_NAME</code></dt>\n\t<dd>The URL that shows when you click the button Raw from the Github file browser.</dd>\n</dl>\n\nTerms in `UPPERCASE_AND_ITALIC` indicate that you are expected to replace them with the actual values (e.g. your username). Note that __FILE_NAME__ above could include a path, e.g. `foo/bar/baz.json`.\n\nGithub Pages URLs (`https://_USERNAME_.github.io/_REPO_NAME_/_FILE_NAME_`) are not supported, because it’s impossible for Mavo to figure out where to save the data just from the Github Pages URL."
+				},
+				{
+					"id": "dropbox",
+					"advanced": false,
+					"title": "Dropbox",
+					"content": "The [Dropbox](https://dropbox.com) backend also provides remote storage, and may be useful for people without a Github account. Just like the Github backend, it takes care of authentication, and only provides editing and saving controls to users that have appropriate permissions.\n\nUnlike with Github, Mavo cannot create the file for you if it does not exist. To start using it, you need to create an empty file with a `.json` extension, and add it to your Dropbox. Then, in the Dropbox application, click \"Share\" and copy the link it gives you (you may need to click \"Copy Link\" to get to it). It will look like `https://www.dropbox.com/s/5fsvey23bi0v8lf/myfile.json?dl=0`. This link is what you will use in the `mv-storage` attribute:\n\n```html\n<div mv-app mv-storage=\"https://www.dropbox.com/s/5fsvey23bi0v8lf/myfile.json?dl=0\">\n\t...\n</div>\n```"
+				},
+				{
+					"id": "html-element",
+					"advanced": false,
+					"title": "HTML Element",
+					"content": "To store data in another HTML element in the page, use an `mv-storage` value of `#ELEMENT_ID` where `ELEMENT_ID` is the id of the element you want to use to store data in.\n\n##### Example\n\n```html\n<pre id=\"data\">{\n\t\"firstName\": \"Lea\",\n\t\"lastName\": \"Verou\"\n}</pre>\n<div mv-app=\"elementStorage\" mv-storage=\"#data\">\n\t<span property=\"firstName\">David</span>\n\t<span property=\"lastName\">Karger</span>\n</div>\n```\n\nWarning: Note that unless you take extra steps to persist the content of that element, **the data will be lost after a page refresh**. This storage adapter is mainly useful for debugging purposes or to combine Mavo with other libraries."
+				},
+				{
+					"id": "mv-source",
+					"advanced": false,
+					"title": "Reading from a different data source",
+					"content": "Sometimes you want to load data from one place and save to a different place, for a variety of reasons. If this is what you want, Mavo has you covered! Just use the `mv-source` attribute to specify where the data will be read **from** and the `mv-storage` attribute to specify where the data will be stored. Note that if you use both `mv-source` and `mv-storage`, only login controls for the latter will be shown in the Mavo bar."
+				},
+				{
+					"id": "mv-init",
+					"advanced": false,
+					"title": "Providing initial data",
+					"content": "Sometimes you want to store your application’s data in the local store or another initially empty storage, but you want the app to start with some data already in place, _if its storage is empty_. For this purpose, you can use the `mv-init` attribute. It will be used just like the `mv-source` attribute above, but only **if no data has been stored yet**."
+				},
+				{
+					"id": "url-params",
+					"advanced": false,
+					"title": "Changing mv-storage, mv-source, and mv-init via the URL",
+					"content": "You can change the storage location of any Mavo app via the URL. This way, you can reuse the same Mavo app to edit multiple sets of data with the same general format or even reuse someone else’s Mavo app to store your own data in your own preferred location! If there is only one Mavo app on the page (or if the one you are interested in is first), you use the `storage`, `source`, and `init` URL parameters. For example, here is [the To-Do list from the demos with a local data store](/demos/todo?storage=local).\n\nWhile the `storage`, `source`, and `init` URL parameters only work for the first Mavo app on the page, you can use `APP_ID-storage`, `APP_ID-source`, and `APP_ID-init` for any Mavo app, regardless of its placement on the page. For example, here is [the local To-Do list again](/demos/todo?todo-storage=local), using URL parameters that include the app name."
+				},
+				{
+					"id": "creating-your-own-storage-backend",
+					"advanced": true,
+					"title": "Creating your own storage backend",
+					"content": "To add support for a new backend, all you need is call `Mavo.Backend.register()` with a class that extends from `Mavo.Backend`. For information on how the `$.Class()` class helper works, look in [Bliss’ documentation](http://blissfuljs.com/docs.html#fn-Class).\n\n```js\nMavo.Backend.register($.Class({\n\t// Mandatory. You may instead extend another backend, e.g. Mavo.Backend.Github\n\textends: Mavo.Backend,\n\n\tid: \"MyAwesomeBackend\", // an id for your backend\n\n\tconstructor: function(url, {mavo, format}) {\n\t\t// Initialization code\n\n\t\t// Already defined by the parent constructor:\n\t\tthis.source // Raw URL (attribute value)\n\t\tthis.url // URL object from this.source\n\t\tthis.mavo // Mavo instance\n\t\tthis.format // Current format\n\t\tthis.permissions // Permissions of this particular backend.\n\t},\n\n\t// Low-level functions for reading data. You don’t need to implement this\n\t// if the mv-storage/mv-source value is a URL and reading the data is just\n\t// a GET request to that URL.\n\tget: function(url) {\n\t\t// Should return a promise that resolves to the data as a string or object\n\t},\n\n\t// High level function for reading data. Calls this.get().\n\t// You rarely need to override this.\n\tload: function() {\n\t\t// Should return a promise that resolves to the data as an object\n\t},\n\n\t// Low-level saving code.\n\t// serialized: Data serialized according to this.format\n\t// path: Path to store data\n\t// o: Arbitrary options\n\tput: function(serialized, path = this.path, o = {}) {\n\t\t// Returns promise\n\t},\n\n\t// If your backend supports uploads, this is mandatory.\n\t// file: File object to be uploaded\n\t// path: relative path to store uploads (e.g. \"images\")\n\tupload: function(file, path) {\n\t\t// Upload code. Should call this.put()\n\t},\n\n\t// High level function for storing data.\n\t// You rarely need to override this, except to avoid serialization.\n\tstore: function(data, {path, format = this.format} = {}) {\n\t\t// Should return a promise that resolves when the data is saved successfully\n\t},\n\n\t// Takes care of authentication. If passive is true, only checks if\n\t// the user is already logged in, but does not present any login UI.\n\t// Typically, you’d call this.login(true) in the constructor\n\tlogin: function(passive) {\n\t\t// Typically, you’d check if a user is already authenticated\n\t\t// and return Promise.resolve() if so.\n\n\t\t// Returns promise that resolves when the user has successfully authenticated\n\t},\n\n\t// Log current user out\n\tlogout: function() {\n\t\t// Returns promise\n\t},\n\n\tstatic: {\n\t\t// Mandatory and very important! This determines when your backend is used.\n\t\t// value: The mv-storage/mv-source/mv-init value\n\t\ttest: function(value) {\n\t\t\t// Returns true if this value applies to this backend\n\t\t}\n\t}\n}));\n```\n\nMake sure to set `this.permissions` accordingly throughout. You can read more about [`Mavo.Permissions` in the API documentation](/docs/api/#permissions).\n\nIn case you’re writing a backend for a JSON-based OAuth 2 service, `Mavo.Backend` includes many helpers to make this as easy as possible. Take a look at the following in the API documentation:\n\n*   [`Mavo.Backend#accessToken`](/docs/api/#Mavo.Backend#accessToken)\n*   [`Mavo.Backend#isAuthenticated`](/docs/api/#Mavo.Backend#isAuthenticated)\n*   [`Mavo.Backend#oAuthenticate`](/docs/api/#Mavo.Backend#oAuthenticate)\n*   [`Mavo.Backend#oAuthLogout`](/docs/api/#Mavo.Backend#oAuthLogout)\n*   [`Mavo.Backend#oAuthParams`](/docs/api/#Mavo.Backend#oAuthParams)\n*   [`Mavo.Backend#request`](/docs/api/#Mavo.Backend#request)\n*   [`Mavo.Backend.apiDomain`](/docs/api/#Mavo.Backend.apiDomain)\n*   [`Mavo.Backend.oAuth`](/docs/api/#Mavo.Backend.oAuth)\n\nAnother helpful function you may write if your backend supports authentication, is the `getUser` function, which should make the API call to get user information and set `this.user`. You **must** set `this.user` **before** setting the `logout` permission to show user information in the Mavo toolbar.\n\n```js\ngetUser: function() {\n\tif (this.user) {\n\t\treturn Promise.resolve(this.user);\n\t}\n\n\treturn this.request(\"user\").then(info => {\n\t\tthis.user = { // replace the following fields with how you get username, name, profile picture, etc\n\t\t\tusername: info.getUsernameHere,\n\t\t\tname: info.getNameHere,\n\t\t\tavatar: info.getProfilePictureHere,\n\t\t\tinfo // raw info object\n\t\t};\n\n\t\t$.fire(this.mavo.element, \"mavo:login\", { backend: this });\n\t});\n},\n```\n\nYou can see examples of backend declarations in [src/backend.github.js](https://github.com/mavoweb/mavo/blob/master/src/backend.github.js), [src/backend.dropbox.js](https://github.com/mavoweb/mavo/blob/master/src/backend.dropbox.js) and [src/backend.js](https://github.com/mavoweb/mavo/blob/master/src/backend.js)\n\nIf your backend may be useful to other people, please consider adding it to the [Plugin directory](https://plugins.mavo.io)!"
+				}
+			]
+		},
+		{
+			"id": "glossary",
+			"title": "Glossary",
+			"section": [
+				{
+					"advanced": false
+				}
+			]
+		},
+		{
+			"id": "actions",
+			"title": "Custom actions",
+			"summary": "Custom actions are a generalization of the editing controls that Mavo generates, and can be very powerful.",
+			"section": [
+				{
+					"id": "mv-action",
+					"advanced": false,
+					"title": "The mv-action attribute",
+					"content": "You define a custom action by setting the `mv-action` attribute on any element inside your Mavo app. The action is performed every time the element is clicked. You can use any of the [expression functions](/docs/mavoscript) and syntax that you are familiar with, plus a few more:\n\n- [`set(property, value)`](#set) to change one or more properties\n- [`add(collection)`](#add) to add a new blank item to a collection\n- [`add(collection, data)`](#add) to add an item with pre-filled data to a collection.\n- [`add(collection, position)`](#add) to add a blank item at a specific position.\n- [`add(collection, data, position)`](#add) to add an item at a specific position.\n- [`delete(items)`](#delete) to delete collection items or clear property values\n- [`delete(items1, items2, ...)`](#delete) to delete multiple different things\n- [`move(item, position)`](#move) to move item to a different place\n- [`move(item, collection)`](#move) to move item to a different collection\n- [`move(item, collection, position)`](#move) to move item to a different collection in a specific place\n\nYou can use multiple calls to these in an action, separated by commas (`,`), semicolons (`;`), spaces, or nothing at all. **They will be executed in the order specified.**\n\nFor example, you **can** do `mv-action=\"add(contact, person), add(friend, person)\"` to copy the same item to two collections.\n\nNote: Just like `mv-if` and `mv-value`, brackets are not required inside `mv-action`. If you include brackets, they will be considered part of your expression."
+				},
+				{
+					"id": "set",
+					"advanced": false,
+					"title": "Changing properties: The set() function",
+					"content": "**Summary**\n`set(property, value)`\n\nYou can change the values of properties with the `set()` function. The first argument is what you want to change, and the second is the new value(s). Note that you can use this to change multiple properties at once, since [property names in actions work exactly the same way as in expressions](https://mavo.io/docs/expressions):\n\n\n##### Example\n\n```html\n<div mv-app>\n\t<div property=\"counter\">0</div>\n\t<button mv-action=\"set(counter, counter + 1)\">Increment</button>\n\t<button mv-action=\"set(counter, 0)\">Reset</button>\n</div>\n```\n\n##### Example: Collections\n\n```html\n<div mv-app mv-source=\"https://test.mavo.io/data/creatures.json\">\n\t<button mv-action=\"set(name, 'Chris')\">Set all names to Chris</button>\n\t<table>\n\t\t<tr property=\"cat\" mv-multiple>\n\t\t\t<td property=\"name\"></td>\n\t\t\t<td property=\"age\"></td>\n\t\t\t<td><button mv-action=\"set(age, 13)\">Set current age to 13</button></td>\n\t\t</tr>\n\t</table>\n</div>\n```\n\nWarning: You can only set existing properties using `set()`. You cannot use it to create new properties. If you need to hold intermediate results, use a `<meta>` element with a property attribute and it will be invisible outside edit mode."
+				},
+				{
+					"id": "delete",
+					"advanced": false,
+					"title": "Deleting items: The delete() function",
+					"content": "**Summary**\n`delete(items)`\n`delete(items1, items2, ...)`\n\nThere is only one type of parameter to the `delete()` function: What to delete (one or more things). These could be entire collections (to empty them), or specific items. The deletion is undoable, via the usual UI that you see when you delete an item using Mavo’s generated controls. If you delete multiple items with the same action, the undoing will re-add all of them.\n\nEspecially with the `delete()` function, you may find the [`where`](/docs/functions/#where) operator useful.\n\n##### Example\n\n```html\n<div mv-app mv-source=\"https://test.mavo.io/data/creatures.json\">\n\t<button mv-action=\"delete(cat where name = 'Vector')\">\n\t\tDelete Vector\n\t</button>\n\t<table>\n\t\t<tr property=\"cat\" mv-multiple>\n\t\t\t<td property=\"name\"></td>\n\t\t\t<td property=\"age\"></td>\n\t\t\t<td><button mv-action=\"delete(cat)\">Delete cat</button></td>\n\t\t</tr>\n\t</table>\n</div>\n```"
+				},
+				{
+					"id": "add",
+					"advanced": false,
+					"title": "Adding items to collections: The add() function",
+					"content": "**Summary**\n`add(collectionOrItem)`\n`add(collectionOrItem, initialValues)`\n`add(collectionOrItem, position)`\n`add(collectionOrItem, initialValues, position)`\n\n# First parameter: Where to add a new item?\n\nThe first parameter of the `add()` function refers to the collection the new item should be added to. This could be either the collection itself (when using its property name from the outside) or a specific collection item.\n\n# Second parameter: What values should the new item have? (optional)\n\nThe second parameter refers to the values you want the new item to have. This could be specified in a number of ways:\n\n- another property, to copy that property’s value\n- You can create data yourself, dynamically, by using the `group()` and `list()` functions, as well as numbers, text, and `true` and `false` keywords. E.g. `group(name: 'Lea', age: 32, hobbies: list('cooking', 'coding', 'design'))`\n- You can combine the two, e.g. `group(person, age: 34)` would copy all values from `person` except `age`, which would be set to 34.\n\nIf you provide multiple values, you will get multiple new items.\n\n# Last parameter: What position should the new item(s) be inserted in? (optional)\n\nThe third parameter is the position (starting from 0) that you want the new item to be added in. \nIf not provided, then the new item will be inserted:\n\n- In the start or end of the collection, depending on its [order](/docs/collections#mv-order).\n- If your first parameter was a collection **item**, then it will be inserted before or after that item, depending on the collection [order](/docs/collections#mv-order).\n\n##### Example\n\n```html\n<div mv-app mv-source=\"https://test.mavo.io/data/creatures.json\">\n\t<button mv-action=\"add(cat, group(name: 'Grumpy Cat', age: 5))\">\n\t\tAdd Grumpy Cat\n\t</button>\n\t<table>\n\t\t<tr property=\"cat\" mv-multiple>\n\t\t\t<td property=\"name\"></td>\n\t\t\t<td property=\"age\"></td>\n\t\t\t<td><button mv-action=\"add(cat, cat)\">Duplicate item</button></td>\n\t\t</tr>\n\t</table>\n</div>\n```"
+				},
+				{
+					"id": "move",
+					"advanced": false,
+					"title": "Moving items: The move() function",
+					"content": "**Summary**\n`move(item, position)`\n`move(item, collection)`\n`move(item, collection, position)`\n\nWhile the `add()` function creates **new** items, the `move()` function moves **existing** items around, either to a different place in the same collection, or to a new collection.\n\n# First parameter: What to move?\n\nThe first argument refers to the item(s) you are moving. This could be one or more items.\n\n# Second parameter: Which collection to move to? (if different)\n\nIf moving to a different collection, this should point to that collection or one of its items.\n\n# Last parameter: Which position to put it in? (optional)\n\nIf you want the item to be placed in a specific position, provide it here as a number (starting from 0).\n\n##### Example\n\n```html\n<table mv-app mv-source=\"https://test.mavo.io/data/creatures.json\">\n\t<tbody>\n\t\t<tr property=\"person\" mv-multiple>\n\t\t\t<td property=\"name\"></td>\n\t\t\t<td property=\"age\"></td>\n\t\t\t<td><button mv-action=\"move(person, cat)\">Make [name] a cat</button></td>\n\t\t</tr>\n\t</tbody>\n\t<tbody>\n\t\t<tr property=\"cat\" mv-multiple>\n\t\t\t<td property=\"name\"></td>\n\t\t\t<td property=\"age\"></td>\n\t\t\t<td><button mv-action=\"move(cat, 0)\">Move cat to top</button></td>\n\t\t</tr>\n\t</tbody>\n</table>\n<style>\ntbody { background: hsl(80, 60%, 80%) }\ntbody + tbody { background: hsl(180, 60%, 85%) }\ntd { padding: .2em }\ntr[property=person] td:first-child::before { content: \"😀 \" }\ntr[property=cat] td:first-child::before { content: \"😺 \" }\n</style>\n```"
+				}
+			]
+		}
+	],
+	"class": [
+		{
+			"name": "mv-autoedit",
+			"on": "Mavo root",
+			"purpose": "Mavo root\tMavo will start in edit mode (no need to click the Edit button). Useful for apps that are almost always in edit mode, but still need a read mode (if read mode is not needed at all, use `mv-mode` instead)."
+		},
+		{
+			"name": "mv-fixed",
+			"on": "Mavo toolbar",
+			"purpose": "Style the toolbar as fixed at the top of the screen (always visible)."
+		},
+		{
+			"name": "mv-logged-in",
+			"purpose": "Only show element to logged in users."
+		},
+		{
+			"name": "mv-logged-out",
+			"purpose": "Only show element to logged out users."
+		}
+	],
+	"live": "✓",
+	"coreAttribute": [
+		{
+			"attribute": "mv-app",
+			"path": "/docs/primer/#mv-app",
+			"link": "Primer",
+			"on": "Mavo root\t",
+			"purpose": "Allows you to assign an id to your app, which is used in a number of places. The element with this attribute is called the **Mavo root**."
+		},
+		{
+			"attribute": "property",
+			"purpose": "Names elements that will be saved, edited, or used in [expressions](/docs/expressions). Elements with this attribute are called **Properties**.",
+			"path": "/docs/properties",
+			"link": "Properties"
+		},
+		{
+			"attribute": "mv-storage",
+			"on": "Mavo root, properties",
+			"purpose": "Tells Mavo where data is stored. It’s used on the Mavo root with any of the accepted values or optionally on individual properties to prevent them from being stored (`mv-storage=\"none\"`).",
+			"live": "yes",
+			"path": "/docs/storage",
+			"link": "Storage"
+		},
+		{
+			"attribute": "typeof",
+			"on": "Properties",
+			"purpose": "The value of this property element is not just an attribute or its text content, but the union of the values of the properties inside it. This is almost always inferred from the structure of your properties and added automatically, but you can use it to force an element to be a group, or to declare the type of the group (e.g. `typeof=\"Person\"`) for better semantic value. Elements with this attribute are called **groups**, objects, or complex properties."
+		},
+		{
+			"attribute": "mv-multiple",
+			"on": "Properties",
+			"purpose": "Makes elements repeatable. Only has meaning on property elements, if there is no `property` attribute, one will be added automatically with a generated name like \"collection\". Elements with this attribute are called **Collections**.\t",
+			"path": "/docs/collections",
+			"link": "Collections"
+		}
+	],
+	"otherAttribute": [
+		{
+			"attribute": "mv-attribute",
+			"on": "Properties, elements with `mv-value`",
+			"purpose": "Override the defaults for which attribute holds the data for this element. For no attribute (element content), specify `\"none\"`.",
+			"path": "/docs/properties",
+			"link": "Properties"
+		},
+		{
+			"attribute": "mv-source",
+			"on": "Mavo root",
+			"purpose": "If specified, it is used instead of `mv-storage` for loading data. Useful when you want to read from one location and write to a different location. Same values as `mv-storage`.",
+			"live": "yes",
+			"path": "/docs/storage",
+			"link": "Storage"
+		},
+		{
+			"attribute": "mv-init",
+			"on": "Mavo root",
+			"purpose": "If no data is stored, `mv-init` will be used to load initial data. Same values as `mv-storage`.",
+			"live": "yes",
+			"path": "/docs/storage",
+			"link": "Storage"
+		},
+		{
+			"attribute": "mv-default",
+			"on": "Properties",
+			"purpose": "Sets the default value. If no value, the default value becomes the property content.",
+			"live": "yes",
+			"path": "/docs/properties",
+			"link": "Properties"
+		},
+		{
+			"attribute": "mv-order",
+			"on": "Collections",
+			"purpose": "Values: `desc` or `asc`. Controls the order that new items are added to collections.",
+			"path": "/docs/collections",
+			"link": "Collections"
+		},
+		{
+			"attribute": "mv-expressions",
+			"purpose": "Change the expression syntax or disable [expressions](/docs/expressions) altogether.",
+			"path": "/docs/mavoscript",
+			"link": "MavoScript"
+		},
+		{
+			"attribute": "mv-value",
+			"purpose": "Set an element's content to the result of an [expressions](/docs/expressions).",
+			"live": "exp",
+			"path": "/docs/expressions",
+			"link": "Expressions"
+		},
+		{
+			"attribute": "mv-if",
+			"purpose": "Remove an element from the DOM if the expression doesn't match and re-add it when it does.",
+			"live": "exp",
+			"path": "/docs/expressions",
+			"link": "Expressions"
+		},
+		{
+			"attribute": "mv-accepts",
+			"on": "Collections",
+			"purpose": "Property names (space separated) of other collections that can move items to this one.",
+			"path": "/docs/collections",
+			"link": "Collections"
+		},
+		{
+			"attribute": "mv-edit",
+			"on": "Properties",
+			"purpose": "Customize how an element is edited by linking to another element, anywhere in the page.",
+			"live": "ini",
+			"path": "/docs/properties",
+			"link": "Properties"
+		},
+		{
+			"attribute": "mv-edit-*",
+			"on": "Properties",
+			"purpose": "Any attributes set this way will be copied over to the property's editor.",
+			"live": "ini",
+			"path": "/docs/properties",
+			"link": "Properties"
+		},
+		{
+			"attribute": "mv-mode",
+			"purpose": "Control whether a property is in read or edit mode independently of the mode of the rest of the Mavo app.",
+			"live": "yes",
+			"path": "/docs/properties",
+			"link": "Properties"
+		},
+		{
+			"attribute": "mv-format",
+			"on": "Mavo root",
+			"purpose": "Render and edit only a subset of the remote data, by providing a (slash-separated) path to the data it handles.",
+			"live": "ini",
+			"path": "/docs/formats",
+			"link": "Formats"
+		},
+		{
+			"attribute": "mv-autosave",
+			"on": "Mavo root",
+			"purpose": "Save automatically when the data changes. Its value is the number of seconds to throttle saving, or 0 for no throttling (save immediately). The default throttling delay is 3 seconds, used when the attribute is specified without a value. Unless throttling is disabled, The Save button will still be present in the Mavo bar.",
+			"live": "ini"
+		},
+		{
+			"attribute": "mv-bar",
+			"on": "Mavo root",
+			"purpose": "Control which buttons may appear in the toolbar and in what order, or hide the toolbar completely.",
+			"path": "/docs/ui/#bar",
+			"link": "UI-Customization"
+		},
+		{
+			"attribute": "mv-path",
+			"on": "Properties",
+			"purpose": "Render and edit only a subset of the stored data.",
+			"live": "ini"
+		},
+		{
+			"attribute": "mv-alias",
+			"on": "Properties",
+			"purpose": "If provided, Mavo will read data from this property **instead** of its real property name. Useful to read stored data properly after renaming a property in the HTML.",
+			"path": "/docs/migration/#mv-alias",
+			"link": "Migration"
+		}
+	],
+	"generatedAttribute": [
+		{
+			"name": "mv-progress",
+			"on": "Mavo root",
+			"purpose": "Only set when an event is in progress. Its value reflects what event, e.g. `\"Saving\"` or `\"Loading\"`."
+		},
+		{
+			"name": "mv-clicked",
+			"on": "Properties that are `<button>` elements or have a `counter` class.",
+			"purpose": "The number of times the button has been clicked."
+		},
+		{
+			"name": "mv-permissions",
+			"on": "Mavo root",
+			"purpose": "Space-separated list of permissions (read, edit, add, delete, login, logout, save)"
+		},
+		{
+			"name": "mv-mode",
+			"on": "Any property",
+			"purpose": "`mv-mode=\"edit\"` is applied on every property when it’s being edited."
+		}
+	],
+	"generatedClass": [
+		{
+			"name": "mv-target-within",
+			"setOn": "Any element that matches the CSS `:target` pseudo-class or contains an element that does."
+		},
+		{
+			"name": "mv-ui",
+			"setOn": "Any (usually generated) controls for triggering Mavo-related actions"
+		},
+		{
+			"name": "mv-empty",
+			"setOn": "Properties with no value"
+		},
+		{
+			"name": "mv-deleted",
+			"setOn": "Collection items that have been deleted but the deletion is not yet saved"
+		},
+		{
+			"name": "mv-item-bar",
+			"setOn": "Buttons on collection items for deleting, adding, rearranging."
+		},
+		{
+			"name": "mv-highlight",
+			"setOn": "Highlighted collection items (e.g. when hovering over the delete button)"
+		},
+		{
+			"name": "mv-bar",
+			"setOn": "Mavo toolbar"
+		},
+		{
+			"name": "mv-editor",
+			"setOn": "Element used for editing a property"
+		},
+		{
+			"name": "mv-popup",
+			"setOn": "Generated popup for editing an attribute."
+		}
+	],
+	"cssVariable": [
+		{
+			"name": "--mv-mode",
+			"value": "`read` or `edit`",
+			"setOn": "Elements with the `mv-mode` attribute"
+		},
+		{
+			"name": "--mv-item-left",
+			"value": "Horizontal distance of item from the left edge of its offset parent in px, e.g. `10px`.",
+			"setOn": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
+		},
+		{
+			"name": "--mv-item-top",
+			"value": "Vertical distance of item from the top edge of its offset parent in px, e.g. `10px`.",
+			"setOn": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
+		},
+		{
+			"name": "--mv-item-width",
+			"value": "Width of item in px, e.g. `100px`.",
+			"setOn": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
+		},
+		{
+			"name": "--mv-item-height",
+			"value": "Height of item in px, e.g. `100px`",
+			"setOn": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
+		}
+	]
+}
