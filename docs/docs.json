@@ -527,75 +527,101 @@
 			"attribute": "mv-attribute",
 			"on": "Properties, elements with `mv-value`",
 			"purpose": "Override the defaults for which attribute holds the data for this element. For no attribute (element content), specify `\"none\"`.",
-			"live": "✘"
+			"live": "✘",
+			"path": "/docs/properties",
+			"link": "Properties"
 		},
 		{
 			"attribute": "mv-source",
 			"on": "Mavo root",
 			"purpose": "If specified, it is used instead of `mv-storage` for loading data. Useful when you want to read from one location and write to a different location. Same values as `mv-storage`.",
-			"live": "✓"
+			"live": "✓",
+			"path": "/docs/storage",
+			"link": "Storage"
 		},
 		{
 			"attribute": "mv-init",
 			"on": "Mavo root",
 			"purpose": "If no data is stored, `mv-init` will be used to load initial data. Same values as `mv-storage`.",
-			"live": "✓"
+			"live": "✓",
+			"path": "/docs/storage",
+			"link": "Storage"
 		},
 		{
 			"attribute": "mv-default",
 			"on": "Properties",
 			"purpose": "Sets the default value. If no value, the default value becomes the property content.",
-			"live": "✓"
+			"live": "✓",
+			"path": "/docs/properties",
+			"link": "Properties"
 		},
 		{
 			"attribute": "mv-order",
 			"on": "Collections",
 			"purpose": "Values: `desc` or `asc`. Controls the order that new items are added to collections.",
-			"live": "✘"
+			"live": "✘",
+			"path": "/docs/collections",
+			"link": "Collections"
 		},
 		{
 			"attribute": "mv-expressions",
 			"purpose": "Change the expression syntax or disable [expressions](/docs/expressions) altogether.",
-			"live": "✘"
+			"live": "✘",
+			"path": "/docs/mavoscript",
+			"link": "MavoScript"
 		},
 		{
 			"attribute": "mv-value",
 			"purpose": "Set an element's content to the result of an [expressions](/docs/expressions).",
-			"live": "Expressions only"
+			"live": "Expressions only",
+			"path": "/docs/expressions",
+			"link": "Expressions"
 		},
 		{
 			"attribute": "mv-if",
 			"purpose": "Remove an element from the DOM if the expression doesn't match and re-add it when it does.",
-			"live": "Expressions only"
+			"live": "Expressions only",
+			"path": "/docs/expressions",
+			"link": "Expressions"
 		},
 		{
 			"attribute": "mv-accepts",
 			"on": "Collections",
 			"purpose": "Property names (space separated) of other collections that can move items to this one.",
-			"live": "✘"
+			"live": "✘",
+			"path": "/docs/collections",
+			"link": "Collections"
 		},
 		{
 			"attribute": "mv-edit",
 			"on": "Properties",
 			"purpose": "Customize how an element is edited by linking to another element, anywhere in the page.",
-			"live": "Initially"
+			"live": "Initially",
+			"path": "/docs/properties",
+			"link": "Properties"
 		},
 		{
 			"attribute": "mv-edit-*",
 			"on": "Properties",
 			"purpose": "Any attributes set this way will be copied over to the property's editor.",
-			"live": "Initially"
+			"live": "Initially",
+			"path": "/docs/properties",
+			"link": "Properties"
 		},
 		{
 			"attribute": "mv-mode",
 			"purpose": "Control whether a property is in read or edit mode independently of the mode of the rest of the Mavo app.",
-			"live": "✓"
+			"live": "✓",
+			"path": "/docs/properties",
+			"link": "Properties"
 		},
 		{
 			"attribute": "mv-format",
 			"on": "Mavo root",
 			"purpose": "Render and edit only a subset of the remote data, by providing a (slash-separated) path to the data it handles.",
-			"live": "Initially"
+			"live": "Initially",
+			"path": "/docs/formats",
+			"link": "Formats"
 		},
 		{
 			"attribute": "mv-autosave",
@@ -607,7 +633,9 @@
 			"attribute": "mv-bar",
 			"on": "Mavo root",
 			"purpose": "Control which buttons may appear in the toolbar and in what order, or hide the toolbar completely.",
-			"live": "✘"
+			"live": "✘",
+			"path": "/docs/ui/#bar",
+			"link": "UI-Customization"
 		},
 		{
 			"attribute": "mv-path",
@@ -619,7 +647,9 @@
 			"attribute": "mv-alias",
 			"on": "Properties",
 			"purpose": "If provided, Mavo will read data from this property **instead** of its real property name. Useful to read stored data properly after renaming a property in the HTML.",
-			"live": "✘"
+			"live": "✘",
+			"path": "/docs/migration/#mv-alias",
+			"link": "Migration"
 		}
 	],
 	"class": [
