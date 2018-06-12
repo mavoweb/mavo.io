@@ -673,7 +673,26 @@
 		}
 	],
 	"generated-attribute": [
-		{}
+		{
+			"name": "mv-progress",
+			"on": "Mavo root",
+			"purpose": "Only set when an event is in progress. Its value reflects what event, e.g. `\"Saving\"` or `\"Loading\"`."
+		},
+		{
+			"name": "mv-clicked",
+			"on": "Properties that are `<button>` elements or have a `counter` class.",
+			"purpose": "The number of times the button has been clicked."
+		},
+		{
+			"name": "mv-permissions",
+			"on": "Mavo root",
+			"purpose": "Space-separated list of permissions (read, edit, add, delete, login, logout, save)"
+		},
+		{
+			"name": "mv-mode",
+			"on": "Any property",
+			"purpose": "`mv-mode=\"edit\"` is applied on every property when it’s being edited."
+		}
 	],
 	"generated-class": [
 		{}
