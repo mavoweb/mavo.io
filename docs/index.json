@@ -510,13 +510,15 @@
 			"path": "/docs/primer/#mv-app",
 			"link": "Primer",
 			"on": "Mavo root\t",
-			"purpose": "Allows you to assign an id to your app, which is used in a number of places. The element with this attribute is called the **Mavo root**."
+			"purpose": "Allows you to assign an id to your app, which is used in a number of places. The element with this attribute is called the **Mavo root**.",
+			"live": "no"
 		},
 		{
 			"attribute": "property",
 			"purpose": "Names elements that will be saved, edited, or used in [expressions](/docs/expressions). Elements with this attribute are called **Properties**.",
 			"path": "/docs/properties",
-			"link": "Properties"
+			"link": "Properties",
+			"live": "no"
 		},
 		{
 			"attribute": "mv-storage",
@@ -529,14 +531,16 @@
 		{
 			"attribute": "typeof",
 			"on": "Properties",
-			"purpose": "The value of this property element is not just an attribute or its text content, but the union of the values of the properties inside it. This is almost always inferred from the structure of your properties and added automatically, but you can use it to force an element to be a group, or to declare the type of the group (e.g. `typeof=\"Person\"`) for better semantic value. Elements with this attribute are called **groups**, objects, or complex properties."
+			"purpose": "The value of this property element is not just an attribute or its text content, but the union of the values of the properties inside it. This is almost always inferred from the structure of your properties and added automatically, but you can use it to force an element to be a group, or to declare the type of the group (e.g. `typeof=\"Person\"`) for better semantic value. Elements with this attribute are called **groups**, objects, or complex properties.",
+			"live": "no"
 		},
 		{
 			"attribute": "mv-multiple",
 			"on": "Properties",
 			"purpose": "Makes elements repeatable. Only has meaning on property elements, if there is no `property` attribute, one will be added automatically with a generated name like \"collection\". Elements with this attribute are called **Collections**.\t",
 			"path": "/docs/collections",
-			"link": "Collections"
+			"link": "Collections",
+			"live": "no"
 		}
 	],
 	"otherAttribute": [
@@ -577,13 +581,15 @@
 			"on": "Collections",
 			"purpose": "Values: `desc` or `asc`. Controls the order that new items are added to collections.",
 			"path": "/docs/collections",
-			"link": "Collections"
+			"link": "Collections",
+			"live": "no"
 		},
 		{
 			"attribute": "mv-expressions",
 			"purpose": "Change the expression syntax or disable [expressions](/docs/expressions) altogether.",
 			"path": "/docs/mavoscript",
-			"link": "MavoScript"
+			"link": "MavoScript",
+			"live": "no"
 		},
 		{
 			"attribute": "mv-value",
@@ -604,7 +610,8 @@
 			"on": "Collections",
 			"purpose": "Property names (space separated) of other collections that can move items to this one.",
 			"path": "/docs/collections",
-			"link": "Collections"
+			"link": "Collections",
+			"live": "no"
 		},
 		{
 			"attribute": "mv-edit",
@@ -648,7 +655,8 @@
 			"on": "Mavo root",
 			"purpose": "Control which buttons may appear in the toolbar and in what order, or hide the toolbar completely.",
 			"path": "/docs/ui/#bar",
-			"link": "UI-Customization"
+			"link": "UI-Customization",
+			"live": "no"
 		},
 		{
 			"attribute": "mv-path",
@@ -661,7 +669,8 @@
 			"on": "Properties",
 			"purpose": "If provided, Mavo will read data from this property **instead** of its real property name. Useful to read stored data properly after renaming a property in the HTML.",
 			"path": "/docs/migration/#mv-alias",
-			"link": "Migration"
+			"link": "Migration",
+			"live": "no"
 		}
 	],
 	"generatedAttribute": [
