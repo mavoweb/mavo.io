@@ -1,7 +1,7 @@
 @@include('_head-docs.html', {
 	"title": "Index of all attributes & classes"
 })
-<body class="language-markup" mv-app="docs" mv-storage="https://github.com/jwass91/mavo.io/docs/docs.json" mv-plugins="markdown" mv-github-commit-prefix="(Docs) ">
+<body class="language-markup" mv-app="docs" mv-storage="https://github.com/jwass91/mavo.io/docs/index.json" mv-plugins="markdown" mv-github-commit-prefix="(Docs) ">
 
 @@include('_header.html')
 
@@ -46,11 +46,11 @@ thead th:first-child {
 			</tr>
 		</thead>
 		<tbody>
-			<tr property="core-attribute" mv-multiple>
+			<tr property="coreAttribute" mv-multiple>
 				<td><code property="attribute"></code></td>
 				<td property="on" class="markdown"></td>
 				<td property="purpose" class="markdown"></td>
-				<td class="[if(live!='✓',if(live!='✘',semi,x))]" property='live' mv-edit="#live"></td>
+				<td class="[if(live!='yes',if(live!=null,semi,empty))]" property='live' mv-edit="#live"></td>
 				<td><a href="/docs/primer/#mv-app" property="path"><span property="link">url</span></a></td>
 			</tr>
 		</tbody>
@@ -77,143 +77,13 @@ thead th:first-child {
 			</tr>
 		</thead>
 		<tbody>
-			<tr property="other-attribute" mv-multiple>
+			<tr property="otherAttribute" mv-multiple>
 				<td><code property="attribute"></code></td>
 				<td property="on" class="markdown"></td>
 				<td property="purpose" class="markdown"></td>
-				<td class="[if(live!='✓',if(live!='✘',semi,x))]" property='live' mv-edit="#live"></td>
+				<td class="[if(live!='yes',if(live!=null,semi,empty))]" property='live' mv-edit="#live"></td>
 				<td><a href="/docs/primer/#mv-app" property="path"><span property="link">url</span></a></td>
 			</tr>
-
-			<!-- <tr>
-				<td><code>mv-attribute</code></td>
-				<td>Properties, elements with <code>mv-value</code></td>
-				<td>Override the defaults for which attribute holds the data for this element. For no attribute (element content), specify <code>"none"</code>.</td>
-				<td></td>
-				<td><a href="/docs/properties">Properties</a></td>
-
-			</tr>
-			<tr>
-				<td><code>mv-source</code></td>
-				<td>Mavo root</td>
-				<td>If specified, it is used instead of <code>mv-storage</code> for loading data. Useful when you want to read from one location and write to a different location. Same values as <code>mv-storage</code>.</td>
-				<td>✓</td>
-				<td><a href="/docs/storage">Storage</a></td>
-
-			</tr>
-			<tr>
-				<td><code>mv-init</code></td>
-				<td>Mavo root</td>
-				<td>If no data is stored, <code>mv-init</code> will be used to load initial data. Same values as <code>mv-storage</code>.</td>
-				<td>✓</td>
-				<td><a href="/docs/storage">Storage</a></td>
-
-			</tr>
-			<tr>
-				<td><code>mv-default</code></td>
-				<td>Properties</td>
-				<td>Sets the default value. If no value, the default value becomes the property content.</td>
-				<td>✓</td>
-				<td><a href="/docs/properties/#mv-default">Properties</a></td>
-
-			</tr>
-			<tr>
-				<td><code>mv-order</code></td>
-				<td>Collections</td>
-				<td>Values: <code>desc</code> or <code>asc</code>. Controls the order that new items are added to collections.</td>
-				<td></td>
-				<td><a href="/docs/collections/#mv-order">Collections</a></td>
-			</tr>
-			<tr>
-				<td><code>mv-expressions</code></td>
-				<td></td>
-				<td>Change the expression syntax or disable <a href="/docs/expressions">expressions</a> altogether.</td>
-				<td></td>
-				<td><a href="/docs/mavoscript">MavoScript</a></td>
-
-			</tr>
-			<tr>
-				<td><code>mv-value</code></td>
-				<td></td>
-				<td>Set an element's content to the result of an <a href="/docs/expressions">expression</a>.</td>
-
-				<td class="semi" title="Any value is interpreted as an expression">Expressions Only</td>
-				<td><a href="/docs/expressions">Expressions</a></td>
-			</tr>
-			<tr>
-				<td><code>mv-if</code></td>
-				<td></td>
-				<td>Remove an element from the DOM if the expression doesn't match and re-add it when it does.</td>
-
-				<td class="semi" title="Any value is interpreted as an expression">Expressions only</td>
-				<td><a href="/docs/expressions">Expressions</a></td>
-			</tr>
-			<tr>
-				<td><code>mv-accepts</code></td>
-				<td>Collections</td>
-				<td>Property names (space separated) of other collections that can move items to this one.</td>
-				<td></td>
-				<td><a href="/docs/collections/#mv-accepts">Collections</a></td>
-			</tr>
-			<tr>
-				<td><code>mv-edit</code></td>
-				<td>Properties</td>
-				<td>Customize how an element is edited by linking to another element, anywhere in the page.</td>
-
-				<td class="semi">Initially</td>
-				<td><a href="/docs/properties/#mv-edit">Properties</a></td>
-			</tr>
-			<tr>
-				<td><code>mv-edit-*</code></td>
-				<td>Properties</td>
-				<td>Any attributes set this way will be copied over to the property's editor.</td>
-
-				<td class="semi">Initially</td>
-				<td><a href="/docs/properties/#mv-edit-star">Properties</a></td>
-			</tr>
-			<tr>
-				<td><code>mv-mode</code></td>
-				<td></td>
-				<td>Control whether a property is in read or edit mode independently of the mode of the rest of the Mavo app.</td>
-				<td>✓</td>
-				<td><a href="/docs/properties/#mv-mode">Properties</a></td>
-			</tr>
-			<tr>
-				<td><code>mv-format</code></td>
-				<td>Mavo root</td>
-				<td>Render and edit only a subset of the remote data, by providing a (slash-separated) path to the data it handles.</td>
-
-				<td class="semi">Initially</td>
-				<td><a href="/docs/formats">Formats</a></td>
-			</tr>
-			<tr>
-				<td><code>mv-autosave</code></td>
-				<td>Mavo root</td>
-				<td>Save automatically when the data changes. Its value is the number of seconds to throttle saving, or 0 for no throttling (save immediately). The default throttling delay is 3 seconds, used when the attribute is specified without a value. Unless throttling is disabled, The Save button will still be present in the Mavo bar.</td>
-				<td class="semi">Initially</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td><code>mv-bar</code></td>
-				<td>Mavo root</td>
-				<td>Control which buttons may appear in the toolbar and in what order, or hide the toolbar completely.</td>
-				<td></td>
-				<td><a href="/docs/ui/#bar">UI Customization</a></td>
-			</tr>
-			<tr>
-				<td><code>mv-path</code></td>
-				<td>Properties</td>
-				<td>Render and edit only a subset of the stored data.</td>
-				<td class="semi">Initially</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td><code>mv-alias</code></td>
-				<td>Properties</td>
-				<td>If provided, Mavo will read data from this property <strong>instead</strong> of its real property name. Useful to read stored data properly after renaming a property in the HTML.</td>
-				<td></td>
-				<td><a href="/docs/migration/#mv-alias">Migration</a></td>
-			</tr> -->
 		</tbody>
 	</table>
 </section>
@@ -236,27 +106,6 @@ thead th:first-child {
 				<td property="on" class="markdown"></td>
 				<td property="purpose" class="markdown"></td>
 			</tr>
-
-			<!-- <tr>
-				<td><code>mv-autoedit</code></td>
-				<td>Mavo root</td>
-				<td>Mavo will start in edit mode (no need to click the Edit button). Useful for apps that are almost always in edit mode, but still need a read mode (if read mode is not needed at all, use <code>mv-mode</code> instead).</td>
-			</tr>
-			<tr>
-				<td><code>mv-fixed</code></td>
-				<td>Mavo toolbar</td>
-				<td>Style the toolbar as fixed at the top of the screen (always visible).</td>
-			</tr>
-			<tr>
-				<td><code>mv-logged-in</code></td>
-				<td></td>
-				<td>Only show element to logged in users.</td>
-			</tr>
-			<tr>
-				<td><code>mv-logged-out</code></td>
-				<td></td>
-				<td>Only show element to logged out users.</td>
-			</tr> -->
 		</tbody>
 	</table>
 </section>
@@ -274,33 +123,11 @@ thead th:first-child {
 			</tr>
 		</thead>
 		<tbody>
-			<tr property="generated-attribute" mv-multiple>
+			<tr property="generatedAttribute" mv-multiple>
 				<td><code property="name"></code></td>
 				<td property="on" class="markdown"></td>
 				<td property="purpose" class="markdown"></td>
 			</tr>
-
-			<!-- <tr>
-				<td><code>mv-progress</code></td>
-				<td>Mavo root</td>
-				<td>Only set when an event is in progress. Its value reflects what event, e.g. <code>"Saving"</code> or <code>"Loading"</code>.</td>
-			</tr>
-			<tr>
-				<td><code>mv-clicked</code></td>
-				<td>Properties that are <code>&lt;button></code> elements or have a <code>counter</code> class.</td>
-				<td>The number of times the button has been clicked.</td>
-			</tr>
-			<tr>
-				<td><code>mv-permissions</code></td>
-				<td>Mavo root</td>
-				<td>Space-separated list of permissions (read, edit, add, delete, login, logout, save)</td>
-			</tr>
-			<tr>
-				<td><code>mv-mode</code></td>
-				<td>Any property</td>
-				<td><code>mv-mode="edit"</code> is applied on every property when it’s being edited.</td>
-			</tr> -->
-			<!-- tr>td>code^td*2 -->
 		</tbody>
 	</table>
 </section>
@@ -317,47 +144,10 @@ thead th:first-child {
 			</tr>
 		</thead>
 		<tbody>
-			<tr property="generated-class" mv-multiple>
+			<tr property="generatedClass" mv-multiple>
 				<td><code property="name"></code></td>
-				<td property="set-on" class="markdown"></td>
+				<td property="setOn" class="markdown"></td>
 			</tr>
-
-			<!-- <tr>
-				<td><code>mv-target-within</code></td>
-				<td>Any element that matches the CSS <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:target"><code>:target</code></a> pseudo-class or contains an element that does.</td>
-			</tr>
-			<tr>
-				<td><code>mv-ui</code></td>
-				<td>Any (usually generated) controls for triggering Mavo-related actions</td>
-			</tr>
-			<tr>
-				<td><code>mv-empty</code></td>
-				<td>Properties with no value</td>
-			</tr>
-			<tr>
-				<td><code>mv-deleted</code></td>
-				<td>Collection items that have been deleted but the deletion is not yet saved.</td>
-			</tr>
-			<tr>
-				<td><code>mv-item-bar</code></td>
-				<td>Buttons on collection items for deleting, adding, rearranging.</td>
-			</tr>
-			<tr>
-				<td><code>mv-highlight</code></td>
-				<td>Highlighted collection items (e.g. when hovering over the delete button)</td>
-			</tr>
-			<tr>
-				<td><code>mv-bar</code></td>
-				<td>Mavo toolbar</td>
-			</tr>
-			<tr>
-				<td><code>mv-editor</code></td>
-				<td>Element used for editing a property</td>
-			</tr>
-			<tr>
-				<td><code>mv-popup</code></td>
-				<td>Generated popup for editing an attribute.</td>
-			</tr> -->
 		</tbody>
 	</table>
 </section>
@@ -376,37 +166,11 @@ thead th:first-child {
 			</tr>
 		</thead>
 		<tbody>
-			<tr property="css-attribute" mv-multiple>
+			<tr property="cssVariable" mv-multiple>
 				<td><code property="name"></code></td>
-				<td property="set-on" class="markdown"></td>
+				<td property="setOn" class="markdown"></td>
 				<td property="value" class="markdown"></td>
 			</tr>
-
-			<!-- <tr>
-				<td><code>--mv-mode</code></td>
-				<td>Elements with the <code>mv-mode</code> attribute</td>
-				<td><code>read</code> or <code>edit</code></td>
-			</tr>
-			<tr>
-				<td><code>--mv-item-left</code></td>
-				<td><a href="/docs/collections/#collectiion-editing-controls">Item bar</a> of <a href="/docs/collections/#simple-collections">simple collections</a></td>
-				<td>Horizontal distance of item from the left edge of its offset parent in px, e.g. <code>10px</code>.</td>
-			</tr>
-			<tr>
-				<td><code>--mv-item-top</code></td>
-				<td><a href="/docs/collections/#collectiion-editing-controls">Item bar</a> of <a href="/docs/collections/#simple-collections">simple collections</a></td>
-				<td>Vertical distance of item from the top edge of its offset parent in px, e.g. <code>10px</code>.</td>
-			</tr>
-			<tr>
-				<td><code>--mv-item-width</code></td>
-				<td><a href="/docs/collections/#collectiion-editing-controls">Item bar</a> of <a href="/docs/collections/#simple-collections">simple collections</a></td>
-				<td>Width of item in px, e.g. <code>100px</code>.</td>
-			</tr>
-			<tr>
-				<td><code>--mv-item-height</code></td>
-				<td><a href="/docs/collections/#collectiion-editing-controls">Item bar</a> of <a href="/docs/collections/#simple-collections">simple collections</a></td>
-				<td>Height of item in px, e.g. <code>100px</code>.</td>
-			</tr> -->
 		</tbody>
 	</table>
 
@@ -415,10 +179,10 @@ thead th:first-child {
 
 <div hidden>
 	<select property="live" id="live">
-		<option value="✘">✘</option>
-		<option value="✓">✓</option>
-		<option value="Initially">Initially</option>
-		<option value="Expressions only">Expressions only</option>
+		<option value="">✘</option>
+		<option value="yes">✓</option>
+		<option value="ini">Initially</option>
+		<option value="exp">Expressions only</option>
 	</select>
 </div>
 

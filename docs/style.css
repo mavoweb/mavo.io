@@ -195,9 +195,14 @@ table.attributes td:nth-last-child(2) {
     text-transform: uppercase;
     background: #ffee99;
     color: #b39500; }
-  table.attributes td:nth-last-child(2).x {
+  table.attributes td:nth-last-child(2).empty {
     background: #ffdbdb;
     color: #d65c5c; }
+  table.attributes td:nth-last-child(2):empty {
+    background: #ffdbdb;
+    color: #d65c5c; }
+    table.attributes td:nth-last-child(2):empty::before {
+      content: "✘"; }
 
 @keyframes target {}[mv-app="api"] [id="api"] h2, [mv-app="api"] [id="api"] h3, [mv-app="api"] [id="api"] h4, [mv-app="api"] [id="api"] p,
 [mv-app="functions"] [id="functions"] h2,
