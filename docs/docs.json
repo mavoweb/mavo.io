@@ -526,7 +526,7 @@
 		{
 			"attribute": "mv-attribute",
 			"on": "Properties, elements with `mv-value`",
-			"live": "✓"
+			"live": "✘"
 		},
 		{
 			"attribute": "mv-source",
@@ -546,34 +546,34 @@
 		{
 			"attribute": "mv-order",
 			"on": "Collections",
-			"live": "✓"
+			"live": "✘"
 		},
 		{
 			"attribute": "mv-expressions",
-			"live": "✓"
+			"live": "✘"
 		},
 		{
 			"attribute": "mv-value",
-			"live": "✓"
+			"live": "Expressions only"
 		},
 		{
 			"attribute": "mv-if",
-			"live": "✓"
+			"live": "Expressions only"
 		},
 		{
 			"attribute": "mv-accepts",
 			"on": "Collections",
-			"live": "✓"
+			"live": "✘"
 		},
 		{
 			"attribute": "mv-edit",
 			"on": "Properties",
-			"live": "✓"
+			"live": "Initially"
 		},
 		{
 			"attribute": "mv-edit-*",
 			"on": "Properties",
-			"live": "✓"
+			"live": "Initially"
 		},
 		{
 			"attribute": "mv-mode",
@@ -582,27 +582,27 @@
 		{
 			"attribute": "mv-format",
 			"on": "Mavo root",
-			"live": "✓"
+			"live": "Initially"
 		},
 		{
 			"attribute": "mv-autosave",
 			"on": "Mavo root",
-			"live": "✓"
+			"live": "Initially"
 		},
 		{
 			"attribute": "mv-bar",
 			"on": "Mavo root",
-			"live": "✓"
+			"live": "✘"
 		},
 		{
 			"attribute": "mv-path",
 			"on": "Properties",
-			"live": "✓"
+			"live": "Initially"
 		},
 		{
 			"attribute": "mv-alias",
 			"on": "Properties",
-			"live": "✓"
+			"live": "✘"
 		}
 	],
 	"class": [
