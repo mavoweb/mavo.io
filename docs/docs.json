@@ -733,7 +733,31 @@
 		}
 	],
 	"css-attribute": [
-		{}
+		{
+			"name": "--mv-mode",
+			"set-on": "Elements with the `mv-mode` attribute",
+			"value": "`read` or `edit`"
+		},
+		{
+			"name": "--mv-item-left",
+			"set-on": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)",
+			"value": "Horizontal distance of item from the left edge of its offset parent in px, e.g. `10px`."
+		},
+		{
+			"name": "--mv-item-top",
+			"set-on": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)",
+			"value": "Vertical distance of item from the top edge of its offset parent in px, e.g. `10px`."
+		},
+		{
+			"name": "--mv-item-width",
+			"set-on": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)",
+			"value": "Width of item in px, e.g. `100px`."
+		},
+		{
+			"name": "--mv-item-height",
+			"set-on": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)",
+			"value": "Height of item in px, e.g. `100px`"
+		}
 	],
 	"live": "✓"
 }
