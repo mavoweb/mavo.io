@@ -525,22 +525,27 @@
 	"other-attribute": [
 		{
 			"attribute": "mv-attribute",
+			"on": "Properties, elements with `mv-value`",
 			"live": "✓"
 		},
 		{
 			"attribute": "mv-source",
+			"on": "Mavo root",
 			"live": "✓"
 		},
 		{
 			"attribute": "mv-init",
+			"on": "Mavo root",
 			"live": "✓"
 		},
 		{
 			"attribute": "mv-default",
+			"on": "Properties",
 			"live": "✓"
 		},
 		{
 			"attribute": "mv-order",
+			"on": "Collections",
 			"live": "✓"
 		},
 		{
@@ -557,14 +562,17 @@
 		},
 		{
 			"attribute": "mv-accepts",
+			"on": "Collections",
 			"live": "✓"
 		},
 		{
 			"attribute": "mv-edit",
+			"on": "Properties",
 			"live": "✓"
 		},
 		{
 			"attribute": "mv-edit-*",
+			"on": "Properties",
 			"live": "✓"
 		},
 		{
@@ -573,22 +581,27 @@
 		},
 		{
 			"attribute": "mv-format",
+			"on": "Mavo root",
 			"live": "✓"
 		},
 		{
 			"attribute": "mv-autosave",
+			"on": "Mavo root",
 			"live": "✓"
 		},
 		{
 			"attribute": "mv-bar",
+			"on": "Mavo root",
 			"live": "✓"
 		},
 		{
 			"attribute": "mv-path",
+			"on": "Properties",
 			"live": "✓"
 		},
 		{
 			"attribute": "mv-alias",
+			"on": "Properties",
 			"live": "✓"
 		}
 	],
