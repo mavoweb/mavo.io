@@ -517,13 +517,13 @@
 			"purpose": "Names elements that will be saved, edited, or used in [expressions](/docs/expressions). Elements with this attribute are called **Properties**.",
 			"path": "/docs/properties",
 			"link": "Properties",
-			"live": "✓"
+			"live": "yes"
 		},
 		{
 			"attribute": "mv-storage",
 			"on": "Mavo root, properties",
 			"purpose": "Tells Mavo where data is stored. It’s used on the Mavo root with any of the accepted values or optionally on individual properties to prevent them from being stored (`mv-storage=\"none\"`).",
-			"live": "✓",
+			"live": "yes",
 			"path": "/docs/storage",
 			"link": "Storage"
 		},
