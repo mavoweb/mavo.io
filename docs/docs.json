@@ -524,6 +524,71 @@
 	],
 	"other-attribute": [
 		{
+			"attribute": "mv-attribute",
+			"live": "✓"
+		},
+		{
+			"attribute": "mv-source",
+			"live": "✓"
+		},
+		{
+			"attribute": "mv-init",
+			"live": "✓"
+		},
+		{
+			"attribute": "mv-default",
+			"live": "✓"
+		},
+		{
+			"attribute": "mv-order",
+			"live": "✓"
+		},
+		{
+			"attribute": "mv-expressions",
+			"live": "✓"
+		},
+		{
+			"attribute": "mv-value",
+			"live": "✓"
+		},
+		{
+			"attribute": "mv-if",
+			"live": "✓"
+		},
+		{
+			"attribute": "mv-accepts",
+			"live": "✓"
+		},
+		{
+			"attribute": "mv-edit",
+			"live": "✓"
+		},
+		{
+			"attribute": "mv-edit-*",
+			"live": "✓"
+		},
+		{
+			"attribute": "mv-mode",
+			"live": "✓"
+		},
+		{
+			"attribute": "mv-format",
+			"live": "✓"
+		},
+		{
+			"attribute": "mv-autosave",
+			"live": "✓"
+		},
+		{
+			"attribute": "mv-bar",
+			"live": "✓"
+		},
+		{
+			"attribute": "mv-path",
+			"live": "✓"
+		},
+		{
+			"attribute": "mv-alias",
 			"live": "✓"
 		}
 	],
