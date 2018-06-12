@@ -526,30 +526,36 @@
 		{
 			"attribute": "mv-attribute",
 			"on": "Properties, elements with `mv-value`",
+			"purpose": "Override the defaults for which attribute holds the data for this element. For no attribute (element content), specify `\"none\"`.",
 			"live": "✘"
 		},
 		{
 			"attribute": "mv-source",
 			"on": "Mavo root",
+			"purpose": "If specified, it is used instead of `mv-storage` for loading data. Useful when you want to read from one location and write to a different location. Same values as `mv-storage`.",
 			"live": "✓"
 		},
 		{
 			"attribute": "mv-init",
 			"on": "Mavo root",
+			"purpose": "If no data is stored, `mv-init` will be used to load initial data. Same values as `mv-storage`.",
 			"live": "✓"
 		},
 		{
 			"attribute": "mv-default",
 			"on": "Properties",
+			"purpose": "Sets the default value. If no value, the default value becomes the property content.",
 			"live": "✓"
 		},
 		{
 			"attribute": "mv-order",
 			"on": "Collections",
+			"purpose": "Values: `desc` or `asc`. Controls the order that new items are added to collections.",
 			"live": "✘"
 		},
 		{
 			"attribute": "mv-expressions",
+			"purpose": "Change the expression syntax or disable expressions altogether.",
 			"live": "✘"
 		},
 		{
