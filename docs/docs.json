@@ -520,7 +520,8 @@
 	],
 	"other-attribute": [
 		{
-			"readMore": "/docs/primer/#mv-app"
+			"readMore": "/docs/primer/#mv-app",
+			"live": "✘"
 		}
 	],
 	"class": [
@@ -534,5 +535,6 @@
 	],
 	"css-attribute": [
 		{}
-	]
+	],
+	"live": "✓"
 }
