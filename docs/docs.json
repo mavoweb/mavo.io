@@ -653,7 +653,24 @@
 		}
 	],
 	"class": [
-		{}
+		{
+			"name": "mv-autoedit",
+			"on": "Mavo root",
+			"purpose": "Mavo root\tMavo will start in edit mode (no need to click the Edit button). Useful for apps that are almost always in edit mode, but still need a read mode (if read mode is not needed at all, use `mv-mode` instead)."
+		},
+		{
+			"name": "mv-fixed",
+			"on": "Mavo toolbar",
+			"purpose": "Style the toolbar as fixed at the top of the screen (always visible)."
+		},
+		{
+			"name": "mv-logged-in",
+			"purpose": "Only show element to logged in users."
+		},
+		{
+			"name": "mv-logged-out",
+			"purpose": "Only show element to logged out users."
+		}
 	],
 	"generated-attribute": [
 		{}
