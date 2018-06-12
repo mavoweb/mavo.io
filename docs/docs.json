@@ -510,8 +510,7 @@
 			"path": "/docs/primer/#mv-app",
 			"link": "Primer",
 			"on": "Mavo root\t",
-			"purpose": "Allows you to assign an id to your app, which is used in a number of places. The element with this attribute is called the **Mavo root**.",
-			"live": "✓"
+			"purpose": "Allows you to assign an id to your app, which is used in a number of places. The element with this attribute is called the **Mavo root**."
 		},
 		{
 			"attribute": "property",
