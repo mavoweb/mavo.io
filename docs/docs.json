@@ -483,21 +483,42 @@
 			]
 		}
 	],
-	"core-attribute": [
+	"class": [
+		{
+			"name": "mv-autoedit",
+			"on": "Mavo root",
+			"purpose": "Mavo root\tMavo will start in edit mode (no need to click the Edit button). Useful for apps that are almost always in edit mode, but still need a read mode (if read mode is not needed at all, use `mv-mode` instead)."
+		},
+		{
+			"name": "mv-fixed",
+			"on": "Mavo toolbar",
+			"purpose": "Style the toolbar as fixed at the top of the screen (always visible)."
+		},
+		{
+			"name": "mv-logged-in",
+			"purpose": "Only show element to logged in users."
+		},
+		{
+			"name": "mv-logged-out",
+			"purpose": "Only show element to logged out users."
+		}
+	],
+	"live": "✓",
+	"coreAttribute": [
 		{
 			"attribute": "mv-app",
 			"path": "/docs/primer/#mv-app",
 			"link": "Primer",
 			"on": "Mavo root\t",
 			"purpose": "Allows you to assign an id to your app, which is used in a number of places. The element with this attribute is called the **Mavo root**.",
-			"live": "✘"
+			"live": "✓"
 		},
 		{
 			"attribute": "property",
 			"purpose": "Names elements that will be saved, edited, or used in [expressions](/docs/expressions). Elements with this attribute are called **Properties**.",
 			"path": "/docs/properties",
 			"link": "Properties",
-			"live": "✘"
+			"live": "✓"
 		},
 		{
 			"attribute": "mv-storage",
@@ -511,7 +532,7 @@
 			"attribute": "typeof",
 			"on": "Properties",
 			"purpose": "The value of this property element is not just an attribute or its text content, but the union of the values of the properties inside it. This is almost always inferred from the structure of your properties and added automatically, but you can use it to force an element to be a group, or to declare the type of the group (e.g. `typeof=\"Person\"`) for better semantic value. Elements with this attribute are called **groups**, objects, or complex properties.",
-			"live": "✘"
+			"live": "✓"
 		},
 		{
 			"attribute": "mv-multiple",
@@ -519,15 +540,15 @@
 			"purpose": "Makes elements repeatable. Only has meaning on property elements, if there is no `property` attribute, one will be added automatically with a generated name like \"collection\". Elements with this attribute are called **Collections**.\t",
 			"path": "/docs/collections",
 			"link": "Collections",
-			"live": "✘"
+			"live": "✓"
 		}
 	],
-	"other-attribute": [
+	"otherAttribute": [
 		{
 			"attribute": "mv-attribute",
 			"on": "Properties, elements with `mv-value`",
 			"purpose": "Override the defaults for which attribute holds the data for this element. For no attribute (element content), specify `\"none\"`.",
-			"live": "✘",
+			"live": "✓",
 			"path": "/docs/properties",
 			"link": "Properties"
 		},
@@ -559,14 +580,14 @@
 			"attribute": "mv-order",
 			"on": "Collections",
 			"purpose": "Values: `desc` or `asc`. Controls the order that new items are added to collections.",
-			"live": "✘",
+			"live": "✓",
 			"path": "/docs/collections",
 			"link": "Collections"
 		},
 		{
 			"attribute": "mv-expressions",
 			"purpose": "Change the expression syntax or disable [expressions](/docs/expressions) altogether.",
-			"live": "✘",
+			"live": "✓",
 			"path": "/docs/mavoscript",
 			"link": "MavoScript"
 		},
@@ -588,7 +609,7 @@
 			"attribute": "mv-accepts",
 			"on": "Collections",
 			"purpose": "Property names (space separated) of other collections that can move items to this one.",
-			"live": "✘",
+			"live": "✓",
 			"path": "/docs/collections",
 			"link": "Collections"
 		},
@@ -633,7 +654,7 @@
 			"attribute": "mv-bar",
 			"on": "Mavo root",
 			"purpose": "Control which buttons may appear in the toolbar and in what order, or hide the toolbar completely.",
-			"live": "✘",
+			"live": "✓",
 			"path": "/docs/ui/#bar",
 			"link": "UI-Customization"
 		},
@@ -647,32 +668,12 @@
 			"attribute": "mv-alias",
 			"on": "Properties",
 			"purpose": "If provided, Mavo will read data from this property **instead** of its real property name. Useful to read stored data properly after renaming a property in the HTML.",
-			"live": "✘",
+			"live": "✓",
 			"path": "/docs/migration/#mv-alias",
 			"link": "Migration"
 		}
 	],
-	"class": [
-		{
-			"name": "mv-autoedit",
-			"on": "Mavo root",
-			"purpose": "Mavo root\tMavo will start in edit mode (no need to click the Edit button). Useful for apps that are almost always in edit mode, but still need a read mode (if read mode is not needed at all, use `mv-mode` instead)."
-		},
-		{
-			"name": "mv-fixed",
-			"on": "Mavo toolbar",
-			"purpose": "Style the toolbar as fixed at the top of the screen (always visible)."
-		},
-		{
-			"name": "mv-logged-in",
-			"purpose": "Only show element to logged in users."
-		},
-		{
-			"name": "mv-logged-out",
-			"purpose": "Only show element to logged out users."
-		}
-	],
-	"generated-attribute": [
+	"generatedAttribute": [
 		{
 			"name": "mv-progress",
 			"on": "Mavo root",
@@ -694,70 +695,69 @@
 			"purpose": "`mv-mode=\"edit\"` is applied on every property when it’s being edited."
 		}
 	],
-	"generated-class": [
+	"generatedClass": [
 		{
 			"name": "mv-target-within",
-			"set-on": "Any element that matches the CSS `:target` pseudo-class or contains an element that does."
+			"setOn": "Any element that matches the CSS `:target` pseudo-class or contains an element that does."
 		},
 		{
 			"name": "mv-ui",
-			"set-on": "Any (usually generated) controls for triggering Mavo-related actions"
+			"setOn": "Any (usually generated) controls for triggering Mavo-related actions"
 		},
 		{
 			"name": "mv-empty",
-			"set-on": "Properties with no value"
+			"setOn": "Properties with no value"
 		},
 		{
 			"name": "mv-deleted",
-			"set-on": "Collection items that have been deleted but the deletion is not yet saved"
+			"setOn": "Collection items that have been deleted but the deletion is not yet saved"
 		},
 		{
 			"name": "mv-item-bar",
-			"set-on": "Buttons on collection items for deleting, adding, rearranging."
+			"setOn": "Buttons on collection items for deleting, adding, rearranging."
 		},
 		{
 			"name": "mv-highlight",
-			"set-on": "Highlighted collection items (e.g. when hovering over the delete button)"
+			"setOn": "Highlighted collection items (e.g. when hovering over the delete button)"
 		},
 		{
 			"name": "mv-bar",
-			"set-on": "Mavo toolbar"
+			"setOn": "Mavo toolbar"
 		},
 		{
 			"name": "mv-editor",
-			"set-on": "Element used for editing a property"
+			"setOn": "Element used for editing a property"
 		},
 		{
 			"name": "mv-popup",
-			"set-on": "Generated popup for editing an attribute."
+			"setOn": "Generated popup for editing an attribute."
 		}
 	],
-	"css-attribute": [
+	"cssVariable": [
 		{
 			"name": "--mv-mode",
-			"set-on": "Elements with the `mv-mode` attribute",
-			"value": "`read` or `edit`"
+			"value": "`read` or `edit`",
+			"setOn": "Elements with the `mv-mode` attribute"
 		},
 		{
 			"name": "--mv-item-left",
-			"set-on": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)",
-			"value": "Horizontal distance of item from the left edge of its offset parent in px, e.g. `10px`."
+			"value": "Horizontal distance of item from the left edge of its offset parent in px, e.g. `10px`.",
+			"setOn": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
 		},
 		{
 			"name": "--mv-item-top",
-			"set-on": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)",
-			"value": "Vertical distance of item from the top edge of its offset parent in px, e.g. `10px`."
+			"value": "Vertical distance of item from the top edge of its offset parent in px, e.g. `10px`.",
+			"setOn": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
 		},
 		{
 			"name": "--mv-item-width",
-			"set-on": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)",
-			"value": "Width of item in px, e.g. `100px`."
+			"value": "Width of item in px, e.g. `100px`.",
+			"setOn": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
 		},
 		{
 			"name": "--mv-item-height",
-			"set-on": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)",
-			"value": "Height of item in px, e.g. `100px`"
+			"value": "Height of item in px, e.g. `100px`",
+			"setOn": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
 		}
-	],
-	"live": "✓"
+	]
 }
