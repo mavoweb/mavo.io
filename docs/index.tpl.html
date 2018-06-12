@@ -1,7 +1,7 @@
 @@include('_head-docs.html', {
 	"title": "Index of all attributes & classes"
 })
-<body class="language-markup">
+<body class="language-markup" mv-app="docs" mv-storage="https://github.com/jwass91/mavo.io/docs/docs.json" mv-plugins="markdown" mv-github-commit-prefix="(Docs) ">
 
 @@include('_header.html')
 
@@ -21,6 +21,7 @@ thead th:first-child {
 </style>
 
 <section id="intro">
+	<div class="mv-bar mv-ui mv-fixed"></div>
 	<p>
 		This is an index of all Mavo attributes and classes, with links to their respective pages in the documentation. New to Mavo? Read the <a href="primer">Primer</a> first!
 	</p>
@@ -45,46 +46,13 @@ thead th:first-child {
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td><code>mv-app</code></td>
-				<td>Mavo root</td>
-				<td>Allows you to assign an id to your app, which is used in a number of places. The element with this attribute is called the <strong>Mavo root</strong>.</td>
-				<td></td>
-				<td><a href="/docs/primer/#mv-app">Primer</a></td>
+			<tr property="core-attribute" mv-multiple>
+				<td><code property="attribute"></code></td>
+				<td property="on" class="markdown"></td>
+				<td property="purpose" class="markdown"></td>
+				<td class="[if(live!='✓',if(live!='✘',semi,x))]" property='live' mv-edit="#live"></td>
+				<td><a href="/docs/primer/#mv-app" property="path"><span property="link">url</span></a></td>
 			</tr>
-			<tr>
-				<td><code>property</code></td>
-				<td></td>
-				<td>Names elements that will be saved, edited, or used in <a href="/docs/expressions">expressions</a>. Elements with this attribute are called <strong>Properties</strong>.</td>
-
-				<td></td>
-				<td><a href="/docs/properties">Properties</a></td>
-			</tr>
-			<tr>
-				<td><code>mv-storage</code></td>
-				<td>Mavo root, properties</td>
-				<td>Tells Mavo where data is stored. It’s used on the Mavo root with any of the accepted values or optionally on individual properties to prevent them from being stored (<code>mv-storage="none"</code>).</td>
-				<td>✓</td>
-				<td><a href="/docs/storage">Storage</a></td>
-			</tr>
-			<tr>
-				<td><code>typeof</code></td>
-				<td>Properties</td>
-				<td>The value of this property element is not just an attribute or its text content, but the union of the values of the properties inside it.
-					This is almost always inferred from the structure of your properties and added automatically, but you can use it to force an element to be a group, or to declare the type of the group (e.g. <code>typeof="Person"</code>) for better semantic value.
-					Elements with this attribute are called <strong>groups</strong>, objects, or complex properties.</td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td><code>mv-multiple</code></td>
-				<td>Properties</td>
-				<td>Makes elements repeatable. Only has meaning on property elements, if there is no <code>property</code> attribute, one will be added automatically with a generated name like "collection".
-					Elements with this attribute are called <strong>Collections</strong>.</td>
-				<td></td>
-				<td><a href="/docs/collections">Collections</a></td>
-			</tr>
-
 		</tbody>
 	</table>
 </section>
@@ -109,7 +77,15 @@ thead th:first-child {
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
+			<tr property="other-attribute" mv-multiple>
+				<td><code property="attribute"></code></td>
+				<td property="on" class="markdown"></td>
+				<td property="purpose" class="markdown"></td>
+				<td class="[if(live!='✓',if(live!='✘',semi,x))]" property='live' mv-edit="#live"></td>
+				<td><a href="/docs/primer/#mv-app" property="path"><span property="link">url</span></a></td>
+			</tr>
+
+			<!-- <tr>
 				<td><code>mv-attribute</code></td>
 				<td>Properties, elements with <code>mv-value</code></td>
 				<td>Override the defaults for which attribute holds the data for this element. For no attribute (element content), specify <code>"none"</code>.</td>
@@ -237,7 +213,7 @@ thead th:first-child {
 				<td>If provided, Mavo will read data from this property <strong>instead</strong> of its real property name. Useful to read stored data properly after renaming a property in the HTML.</td>
 				<td></td>
 				<td><a href="/docs/migration/#mv-alias">Migration</a></td>
-			</tr>
+			</tr> -->
 		</tbody>
 	</table>
 </section>
@@ -255,7 +231,13 @@ thead th:first-child {
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
+			<tr property="class" mv-multiple>
+				<td><code property="name"></code></td>
+				<td property="on" class="markdown"></td>
+				<td property="purpose" class="markdown"></td>
+			</tr>
+
+			<!-- <tr>
 				<td><code>mv-autoedit</code></td>
 				<td>Mavo root</td>
 				<td>Mavo will start in edit mode (no need to click the Edit button). Useful for apps that are almost always in edit mode, but still need a read mode (if read mode is not needed at all, use <code>mv-mode</code> instead).</td>
@@ -274,7 +256,7 @@ thead th:first-child {
 				<td><code>mv-logged-out</code></td>
 				<td></td>
 				<td>Only show element to logged out users.</td>
-			</tr>
+			</tr> -->
 		</tbody>
 	</table>
 </section>
@@ -292,7 +274,13 @@ thead th:first-child {
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
+			<tr property="generated-attribute" mv-multiple>
+				<td><code property="name"></code></td>
+				<td property="on" class="markdown"></td>
+				<td property="purpose" class="markdown"></td>
+			</tr>
+
+			<!-- <tr>
 				<td><code>mv-progress</code></td>
 				<td>Mavo root</td>
 				<td>Only set when an event is in progress. Its value reflects what event, e.g. <code>"Saving"</code> or <code>"Loading"</code>.</td>
@@ -311,7 +299,7 @@ thead th:first-child {
 				<td><code>mv-mode</code></td>
 				<td>Any property</td>
 				<td><code>mv-mode="edit"</code> is applied on every property when it’s being edited.</td>
-			</tr>
+			</tr> -->
 			<!-- tr>td>code^td*2 -->
 		</tbody>
 	</table>
@@ -329,7 +317,12 @@ thead th:first-child {
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
+			<tr property="generated-class" mv-multiple>
+				<td><code property="name"></code></td>
+				<td property="set-on" class="markdown"></td>
+			</tr>
+
+			<!-- <tr>
 				<td><code>mv-target-within</code></td>
 				<td>Any element that matches the CSS <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:target"><code>:target</code></a> pseudo-class or contains an element that does.</td>
 			</tr>
@@ -364,7 +357,7 @@ thead th:first-child {
 			<tr>
 				<td><code>mv-popup</code></td>
 				<td>Generated popup for editing an attribute.</td>
-			</tr>
+			</tr> -->
 		</tbody>
 	</table>
 </section>
@@ -383,7 +376,13 @@ thead th:first-child {
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
+			<tr property="css-attribute" mv-multiple>
+				<td><code property="name"></code></td>
+				<td property="set-on" class="markdown"></td>
+				<td property="value" class="markdown"></td>
+			</tr>
+
+			<!-- <tr>
 				<td><code>--mv-mode</code></td>
 				<td>Elements with the <code>mv-mode</code> attribute</td>
 				<td><code>read</code> or <code>edit</code></td>
@@ -407,10 +406,21 @@ thead th:first-child {
 				<td><code>--mv-item-height</code></td>
 				<td><a href="/docs/collections/#collectiion-editing-controls">Item bar</a> of <a href="/docs/collections/#simple-collections">simple collections</a></td>
 				<td>Height of item in px, e.g. <code>100px</code>.</td>
-			</tr>
+			</tr> -->
 		</tbody>
 	</table>
+
+
 </section>
+
+<div hidden>
+	<select property="live" id="live">
+		<option value="✘">✘</option>
+		<option value="✓">✓</option>
+		<option value="Initially">Initially</option>
+		<option value="Expressions only">Expressions only</option>
+	</select>
+</div>
 
 @@include('_footer-docs.html')
 
