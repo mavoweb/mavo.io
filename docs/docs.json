@@ -490,6 +490,10 @@
 			"link": "Primer",
 			"on": "Mavo root\t",
 			"purpose": "Allows you to assign an id to your app, which is used in a number of places. The element with this attribute is called the **Mavo root**."
+		},
+		{
+			"attribute": "property",
+			"purpose": "Names elements that will be saved, edited, or used in [expressions](https://mavo.io). Elements with this attribute are called **Properties**."
 		}
 	],
 	"other-attribute": [
