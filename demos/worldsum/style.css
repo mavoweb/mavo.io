@@ -1,0 +1,124 @@
+* {
+  margin: 0; }
+
+html {
+  background: #c6cad2; }
+  @media print {
+    html {
+      background: none; } }
+
+body {
+  padding: 1em;
+  font: 300 130%/1.5 'Helvetica Neue', sans-serif;
+  text-align: center; }
+  @media (max-width: 600px) {
+    body {
+      width: auto;
+      margin: 1em; } }
+
+h1 {
+  font-weight: 300;
+  font-size: 250%;
+  background: #f1f2f4;
+  padding: 1rem; }
+
+a {
+  color: inherit; }
+  a:not(:hover) {
+    text-decoration: none; }
+
+article[property=sum] {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  margin: 1em;
+  max-width: 30em;
+  background: white;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6, 0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6, 0 17px 2px -6px rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  text-align: left; }
+
+table {
+  width: 100%;
+  border-spacing: 0; }
+
+th, td {
+  padding: .5rem .8rem;
+  font-weight: inherit;
+  text-align: inherit;
+  white-space: nowrap; }
+
+thead {
+  background: #e2e4e9;
+  font-weight: bold; }
+  thead th:last-child {
+    text-align: right; }
+  thead select {
+    font: inherit; }
+
+tbody th {
+  width: 80%; }
+
+tbody td:last-child {
+  text-align: right; }
+
+tbody th, tbody td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+  tbody th.mv-empty[mv-mode=edit], tbody td.mv-empty[mv-mode=edit] {
+    border-bottom-color: rgba(0, 0, 0, 0.2); }
+
+tfoot {
+  font-size: 200%; }
+  tfoot th {
+    opacity: .5; }
+
+button {
+  cursor: pointer; }
+
+button.mv-add-sum {
+  font-size: 150%;
+  margin-bottom: .5em;
+  border: 0; }
+
+@media print {
+  body > header {
+    display: none; } }
+
+.show-all,
+button.mv-add-sum.mv-add-sum {
+  display: block;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: .5em 1em;
+  margin: 1em auto;
+  border-radius: .3em;
+  background: white;
+  font-weight: bold;
+  font-size: 120%;
+  line-height: 1; }
+  @media print {
+    .show-all,
+    button.mv-add-sum.mv-add-sum {
+      display: none; } }
+  .show-all:hover,
+  button.mv-add-sum.mv-add-sum:hover {
+    text-decoration: none;
+    background: #f06;
+    color: white; }
+
+button.mv-add-item {
+  width: 100%;
+  padding: .3em;
+  box-sizing: border-box;
+  border: 0;
+  background: #95bf40;
+  font: inherit;
+  font-weight: bold;
+  color: white; }
+  button.mv-add-item:not(:hover):not(:focus) {
+    opacity: .5; }
+
+body:not(.mv-target-within) .show-all {
+  display: none; }
+
+/*# sourceMappingURL=style.css.map */
