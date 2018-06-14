@@ -1,7 +1,7 @@
 @@include('_head-docs.html', {
 	"title": "Index of all attributes & classes"
 })
-<body class="language-markup" mv-app="docs" mv-storage="https://github.com/jwass91/mavo.io/docs/index.json" mv-plugins="markdown" mv-github-commit-prefix="(Docs) ">
+<body class="language-markup" mv-app="docs" mv-storage="https://github.com/mavoweb/mavo.io/docs/index.json" mv-plugins="markdown" mv-github-commit-prefix="(Docs) ">
 
 @@include('_header.html')
 
@@ -50,7 +50,7 @@ thead th:first-child {
 				<td><code property="attribute"></code></td>
 				<td property="on" class="markdown"></td>
 				<td property="purpose" class="markdown"></td>
-				<td class="[if(live!='yes',if(live!=null,semi,empty))]" property='live' mv-edit="#live"></td>
+				<td class="[if(live!='yes',if(live,semi,empty))]" property='live' mv-edit="#live"></td>
 				<td><a href="/docs/primer/#mv-app" property="path"><span property="link">url</span></a></td>
 			</tr>
 		</tbody>
@@ -81,7 +81,7 @@ thead th:first-child {
 				<td><code property="attribute"></code></td>
 				<td property="on" class="markdown"></td>
 				<td property="purpose" class="markdown"></td>
-				<td class="[if(live!='yes',if(live!=null,semi,empty))]" property='live' mv-edit="#live"></td>
+				<td class="[if(live!='yes',if(live,semi,empty))]" property='live' mv-edit="#live"></td>
 				<td><a href="/docs/primer/#mv-app" property="path"><span property="link">url</span></a></td>
 			</tr>
 		</tbody>

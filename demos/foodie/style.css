@@ -194,8 +194,6 @@ body {
     text-align: left; }
   body #data:empty {
     visibility: hidden; }
-  body ::-webkit-input-placeholder {
-    color: rgba(117, 117, 117, 0.6); }
   body :-ms-input-placeholder {
     color: rgba(117, 117, 117, 0.6); }
   body ::placeholder {

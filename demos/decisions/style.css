@@ -163,9 +163,6 @@ footer {
   margin-top: 2em;
   color: #6a707c; }
 
-::-webkit-input-placeholder {
-  color: rgba(117, 117, 117, 0.6); }
-
 :-ms-input-placeholder {
   color: rgba(117, 117, 117, 0.6); }
 

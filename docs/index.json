@@ -19,7 +19,6 @@
 			"purpose": "Only show element to logged out users."
 		}
 	],
-	"live": "✓",
 	"coreAttribute": [
 		{
 			"attribute": "mv-app",
