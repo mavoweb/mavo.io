@@ -68,7 +68,6 @@ body > header + h2 {
       display: none; } }
 
 #summary {
-  page-break-inside: avoid;
   break-inside: avoid; }
   #summary dt {
     font-size: 120%;
@@ -195,6 +194,9 @@ table.attributes td:nth-last-child(2) {
     text-transform: uppercase;
     background: #ffee99;
     color: #b39500; }
+  table.attributes td:nth-last-child(2).empty {
+    background: #ffdbdb;
+    color: #d65c5c; }
   table.attributes td:nth-last-child(2):empty {
     background: #ffdbdb;
     color: #d65c5c; }
