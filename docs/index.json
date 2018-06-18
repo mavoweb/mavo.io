@@ -21,20 +21,20 @@
 	],
 	"coreAttribute": [
 		{
-			"attribute": "mv-app",
+			"name": "mv-app",
 			"path": "/docs/primer/#mv-app",
 			"link": "Primer",
 			"on": "Mavo root\t",
 			"purpose": "Allows you to assign an id to your app, which is used in a number of places. The element with this attribute is called the **Mavo root**."
 		},
 		{
-			"attribute": "property",
+			"name": "property",
 			"purpose": "Names elements that will be saved, edited, or used in [expressions](/docs/expressions). Elements with this attribute are called **Properties**.",
 			"path": "/docs/properties",
 			"link": "Properties"
 		},
 		{
-			"attribute": "mv-storage",
+			"name": "mv-storage",
 			"on": "Mavo root, properties",
 			"purpose": "Tells Mavo where data is stored. It’s used on the Mavo root with any of the accepted values or optionally on individual properties to prevent them from being stored (`mv-storage=\"none\"`).",
 			"live": "yes",
@@ -42,28 +42,28 @@
 			"link": "Storage"
 		},
 		{
-			"attribute": "typeof",
+			"name": "typeof",
 			"on": "Properties",
 			"purpose": "The value of this property element is not just an attribute or its text content, but the union of the values of the properties inside it. This is almost always inferred from the structure of your properties and added automatically, but you can use it to force an element to be a group, or to declare the type of the group (e.g. `typeof=\"Person\"`) for better semantic value. Elements with this attribute are called **groups**, objects, or complex properties."
 		},
 		{
-			"attribute": "mv-multiple",
+			"name": "mv-multiple",
 			"on": "Properties",
 			"purpose": "Makes elements repeatable. Only has meaning on property elements, if there is no `property` attribute, one will be added automatically with a generated name like \"collection\". Elements with this attribute are called **Collections**.\t",
 			"path": "/docs/collections",
 			"link": "Collections"
 		}
 	],
-	"otherAttribute": [
+	"attribute": [
 		{
-			"attribute": "mv-attribute",
+			"name": "mv-attribute",
 			"on": "Properties, elements with `mv-value`",
 			"purpose": "Override the defaults for which attribute holds the data for this element. For no attribute (element content), specify `\"none\"`.",
 			"path": "/docs/properties",
 			"link": "Properties"
 		},
 		{
-			"attribute": "mv-source",
+			"name": "mv-source",
 			"on": "Mavo root",
 			"purpose": "If specified, it is used instead of `mv-storage` for loading data. Useful when you want to read from one location and write to a different location. Same values as `mv-storage`.",
 			"live": "yes",
@@ -71,7 +71,7 @@
 			"link": "Storage"
 		},
 		{
-			"attribute": "mv-init",
+			"name": "mv-init",
 			"on": "Mavo root",
 			"purpose": "If no data is stored, `mv-init` will be used to load initial data. Same values as `mv-storage`.",
 			"live": "yes",
@@ -79,72 +79,72 @@
 			"link": "Storage"
 		},
 		{
-			"attribute": "mv-default",
+			"name": "mv-default",
 			"on": "Properties",
 			"purpose": "Sets the default value. If no value, the default value becomes the property content.",
 			"live": "yes",
-			"path": "/docs/properties",
+			"path": "/docs/properties/#mv-default",
 			"link": "Properties"
 		},
 		{
-			"attribute": "mv-order",
+			"name": "mv-order",
 			"on": "Collections",
 			"purpose": "Values: `desc` or `asc`. Controls the order that new items are added to collections.",
-			"path": "/docs/collections",
+			"path": "/docs/collections/#mv-order",
 			"link": "Collections"
 		},
 		{
-			"attribute": "mv-expressions",
+			"name": "mv-expressions",
 			"purpose": "Change the expression syntax or disable [expressions](/docs/expressions) altogether.",
 			"path": "/docs/mavoscript",
 			"link": "MavoScript"
 		},
 		{
-			"attribute": "mv-value",
+			"name": "mv-value",
 			"purpose": "Set an element's content to the result of an [expressions](/docs/expressions).",
 			"live": "expressions",
 			"path": "/docs/expressions",
 			"link": "Expressions"
 		},
 		{
-			"attribute": "mv-if",
+			"name": "mv-if",
 			"purpose": "Remove an element from the DOM if the expression doesn't match and re-add it when it does.",
 			"live": "expressions",
 			"path": "/docs/expressions",
 			"link": "Expressions"
 		},
 		{
-			"attribute": "mv-accepts",
+			"name": "mv-accepts",
 			"on": "Collections",
 			"purpose": "Property names (space separated) of other collections that can move items to this one.",
-			"path": "/docs/collections",
+			"path": "/docs/collections/#mv-accepts",
 			"link": "Collections"
 		},
 		{
-			"attribute": "mv-edit",
+			"name": "mv-edit",
 			"on": "Properties",
 			"purpose": "Customize how an element is edited by linking to another element, anywhere in the page.",
 			"live": "initially",
-			"path": "/docs/properties",
+			"path": "/docs/properties/#mv-edit",
 			"link": "Properties"
 		},
 		{
-			"attribute": "mv-edit-*",
+			"name": "mv-edit-*",
 			"on": "Properties",
 			"purpose": "Any attributes set this way will be copied over to the property's editor.",
 			"live": "initially",
-			"path": "/docs/properties",
+			"path": "/docs/properties/#mv-edit-star",
 			"link": "Properties"
 		},
 		{
-			"attribute": "mv-mode",
+			"name": "mv-mode",
 			"purpose": "Control whether a property is in read or edit mode independently of the mode of the rest of the Mavo app.",
 			"live": "yes",
-			"path": "/docs/properties",
+			"path": "/docs/properties/#mv-mode",
 			"link": "Properties"
 		},
 		{
-			"attribute": "mv-format",
+			"name": "mv-format",
 			"on": "Mavo root",
 			"purpose": "Render and edit only a subset of the remote data, by providing a (slash-separated) path to the data it handles.",
 			"live": "initially",
@@ -152,26 +152,26 @@
 			"link": "Formats"
 		},
 		{
-			"attribute": "mv-autosave",
+			"name": "mv-autosave",
 			"on": "Mavo root",
 			"purpose": "Save automatically when the data changes. Its value is the number of seconds to throttle saving, or 0 for no throttling (save immediately). The default throttling delay is 3 seconds, used when the attribute is specified without a value. Unless throttling is disabled, The Save button will still be present in the Mavo bar.",
 			"live": "initially"
 		},
 		{
-			"attribute": "mv-bar",
+			"name": "mv-bar",
 			"on": "Mavo root",
 			"purpose": "Control which buttons may appear in the toolbar and in what order, or hide the toolbar completely.",
 			"path": "/docs/ui/#bar",
 			"link": "UI-Customization"
 		},
 		{
-			"attribute": "mv-path",
+			"name": "mv-path",
 			"on": "Properties",
 			"purpose": "Render and edit only a subset of the stored data.",
 			"live": "initially"
 		},
 		{
-			"attribute": "mv-alias",
+			"name": "mv-alias",
 			"on": "Properties",
 			"purpose": "If provided, Mavo will read data from this property **instead** of its real property name. Useful to read stored data properly after renaming a property in the HTML.",
 			"path": "/docs/migration/#mv-alias",
@@ -203,66 +203,66 @@
 	"generatedClass": [
 		{
 			"name": "mv-target-within",
-			"setOn": "Any element that matches the CSS `:target` pseudo-class or contains an element that does."
+			"on": "Any element that matches the CSS `:target` pseudo-class or contains an element that does."
 		},
 		{
 			"name": "mv-ui",
-			"setOn": "Any (usually generated) controls for triggering Mavo-related actions"
+			"on": "Any (usually generated) controls for triggering Mavo-related actions"
 		},
 		{
 			"name": "mv-empty",
-			"setOn": "Properties with no value"
+			"on": "Properties with no value"
 		},
 		{
 			"name": "mv-deleted",
-			"setOn": "Collection items that have been deleted but the deletion is not yet saved"
+			"on": "Collection items that have been deleted but the deletion is not yet saved"
 		},
 		{
 			"name": "mv-item-bar",
-			"setOn": "Buttons on collection items for deleting, adding, rearranging."
+			"on": "Buttons on collection items for deleting, adding, rearranging."
 		},
 		{
 			"name": "mv-highlight",
-			"setOn": "Highlighted collection items (e.g. when hovering over the delete button)"
+			"on": "Highlighted collection items (e.g. when hovering over the delete button)"
 		},
 		{
 			"name": "mv-bar",
-			"setOn": "Mavo toolbar"
+			"on": "Mavo toolbar"
 		},
 		{
 			"name": "mv-editor",
-			"setOn": "Element used for editing a property"
+			"on": "Element used for editing a property"
 		},
 		{
 			"name": "mv-popup",
-			"setOn": "Generated popup for editing an attribute."
+			"on": "Generated popup for editing an attribute."
 		}
 	],
 	"cssVariable": [
 		{
 			"name": "--mv-mode",
 			"value": "`read` or `edit`",
-			"setOn": "Elements with the `mv-mode` attribute"
+			"on": "Elements with the `mv-mode` attribute"
 		},
 		{
 			"name": "--mv-item-left",
 			"value": "Horizontal distance of item from the left edge of its offset parent in px, e.g. `10px`.",
-			"setOn": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
+			"on": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
 		},
 		{
 			"name": "--mv-item-top",
 			"value": "Vertical distance of item from the top edge of its offset parent in px, e.g. `10px`.",
-			"setOn": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
+			"on": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
 		},
 		{
 			"name": "--mv-item-width",
 			"value": "Width of item in px, e.g. `100px`.",
-			"setOn": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
+			"on": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
 		},
 		{
 			"name": "--mv-item-height",
 			"value": "Height of item in px, e.g. `100px`",
-			"setOn": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
+			"on": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
 		}
 	]
 }
