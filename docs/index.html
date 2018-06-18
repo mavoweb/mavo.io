@@ -14,7 +14,9 @@
 </head>
 
 
-<body class="language-markup" mv-app="docs" mv-storage="https://github.com/jwass91/mavo.io/docs/index.json" mv-plugins="markdown" mv-github-commit-prefix="(Docs) ">
+<!-- <body class="language-markup" mv-app="docs" mv-storage="https://github.com/mavoweb/mavo.io/docs/index.json" mv-plugins="markdown" mv-github-commit-prefix="(Docs) "> -->
+	<body class="language-markup" mv-app="docs" mv-storage="http://localhost:8000/docs/index.json" mv-plugins="markdown" mv-github-commit-prefix="(Docs) ">
+	
 
 <header>
 	<h1 class="logo">
@@ -67,7 +69,7 @@ thead th:first-child {
 	<table class="attributes">
 		<thead>
 			<tr>
-				<th style="width: 11%">Attribute</th>
+				<th style="width: 11%">Name</th>
 				<th style="width: 10%">On</th>
 				<th>Purpose</th>
 				<th style="width: 5%;">Live?</th>
@@ -76,7 +78,7 @@ thead th:first-child {
 		</thead>
 		<tbody>
 			<tr property="coreAttribute" mv-multiple>
-				<td><code property="attribute"></code></td>
+				<td><code property="name"></code></td>
 				<td property="on" class="markdown"></td>
 				<td property="purpose" class="markdown"></td>
 				<td class="[if(live!='yes',if(live,semi,empty))]" property='live' mv-edit="#live"></td>
@@ -98,7 +100,7 @@ thead th:first-child {
 	<table class="attributes">
 		<thead>
 			<tr>
-				<th>Attribute</th>
+				<th>Name</th>
 				<th>On</th>
 				<th style="width: 48%;">Purpose</th>
 				<th>Live?</th>
@@ -106,8 +108,8 @@ thead th:first-child {
 			</tr>
 		</thead>
 		<tbody>
-			<tr property="otherAttribute" mv-multiple>
-				<td><code property="attribute"></code></td>
+			<tr property="attribute" mv-multiple>
+				<td><code property="name"></code></td>
 				<td property="on" class="markdown"></td>
 				<td property="purpose" class="markdown"></td>
 				<td class="[if(live!='yes',if(live,semi,empty))]" property='live' mv-edit="#live"></td>
@@ -175,7 +177,7 @@ thead th:first-child {
 		<tbody>
 			<tr property="generatedClass" mv-multiple>
 				<td><code property="name"></code></td>
-				<td property="setOn" class="markdown"></td>
+				<td property="on" class="markdown"></td>
 			</tr>
 		</tbody>
 	</table>
@@ -197,7 +199,7 @@ thead th:first-child {
 		<tbody>
 			<tr property="cssVariable" mv-multiple>
 				<td><code property="name"></code></td>
-				<td property="setOn" class="markdown"></td>
+				<td property="on" class="markdown"></td>
 				<td property="value" class="markdown"></td>
 			</tr>
 		</tbody>
