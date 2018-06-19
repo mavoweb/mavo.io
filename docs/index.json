@@ -59,7 +59,7 @@
 			"name": "mv-attribute",
 			"on": "Properties, elements with `mv-value`",
 			"purpose": "Override the defaults for which attribute holds the data for this element. For no attribute (element content), specify `\"none\"`.",
-			"path": "/docs/properties",
+			"path": "/docs/properties/#mv-attribute",
 			"link": "Properties"
 		},
 		{
@@ -101,16 +101,16 @@
 		},
 		{
 			"name": "mv-value",
-			"purpose": "Set an element's content to the result of an [expressions](/docs/expressions).",
+			"purpose": "Set an element's content to the result of an [expressions](/docs/expressions/#providing-fallbacks-the-mv-value-attribute).",
 			"live": "expressions",
-			"path": "/docs/expressions",
+			"path": "/docs/expressions/#providing-fallbacks-the-mv-value-attribute",
 			"link": "Expressions"
 		},
 		{
 			"name": "mv-if",
 			"purpose": "Remove an element from the DOM if the expression doesn't match and re-add it when it does.",
 			"live": "expressions",
-			"path": "/docs/expressions",
+			"path": "/docs/expressions/#conditionals-if-and-the-mv-if-attribute",
 			"link": "Expressions"
 		},
 		{
