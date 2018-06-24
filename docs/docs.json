@@ -454,7 +454,7 @@
 		{
 			"id": "actions",
 			"title": "Custom actions",
-			"summary": "Custom actions are a generalization of the editing controls that Mavo generates, and can be very powerful.",
+			"summary": "Custom actions allow you to create your own controls that modify data  in custom ways. They are a generalization of the editing controls that Mavo generates, and can be very powerful.",
 			"section": [
 				{
 					"id": "mv-action",
