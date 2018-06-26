@@ -438,6 +438,41 @@
 			]
 		},
 		{
+			"name": "random",
+			"id": "random",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Generate a random number.",
+			"argument": [
+				{
+					"name": "min",
+					"optional": true,
+					"type": "Number",
+					"description": "Minimum allowed number. Defaults to 0."
+				},
+				{
+					"name": "max",
+					"optional": true,
+					"type": "Number",
+					"description": "Maximum allowed number. Defaults to 100."
+				},
+				{
+					"name": "step",
+					"optional": true,
+					"type": "Number",
+					"description": "Step, i.e. allowed increment. Defaults to 1, which returns integers."
+				}
+			],
+			"returnType": "Number",
+			"returnDescription": "The random number.",
+			"shown": [
+				true,
+				true,
+				true
+			]
+		},
+		{
 			"name": "count",
 			"category": "lists",
 			"role": "function",
@@ -594,34 +629,221 @@
 			]
 		},
 		{
-			"name": "random",
-			"id": "random",
+			"name": "len",
+			"id": "len",
 			"unary": false,
-			"category": "math",
+			"category": "text",
 			"role": "function",
-			"description": "Generate a random number.",
+			"description": "Find the length in characters of a text value. E.g. len(\"foo\") is 3.",
 			"argument": [
 				{
-					"name": "min",
-					"optional": true,
-					"type": "Number",
-					"description": "Minimum allowed number. Defaults to 0."
-				},
-				{
-					"name": "max",
-					"optional": true,
-					"type": "Number",
-					"description": "Maximum allowed number. Defaults to 100."
-				},
-				{
-					"name": "step",
-					"optional": true,
-					"type": "Number",
-					"description": "Step, i.e. allowed increment. Defaults to 1, which returns integers."
+					"name": "text",
+					"optional": false,
+					"type": "Text",
+					"description": "The text to measure"
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "The random number.",
+			"returnDescription": "The number of characters",
+			"shown": [
+				true,
+				true,
+				true
+			]
+		},
+		{
+			"name": "idify",
+			"id": "idify",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "Convert text to something that looks like the ids we are more used to. For example, `idify(\"Chicken Liver Pâté! 😋\")` returns `\"chicken-liver-pate\"`",
+			"argument": [
+				{
+					"name": "text",
+					"optional": false,
+					"type": "Text",
+					"description": "The text to convert"
+				}
+			],
+			"returnType": "Text",
+			"returnDescription": "The id",
+			"shown": [
+				true,
+				true,
+				true
+			]
+		},
+		{
+			"name": "readable",
+			"id": "readable",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "The opposite of `idify()`, this takes an id (either in camelCase, or in underscore_case, in hyphen-case, or even mixed) and tries its best to convert it to a readable label. For example, `readable(\"fooBar-baz\")` returns `\"Foo bar baz\"`.\nAlso used by Mavo internally to generate the editing UI from property names.",
+			"argument": [
+				{
+					"name": "id",
+					"optional": false,
+					"type": "Text",
+					"description": "The id-like text to convert."
+				}
+			],
+			"returnType": "Text",
+			"returnDescription": "The readable label.",
+			"shown": [
+				true,
+				true,
+				true
+			]
+		},
+		{
+			"name": "uppercase",
+			"id": "uppercase",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "Converts all letters to uppercase.",
+			"argument": [
+				{
+					"name": "text",
+					"optional": false,
+					"type": "Text",
+					"description": "The text to convert."
+				}
+			],
+			"returnType": "Text",
+			"returnDescription": "The converted text",
+			"shown": [
+				true,
+				true,
+				true
+			]
+		},
+		{
+			"name": "lowercase",
+			"id": "lowercase",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "Converts all letters to lowercase.",
+			"argument": [
+				{
+					"name": "text",
+					"optional": false,
+					"type": "Text",
+					"description": "The text to convert."
+				}
+			],
+			"returnType": "Text",
+			"returnDescription": "The converted text",
+			"shown": [
+				true,
+				true,
+				true
+			]
+		},
+		{
+			"name": "search",
+			"id": "search",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "Case-insensitive search",
+			"argument": [
+				{
+					"name": "haystack",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look in"
+				},
+				{
+					"name": "needle",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look for"
+				}
+			],
+			"returnType": "Number",
+			"returnDescription": "Position of the first match if found, or -1 if not found.",
+			"shown": [
+				true,
+				true,
+				true
+			]
+		},
+		{
+			"name": "starts",
+			"id": "starts",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Check if text starts with another bit of text",
+			"argument": [
+				{
+					"name": "haystack",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look in"
+				},
+				{
+					"name": "needle",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look for"
+				}
+			],
+			"returnDescription": "True if it does, false otherwise.",
+			"shown": [
+				true,
+				true,
+				true
+			]
+		},
+		{
+			"name": "ends",
+			"id": "ends",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Check if text ends with another bit of text",
+			"argument": [
+				{
+					"name": "haystack",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look in"
+				},
+				{
+					"name": "needle",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look for"
+				}
+			],
+			"returnDescription": "True if it does, false otherwise.",
+			"shown": [
+				true,
+				true,
+				true
+			]
+		},
+		{
+			"name": "url",
+			"id": "url",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "If `param` is provided, returns the value of that parameter from the current page URL. This matches both parameters like `example.com/index.html?foo=bar` and `example.com/index.html/foo/bar` with the former having priority over the latter\nIf `param` is **not** provided, it returns the URL of the current page.",
+			"argument": [
+				{
+					"name": "param",
+					"optional": true,
+					"type": "Text",
+					"description": "The parameter to get."
+				}
+			],
+			"returnType": "Text",
 			"shown": [
 				true,
 				true,
@@ -980,228 +1202,6 @@
 			],
 			"returnType": "Number",
 			"returnDescription": "Number of years",
-			"shown": [
-				true,
-				true,
-				true
-			]
-		},
-		{
-			"name": "len",
-			"id": "len",
-			"unary": false,
-			"category": "text",
-			"role": "function",
-			"description": "Find the length in characters of a text value. E.g. len(\"foo\") is 3.",
-			"argument": [
-				{
-					"name": "text",
-					"optional": false,
-					"type": "Text",
-					"description": "The text to measure"
-				}
-			],
-			"returnType": "Number",
-			"returnDescription": "The number of characters",
-			"shown": [
-				true,
-				true,
-				true
-			]
-		},
-		{
-			"name": "idify",
-			"id": "idify",
-			"unary": false,
-			"category": "text",
-			"role": "function",
-			"description": "Convert text to something that looks like the ids we are more used to. For example, `idify(\"Chicken Liver Pâté! 😋\")` returns `\"chicken-liver-pate\"`",
-			"argument": [
-				{
-					"name": "text",
-					"optional": false,
-					"type": "Text",
-					"description": "The text to convert"
-				}
-			],
-			"returnType": "Text",
-			"returnDescription": "The id",
-			"shown": [
-				true,
-				true,
-				true
-			]
-		},
-		{
-			"name": "readable",
-			"id": "readable",
-			"unary": false,
-			"category": "text",
-			"role": "function",
-			"description": "The opposite of `idify()`, this takes an id (either in camelCase, or in underscore_case, in hyphen-case, or even mixed) and tries its best to convert it to a readable label. For example, `readable(\"fooBar-baz\")` returns `\"Foo bar baz\"`.\nAlso used by Mavo internally to generate the editing UI from property names.",
-			"argument": [
-				{
-					"name": "id",
-					"optional": false,
-					"type": "Text",
-					"description": "The id-like text to convert."
-				}
-			],
-			"returnType": "Text",
-			"returnDescription": "The readable label.",
-			"shown": [
-				true,
-				true,
-				true
-			]
-		},
-		{
-			"name": "uppercase",
-			"id": "uppercase",
-			"unary": false,
-			"category": "text",
-			"role": "function",
-			"description": "Converts all letters to uppercase.",
-			"argument": [
-				{
-					"name": "text",
-					"optional": false,
-					"type": "Text",
-					"description": "The text to convert."
-				}
-			],
-			"returnType": "Text",
-			"returnDescription": "The converted text",
-			"shown": [
-				true,
-				true,
-				true
-			]
-		},
-		{
-			"name": "lowercase",
-			"id": "lowercase",
-			"unary": false,
-			"category": "text",
-			"role": "function",
-			"description": "Converts all letters to lowercase.",
-			"argument": [
-				{
-					"name": "text",
-					"optional": false,
-					"type": "Text",
-					"description": "The text to convert."
-				}
-			],
-			"returnType": "Text",
-			"returnDescription": "The converted text",
-			"shown": [
-				true,
-				true,
-				true
-			]
-		},
-		{
-			"name": "search",
-			"id": "search",
-			"unary": false,
-			"category": "text",
-			"role": "function",
-			"description": "Case-insensitive search",
-			"argument": [
-				{
-					"name": "haystack",
-					"optional": false,
-					"type": "Text",
-					"description": "Text to look in"
-				},
-				{
-					"name": "needle",
-					"optional": false,
-					"type": "Text",
-					"description": "Text to look for"
-				}
-			],
-			"returnType": "Number",
-			"returnDescription": "Position of the first match if found, or -1 if not found.",
-			"shown": [
-				true,
-				true,
-				true
-			]
-		},
-		{
-			"name": "starts",
-			"id": "starts",
-			"unary": false,
-			"category": "math",
-			"role": "function",
-			"description": "Check if text starts with another bit of text",
-			"argument": [
-				{
-					"name": "haystack",
-					"optional": false,
-					"type": "Text",
-					"description": "Text to look in"
-				},
-				{
-					"name": "needle",
-					"optional": false,
-					"type": "Text",
-					"description": "Text to look for"
-				}
-			],
-			"returnDescription": "True if it does, false otherwise.",
-			"shown": [
-				true,
-				true,
-				true
-			]
-		},
-		{
-			"name": "ends",
-			"id": "ends",
-			"unary": false,
-			"category": "math",
-			"role": "function",
-			"description": "Check if text ends with another bit of text",
-			"argument": [
-				{
-					"name": "haystack",
-					"optional": false,
-					"type": "Text",
-					"description": "Text to look in"
-				},
-				{
-					"name": "needle",
-					"optional": false,
-					"type": "Text",
-					"description": "Text to look for"
-				}
-			],
-			"returnDescription": "True if it does, false otherwise.",
-			"shown": [
-				true,
-				true,
-				true
-			]
-		},
-		{
-			"name": "url",
-			"id": "url",
-			"unary": false,
-			"category": "math",
-			"role": "function",
-			"description": "If `param` is provided, returns the value of that parameter from the current page URL. This matches both parameters like `example.com/index.html?foo=bar` and `example.com/index.html/foo/bar` with the former having priority over the latter\nIf `param` is **not** provided, it returns the URL of the current page.",
-			"argument": [
-				{
-					"name": "param",
-					"optional": true,
-					"type": "Text",
-					"description": "The parameter to get."
-				}
-			],
-			"returnType": "Text",
 			"shown": [
 				true,
 				true,
