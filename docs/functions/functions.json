@@ -456,6 +456,15 @@
 			"returnDescription": "The minimum number"
 		},
 		{
+			"unary": false,
+			"role": "function",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
+		},
+		{
 			"name": "round",
 			"id": "round",
 			"unary": false,
