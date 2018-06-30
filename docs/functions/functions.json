@@ -420,7 +420,7 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Calculate the minimum of all numbers in the list.",
+			"description": "Calculate the minimum of all numbers in the list.\n`min()` also accepts multiple parameters of `Number` and returns the minimum number of all parameters. For example, `min(1, 2, 3)` will return `1`.",
 			"argument": [
 				{
 					"name": "list",
@@ -443,7 +443,7 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Calculate the maximum of all numbers in the list.",
+			"description": "Calculate the maximum of all numbers in the list.\n`max()` also accepts multiple parameters of `Number` and returns the maximum number of all parameters. For example, `max(1, 2, 3)` will return `3`.",
 			"argument": [
 				{
 					"name": "list",
