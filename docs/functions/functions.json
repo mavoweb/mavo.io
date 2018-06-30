@@ -453,7 +453,7 @@
 				}
 			],
 			"returnType": "Number",
-			"returnDescription": "The minimum number"
+			"returnDescription": "The maximum number"
 		},
 		{
 			"name": "round",
