@@ -633,7 +633,7 @@
 			"unary": false,
 			"category": "lists",
 			"role": "function",
-			"description": "Checks if two lists share one or more of the same item.",
+			"description": "Checks if two lists share one or more of the same item.\nFor example, `intersects([1,2,3], [4,3,5])` will be true because both share the item `3`.",
 			"argument": [
 				{
 					"name": "list1",
@@ -646,8 +646,7 @@
 					"type": "List"
 				}
 			],
-			"returnDescription": "True if there is an intersection and false if not.",
-			"demo": "`intersects([1,2,3], [4,3,5])` will be true because both share the item `3`."
+			"returnDescription": "True if there is an intersection and false if not."
 		},
 		{
 			"name": "reverse",
