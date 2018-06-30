@@ -461,7 +461,7 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Round a given number to the specified decimal place. Round to whole number if decimal place not specified.",
+			"description": "Rounds a number to the nearest integer. If the `decimals` parameter is used, rounds a number to the nearest number of decimals.",
 			"argument": [
 				{
 					"name": "number",
@@ -473,7 +473,7 @@
 					"name": "decimals",
 					"optional": false,
 					"type": "Number",
-					"description": "Number of decimal places to the round the number to."
+					"description": "Number of decimals the number will round to."
 				}
 			],
 			"returnType": "Number",
