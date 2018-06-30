@@ -473,7 +473,7 @@
 					"name": "decimals",
 					"optional": false,
 					"type": "Number",
-					"description": "Number of decimals the number will round to."
+					"description": "Number of decimals the number will be rounded to."
 				}
 			],
 			"returnType": "Number",
