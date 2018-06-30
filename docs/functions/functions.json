@@ -485,24 +485,25 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Returns a number with the specified number of digits and decimal places.",
+			"description": "Returns a number with the specified number of digits and decimal places.\nFor example, `digits(2, 1234.5678)` will return `34.5678`, a number with 2 digits and the number of decimals unchanged. `digits(2, 3, 1234.5678)` will return `34.567`, a number with 2 digits and 3 decimals.\nIf `digits` or `decimals` parameter is larger than the number of digits or decimals the number has, the number will be padded with 0s. For example, `digits(4, 5, 12.345)` will return `0012.34500`.",
 			"argument": [
 				{
 					"name": "digits",
 					"optional": true,
 					"type": "Number",
-					"description": "Number of digits to keep."
+					"description": "Number of digits to keep. If `number` has fewer digits than the `digits` parameter, 0s will be padded before the number."
 				},
 				{
 					"name": "decimals",
 					"optional": true,
 					"type": "Number",
-					"description": "Number of decimal places to keep."
+					"description": "Number of decimal places to keep. If `number` has fewer decimals than the `decimals` parameter, 0s will be padded after the number's decimals."
 				},
 				{
 					"name": "number",
 					"optional": false,
-					"type": "Number"
+					"type": "Number",
+					"description": "Number to be changed."
 				}
 			],
 			"returnType": "Number",
