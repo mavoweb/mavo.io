@@ -1,9 +1,11 @@
 (function($, $$) {
 
 Mavo.hooks.add("markdown-render-before", function(env) {
-	env.markdown = env.markdown.replace(/^(Note|Tip|Warning): /mig, function($0, $1) {
-		return "<p class=" + $1.toLowerCase() + ">";
-	});
+	if (env.markdown) {
+		env.markdown = env.markdown.replace(/^(Note|Tip|Warning): /mig, function($0, $1) {
+			return "<p class=" + $1.toLowerCase() + ">";
+		});
+	}
 });
 
 document.addEventListener("mv-markdown-render", function(evt) {
