@@ -50,6 +50,9 @@ body {
     backdrop-filter: blur(4px);
     color: white;
     transition: .2s bottom; }
+    [property=painting] p ::-webkit-input-placeholder,
+    .mv-add-painting p ::-webkit-input-placeholder {
+      color: rgba(255, 255, 255, 0.6); }
     [property=painting] p :-ms-input-placeholder,
     .mv-add-painting p :-ms-input-placeholder {
       color: rgba(255, 255, 255, 0.6); }

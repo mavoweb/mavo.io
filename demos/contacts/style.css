@@ -153,6 +153,9 @@ button.mv-add.mv-add-contact {
   button.mv-add.mv-add-contact:hover {
     background: rgba(255, 255, 255, 0.5); }
 
+::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.6); }
+
 :-ms-input-placeholder {
   color: rgba(0, 0, 0, 0.6); }
 

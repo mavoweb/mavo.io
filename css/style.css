@@ -359,6 +359,7 @@ body > footer {
       -ms-flex: 2;
       flex: 2; }
       body > footer > article:first-of-type ul {
+        -moz-columns: 2;
         columns: 2; }
   body > footer p {
     margin: .5em; }

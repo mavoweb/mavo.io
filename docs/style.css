@@ -68,6 +68,7 @@ body > header + h2 {
       display: none; } }
 
 #summary {
+  page-break-inside: avoid;
   break-inside: avoid; }
   #summary dt {
     font-size: 120%;
