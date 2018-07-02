@@ -471,7 +471,7 @@
 				},
 				{
 					"name": "decimals",
-					"optional": false,
+					"optional": true,
 					"type": "Number",
 					"description": "Number of decimals the number will be rounded to."
 				}
