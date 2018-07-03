@@ -369,6 +369,34 @@
 			]
 		},
 		{
+			"name": "get",
+			"id": "get",
+			"unary": false,
+			"category": "other",
+			"role": "function",
+			"description": "Get a value of a group by key. For example, `get(group(bar:4), bar)` will return `4`.\nIf the first parameter is a collection, all values of the given key are returned. For example, `get(list(group(id:\"foo\", name:\"fooname\"), group(id:\"bar\", name:\"barname\")), name)` returns `list(\"fooname\", \"barname\")`.\nIf the first parameter is a collection and the second parameter is in the form `\"key=value\"`, then the group(s) that satisfies this condition will be returned as a list. For example, `get(list(group(id:\"foo\", name:\"fooname\"), group(id:\"bar\", name:\"barname\")), \"name=fooname\")` returns `list(group(id:\"foo\", name:\"fooname\"))`.\nYou can attach a **key** to the end of `get()` with a `.` operator to get the value of a key. For example, `get(list(group(id:\"foo\", name:\"fooname\"), group(id:\"bar\", name:\"barname\")), \"id=foo\").name` returns `\"fooname\"`.",
+			"argument": [
+				{
+					"name": "object",
+					"optional": false,
+					"type": "Group or List of Groups",
+					"description": "Where to look up keys and find values."
+				},
+				{
+					"name": "key",
+					"optional": false,
+					"type": "Text",
+					"description": "The key to look for or the condition to match if in the form `\"key=value\"`."
+				},
+				{
+					"name": "meta",
+					"optional": false,
+					"type": "Group"
+				}
+			],
+			"returnDescription": "Value of found key or a list of values if multiple keys are found. Returns a list of groups if the second parameter is \"key=value\". "
+		},
+		{
 			"name": "average",
 			"id": "average",
 			"unary": false,
@@ -755,6 +783,102 @@
 			],
 			"returnType": "Text",
 			"returnDescription": "Text in between from and to"
+		},
+		{
+			"name": "from",
+			"id": "from",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "Returns all texts after another bit of text.",
+			"argument": [
+				{
+					"name": "haystack",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look in."
+				},
+				{
+					"name": "needle",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look for."
+				}
+			],
+			"returnType": "Text",
+			"returnDescription": "All texts after the needle."
+		},
+		{
+			"name": "fromlast",
+			"id": "fromlast",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "Same as `from()` but searches for the needle starting with the **last** character of the haystack instead of the first.",
+			"argument": [
+				{
+					"name": "haystack",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look in."
+				},
+				{
+					"name": "needle",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look for."
+				}
+			],
+			"returnType": "Text",
+			"returnDescription": "All texts after the needle."
+		},
+		{
+			"name": "to",
+			"id": "to",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "Returns all texts before another bit of text.",
+			"argument": [
+				{
+					"name": "haystack",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look in."
+				},
+				{
+					"name": "needle",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look for."
+				}
+			],
+			"returnType": "Text",
+			"returnDescription": "All texts before the needle."
+		},
+		{
+			"name": "tolast",
+			"id": "tolast",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "Same as `to()` but searches for the needle starting with the **first** character of the haystack instead of the last.",
+			"argument": [
+				{
+					"name": "haystack",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look in."
+				},
+				{
+					"name": "needle",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look for."
+				}
+			],
+			"returnType": "Text",
+			"returnDescription": "All texts before the needle."
 		},
 		{
 			"name": "random",
@@ -1347,6 +1471,30 @@
 			]
 		},
 		{
+			"name": "contains",
+			"id": "contains",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Check if a collection, group, list, or text contains a needle. For example, `contains(group(name:\"Kenneth\", age:17, food:\"rice\"), \"rice\")` returns `true`.\nIf both haystack and needle are a list, `contains()` checks if the first item of the haystack contains the first item of the needle, and so on. For example, `contains(list(\"Kenneth\", \"Verou\"), list(\"Kenneth\", \"Lea\"))` will return `list(true, false)`.",
+			"argument": [
+				{
+					"name": "haystack",
+					"optional": false,
+					"type": "Group, List, or Text",
+					"description": "Where to look in."
+				},
+				{
+					"name": "needle",
+					"optional": false,
+					"type": "List or Text",
+					"description": "What to look for."
+				}
+			],
+			"returnType": "True or False",
+			"returnDescription": "True if the haystack contains the needle, false otherwise."
+		},
+		{
 			"name": "starts",
 			"id": "starts",
 			"unary": false,
@@ -1422,6 +1570,37 @@
 				true,
 				true,
 				true
+			]
+		},
+		{
+			"name": "json",
+			"id": "json",
+			"unary": false,
+			"category": "other",
+			"role": "function",
+			"description": "Converts data into JSON string and avoids circular reference.",
+			"argument": [
+				{
+					"name": "data",
+					"optional": false,
+					"type": "Anything",
+					"description": "Data to be converted to JSON string."
+				}
+			],
+			"returnType": "Text",
+			"returnDescription": "The JSON string."
+		},
+		{
+			"name": "log",
+			"id": "log",
+			"unary": false,
+			"category": "other",
+			"role": "function",
+			"description": "Logs data to the browser console and returns the result of the first parameter of this function.\nFor example, `log(1 + 1, Math.floor(3.5), true && false)` will return `2`, the result of the first parameter of `log()`. Additionally, when you open the browser console, `2 3 false` will be displayed.",
+			"argument": [
+				{
+					"optional": false
+				}
 			]
 		},
 		{
