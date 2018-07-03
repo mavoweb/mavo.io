@@ -420,7 +420,7 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Calculate the minimum of all numbers in the list.",
+			"description": "Calculate the minimum of all numbers in the list.\n`min()` also accepts multiple parameters of `Number` and returns the minimum number of all parameters. For example, `min(1, 2, 3)` will return `1`.",
 			"argument": [
 				{
 					"name": "list",
@@ -436,6 +436,78 @@
 				true,
 				true
 			]
+		},
+		{
+			"name": "max",
+			"id": "max",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Calculate the maximum of all numbers in the list.\n`max()` also accepts multiple parameters of `Number` and returns the maximum number of all parameters. For example, `max(1, 2, 3)` will return `3`.",
+			"argument": [
+				{
+					"name": "list",
+					"optional": false,
+					"type": "List of numbers",
+					"description": "The numbers you are trying to find the max of."
+				}
+			],
+			"returnType": "Number",
+			"returnDescription": "The maximum number"
+		},
+		{
+			"name": "round",
+			"id": "round",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Rounds a number to the nearest integer. If the `decimals` parameter is used, rounds a number to the nearest number of decimals.",
+			"argument": [
+				{
+					"name": "number",
+					"optional": false,
+					"type": "Number",
+					"description": "Number to be rounded."
+				},
+				{
+					"name": "decimals",
+					"optional": true,
+					"type": "Number",
+					"description": "Number of decimals the number will be rounded to."
+				}
+			],
+			"returnType": "Number",
+			"returnDescription": "The rounded number."
+		},
+		{
+			"name": "digits",
+			"id": "digits",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Returns a number with the specified number of digits and decimal places.\nFor example, `digits(2, 1234.5678)` will return `34.5678`, a number with 2 digits and the number of decimals unchanged. `digits(2, 3, 1234.5678)` will return `34.567`, a number with 2 digits and 3 decimals.\nIf `digits` or `decimals` parameter is larger than the number of digits or decimals the number has, the number will be padded with 0s. For example, `digits(4, 5, 12.345)` will return `0012.34500`.",
+			"argument": [
+				{
+					"name": "digits",
+					"optional": true,
+					"type": "Number",
+					"description": "Number of digits to keep. If `number` has fewer digits than the `digits` parameter, 0s will be padded before the number."
+				},
+				{
+					"name": "decimals",
+					"optional": true,
+					"type": "Number",
+					"description": "Number of decimal places to keep. If `number` has fewer decimals than the `decimals` parameter, 0s will be padded after the number's decimals."
+				},
+				{
+					"name": "number",
+					"optional": false,
+					"type": "Number",
+					"description": "Number to be changed."
+				}
+			],
+			"returnType": "Number",
+			"returnDescription": "New number with specified number of digits and decimal places."
 		},
 		{
 			"name": "count",
@@ -517,6 +589,23 @@
 			]
 		},
 		{
+			"name": "unique",
+			"id": "unique",
+			"unary": false,
+			"category": "lists",
+			"role": "function",
+			"description": "Drops any duplicates, returning only the unique items from a list of values.\nFor example, `unique(list(1, 2, 1, 4, 4, 3, 2))` will return `list(1, 2, 3, 4)`.",
+			"argument": [
+				{
+					"name": "list",
+					"optional": false,
+					"type": "List"
+				}
+			],
+			"returnType": "List",
+			"returnDescription": "A list of unique items."
+		},
+		{
 			"name": "shuffle",
 			"id": "shuffle",
 			"unary": false,
@@ -537,6 +626,44 @@
 				true,
 				true
 			]
+		},
+		{
+			"name": "intersects",
+			"id": "intersects",
+			"unary": false,
+			"category": "lists",
+			"role": "function",
+			"description": "Checks if two lists share one or more of the same item.\nFor example, `intersects(list(1, 2, 3), list(4, 3, 5))` will be true because both share the item `3`.",
+			"argument": [
+				{
+					"name": "list1",
+					"optional": false,
+					"type": "List"
+				},
+				{
+					"name": "list2",
+					"optional": false,
+					"type": "List"
+				}
+			],
+			"returnDescription": "True if there is an intersection and false if not."
+		},
+		{
+			"name": "reverse",
+			"id": "reverse",
+			"unary": false,
+			"category": "lists",
+			"role": "function",
+			"description": "Reverse the order of list items.",
+			"argument": [
+				{
+					"name": "list",
+					"optional": false,
+					"type": "List"
+				}
+			],
+			"returnType": "List",
+			"returnDescription": "A list with its item orders reversed."
 		},
 		{
 			"name": "join",
@@ -592,6 +719,42 @@
 				true,
 				true
 			]
+		},
+		{
+			"name": "between",
+			"id": "between",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "Finds two pieces of text and returns the text between them.",
+			"argument": [
+				{
+					"name": "haystack",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look in."
+				},
+				{
+					"name": "from",
+					"optional": false,
+					"type": "Text",
+					"description": "Text after this will be returned"
+				},
+				{
+					"name": "to",
+					"optional": false,
+					"type": "Text",
+					"description": "Text before this will be returned"
+				},
+				{
+					"name": "tight",
+					"optional": true,
+					"type": "True or False",
+					"description": "If true, the function will search \"from\" parameter from the end of the haystack and \"to\" parameter from the start of haystack. Useful when there are multiple occurrences of from or to and you want the shorter in-between text."
+				}
+			],
+			"returnType": "Text",
+			"returnDescription": "Text in between from and to"
 		},
 		{
 			"name": "random",
@@ -1033,6 +1196,24 @@
 			]
 		},
 		{
+			"name": "ordinal",
+			"id": "ordinal",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "Returns the ordinal indicator (st, nd, rd, th) of a given number.",
+			"argument": [
+				{
+					"name": "number",
+					"optional": false,
+					"type": "Number",
+					"description": "Number used to determine the ordinal character."
+				}
+			],
+			"returnType": "Text",
+			"returnDescription": "The ordinal indicator corresponding to the number."
+		},
+		{
 			"name": "readable",
 			"id": "readable",
 			"unary": false,
@@ -1100,6 +1281,41 @@
 				true,
 				true
 			]
+		},
+		{
+			"name": "replace",
+			"id": "replace",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "Replaces all occurrences of a text with another text.",
+			"argument": [
+				{
+					"name": "haystack",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look in."
+				},
+				{
+					"name": "needle",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look for."
+				},
+				{
+					"name": "replacement",
+					"optional": false,
+					"type": "Text",
+					"description": "Text that replaces needle."
+				},
+				{
+					"name": "iterations",
+					"optional": false,
+					"type": "Number",
+					"description": "Number of times search and replace is performed. Defaults to 1"
+				}
+			],
+			"returnType": "Text"
 		},
 		{
 			"name": "search",
