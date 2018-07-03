@@ -594,7 +594,7 @@
 			"unary": false,
 			"category": "lists",
 			"role": "function",
-			"description": "Creates a list with only unique items. Returns your parameter back if it’s not a list.",
+			"description": "Drops any duplicates, returning only the unique items from a list of values.\nFor example, `unique(list(1, 2, 1, 4, 4, 3, 2))` will return `list(1, 2, 3, 4)`.",
 			"argument": [
 				{
 					"name": "list",
@@ -633,7 +633,7 @@
 			"unary": false,
 			"category": "lists",
 			"role": "function",
-			"description": "Checks if two lists share one or more of the same item.\nFor example, `intersects([1,2,3], [4,3,5])` will be true because both share the item `3`.",
+			"description": "Checks if two lists share one or more of the same item.\nFor example, `intersects(list(1, 2, 3), list(4, 3, 5))` will be true because both share the item `3`.",
 			"argument": [
 				{
 					"name": "list1",
