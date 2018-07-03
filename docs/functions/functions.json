@@ -1573,6 +1573,19 @@
 			]
 		},
 		{
+			"name": "filename",
+			"id": "filename",
+			"unary": false,
+			"category": "other",
+			"role": "function",
+			"argument": [
+				{
+					"name": "URL",
+					"optional": false
+				}
+			]
+		},
+		{
 			"name": "json",
 			"id": "json",
 			"unary": false,
