@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<title>My Multi-Currency sums</title>
+<link rel="stylesheet" href="https://get.mavo.io/mavo.css">
+<link rel="stylesheet" href="style.css">
+<script src="https://get.mavo.io/mavo.js"></script>
+<script src="https://cdn.shopify.com/s/javascripts/currencies.js" ></script>
+</head>
+
+<body mv-storage="local" mv-app="worldsum" class="mv-autoedit">
+
+<a href="#" class="show-all">↩ Back to all</a>
+
+<article property="sum" mv-multiple id="[id]" mv-order="desc">
+	<header>
+		<a href="#[id]" title="Click to isolate this sum" property="id" mv-default="[idify(title)]" mv-attribute="data-id">
+			<h1 property="title">Title</h1>
+		</a>
+	</header>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Description</th>
+				<th>Amount</th>
+				<th>To <select property="targetCurrency">
+					<option value="USD">$</option>
+					<option value="EUR">€</option>
+					<option value="GBP">£</option>
+					<option mv-multiple="currency" mv-value="Object.keys(Currency.rates)"></option>
+				</select></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr property="item" mv-multiple>
+				<th property="description">Description</th>
+				<td>
+					<span property="amount" mv-default="[$previous.currency or 'EUR'] 0">EUR 10</span>
+					<meta property="currency" content="[getCurrency(amount)]" />
+					<meta property="rawAmount" content="[getRawAmount(amount)]" />
+				</td>
+				<td property="converted">
+					[Currency.convert(rawAmount, currency, targetCurrency)]
+				</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th colspan="2">Total:</th>
+				<td>[sum(converted)]</td>
+			</tr>
+		</tfoot>
+	</table>
+
+	<meta property="symbols" content="[list(
+		group(symbol: '$', currency: 'USD')
+		group(symbol: '€', currency: 'EUR')
+		group(symbol: '£', currency: 'GBP')
+	)]" />
+</article>
+
+<script src="/js/demo.js"></script>
+<script>
+	// These are only needed because we wanted to be able to type the currency code and the number in the same field
+	// If we were ok with them being separate, the following functions would not be needed.
+	function getRawAmount(amount) {
+		return (amount + "").match(/[\d.]*\s*$/)[0];
+	}
+	function getCurrency(amount) {
+		return (amount + "").match(/^\s*[^\d\s]*/)[0];
+	}
+</script>
+</body>
+</html>

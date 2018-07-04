@@ -287,6 +287,11 @@ table.attributes {
 			color: hsl(50, 100%, 35%);
 		}
 
+		&.empty {
+			background: hsl(0, 100%, 93%);
+			color: hsl(0, 60%, 60%);
+		}
+
 		&:empty {
 			background: hsl(0, 100%, 93%);
 			color: hsl(0, 60%, 60%);
@@ -419,7 +424,7 @@ table.attributes {
 		}
 
 		&.role-constructor,
-		&.role-variable {
+		&.role-special {
 			--color: $green;
 		}
 

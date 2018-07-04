@@ -1,0 +1,166 @@
+$accent-color: #f06;
+
+* { margin:0; }
+
+html {
+	background: hsl(220, 12%, 80%);
+
+	@media print {
+		background: none;
+	}
+}
+
+body {
+	padding: 1em;
+	font: 300 130%/1.5 'Helvetica Neue', sans-serif;
+	text-align: center;
+
+	@media (max-width:600px) {
+		width: auto;
+		margin: 1em;
+	}
+}
+
+h1 {
+	font-weight: 300;
+	font-size: 250%;
+	background: hsl(220, 12%, 95%);
+	padding: 1rem;
+}
+
+a {
+	color:inherit;
+
+	&:not(:hover) {
+		text-decoration: none;
+	}
+}
+
+article[property=sum] {
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	margin: 1em;
+	max-width: 30em;
+	background: white;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6, 0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6, 0 17px 2px -6px rgba(0, 0, 0, 0.2),
+	0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+	text-align: left;
+}
+
+table {
+	width: 100%;
+	border-spacing: 0;
+}
+
+	th, td {
+		padding: .5rem .8rem;
+		font-weight: inherit;
+		text-align: inherit;
+		white-space: nowrap;
+	}
+
+	thead {
+		background: hsl(220, 12%, 90%);
+		font-weight: bold;
+
+		th:last-child {
+			text-align: right;
+		}
+
+		select {
+			font: inherit;
+		}
+	}
+
+	tbody {
+		th {
+			width: 80%;
+		}
+
+		td:last-child {
+			text-align: right;
+		}
+
+		th, td {
+			border-bottom: 1px solid rgba(0,0,0,.1);
+
+			&.mv-empty[mv-mode=edit] {
+				border-bottom-color: rgba(0,0,0,.2);
+			}
+		}
+	}
+
+	tfoot {
+		th {
+			opacity: .5;
+		}
+
+		font-size: 200%;
+	}
+
+button {
+	cursor: pointer;
+}
+
+button.mv-add-sum {
+	font-size: 150%;
+	margin-bottom: .5em;
+	border: 0;
+}
+
+@media print {
+	body > header {
+		display: none;
+	}
+}
+
+.show-all,
+button.mv-add-sum.mv-add-sum {
+	display: block;
+	width: fit-content;
+	padding: .5em 1em;
+	margin: 1em auto;
+	border-radius: .3em;
+	background: white;
+	font-weight: bold;
+	font-size: 120%;
+	line-height: 1;
+
+	@media print {
+		display: none;
+	}
+
+	&:hover {
+		text-decoration: none;
+		background: $accent-color;
+		color: white;
+	}
+}
+
+button.mv-add-item {
+	width: 100%;
+	padding: .3em;
+	box-sizing: border-box;
+	border: 0;
+	background: hsl(80, 50%, 50%);
+	font: inherit;
+	font-weight: bold;
+	color: white;
+
+	&:not(:hover):not(:focus) {
+		opacity: .5;
+	}
+}
+
+// sum selected
+body.mv-target-within {
+
+}
+
+// No sum selected, styles for listing
+body:not(.mv-target-within) {
+	.show-all {
+		display: none;
+	}
+}

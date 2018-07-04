@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1440 900" enable-background="new 0 0 1440 900" xml:space="preserve">
+<g>
+	<g id="logo_1_">
+		<g id="bracket_5_" transform="translate(22.261434265426804, 2)">
+			<g id="bar_5_">
+				<polygon fill="#FF9500" points="373.75,200.57 425.21,200.57 337.38,397.85 285.92,397.85 				"/>
+			</g>
+			<g id="bar2_5_">
+				<polygon fill="#FF9500" points="373.75,200.57 425.21,200.57 513.05,397.85 461.58,397.85 				"/>
+			</g>
+		</g>
+		<g id="A_1_">
+			<g id="A-top_1_">
+				<g id="bracket_4_" transform="translate(22.261434265426804, 2)">
+					<g id="bar_4_">
+						<polygon fill="#FF0080" points="549.58,200.57 601.04,200.57 513.21,397.85 461.75,397.85 						"/>
+					</g>
+					<g id="bar2_4_">
+						<polygon fill="#FF0080" points="549.58,200.57 601.04,200.57 688.88,397.85 637.41,397.85 						"/>
+					</g>
+				</g>
+			</g>
+			<g id="A-crossbar_1_">
+				<circle fill="#FF0080" cx="597.95" cy="348.38" r="21.44"/>
+			</g>
+		</g>
+		<polygon fill="#82CF17" points="852.66,202.57 790.56,342.05 728.46,202.57 677,202.57 764.83,399.85 816.29,399.85 
+			904.12,202.57 		"/>
+		<g id="O_1_">
+			<path fill="#25AFF4" d="M1014.58,406.2c-57.89,0-104.99-47.1-104.99-104.99s47.1-104.99,104.99-104.99s104.99,47.1,104.99,104.99
+				S1072.48,406.2,1014.58,406.2z M1014.58,243.24c-31.97,0-57.98,26.01-57.98,57.98s26.01,57.98,57.98,57.98
+				s57.98-26.01,57.98-57.98S1046.55,243.24,1014.58,243.24z"/>
+		</g>
+	</g>
+</g>
+<rect x="297" y="479.33" fill="none" width="820" height="231.09"/>
+<text transform="matrix(1 0 0 1 310.3862 559.166)"><tspan x="0" y="0" fill="#FFFFFF" font-family="'HelveticaNeue-Light'" font-size="111.8182px">Find out more at </tspan><tspan x="-7.21" y="134.18" fill="#25AFF4" font-family="'HelveticaNeue-Bold'" font-size="111.8182px">https://mavo.io</tspan></text>
+</svg>
