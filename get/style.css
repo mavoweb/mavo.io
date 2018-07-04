@@ -1,5 +1,4 @@
 .questions > article {
-  -ms-flex: 1;
   flex: 1;
   border: 1px solid rgba(0, 0, 0, 0.2);
   padding: 1em;
@@ -17,10 +16,8 @@
     color: #bf4040; }
 
 #releases [property="release"] h2 {
-  display: -ms-flexbox;
   display: flex; }
   #releases [property="release"] h2 > a {
-    -ms-flex: 1;
     flex: 1; }
 
 #releases [property="tag_name"] {

@@ -8,13 +8,12 @@ body > header {
   body > header a {
     color: inherit; }
   body > header .masthead {
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-pack: justify;
     justify-content: space-between; }
     body > header .masthead .logo img {
       display: block; }
       body > header .masthead .logo img:not(:hover) {
+        -webkit-filter: grayscale(100%) brightness(400%);
         filter: grayscale(100%) brightness(400%); }
   body > header .promo {
     padding: 5em;
@@ -42,6 +41,7 @@ body > header nav iframe {
   display: inline-block; }
   body > header nav iframe:not(:hover) {
     mix-blend-mode: screen;
+    -webkit-filter: invert(100%);
     filter: invert(100%); }
   body > header nav iframe:hover, body > header nav iframe:focus {
     mix-blend-mode: luminosity; }
@@ -56,13 +56,9 @@ body > header nav iframe {
   font-weight: 400; }
 
 #pros {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-flow: row wrap;
   flex-flow: row wrap;
-  -ms-flex-align: start;
   align-items: flex-start;
-  -ms-flex-pack: center;
   justify-content: center;
   background: #6ec9f7;
   padding: 5em calc(50vw - 525px) 6em;
@@ -116,7 +112,6 @@ body > header nav iframe {
   padding: .5em; }
 
 .manual.example [mv-app="shopping"] li:not(.mv-deleted) {
-  display: -ms-flexbox;
   display: flex;
   background: #f6f8f9; }
   .manual.example [mv-app="shopping"] li:not(.mv-deleted):nth-child(odd) {
@@ -128,7 +123,6 @@ body > header nav iframe {
   color: gray; }
 
 .manual.example [mv-app="shopping"] label {
-  -ms-flex: 1;
   flex: 1; }
 
 .manual.example [mv-app="shopping"] .mv-item-bar.mv-ui {

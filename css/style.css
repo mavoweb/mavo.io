@@ -35,15 +35,13 @@
   --color-blue: #25aff4;
   --color-green: #82cf17;
   --color-orange: #ff9500;
-  --font-body: Roboto, "Helvetica Neue", sans-serif;
-  --font-heading: Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
-  --font-mono: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-  --content-width: 1050px; }
+  --font-body: Roboto, Helvetica Neue, sans-serif;
+  --font-heading: Didot, Didot LT STD, Bodoni 72, Bodoni, Bodoni MT, Libre Bodoni, Hoefler Text, Cambria, Georgia, serif;
+  --font-mono: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
+  --content-width: $content-width; }
 
 body {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-flow: column;
   flex-flow: column;
   min-height: 100vh;
   margin: 0;
@@ -188,25 +186,18 @@ input {
 
 body > header,
 body > footer {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-flow: column;
   flex-flow: column;
-  -ms-flex-align: center;
   align-items: center;
-  -ms-flex-pack: center;
   justify-content: center; }
 
 body > header {
   position: relative;
   z-index: 1;
-  display: -ms-flexbox;
   display: flex;
   padding: .8em 1em;
   margin: 0 -1rem;
-  -ms-flex-pack: justify;
   justify-content: space-between;
-  -ms-flex-flow: row;
   flex-flow: row;
   -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%);
   clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%);
@@ -227,13 +218,11 @@ body > header {
     text-align: right;
     font: 200 250%/1 Roboto, "Helvetica Neue", sans-serif; }
   body > header nav {
-    display: -ms-flexbox;
     display: flex;
     font-weight: 700;
     margin-bottom: 1.5em; }
     @media (max-width: 900px) {
       body > header nav {
-        -ms-flex-wrap: wrap;
         flex-wrap: wrap; }
         body > header nav a {
           min-width: 6em; } }
@@ -252,7 +241,9 @@ body > header {
       display: none; }
     @supports ((-webkit-clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%)) or (clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%))) {
       html:not(.home) body > header nav {
+        -webkit-transform: rotate(-1deg);
         transform: rotate(-1deg);
+        -webkit-transform-origin: right;
         transform-origin: right; } }
 
 a.soon {
@@ -307,11 +298,8 @@ body > div,
       padding-right: 1rem; } }
 
 body > footer {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-flow: row wrap;
   flex-flow: row wrap;
-  -ms-flex-align: start;
   align-items: flex-start;
   padding: 3em 1em 1em;
   padding: 3em calc(50% - 525px) 1em;
@@ -322,7 +310,6 @@ body > footer {
   clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%);
   margin: 2rem -1rem 0 -1rem; }
   body > footer nav {
-    display: -ms-flexbox;
     display: flex;
     font-weight: 700;
     margin-bottom: 1.5em; }
@@ -341,13 +328,14 @@ body > footer {
       display: none; }
     @supports ((-webkit-clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%)) or (clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 1.5em), 0% 100%))) {
       html:not(.home) body > footer nav {
+        -webkit-transform: rotate(-1deg);
         transform: rotate(-1deg);
+        -webkit-transform-origin: right;
         transform-origin: right; } }
   body > footer p:first-child {
     width: 100%;
     font-size: 150%; }
   body > footer > article {
-    -ms-flex: 1;
     flex: 1;
     margin: 0 1em 0 .5em; }
     body > footer > article > h1 {
@@ -356,9 +344,9 @@ body > footer {
       font-family: Roboto, "Helvetica Neue", sans-serif;
       opacity: .4; }
     body > footer > article:first-of-type {
-      -ms-flex: 2;
       flex: 2; }
       body > footer > article:first-of-type ul {
+        -webkit-columns: 2;
         -moz-columns: 2;
         columns: 2; }
   body > footer p {
@@ -370,8 +358,6 @@ body > footer {
   body > footer a.logo {
     height: 5em;
     margin: 0 .5em;
-    -ms-flex-item-align: center;
-    -ms-grid-row-align: center;
     align-self: center; }
     body > footer a.logo img {
       height: 100%; }
@@ -404,6 +390,7 @@ body > footer {
     background: #ffeacc; }
     .notice.warning::before {
       content: "⚠️ ";
+      -webkit-filter: hue-rotate(-10deg);
       filter: hue-rotate(-10deg);
       mix-blend-mode: multiply; }
     .notice.warning a {
@@ -464,6 +451,7 @@ body > section table {
       margin-right: .2em; }
   .example .example-container {
     position: relative;
+    -webkit-transform: scale(1);
     transform: scale(1);
     padding: 1.2em 1em 1em;
     border: 1px solid rgba(0, 0, 0, 0.3);
@@ -490,13 +478,9 @@ body > section table {
     margin-bottom: 0; }
     @media (min-width: 1000px) {
       .example.side-by-side > .demo-container {
-        display: -ms-flexbox;
         display: flex;
-        -ms-flex-flow: row;
         flex-flow: row;
-        -ms-flex-align: stretch;
         align-items: stretch;
-        -ms-flex-pack: stretch;
         justify-content: stretch;
         position: relative; } }
     .example.side-by-side > h1,
@@ -506,7 +490,6 @@ body > section table {
       margin: 0;
       margin-bottom: .5em; }
     .example.side-by-side h6 {
-      display: -ms-flexbox;
       display: flex; }
     .example.side-by-side form {
       margin-left: auto; }
@@ -515,12 +498,23 @@ body > section table {
         display: inline-block;
         margin-right: .3em; }
 
-@keyframes wiggle {
+@-webkit-keyframes wiggle {
   from {
+    -webkit-transform: rotate(-10deg);
     transform: rotate(-10deg); }
   to {
+    -webkit-transform: rotate(10deg);
+    transform: rotate(10deg); } }
+
+@keyframes wiggle {
+  from {
+    -webkit-transform: rotate(-10deg);
+    transform: rotate(-10deg); }
+  to {
+    -webkit-transform: rotate(10deg);
     transform: rotate(10deg); } }
       .example.side-by-side form .play:hover::before {
+        -webkit-animation: .2s wiggle infinite alternate;
         animation: .2s wiggle infinite alternate; }
     .example.side-by-side pre {
       -webkit-clip-path: none;
@@ -532,13 +526,13 @@ body > section table {
       resize: horizontal; }
       .example.side-by-side pre code {
         -moz-tab-size: 2;
+        -o-tab-size: 2;
         tab-size: 2; }
       @media (min-width: 1000px) {
         .example.side-by-side pre {
           margin-right: 1em; } }
     .example.side-by-side .example-container {
       margin: 0;
-      -ms-flex: 1;
       flex: 1;
       min-width: 30%; }
     .example.side-by-side pre, .example.side-by-side .example-container {
@@ -575,6 +569,7 @@ pre, code {
   background: whitesmoke;
   font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   -moz-tab-size: 4;
+  -o-tab-size: 4;
   tab-size: 4;
   -webkit-hyphens: none;
   -ms-hyphens: none;

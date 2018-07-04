@@ -13,9 +13,7 @@ body {
       body header h1 img {
         max-width: 8em; }
   body > div {
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-flow: row wrap;
     flex-flow: row wrap; }
   body footer {
     margin-top: 1em;
@@ -34,6 +32,7 @@ body {
     display: block;
     width: 13rem;
     height: 13rem;
+    -o-object-fit: cover;
     object-fit: cover;
     background: #ddd;
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" stroke="black" stroke-opacity=".3">\a 			<line x2="100" y2="100" /><line x1="100" y2="100" /></svg>'); }
@@ -53,8 +52,14 @@ body {
     [property=painting] p ::-webkit-input-placeholder,
     .mv-add-painting p ::-webkit-input-placeholder {
       color: rgba(255, 255, 255, 0.6); }
+    [property=painting] p ::-moz-placeholder,
+    .mv-add-painting p ::-moz-placeholder {
+      color: rgba(255, 255, 255, 0.6); }
     [property=painting] p :-ms-input-placeholder,
     .mv-add-painting p :-ms-input-placeholder {
+      color: rgba(255, 255, 255, 0.6); }
+    [property=painting] p ::-ms-input-placeholder,
+    .mv-add-painting p ::-ms-input-placeholder {
       color: rgba(255, 255, 255, 0.6); }
     [property=painting] p ::placeholder,
     .mv-add-painting p ::placeholder {

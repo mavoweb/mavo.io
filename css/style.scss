@@ -40,15 +40,15 @@
 // Sass variables to CSS variables
 :root {
 	// Colors
-	--color-magenta: $magenta;
-	--color-blue: $blue;
-	--color-green: $green;
-	--color-orange: $orange;
+	--color-magenta: #{$magenta};
+	--color-blue: #{$blue};
+	--color-green: #{$green};
+	--color-orange: #{$orange};
 
 	// Fonts
-	--font-body: $body-font;
-	--font-heading: $heading-font;
-	--font-mono: $mono-font;
+	--font-body: #{$body-font};
+	--font-heading: #{$heading-font};
+	--font-mono: #{$mono-font};
 
 	// Layout
 	--content-width: $content-width;

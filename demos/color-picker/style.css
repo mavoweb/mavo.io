@@ -31,6 +31,7 @@ header::before {
   color: white;
   font-size: 125%;
   box-shadow: 5em 0, 10em 0, 0 5em, 10em 5em, 0 10em, 5em 10em, 10em 10em;
+  -webkit-filter: drop-shadow(0 0 1px gray) drop-shadow(0 0 1px gray);
   filter: drop-shadow(0 0 0.5px gray) drop-shadow(0 0 0.5px gray); }
 
 @media (min-width: 70em) {
@@ -40,13 +41,10 @@ header::before {
     top: 5em; } }
 
 article {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-flow: column;
   flex-flow: column; }
 
 article > div {
-  display: -ms-flexbox;
   display: flex; }
 
 output {
@@ -57,11 +55,8 @@ output {
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5); }
 
 .sliders {
-  -ms-flex: 1;
   flex: 1;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-flow: column;
   flex-flow: column;
   margin-right: 1em; }
 

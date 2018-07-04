@@ -41,8 +41,8 @@ body > header + h2 {
 .example .mv-debug-storage {
   margin: 0;
   background: rgba(0, 0, 0, 0.06);
-  color: black .example .mv-debug-storage; }
-  .example .mv-debug-storage :not(:last-child) {
+  color: black; }
+  .example .mv-debug-storage:not(:last-child) {
     margin-bottom: 1em; }
   .example .mv-debug-storage summary {
     display: block;
@@ -68,7 +68,7 @@ body > header + h2 {
       display: none; } }
 
 #summary {
-  page-break-inside: avoid;
+  -webkit-column-break-inside: avoid;
   break-inside: avoid; }
   #summary dt {
     font-size: 120%;
@@ -204,6 +204,8 @@ table.attributes td:nth-last-child(2) {
     table.attributes td:nth-last-child(2):empty::before {
       content: "✘"; }
 
+@-webkit-keyframes target {}
+
 @keyframes target {}[mv-app="api"] [id="api"] h2, [mv-app="api"] [id="api"] h3, [mv-app="api"] [id="api"] h4, [mv-app="api"] [id="api"] p,
 [mv-app="functions"] [id="functions"] h2,
 [mv-app="functions"] [id="functions"] h3,
@@ -224,9 +226,7 @@ table.attributes td:nth-last-child(2) {
   padding: .8em 1em; }
   [mv-app="api"] [id="api"] [property=mavoClass] > summary,
   [mv-app="functions"] [id="functions"] [property=mavoClass] > summary {
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-align: baseline;
     align-items: baseline; }
     [mv-app="api"] [id="api"] [property=mavoClass] > summary h2,
     [mv-app="functions"] [id="functions"] [property=mavoClass] > summary h2 {
@@ -244,7 +244,6 @@ table.attributes td:nth-last-child(2) {
         color: inherit; }
     [mv-app="api"] [id="api"] [property=mavoClass] > summary p:last-of-type,
     [mv-app="functions"] [id="functions"] [property=mavoClass] > summary p:last-of-type {
-      -ms-flex: 1;
       flex: 1;
       text-align: right; }
   [mv-app="api"] [id="api"] [property=mavoClass] > h3,
@@ -278,11 +277,8 @@ table.attributes td:nth-last-child(2) {
   [mv-app="api"] [id="api"] [property=term] > summary,
   [mv-app="functions"] [id="functions"] [property=member] > summary,
   [mv-app="functions"] [id="functions"] [property=term] > summary {
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-align: center;
     align-items: center;
-    -ms-flex-pack: end;
     justify-content: flex-end;
     padding: .3em .5em;
     margin: 0 -.75em 0 -.8em;
@@ -449,6 +445,7 @@ table.attributes td:nth-last-child(2) {
 [mv-app="api"] [id="api"] [property=mavoClass].mv-target-within,
 [mv-app="functions"] [id="functions"] [property=mavoClass].mv-target-within {
   box-shadow: 0 0 1em .1em orange;
+  -webkit-animation: target 1s 1s both;
   animation: target 1s 1s both; }
 
 [mv-app="api"] [id="api"] [property=optional],

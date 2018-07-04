@@ -18,8 +18,14 @@ body {
   body a {
     text-decoration: none; }
 
+@-webkit-keyframes transform {
+  from {
+    -webkit-transform: rotate(8deg);
+    transform: rotate(8deg); } }
+
 @keyframes transform {
   from {
+    -webkit-transform: rotate(8deg);
     transform: rotate(8deg); } }
   body ul {
     position: relative;
@@ -44,9 +50,12 @@ body {
       z-index: -1;
       background: inherit;
       box-shadow: inherit;
+      -webkit-transform: rotate(-3deg);
       transform: rotate(-3deg);
+      -webkit-animation: transform 0.4s cubic-bezier(0.25, 0.1, 0.4, 1.5);
       animation: transform 0.4s cubic-bezier(0.25, 0.1, 0.4, 1.5); }
     body ul::after {
+      -webkit-transform: rotate(2deg);
       transform: rotate(2deg); }
   body :checked + [property=taskTitle] {
     font-style: italic;
@@ -105,9 +114,7 @@ body {
     border: 0; }
 
 li[property=task] {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
   align-items: center;
   border-bottom: 1px dashed rgba(51, 85, 153, 0.5);
   list-style: none;
@@ -116,7 +123,6 @@ li[property=task] {
   li[property=task].mv-deleted {
     padding: .3em; }
   li[property=task] label {
-    -ms-flex: 1;
     flex: 1;
     padding: .2em;
     margin: .3em 0;

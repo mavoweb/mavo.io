@@ -47,9 +47,7 @@ h1 {
 
 article {
   position: relative;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   max-width: 35em;
   padding: 2.5em;
@@ -79,7 +77,6 @@ article {
       article > header h1 + p {
         text-align: center; }
   article > section {
-    -ms-flex: 1;
     flex: 1;
     margin: 2em 1px 0;
     text-align: left; }
@@ -166,7 +163,13 @@ footer {
 ::-webkit-input-placeholder {
   color: rgba(117, 117, 117, 0.6); }
 
+::-moz-placeholder {
+  color: rgba(117, 117, 117, 0.6); }
+
 :-ms-input-placeholder {
+  color: rgba(117, 117, 117, 0.6); }
+
+::-ms-input-placeholder {
   color: rgba(117, 117, 117, 0.6); }
 
 ::placeholder {

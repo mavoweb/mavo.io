@@ -3,11 +3,9 @@ Build file to concat & minify files, compile SCSS and so on.
 */
 // grab our gulp packages
 var gulp  = require("gulp");
-var uglify = require("gulp-uglify");
 var rename = require("gulp-rename");
 var concat = require("gulp-concat");
 var sass = require("gulp-sass");
-var babel = require("gulp-babel");
 var autoprefixer = require("gulp-autoprefixer");
 var sourcemaps = require("gulp-sourcemaps");
 var fileinclude = require("gulp-file-include");
@@ -19,7 +17,7 @@ gulp.task("sass", function() {
 		.pipe(sourcemaps.init())
 		.pipe(sass().on("error", sass.logError))
 		.pipe(autoprefixer({
-			browsers: ["last 2 versions"],
+			browsers: ["cover 90%", "since 2016"],
 			cascade: false
 		}))
 		.pipe(rename({ extname: ".css" }))

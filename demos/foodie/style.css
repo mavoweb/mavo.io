@@ -50,6 +50,7 @@ body {
         bottom: -1em;
         background: center / cover;
         background-image: inherit;
+        -webkit-filter: brightness(0.8) blur(0.8em);
         filter: brightness(0.8) blur(0.8em); }
       body > article > header > a {
         display: block; }
@@ -58,6 +59,7 @@ body {
         height: 5em;
         border: none;
         border-radius: 5em;
+        -o-object-fit: cover;
         object-fit: cover;
         box-shadow: 0 0 0 0.3em rgba(255, 255, 255, 0.4); }
       body > article > header img:not([src]), body > article > header img[src=""] {
@@ -95,14 +97,12 @@ body {
         border: 1px solid rgba(0, 0, 0, 0.1);
         font-family: Baskerville, Palatino Linotype, Palatino, serif; }
         body > article > section > article > header {
-          display: -ms-flexbox;
           display: flex;
           background: rgba(0, 0, 0, 0.1);
           padding: 0.5em;
           margin: -1em;
           margin-bottom: 1em; }
           body > article > section > article > header > h1 {
-            -ms-flex: 1;
             flex: 1;
             width: 100%;
             padding: 0.5em;
@@ -111,9 +111,7 @@ body {
             body > article > section > article > header > h1 div {
               font-weight: normal; }
           body > article > section > article > header > p {
-            display: -ms-flexbox;
             display: flex;
-            -ms-flex-align: center;
             align-items: center;
             width: -webkit-min-content;
             width: -moz-min-content;
@@ -129,7 +127,6 @@ body {
             -ms-hyphens: none;
             hyphens: none; }
             body > article > section > article > header > p span {
-              -ms-flex: 1;
               flex: 1;
               padding-left: .2em;
               border-left: 1px solid rgba(255, 255, 255, 0.3);
@@ -189,6 +186,7 @@ body {
     margin: 3em 0 1em;
     overflow: auto;
     -moz-tab-size: 4;
+    -o-tab-size: 4;
     tab-size: 4;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3) inset;
     text-align: left; }
@@ -196,7 +194,11 @@ body {
     visibility: hidden; }
   body ::-webkit-input-placeholder {
     color: rgba(117, 117, 117, 0.6); }
+  body ::-moz-placeholder {
+    color: rgba(117, 117, 117, 0.6); }
   body :-ms-input-placeholder {
+    color: rgba(117, 117, 117, 0.6); }
+  body ::-ms-input-placeholder {
     color: rgba(117, 117, 117, 0.6); }
   body ::placeholder {
     color: rgba(117, 117, 117, 0.6); }

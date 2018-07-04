@@ -61,7 +61,7 @@ body > header + h2 {
 	.mv-debug-storage {
 		margin: 0;
 		background: rgba(0,0,0,.06);
-		color: black
+		color: black;
 
 		&:not(:last-child) {
 			margin-bottom: 1em;
@@ -412,20 +412,20 @@ table.attributes {
 
 		&.role-property,
 		&.role-operator {
-			--color: $magenta;
+			--color: #{$magenta};
 		}
 
 		&.role-accessor {
-			--color: $orange;
+			--color: #{$orange};
 		}
 
 		&.role-function {
-			--color: $blue;
+			--color: #{$blue};
 		}
 
 		&.role-constructor,
 		&.role-special {
-			--color: $green;
+			--color: #{$green};
 		}
 
 		&.role-constructor [property=name] {

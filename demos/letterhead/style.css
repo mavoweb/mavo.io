@@ -94,22 +94,18 @@ header > address > h2 {
     font-weight: bold; }
 
 .recipient {
-  display: -ms-flexbox;
   display: flex; }
   .recipient > div {
     text-align: right;
-    -ms-flex: 1;
     flex: 1; }
   .recipient h2 {
     font-size: 120%; }
 
 .company {
-  display: -ms-flexbox;
   display: flex; }
   .company > img {
     margin-right: 1em; }
   .company > div {
-    -ms-flex: 1;
     flex: 1; }
 
 address {
@@ -186,13 +182,10 @@ body:not(.mv-target-within) .show-all {
   display: none; }
 
 body:not(.mv-target-within) article.letter {
-  display: -ms-flexbox;
   display: flex;
   width: 66em;
   margin: 2px auto; }
   body:not(.mv-target-within) article.letter [property=title] {
-    -ms-flex-item-align: center;
-    -ms-grid-row-align: center;
     align-self: center;
     margin-left: .5em;
     font-size: 150%;
@@ -210,7 +203,6 @@ body:not(.mv-target-within) article.letter {
     font-size: 150%;
     font-weight: bold; }
   body:not(.mv-target-within) article.letter .recipient {
-    -ms-flex: 1;
     flex: 1; }
 
 /*# sourceMappingURL=style.css.map */

@@ -3,11 +3,8 @@ section[mv-app="demos"] {
   section[mv-app="demos"][mv-permissions~="login"] > .mv-bar {
     display: none; }
   section[mv-app="demos"] > div {
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-flow: row wrap;
     flex-flow: row wrap;
-    -ms-flex-pack: center;
     justify-content: center;
     margin: auto;
     width: 100%; }
@@ -71,9 +68,7 @@ html:not(.lite) body:not(.has-demo-bar) main {
 
 .lite body {
   padding: 0;
-  -ms-flex-align: stretch;
   align-items: stretch;
-  -ms-flex-pack: stretch;
   justify-content: stretch; }
 
 .lite body > section,
@@ -99,7 +94,6 @@ body.has-demo-bar {
   top: 0;
   left: 0;
   right: 0;
-  display: -ms-flexbox;
   display: flex;
   padding: .4em .2em;
   background: black;
@@ -122,6 +116,7 @@ body.has-demo-bar {
     .demo-bar.demo-bar.demo-bar > *.next {
       margin-left: auto; }
     .demo-bar.demo-bar.demo-bar > *.home:not(:hover) {
+      -webkit-filter: grayscale(100%);
       filter: grayscale(100%); }
   .demo-bar.demo-bar.demo-bar > [href]:hover,
   .demo-bar.demo-bar.demo-bar > :enabled:hover {
@@ -137,6 +132,7 @@ body.has-demo-bar {
   padding: .5rem;
   border-radius: .5rem;
   box-shadow: 0.1em 0.1em 2em rgba(0, 0, 0, 0.2);
+  -webkit-transform-origin: top;
   transform-origin: top; }
   .tippy-popper .tippy-tooltip.tippy-tooltip pre {
     line-height: 1.5;

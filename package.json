@@ -17,19 +17,15 @@
   },
   "homepage": "http://mavo.io",
   "devDependencies": {
-    "babel-eslint": "^5.0.0",
-    "babel-preset-es2015": "^6.5.0",
-    "gulp": "^3.9.0",
-    "gulp-autoprefixer": "^5.0.0",
-    "gulp-babel": "^6.1.3",
+    "gulp": "^3",
+    "gulp-autoprefixer": "^5",
     "gulp-concat": "^2.6.0",
-    "gulp-file-include": "^1.2.0",
-    "gulp-notify": "^2.2.0",
-    "gulp-rename": "^1.3.0",
-    "gulp-replace": "^0.5.4",
-    "gulp-sass": "^4.0.1",
-    "gulp-sourcemaps": "^1.12.1",
-    "gulp-uglify": "^1.5.1",
-    "gulp-util": "^3.0.7"
+    "gulp-file-include": "^2",
+    "gulp-notify": "^3",
+    "gulp-rename": "^1",
+    "gulp-replace": "^1",
+    "gulp-sass": "^4",
+    "gulp-sourcemaps": "^2",
+    "gulp-util": "^3"
   }
 }

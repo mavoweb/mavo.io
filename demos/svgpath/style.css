@@ -17,9 +17,7 @@ body > header h1 a, body > header h1 button, body > header h1 .mv-button, .edito
     background: #737b8c; }
 
 body {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-flow: column;
   flex-flow: column;
   margin: 0;
   height: 100vh;
@@ -30,9 +28,7 @@ body {
     font-size: 350%; }
 
 body > header {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
   align-items: center;
   padding: .5em;
   background: #737b8c;
@@ -47,7 +43,6 @@ body > header {
     body > header .mv-bar .mv-import::before {
       content: "⬆️ "; }
   body > header h1 {
-    -ms-flex: 1;
     flex: 1;
     margin: 0;
     font-size: 130%;
@@ -72,9 +67,7 @@ body > header {
     padding: 0 .5em; }
 
 main {
-  -ms-flex: 1;
   flex: 1;
-  display: -ms-flexbox;
   display: flex; }
 
 main > section > h1 {
@@ -82,11 +75,8 @@ main > section > h1 {
   font-size: 200%; }
 
 .editor {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-flow: column;
   flex-flow: column;
-  -ms-flex: 1;
   flex: 1;
   padding: 0 1em 1em; }
   .editor > h1 details {
@@ -108,7 +98,6 @@ main > section > h1 {
     font: 100% Consolas, Monaco, monospace;
     white-space: normal; }
   .editor > div {
-    -ms-flex: 1;
     flex: 1;
     overflow: auto; }
   .editor .mv-add-segment {
@@ -117,13 +106,10 @@ main > section > h1 {
     letter-spacing: -.05em; }
 
 .preview {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-flow: column;
   flex-flow: column;
   width: 50vw; }
   .preview svg {
-    -ms-flex: 1;
     flex: 1;
     background: #e6e6e6;
     display: block;
@@ -138,7 +124,7 @@ main > section > h1 {
       transform-box: fill-box; }
 
 [property=segment] {
-  --color: #737b8c;
+  --color: hsl(220, 10%, 50%);
   position: relative;
   margin: .8em 0;
   border: 1px solid var(--color);
@@ -155,9 +141,7 @@ main > section > h1 {
     [property=segment] .mv-item-bar:not(:hover):not(:focus) {
       mix-blend-mode: multiply; }
   [property=segment] h1 {
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-align: center;
     align-items: center;
     padding: .5em;
     padding-left: 3em;
@@ -184,15 +168,15 @@ main > section > h1 {
   [property=segment].absolute::before {
     text-transform: uppercase; }
   [property=segment][data-segtype="m"] {
-    --color: #73ac39; }
+    --color: hsl(90, 50%, 45%); }
   [property=segment][data-segtype="l"] {
     --color: #f47; }
   [property=segment][data-segtype="h"] {
-    --color: #4d80b3; }
+    --color: hsl(210, 40%, 50%); }
   [property=segment][data-segtype="v"] {
-    --color: #c33d22; }
+    --color: hsl(10, 70%, 45%); }
   [property=segment][data-segtype="a"] {
-    --color: #4db3a2; }
+    --color: hsl(170, 40%, 50%); }
   [property=segment] label {
     margin-right: .5em; }
   [property=segment] input[type=number] {

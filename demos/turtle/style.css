@@ -19,9 +19,7 @@ body > header a, body > header button, body > header .button, body > header .mv-
     background: #737b8c; }
 
 body {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-flow: column;
   flex-flow: column;
   margin: 0;
   height: 100vh;
@@ -37,16 +35,13 @@ a {
   color: inherit; }
 
 body > header {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
   align-items: center;
   padding: .5em;
   background: #737b8c;
   color: white;
   font-size: 120%; }
   body > header .mv-bar {
-    display: -ms-flexbox;
     display: flex; }
     body > header .mv-bar .mv-clear::before {
       content: "❌ ";
@@ -59,7 +54,9 @@ body > header {
     margin: 0;
     font-size: 130%;
     line-height: 1;
+    -webkit-filter: brightness(140%) saturate(70%);
     filter: brightness(140%) saturate(70%);
+    -webkit-transform: scaleX(-1) scale(1.2);
     transform: scaleX(-1) scale(1.2);
     margin-right: .5em;
     mix-blend-mode: luminosity; }
@@ -72,7 +69,6 @@ body > header {
     body > header a:not(:hover):not(:active):not(:focus), body > header button:not(:hover):not(:active):not(:focus), body > header .button:not(:hover):not(:active):not(:focus), body > header .mv-button:not(:hover):not(:active):not(:focus) {
       color: #737b8c; }
   body > header details {
-    display: -ms-flexbox;
     display: flex;
     position: relative; }
     body > header details > div {
@@ -95,6 +91,7 @@ body > header {
         border-bottom: 0;
         width: .5em;
         height: .5em;
+        -webkit-transform: rotate(45deg);
         transform: rotate(45deg); }
     body > header details textarea {
       display: block;
@@ -121,9 +118,7 @@ body > header {
       margin-left: auto; }
 
 main {
-  -ms-flex: 1;
   flex: 1;
-  display: -ms-flexbox;
   display: flex; }
 
 .editor {
@@ -146,24 +141,18 @@ main {
       content: "+ "; }
 
 .preview {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-flow: column;
   flex-flow: column;
   width: 50vw; }
   .preview iframe {
-    -ms-flex: 1;
     flex: 1;
     display: block;
     overflow: visible; }
 
 [property=instruction] {
   position: relative;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  -ms-flex-align: center;
   align-items: center;
   padding: .4em 0;
   counter-increment: step; }
