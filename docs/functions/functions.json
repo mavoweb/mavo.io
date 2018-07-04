@@ -1581,9 +1581,13 @@
 			"argument": [
 				{
 					"name": "URL",
-					"optional": false
+					"optional": false,
+					"type": "Text"
 				}
-			]
+			],
+			"description": "Gets all texts after the rightmost slash of an URL. For example, `filename(\"http://mavo.io/docs/functions.html\")` will return `functions.html`.\nIf the parameter is not an URL, `filename()` will return the value of the parameter as-is.",
+			"returnType": "Text",
+			"returnDescription": "Text after the rightmost slash of an URL. Returns the value of the parameter as-is if not an URL."
 		},
 		{
 			"name": "json",
@@ -1609,12 +1613,25 @@
 			"unary": false,
 			"category": "other",
 			"role": "function",
-			"description": "Logs data to the browser console and returns the result of the first parameter of this function.\nFor example, `log(1 + 1, Math.floor(3.5), true && false)` will return `2`, the result of the first parameter of `log()`. Additionally, when you open the browser console, `2 3 false` will be displayed.",
+			"description": "Logs the result of all parameters to the browser console and returns the result of the first parameter of this function.\nFor example, `log(1 + 1, floor(3.5), true && false)` will return `2`, the result of the first parameter of `log()`. Additionally, when you open the browser console, `2 3 false` will be displayed.",
 			"argument": [
 				{
-					"optional": false
+					"optional": false,
+					"name": "parameter1",
+					"type": "Anything"
+				},
+				{
+					"name": "parameter2",
+					"optional": false,
+					"type": "Anything"
+				},
+				{
+					"name": "...",
+					"optional": false,
+					"description": "You can provide as many as you want."
 				}
-			]
+			],
+			"returnDescription": "The result of the first parameter."
 		},
 		{
 			"name": "$now",
