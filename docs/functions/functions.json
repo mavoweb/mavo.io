@@ -1618,12 +1618,14 @@
 				{
 					"optional": false,
 					"name": "parameter1",
-					"type": "Anything"
+					"type": "Anything",
+					"description": "The first parameter to be logged to the browser console."
 				},
 				{
 					"name": "parameter2",
 					"optional": false,
-					"type": "Anything"
+					"type": "Anything",
+					"description": "The second parameter to be logged to the browser console."
 				},
 				{
 					"name": "...",
