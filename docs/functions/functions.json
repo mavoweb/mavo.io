@@ -1476,7 +1476,7 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Check if a collection, group, list, or text contains a needle. For example, `contains(group(name:\"Kenneth\", age:17, food:\"rice\"), \"rice\")` returns `true`.\nIf both haystack and needle are a list, `contains()` checks if the first item of the haystack contains the first item of the needle, and so on. For example, `contains(list(\"Kenneth\", \"Verou\"), list(\"Kenneth\", \"Lea\"))` will return `list(true, false)`.",
+			"description": "Check if a collection, group, list, or text contains a needle. For example, `contains(group(name:\"Kenneth\", age:17, food:\"rice\"), \"rice\")` returns `true`.\nIf both haystack and needle are a list, `contains()` checks if the first item of the haystack contains the first item of the needle, and so on, and returns a list of corresponding results. For example, `contains(list(\"Kenneth\", \"Verou\"), list(\"Ken\", \"Lea\"))` will return `list(true, false)`.",
 			"argument": [
 				{
 					"name": "haystack",
