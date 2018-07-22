@@ -1590,17 +1590,17 @@
 			"unary": false,
 			"category": "other",
 			"role": "function",
-			"description": "Converts data into JSON string and avoids circular reference.",
+			"description": "Converts data to JSON.",
 			"argument": [
 				{
 					"name": "data",
 					"optional": false,
 					"type": "Anything",
-					"description": "Data to be converted to JSON string."
+					"description": "Data to be converted to JSON."
 				}
 			],
 			"returnType": "Text",
-			"returnDescription": "The JSON string."
+			"returnDescription": "The JSON."
 		},
 		{
 			"name": "log",
