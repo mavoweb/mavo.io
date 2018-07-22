@@ -1608,7 +1608,7 @@
 			"unary": false,
 			"category": "other",
 			"role": "function",
-			"description": "Logs the result of all parameters to the browser console and returns the result of the first parameter of this function.\nFor example, `log(1 + 1, floor(3.5), true && false)` will return `2`, the result of the first parameter of `log()`. Additionally, when you open the browser console, `2 3 false` will be displayed.",
+			"description": "Logs the result of all parameters to the browser console and returns the result of the first parameter of this function.\nFor example, `log(1 + 1, floor(3.5), true && false)` will return `2`, the result of the first parameter of `log()`. Additionally, when you open the browser console, `2 3 false` will be displayed.\nThis function is primarily for **advanced** Mavo users and developers. To debug your Mavo app, the [Mavo Inspector](https://chrome.google.com/webstore/detail/mavo-inspector/fcjdobllamgdbbjhhhpghnffideklgpa) Chrome extension may be more useful (works only with the development version of Mavo).",
 			"argument": [
 				{
 					"optional": false,
