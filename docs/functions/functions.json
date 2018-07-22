@@ -387,11 +387,6 @@
 					"optional": false,
 					"type": "Text",
 					"description": "The key to look for or the condition to match if in the form `\"key=value\"`."
-				},
-				{
-					"name": "meta",
-					"optional": false,
-					"type": "Group"
 				}
 			],
 			"returnDescription": "Value of found key or a list of values if multiple keys are found. Returns a list of groups if the second parameter is \"key=value\". "
@@ -1476,7 +1471,7 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Check if a collection, group, list, or text contains a needle. For example, `contains(group(name:\"Kenneth\", age:17, food:\"rice\"), \"rice\")` returns `true`.\nIf both haystack and needle are a list, `contains()` checks if the first item of the haystack contains the first item of the needle, and so on, and returns a list of corresponding results. For example, `contains(list(\"Kenneth\", \"Verou\"), list(\"Ken\", \"Lea\"))` will return `list(true, false)`.",
+			"description": "Check if a collection, group, list, or text contains another given text. For example, `contains(\"Kenneth\", \"Ken\")` returns `true`.\nIf both haystack and needle are a list, `contains()` checks if the first item of the haystack contains the first item of the needle, and so on, and returns a list of corresponding results. For example, `contains(list(\"Kenneth\", \"Verou\"), list(\"Ken\", \"Lea\"))` will return `list(true, false)`.",
 			"argument": [
 				{
 					"name": "haystack",
