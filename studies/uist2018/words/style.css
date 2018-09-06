@@ -9,6 +9,8 @@ button {
 
 .sentence {
 	display: flex;
+	align-items: flex-start;
+	flex-wrap: wrap;
 	border: 1px dashed hsl(220, 10%, 50%);
 	padding: .3em;
 	overflow: hidden;
@@ -48,6 +50,11 @@ button {
 	background: white;
 	box-shadow: 0 .05em .05em hsla(220, 10%, 50%, .5);
 }
+
+	[property="orderedWord"]:active,
+	[property="word"]:active {
+		background: hsl(30, 100%, 95%);
+	}
 
 [property="word"] {
 	cursor: pointer;

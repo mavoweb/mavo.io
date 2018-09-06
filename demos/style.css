@@ -99,6 +99,9 @@ body.has-demo-bar {
   background: black;
   color: white;
   font: bold 1rem/1.5 Roboto, "Helvetica Neue", sans-serif; }
+  @media print {
+    .demo-bar.demo-bar.demo-bar {
+      display: none; } }
   .demo-bar.demo-bar.demo-bar > * {
     min-width: 1em;
     padding: .3em .7em;

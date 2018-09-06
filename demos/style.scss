@@ -124,6 +124,10 @@ body.has-demo-bar {
 	color: white;
 	font: bold 1rem/1.5 $body-font;
 
+	@media print {
+		display: none;
+	}
+
 	& > * {
 		min-width: 1em;
 		padding: .3em .7em;
