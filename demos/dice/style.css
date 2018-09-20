@@ -22,7 +22,16 @@ button {
 	border: 1px solid rgba(0,0,0,.1);
 	padding: 0 .4em;
 	cursor: pointer;
+	outline: none;
 }
+
+	button:focus-visible {
+		outline: 5px auto hsl(195, 90%, 50%);
+	}
+
+	button:active {
+		background: hsl(220, 10%, 80%);
+	}
 
 .dice {
 	font-size: 500%;
