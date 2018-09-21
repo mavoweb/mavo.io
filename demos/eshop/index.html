@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<title>E-shop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css">
+<script src="https://dev.mavo.io/dist/mavo.js"></script>
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<div mv-app="eshop" mv-storage="https://github.com/mavoweb/mavo.io/demos/eshop/products.json" mv-bar="no-login">
+	<h1>Products</h1>
+
+	<article property="product" mv-multiple>
+		<img property="image" alt="" />
+		<span property="name"></span>
+		<!-- Dot notation because cart is a separate Mavo app, due to separate storage (local) -->
+		<button mv-action="add(cart.product, product)" class="add-to-cart">Add to cart</button>
+		<span property="amount" class="price"></span>
+	</article>
+
+	<footer>
+		Products from <a href="http://theworstthingsforsale.com/">The Worst Things For Sale</a>
+		&bull; <a href="?login" class="mv-login">Admin login</a>
+	</footer>
+</div>
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank"
+		mv-app="cart" mv-storage="local" mv-autosave="0" mv-mode="read">
+	<h1>My Cart</h1>
+
+	<!-- required by PayPal -->
+	<input type="hidden" name="cmd" value="_cart">
+	<input type="hidden" name="upload" value="1">
+	<input type="hidden" name="business" value="actions@mavo.io"> <!-- Sandbox account -->
+	<input type="hidden" name="currency_code" value="USD">
+
+	<table>
+		<thead>
+			<tr>
+				<th>Product</th>
+				<th>Quantity</th>
+				<th>Price</th>
+				<th>Subtotal</th>
+			</tr>
+		</thead>
+		<tr property="product" mv-multiple mv-initial-items="0">
+			<!-- Anything with a name attribute is sent to PayPal -->
+			<td property="name"></td>
+			<td><input type="number" property="quantity" value="1" min="1" name="quantity_[$index + 1]"></td>
+			<td class="price" property="amount"></td>
+			<td>
+				<span property="subtotal" class="price">[amount * quantity]</span>
+				<input type="hidden" name="item_name_[$index + 1]" value="[name]">
+				<input type="hidden" name="amount_[$index + 1]" value="[amount]">
+			</td>
+		</tr>
+		<tfoot>
+			<tr>
+				<td colspan="3">Total</td>
+				<td class="price">[sum(subtotal)]</td>
+			</tr>
+		</tfoot>
+	</table>
+	<button disabled="[count(product) = 0]" class="checkout">Check out with PayPal</button>
+</form>
+
+<!-- This adds the demo navigation toolbar. It's not actually needed for the demo to work -->
+<script src="/js/demo.js"></script>
+
+</body>
+</html>
