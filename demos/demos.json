@@ -96,6 +96,13 @@
 			"id": "contacts"
 		},
 		{
+			"name": "Shopping list",
+			"tag": [
+				"Actions"
+			],
+			"id": "shopping"
+		},
+		{
 			"name": "Dice roller with history",
 			"tag": [
 				"Actions"
