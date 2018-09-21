@@ -118,13 +118,25 @@ input[property="quantity"] {
 		border-top: 1px solid;
 	}
 
-	[mv-app=cart] th:last-child,
-	[mv-app=cart] td:last-child {
+	[mv-app=cart] th:nth-last-child(2),
+	[mv-app=cart] td:nth-last-child(2) {
 		background: hsl(var(--color1), 95%);
 	}
 
 	[mv-app=cart] td,
 	[mv-app=cart] th { padding: .5rem; }
+
+[mv-app=cart] .remove {
+	all: initial;
+	font-size: 70%;
+	padding: .2em .3em;
+	border-radius: .2em;
+	cursor: pointer;
+}
+
+	[mv-app=cart] .remove:hover {
+		background: hsl(0,100%, 90%);
+	}
 
 footer {
 	font-size: smaller;

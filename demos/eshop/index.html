@@ -46,6 +46,7 @@
 				<th>Quantity</th>
 				<th>Price</th>
 				<th>Subtotal</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tr property="product" mv-multiple mv-initial-items="0">
@@ -58,11 +59,13 @@
 				<input type="hidden" name="item_name_[$index + 1]" value="[name]">
 				<input type="hidden" name="amount_[$index + 1]" value="[amount]">
 			</td>
+			<td><button type="button" title="Remove" mv-action="delete(product)" class="remove">❌</button></td>
 		</tr>
 		<tfoot>
 			<tr>
 				<td colspan="3">Total</td>
 				<td class="price">[sum(subtotal)]</td>
+				<td></td>
 			</tr>
 		</tfoot>
 	</table>
