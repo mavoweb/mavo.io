@@ -40,17 +40,25 @@
 	<input type="hidden" name="currency_code" value="USD">
 
 	<table>
+		<colgroup>
+			<col class="remove"></col>
+			<col class="product"></col>
+			<col class="quantity"></col>
+			<col class="price"></col>
+			<col class="subtotal"></col>
+		</colgroup>
 		<thead>
 			<tr>
+				<th></th>
 				<th>Product</th>
 				<th>Quantity</th>
 				<th>Price</th>
 				<th>Subtotal</th>
-				<th></th>
 			</tr>
 		</thead>
 		<tr property="product" mv-multiple mv-initial-items="0">
 			<!-- Anything with a name attribute is sent to PayPal -->
+			<td><button type="button" title="Remove from cart" mv-action="delete(product)" class="remove">❌</button></td>
 			<td property="name"></td>
 			<td><input type="number" property="quantity" value="1" min="1" name="quantity_[$index + 1]"></td>
 			<td class="price" property="amount"></td>
@@ -59,13 +67,15 @@
 				<input type="hidden" name="item_name_[$index + 1]" value="[name]">
 				<input type="hidden" name="amount_[$index + 1]" value="[amount]">
 			</td>
-			<td><button type="button" title="Remove" mv-action="delete(product)" class="remove">❌</button></td>
+		</tr>
+		<tr mv-if="count(product) = 0" class="empty-cart-message">
+			<td colspan="4">(Cart is empty)</td>
+			<td></td>
 		</tr>
 		<tfoot>
 			<tr>
-				<td colspan="3">Total</td>
+				<td colspan="4">Total</td>
 				<td class="price">[sum(subtotal)]</td>
-				<td></td>
 			</tr>
 		</tfoot>
 	</table>
