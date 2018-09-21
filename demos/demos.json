@@ -2,7 +2,9 @@
 	"demo": [
 		{
 			"name": "To-Do List",
-			"tag": [],
+			"tag": [
+				"Actions"
+			],
 			"id": "todo"
 		},
 		{
@@ -20,6 +22,15 @@
 				"TINYMCE"
 			],
 			"id": "homepage"
+		},
+		{
+			"name": "E-shop with Paypal checkout",
+			"tag": [
+				"Actions",
+				"Github",
+				"Multiple Apps"
+			],
+			"id": "eshop"
 		},
 		{
 			"name": "Mortgage Calculator",
@@ -83,6 +94,20 @@
 				"Hierarchy"
 			],
 			"id": "contacts"
+		},
+		{
+			"name": "Dice roller with history",
+			"tag": [
+				"Actions"
+			],
+			"id": "dice"
+		},
+		{
+			"name": "Language learning game",
+			"tag": [
+				"Actions"
+			],
+			"id": "words"
 		}
 	]
 }
