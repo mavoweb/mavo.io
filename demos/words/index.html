@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Word game!</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css">
-	<link rel="stylesheet" href="style.css">
-	<script src="https://dev.mavo.io/dist/mavo.js"></script>
+
+<meta charset="UTF-8">
+<title>Word game!</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css">
+<link rel="stylesheet" href="style.css">
+<script src="https://dev.mavo.io/dist/mavo.js"></script>
+
 </head>
 <body mv-app="words" mv-bar="none">
-	<h1>Word game!</h1>
 
-	Sentence:
-	<div class="sentence [if(join(orderedWord, ' ') = solution, correct)]" mv-mode="edit">
-		<span property="orderedWord" mv-multiple mv-accepts="word" mv-optional mv-mode="read"></span>
+<h1>Word game!</h1>
 
-		<div class="buttons">
-			<button class="clear" mv-action="delete(orderedWord)">Clear</button>
-			<button class="clear" mv-action="delete(last(orderedWord))">Undo</button>
-		</div>
+Sentence:
+<div class="sentence [if(join(orderedWord, ' ') = solution, correct)]" mv-mode="edit">
+	<span property="orderedWord" mv-multiple mv-accepts="word" mv-optional mv-mode="read"></span>
+
+	<div class="buttons">
+		<button class="clear" mv-action="delete(orderedWord)">Clear</button>
+		<button class="clear" mv-action="delete(last(orderedWord))">Undo</button>
 	</div>
+</div>
 
-	<span property="word" mv-multiple mv-value="shuffle(split(solution))" mv-action="add(orderedWord, word)"></span>
+<span property="word" mv-multiple mv-value="shuffle(split(solution))" mv-action="add(orderedWord, word)"></span>
 
-	<details>
-		<summary>Solution</summary>
-		<div property="solution" mv-mode="edit">Je suis une femme</div>
-	</details>
+<details>
+	<summary>Solution</summary>
+	<div property="solution" mv-mode="edit">Je suis une femme</div>
+</details>
+
+<!-- This adds the demo navigation toolbar. It's not actually needed for the demo to work -->
+<script src="/js/demo.js"></script>
+
 </body>
 </html>
