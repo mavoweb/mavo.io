@@ -381,7 +381,6 @@ table.attributes {
 		& > summary {
 			display: flex;
 			align-items: center;
-			justify-content: flex-end;
 			padding: .3em .5em;
 			margin: 0 -.75em 0 -.8em;
 			background: color-image(hsla(0,0%,100%,.85)) var(--color);
@@ -566,6 +565,10 @@ table.attributes {
 	[property=returnType],
 	.type {
 		font-family: $mono-font;
+	}
+
+	summary h4 {
+		margin-right: auto;
 	}
 }
 

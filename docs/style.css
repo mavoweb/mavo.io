@@ -279,7 +279,6 @@ table.attributes td:nth-last-child(2) {
   [mv-app="functions"] [id="functions"] [property=term] > summary {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
     padding: .3em .5em;
     margin: 0 -.75em 0 -.8em;
     background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)) var(--color); }
@@ -490,6 +489,9 @@ table.attributes td:nth-last-child(2) {
 [mv-app="api"] [id="api"] [property=returnType],
 [mv-app="api"] [id="api"] .type {
   font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace; }
+
+[mv-app="api"] [id="api"] summary h4 {
+  margin-right: auto; }
 
 [mv-app]:not([mv-mode=edit]) .hide-on-read {
   display: none; }
