@@ -154,7 +154,7 @@
 		{
 			"name": "mv-autosave",
 			"on": "Mavo root",
-			"purpose": "Save automatically when the data changes. Its value is the number of seconds to throttle saving, or 0 for no throttling (save immediately). The default throttling delay is 3 seconds, used when the attribute is specified without a value. Unless throttling is disabled, The Save button will still be present in the Mavo bar.",
+			"purpose": "Save automatically when the data changes, either immediately or at most every N seconds.",
 			"live": "initially",
 			"path": "/docs/storage/#autosave",
 			"link": "Storage"
