@@ -1390,6 +1390,28 @@
 			"description": "Data object attached to each node.",
 			"member": [
 				{
+					"name": "data",
+					"static": false,
+					"role": "property",
+					"description": "The underlying data value, e.g. an Array if this Mavo.Data is attached to a Collection, usually a string or other primitive value if this Mavo.Data is attached to a Primitive.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "parent",
+					"static": false,
+					"role": "property",
+					"description": "The `Mavo.Data` attached to the parent node.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
 					"name": "stub",
 					"static": true,
 					"role": "property",
@@ -1397,6 +1419,31 @@
 					"argument": [
 						{
 							"optional": false
+						}
+					]
+				},
+				{
+					"name": "update",
+					"static": false,
+					"role": "function",
+					"description": "Update this data object based on children nodes' data (if the node is a Collection or ImplicitCollection) or the node's value in the DOM (if the node is a Primitive). Does nothing in other cases. Propagates updates to parent if any changes were made.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "resolve",
+					"static": false,
+					"role": "function",
+					"description": "Resolves the value associated with a property name. If the property name directly exists on `data` then it is looked up and returned from there.",
+					"argument": [
+						{
+							"name": "property",
+							"optional": false,
+							"type": "String",
+							"description": "Property name to resolve."
 						}
 					]
 				}
