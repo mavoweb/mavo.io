@@ -483,7 +483,7 @@
 			"name": "Mavo.Group",
 			"parentClass": "Mavo.Node",
 			"filename": "group.js",
-			"description": "Group nodes are analogous to JSON objects. There is always at least one group in every Mavo: The root.",
+			"description": "Group nodes are analogous to JSON objects. There is always at least one group in every Mavo: The root. Any property that contains any other properties is also a group.",
 			"member": [
 				{
 					"static": false,
@@ -667,13 +667,75 @@
 		{
 			"name": "Mavo.DOMExpression",
 			"filename": "domexpression.js",
-			"description": "A `DOMExpression` object is created for each text node or attribute that contains one or more expressions.",
+			"description": "A `DOMExpression` object is created for each text node or attribute that contains one or more expressions. Note that there is only one `DOMExpression` for the node even if it contains two or more expressions. On the other hand, if many items in a collection share the same Expression, they have different DOMExpressions.",
 			"member": [
 				{
 					"static": false,
 					"role": "property",
 					"argument": [
 						{
+							"optional": false
+						}
+					],
+					"name": "node",
+					"type": "Mavo.Node",
+					"description": "The node that this DOMExpression is attached to."
+				},
+				{
+					"name": "attribute",
+					"type": "String | null",
+					"static": false,
+					"role": "property",
+					"description": "The attribute of the node that this DOMExpression is attached to, or null if it's attached to the text content of a node.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "expression",
+					"type": "String",
+					"static": false,
+					"role": "property",
+					"description": "The original text content or attribute value that represents this DOMExpression, e.g. `\"The sum is [foo + 5]\"`.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "parsed",
+					"type": "Array<String | Mavo.Expression>",
+					"static": false,
+					"role": "property",
+					"description": "An array of literal strings and `Mavo.Expression`s parsed from `expression`, e.g. `[\"The sum is \", expr]` where `expr` is an instance of `Mavo.Expression` corresponding to `\"foo + 5\"`.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "update",
+					"static": false,
+					"role": "function",
+					"description": "Recomputes the value of this expression and updates the DOM with the new value.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "output",
+					"static": false,
+					"role": "function",
+					"description": "Updates the DOM with the new value.",
+					"argument": [
+						{
+							"name": "value",
 							"optional": false
 						}
 					]
@@ -780,6 +842,22 @@
 							"optional": false
 						}
 					]
+				},
+				{
+					"name": "compile",
+					"static": true,
+					"role": "function",
+					"description": "Compile a MavoScript expression string into a JavaScript function. Using the `with` statement, variable lookups are made against the data in context and then against [`Mavo.Data.stub`](#Mavo.Data.stub).",
+					"argument": [
+						{
+							"name": "expression",
+							"optional": false,
+							"type": "String",
+							"description": "The string representing the MavoScript expression."
+						}
+					],
+					"returnType": "function",
+					"returnDescription": "The compiled JavaScript function."
 				}
 			]
 		},
@@ -1304,6 +1382,23 @@
 						}
 					],
 					"returnDescription": "Return value of the callback"
+				}
+			]
+		},
+		{
+			"name": "Mavo.Data",
+			"description": "Data object attached to each node.",
+			"member": [
+				{
+					"name": "stub",
+					"static": true,
+					"role": "property",
+					"description": "A global object that looks up any property accesses in Mavo's global scope of utility functions and special values.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
 				}
 			]
 		}
