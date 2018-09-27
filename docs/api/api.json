@@ -224,6 +224,30 @@
 							"optional": false
 						}
 					]
+				},
+				{
+					"name": "route",
+					"type": "Symbol",
+					"static": true,
+					"role": "property",
+					"description": "A JavaScript symbol used to attach a property to `data` in `Mavo.Data`.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "property",
+					"type": "Symbol",
+					"static": true,
+					"role": "property",
+					"description": "A JavaScript symbol used to attach property names or indexes into collections to `data` in `Mavo.Data`.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
 				}
 			]
 		},
@@ -1404,7 +1428,7 @@
 					"name": "data",
 					"static": false,
 					"role": "property",
-					"description": "The underlying data value, e.g. an Array if this Mavo.Data is attached to a Collection, usually a string or other primitive value if this Mavo.Data is attached to a Primitive.",
+					"description": "The underlying data value, e.g. an Array if this Mavo.Data is attached to a Collection, usually a string or other primitive value if this Mavo.Data is attached to a Primitive.\n\nWhen `data` is a JavaScript object or array, it has some properties keyed by Symbols from `Mavo`:\n\n- Under `Mavo.route`, the data has an object keyed by property names; each value is a `Set` of property names of direct children of the current node, telling it which children to look into to recursively find properties with that name.\n- Under `Mavo.property`, the data has the property name or numerical index for the node.\n- Under `Mavo.parent`, the data has the data value from the parent node.",
 					"argument": [
 						{
 							"optional": false
