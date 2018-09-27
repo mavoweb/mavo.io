@@ -787,13 +787,18 @@
 					"name": "eval",
 					"static": false,
 					"role": "function",
-					"description": "The latest value from evaluating this expression. Be wary of using this: since a single `Mavo.Expression` object can be used by multiple expressions, the usefulness of this value is very short-lived.",
+					"description": "The latest value from evaluating this expression. Be wary of using this: since a single `Mavo.Expression` object can be used by multiple expressions, the usefulness of this value is very short-lived.\n\nThis will compile the MavoScript expression into a JavaScript function if it isn't already compiled, and cache the result.",
 					"argument": [
 						{
 							"name": "data",
 							"optional": false,
 							"type": "Object",
 							"description": "The data to use as context"
+						},
+						{
+							"name": "options",
+							"optional": true,
+							"description": "Options for MavoScript compilation, passed to `Mavo.Script.compile`."
 						}
 					],
 					"returnDescription": "Expression value or `Error` object if that produced an error"
@@ -854,6 +859,12 @@
 							"optional": false,
 							"type": "String",
 							"description": "The string representing the MavoScript expression."
+						},
+						{
+							"name": "options",
+							"optional": true,
+							"type": "Object",
+							"description": "Object of compilation arguments. With the property `actions`, MavoScript actions are enabled in compilation."
 						}
 					],
 					"returnType": "function",
