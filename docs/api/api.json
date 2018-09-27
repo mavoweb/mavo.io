@@ -1437,7 +1437,7 @@
 					"name": "resolve",
 					"static": false,
 					"role": "function",
-					"description": "Resolves the value associated with a property name. If the property name directly exists on `data` then it is looked up and returned from there.",
+					"description": "Resolves the value associated with a property name. If the property name directly exists on `data` then it is looked up and returned from there. Otherwise it is looked up among Mavo globals and other fallbacks in name resolution.\n\nIf JavaScript object data is looked up from a route or a node, it will be returned as a JavaScript proxy on which property lookups will also call `resolve`.",
 					"argument": [
 						{
 							"name": "property",
