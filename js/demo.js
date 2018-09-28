@@ -77,7 +77,7 @@ if (!parent || parent === window) {
 		$.fetch(location.href).then(xhr => {
 			var html = xhr.responseText
 				.replace(/data-files=".+?" /, "")
-				.replace('<script src="/js/demo.js"></script>\n', "");
+				.replace(/(\n<!--.+?-->\s*)?<script src="\/js\/demo.js"><\/script>\n/g, "");
 
 			// Create HTML tooltips
 			Promise.all([
