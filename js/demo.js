@@ -3,12 +3,22 @@ Mavo.load("/sitewide.js");
 if (!parent || parent === window) {
 	$.ready().then(function(){
 		var id = Mavo.Functions.url("demos");
+
 		Mavo.load("/css/prism.css");
-		Mavo.load("/demos/style.css");
+
+		var cssLoaded = new Promise(resolve => {
+			$.create("link", {
+				"href": "/demos/style.css",
+				"rel": "stylesheet",
+				"inside": document.head,
+				"onload": resolve
+			});
+		}).then(evt => bar.hidden = false);
 
 		var buttons = {};
 		var bar = $.create({
 			className: "demo-bar",
+			hidden: true,
 			contents: [
 				{
 					tag: "a",
