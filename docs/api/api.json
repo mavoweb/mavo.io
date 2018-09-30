@@ -1428,7 +1428,7 @@
 					"name": "data",
 					"static": false,
 					"role": "property",
-					"description": "The underlying data value, e.g. an Array if this Mavo.Data is attached to a Collection, usually a string or other primitive value if this Mavo.Data is attached to a Primitive.\n\nWhen `data` is a JavaScript object or array, it has some properties keyed by Symbols from `Mavo`:\n\n- Under `Mavo.route`, the data has an object keyed by property names; each value is a `Set` of property names of direct children of the current node, telling it which children to look into to recursively find properties with that name.\n- Under `Mavo.property`, the data has the property name or numerical index for the node.\n- Under `Mavo.parent`, the data has the data value from the parent node.",
+					"description": "The underlying data value, e.g. an Array if this Mavo.Data is attached to a Collection, usually a string or other primitive value if this Mavo.Data is attached to a Primitive.\n\nWhen `data` is a JavaScript object or array, it has some properties keyed by Symbols from `Mavo`:\n\n- Under `Mavo.route`, the data has an object keyed by property names; each value is either:\n    - a `Set` of property names of direct children of the current node, telling it which children to look into to recursively find properties with that name; or\n    - the boolean literal `true`, if all direct children should be looked into, which happens if `data` represents a Collection.\n- Under `Mavo.property`, the data has the property name or numerical index for the node.\n- Under `Mavo.parent`, the data has the data value from the parent node.",
 					"argument": [
 						{
 							"optional": false
@@ -1498,6 +1498,30 @@
 							"name": "data",
 							"optional": false,
 							"description": "Data object to start looking in."
+						}
+					]
+				},
+				{
+					"name": "find",
+					"static": true,
+					"role": "function",
+					"description": "Looks for `property` in `data`'s descendants.",
+					"argument": [
+						{
+							"name": "property",
+							"optional": false,
+							"type": "String",
+							"description": "Property name to look for."
+						},
+						{
+							"name": "data",
+							"optional": false,
+							"description": "Data object to start looking in."
+						},
+						{
+							"name": "options",
+							"optional": true,
+							"description": "Object of options. If the key `exclude` is provided, a direct child data object that is identical to `options.exclude` is skipped."
 						}
 					]
 				}
