@@ -1481,6 +1481,25 @@
 							"description": "Property name to resolve."
 						}
 					]
+				},
+				{
+					"name": "findUp",
+					"static": true,
+					"role": "function",
+					"description": "Looks for `property` in `data`'s descendants, then in the descendants of each ancestor of `data` in turn, until the property is found.",
+					"argument": [
+						{
+							"name": "property",
+							"optional": false,
+							"type": "String",
+							"description": "Property name to look for."
+						},
+						{
+							"name": "data",
+							"optional": false,
+							"description": "Data object to start looking in."
+						}
+					]
 				}
 			]
 		}
