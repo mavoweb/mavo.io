@@ -224,6 +224,42 @@
 							"optional": false
 						}
 					]
+				},
+				{
+					"name": "route",
+					"type": "Symbol",
+					"static": true,
+					"role": "property",
+					"description": "A JavaScript symbol used to attach a property to `data` in `Mavo.Data`.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "property",
+					"type": "Symbol",
+					"static": true,
+					"role": "property",
+					"description": "A JavaScript symbol used to attach property names or indexes into collections to `data` in `Mavo.Data`.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "parent",
+					"type": "Symbol",
+					"static": true,
+					"role": "property",
+					"description": "A JavaScript symbol used to attach parent data objects to `data` in `Mavo.Data`.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
 				}
 			]
 		},
@@ -787,13 +823,18 @@
 					"name": "eval",
 					"static": false,
 					"role": "function",
-					"description": "The latest value from evaluating this expression. Be wary of using this: since a single `Mavo.Expression` object can be used by multiple expressions, the usefulness of this value is very short-lived.",
+					"description": "The latest value from evaluating this expression. Be wary of using this: since a single `Mavo.Expression` object can be used by multiple expressions, the usefulness of this value is very short-lived.\n\nThis will compile the MavoScript expression into a JavaScript function if it isn't already compiled, and cache the result.",
 					"argument": [
 						{
 							"name": "data",
 							"optional": false,
 							"type": "Object",
 							"description": "The data to use as context"
+						},
+						{
+							"name": "options",
+							"optional": true,
+							"description": "Options for MavoScript compilation, passed to `Mavo.Script.compile`."
 						}
 					],
 					"returnDescription": "Expression value or `Error` object if that produced an error"
@@ -854,6 +895,12 @@
 							"optional": false,
 							"type": "String",
 							"description": "The string representing the MavoScript expression."
+						},
+						{
+							"name": "options",
+							"optional": true,
+							"type": "Object",
+							"description": "Object of compilation arguments. With the property `actions`, MavoScript actions are enabled in compilation."
 						}
 					],
 					"returnType": "function",
@@ -1390,6 +1437,28 @@
 			"description": "Data object attached to each node.",
 			"member": [
 				{
+					"name": "data",
+					"static": false,
+					"role": "property",
+					"description": "The underlying data value, e.g. an Array if this Mavo.Data is attached to a Collection, usually a string or other primitive value if this Mavo.Data is attached to a Primitive.\n\nWhen `data` is a JavaScript object or array, it has some properties keyed by Symbols from `Mavo`:\n\n- Under `Mavo.route`, the data has an object keyed by property names; each value is either:\n    - a `Set` of property names of direct children of the current node, telling it which children to look into to recursively find properties with that name; or\n    - the boolean literal `true`, if all direct children should be looked into, which happens if `data` represents a Collection.\n- Under `Mavo.property`, the data has the property name or numerical index for the node.\n- Under `Mavo.parent`, the data has the data value from the parent node.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "parent",
+					"static": false,
+					"role": "property",
+					"description": "The `Mavo.Data` attached to the parent node.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
 					"name": "stub",
 					"static": true,
 					"role": "property",
@@ -1397,6 +1466,74 @@
 					"argument": [
 						{
 							"optional": false
+						}
+					]
+				},
+				{
+					"name": "update",
+					"static": false,
+					"role": "function",
+					"description": "Update this data object based on children nodes' data (if the node is a Collection or ImplicitCollection) or the node's value in the DOM (if the node is a Primitive). Does nothing in other cases. Propagates updates to parent if any changes were made.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "resolve",
+					"static": false,
+					"role": "function",
+					"description": "Resolves the value associated with a property name. If the property name directly exists on `data` then it is looked up and returned from there. Otherwise it is looked up among Mavo globals and other fallbacks in name resolution.\n\nIf JavaScript object data is looked up from a route or a node, it will be returned as a JavaScript proxy on which property lookups will also call `resolve`.",
+					"argument": [
+						{
+							"name": "property",
+							"optional": false,
+							"type": "String",
+							"description": "Property name to resolve."
+						}
+					]
+				},
+				{
+					"name": "findUp",
+					"static": true,
+					"role": "function",
+					"description": "Looks for `property` in `data`'s descendants (including itself), then in the descendants of each ancestor of `data` in turn, until the property is found.",
+					"argument": [
+						{
+							"name": "property",
+							"optional": false,
+							"type": "String",
+							"description": "Property name to look for."
+						},
+						{
+							"name": "data",
+							"optional": false,
+							"description": "Data object to start looking in."
+						}
+					]
+				},
+				{
+					"name": "find",
+					"static": true,
+					"role": "function",
+					"description": "Looks for `property` in `data`'s descendants (including itself).",
+					"argument": [
+						{
+							"name": "property",
+							"optional": false,
+							"type": "String",
+							"description": "Property name to look for."
+						},
+						{
+							"name": "data",
+							"optional": false,
+							"description": "Data object to start looking in."
+						},
+						{
+							"name": "options",
+							"optional": true,
+							"description": "Object of options. If the key `exclude` is provided, a direct child data object that is identical to `options.exclude` is skipped."
 						}
 					]
 				}
