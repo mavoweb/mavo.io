@@ -248,6 +248,18 @@
 							"optional": false
 						}
 					]
+				},
+				{
+					"name": "parent",
+					"type": "Symbol",
+					"static": true,
+					"role": "property",
+					"description": "A JavaScript symbol used to attach parent data objects to `data` in `Mavo.Data`.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
 				}
 			]
 		},
