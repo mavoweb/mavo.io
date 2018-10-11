@@ -512,6 +512,18 @@
 					],
 					"returnType": "Mavo.Node",
 					"returnDescription": "The corresponding Mavo node or `undefined` if none exists."
+				},
+				{
+					"name": "liveData",
+					"type": "Mavo.Data",
+					"static": false,
+					"role": "property",
+					"description": "An instance of `Mavo.Data` that keeps track of the data on or inside this node and provides proxying or name resolution functionality to access this data. Note that this property is not actually declared in `Mavo.Node`; subclasses are responsible for defining it.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
 				}
 			]
 		},
