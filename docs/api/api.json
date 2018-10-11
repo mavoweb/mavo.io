@@ -436,7 +436,7 @@
 					"name": "getData",
 					"static": false,
 					"role": "function",
-					"description": "Return the current data of this node as a JS object. This is the data used in expressions or for storing.",
+					"description": "Return the current data of this node as a plain JS object (not an instance of `Mavo.Data`). This is the data used in expressions or for storing.",
 					"argument": [
 						{
 							"name": "options",
