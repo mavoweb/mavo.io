@@ -1,0 +1,131 @@
+body {
+	font: 100%/1.5 Helvetica Neue, sans-serif;
+	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 1em;
+	justify-content: center;
+	min-height: 100vh;
+	margin: 0;
+	box-sizing: border-box;
+	padding: 1em;
+}
+
+:focus:not(:focus-visible) { outline: none }
+
+h1 {
+	margin-top: 0;
+	color: hsl(45, 100%, 30%);
+}
+
+[property=winnerCount] {
+	border: 1px solid hsla(45, 100%, 30%, .4);
+	border-radius: .2em;
+}
+
+.person {
+	display: block;
+}
+
+button,
+input[type=number] {
+	font: inherit;
+	color: inherit;
+}
+
+button {
+	padding: .2em .5em;
+	border-radius: .2em;
+	cursor: pointer;
+}
+
+button.draw {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: calc(100% - 2em);
+	margin: 1em;
+	box-sizing: border-box;
+	margin-top: auto;
+
+	--color: 80, 65%;
+	background: hsl(var(--color), 85%);
+	border-color: hsl(var(--color), 60%);
+	color: hsl(var(--color), 30%);
+	font-size: 120%;
+	font-weight: bold;
+}
+
+section {
+	position: relative;
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	justify-content: center;
+	padding: .5em 1em;
+	border-radius: .25em;
+}
+
+.candidates .mv-item-bar.mv-ui {
+	transform: translateX(6em);
+}
+
+.candidates {
+	background: hsl(220, 20%, 90%);
+}
+
+	.candidates h1 {
+		color: hsl(220, 20%, 40%);
+	}
+
+		.candidates h1 button { /* Clear */
+			padding: .3em .5em .1em .2em;
+			font-size: 60%;
+			text-transform: uppercase;
+			background:  transparent;
+			--color: #c00;
+			color: var(--color);
+			border: 2px solid var(--color);
+			border-radius: .3em;
+			mix-blend-mode: multiply;
+		}
+
+		.candidates h1 button:hover {
+			background: var(--color);
+			color: white;
+		}
+
+		.candidates h1 button:active {
+			--color: #900;
+		}
+
+			.candidates h1 button::before {
+				content: "";
+				display: inline-block;
+				vertical-align: middle;
+				background: var(--mv-rubbish-bin) no-repeat left / contain;
+				padding: .8em;
+			}
+
+			.candidates h1 button:hover::before {
+				filter: saturate(0%) brightness(400%);
+			}
+
+.winners {
+	display: flex;
+	flex-flow: column;
+	padding-bottom: 2em;
+	background: hsl(45, 100%, 85%);
+	--starburst-stripes: 20;
+	--starburst-stripe: calc(100% / var(--starburst-stripes));
+	background-image: repeating-conic-gradient(hsla(0,0%,100%,.5) 0, hsla(0,0%,100%,.5) var(--starburst-stripe), transparent 0 calc(2 * var(--starburst-stripe)));
+}
+
+	.winners ul {
+		padding: 0;
+	}
+
+[property=winner] {
+	font-size: 150%;
+}
