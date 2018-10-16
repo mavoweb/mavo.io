@@ -433,6 +433,25 @@
 					]
 				},
 				{
+					"name": "dataRender",
+					"static": false,
+					"role": "function",
+					"description": "Inner function for rendering data",
+					"argument": [
+						{
+							"name": "data",
+							"optional": false,
+							"description": "Data to render."
+						},
+						{
+							"name": "options",
+							"optional": true,
+							"type": "Object",
+							"description": "Options object keyed by:\n- `live`\n- `root`: the root `Mavo.Node`"
+						}
+					]
+				},
+				{
 					"name": "getData",
 					"static": false,
 					"role": "function",
@@ -522,6 +541,32 @@
 					"argument": [
 						{
 							"optional": false
+						}
+					]
+				},
+				{
+					"name": "children",
+					"type": "Array<Mavo.Node> | {[String]: Mavo.Node} | undefined",
+					"static": false,
+					"role": "property",
+					"description": "An array or object containing all child `Mavo.Node`s of a Group, Collection, or ImplicitCollection. Not declared in `Mavo.Node`; subclasses are responsible for defining it.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "propagate",
+					"static": false,
+					"role": "function",
+					"description": "Call a callback on each child `Mavo.Node` of this node. The node will also be `this` in the callback.",
+					"argument": [
+						{
+							"name": "callback",
+							"optional": false,
+							"type": "Function|String",
+							"description": "Callback to call, or string name of JavaScript property on the `Mavo.Node` to call."
 						}
 					]
 				}
