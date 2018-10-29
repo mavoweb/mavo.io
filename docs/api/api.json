@@ -422,7 +422,7 @@
 					"name": "render",
 					"static": false,
 					"role": "function",
-					"description": "Render data onto this node",
+					"description": "Render data onto this node. Calls `dataRender` internally, with logic before and after to maintain editing state, normalize data, and call hooks.",
 					"argument": [
 						{
 							"name": "data",
@@ -436,7 +436,7 @@
 					"name": "dataRender",
 					"static": false,
 					"role": "function",
-					"description": "Inner function for rendering data",
+					"description": "Inner function for rendering data. Subclasses of `Mavo.Node ` should override this function.",
 					"argument": [
 						{
 							"name": "data",
@@ -1503,7 +1503,7 @@
 		},
 		{
 			"name": "Mavo.Data",
-			"description": "Data object attached to each node.",
+			"description": "Data object attached to each node, responsible for keeping track of \"live data\", that is, data used for evaluating expressions and such. `Mavo.Data` also includes a lot of logic for name resolution during evaluating expressions. This is distinct from the data for storing in the backend, which is simpler and is taken care of by `Mavo.Node.getData`.",
 			"member": [
 				{
 					"name": "data",
