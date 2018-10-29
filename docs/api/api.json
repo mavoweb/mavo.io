@@ -455,7 +455,7 @@
 					"name": "getData",
 					"static": false,
 					"role": "function",
-					"description": "Return the current data of this node as a plain JS object (not an instance of `Mavo.Data`). This is the data used in expressions or for storing.",
+					"description": "Return the current data of this node as a plain JS object (not an instance of `Mavo.Data`). This is the data used for storing.",
 					"argument": [
 						{
 							"name": "options",
@@ -537,7 +537,7 @@
 					"type": "Mavo.Data",
 					"static": false,
 					"role": "property",
-					"description": "An instance of `Mavo.Data` that keeps track of the data on or inside this node and provides proxying or name resolution functionality to access this data. Note that this property is not actually declared in `Mavo.Node`; subclasses are responsible for defining it.",
+					"description": "An instance of `Mavo.Data` that keeps track of the data on or inside this node, and provides proxying and name resolution functionality to access this data, for evaluating expressions and such. Note that this property is not actually declared in `Mavo.Node`; subclasses are responsible for defining it.",
 					"argument": [
 						{
 							"optional": false
@@ -567,6 +567,18 @@
 							"optional": false,
 							"type": "Function|String",
 							"description": "Callback to call, or string name of JavaScript property on the `Mavo.Node` to call."
+						}
+					]
+				},
+				{
+					"name": "collection",
+					"type": "Mavo.Collection | undefined",
+					"static": false,
+					"role": "property",
+					"description": "`Mavo.Collection` that this node directly belongs to, if any. The `Mavo.Collection` provides itself as the value.",
+					"argument": [
+						{
+							"optional": false
 						}
 					]
 				}
@@ -1594,7 +1606,8 @@
 						}
 					]
 				}
-			]
+			],
+			"filename": "data.js"
 		}
 	]
 }
