@@ -938,7 +938,15 @@
 					"description": "Add a unary operator to the expression syntax.",
 					"argument": [
 						{
-							"optional": false
+							"optional": false,
+							"name": "name",
+							"type": "String"
+						},
+						{
+							"name": "o",
+							"optional": false,
+							"type": "Object",
+							"description": "Operator with a `scalar` property that's the unary function"
 						}
 					]
 				},
@@ -949,7 +957,15 @@
 					"description": "Add a binary operator to the expression syntax.",
 					"argument": [
 						{
-							"optional": false
+							"optional": false,
+							"name": "name",
+							"type": "String"
+						},
+						{
+							"name": "o",
+							"optional": false,
+							"type": "Object",
+							"description": "Operator with a `scalar` property that's the binary function"
 						}
 					]
 				},
@@ -974,6 +990,46 @@
 					],
 					"returnType": "function",
 					"returnDescription": "The compiled JavaScript function."
+				},
+				{
+					"name": "unaryOperation",
+					"static": true,
+					"role": "function",
+					"description": "Intelligently apply the scalar function to the operand.",
+					"argument": [
+						{
+							"name": "operand",
+							"optional": false,
+							"description": "Value on which to apply the unary operation. Can be an array, in which case it's mapped through the operation."
+						},
+						{
+							"name": "scalarFunction",
+							"optional": false,
+							"type": "Function",
+							"description": "Unary function to call or to map across the list."
+						}
+					]
+				},
+				{
+					"name": "binaryOperation",
+					"static": true,
+					"role": "function",
+					"description": "Intelligently apply the binary operator to the two operands.",
+					"argument": [
+						{
+							"name": "operand1",
+							"optional": false
+						},
+						{
+							"name": "operand2",
+							"optional": false
+						},
+						{
+							"name": "operator",
+							"optional": false,
+							"type": "Object"
+						}
+					]
 				}
 			]
 		},
