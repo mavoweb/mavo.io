@@ -1014,20 +1014,23 @@
 					"name": "binaryOperation",
 					"static": true,
 					"role": "function",
-					"description": "Intelligently apply the binary operator to the two operands.",
+					"description": "Intelligently apply the binary operator to the two operands. Either operand can be an array or not. If one operand is an array, it will map the operation with the other operand across it; if both are arrays, it will vectorize or zip across the operands, using default values for the shorter operand beyond its length.",
 					"argument": [
 						{
 							"name": "operand1",
-							"optional": false
+							"optional": false,
+							"description": "First operand; can be an array."
 						},
 						{
 							"name": "operand2",
-							"optional": false
+							"optional": false,
+							"description": "Second operand; can be an array."
 						},
 						{
 							"name": "operator",
 							"optional": false,
-							"type": "Object"
+							"type": "Object",
+							"description": "Object representing the operator, which can have several properties:\n\n- `scalar`: the underlying binary operation, as a JavaScript function\n- `unary`, `leftUnary`, or `rightUnary` (all optional): an underlying unary JavaScript function to call if one of the operands is missing; overrides `default` properties\n- `default`, `leftDefault`, or `rightDefault` (all optional): a default value to use for one of the operands if it's missing"
 						}
 					]
 				}
