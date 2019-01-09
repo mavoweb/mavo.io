@@ -131,7 +131,7 @@ button.mv-add-invoice {
 	}
 }
 
-address {
+address, [property=notes] {
 	white-space: pre-line;
 }
 

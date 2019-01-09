@@ -94,7 +94,7 @@ header > address > h2 {
   .company > div {
     flex: 1; }
 
-address {
+address, [property=notes] {
   white-space: pre-line; }
 
 .show-all, button.mv-add-invoice {
