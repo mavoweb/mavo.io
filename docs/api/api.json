@@ -260,6 +260,22 @@
 							"optional": false
 						}
 					]
+				},
+				{
+					"name": "get",
+					"static": false,
+					"role": "function",
+					"description": "Get the corresponding Mavo instance from an element reference, if one exists.",
+					"argument": [
+						{
+							"name": "element",
+							"optional": false,
+							"type": "Element",
+							"description": "The Mavo root for the app whose instance we want to get."
+						}
+					],
+					"returnType": "Mavo",
+					"returnDescription": "The Mavo app whose root is the passed element, or `null` if none is found."
 				}
 			]
 		},
