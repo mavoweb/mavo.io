@@ -263,7 +263,7 @@
 				},
 				{
 					"name": "get",
-					"static": false,
+					"static": true,
 					"role": "function",
 					"description": "Get the corresponding Mavo instance from an element reference, if one exists.",
 					"argument": [
