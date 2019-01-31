@@ -19,7 +19,7 @@
 		<img property="image" alt="" />
 		<span property="name"></span>
 		<!-- Dot notation because cart is a separate Mavo app, due to separate storage (local) -->
-		<button mv-action="add(cart.product, product)" class="add-to-cart">Add to cart</button>
+		<button mv-action="add(product, cart.product)" class="add-to-cart">Add to cart</button>
 		<span property="amount" class="price"></span>
 	</article>
 
