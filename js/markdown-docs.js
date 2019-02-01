@@ -121,7 +121,11 @@ ${html}
 					type: "submit",
 					textContent: "Play!",
 					className: "play",
-					title: "Play with this example on codepen.io"
+					title: "Play with this example on codepen.io",
+					events: {
+						// This shouldn't be needed but for some reason the form won't submit otherwises
+						click: function(evt) { this.form.submit(); }
+					}
 				}
 			],
 			inside: heading
