@@ -31,6 +31,18 @@
 					"role": "property"
 				},
 				{
+					"name": "dataLoaded",
+					"type": "Promise",
+					"static": false,
+					"role": "property",
+					"description": "Data has been loaded (if any). Similar to the `mv-load` event.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
 					"name": "element",
 					"role": "property",
 					"type": "Element",
@@ -276,6 +288,30 @@
 					],
 					"returnType": "Mavo",
 					"returnDescription": "The Mavo app whose root is the passed element, or `null` if none is found."
+				},
+				{
+					"name": "ready",
+					"type": "Promise",
+					"static": true,
+					"role": "property",
+					"description": "All dependencies (e.g. plugins and polyfills) have loaded, but apps have not necessarily been initialized yet.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "inited",
+					"type": "Promise",
+					"static": true,
+					"role": "property",
+					"description": "Apps have been initialized. You can now use `Mavo.all` to get a reference to them.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
 				}
 			]
 		},
