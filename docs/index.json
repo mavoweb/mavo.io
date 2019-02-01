@@ -254,24 +254,14 @@
 			"on": "Elements with the `mv-mode` attribute"
 		},
 		{
-			"name": "--mv-item-left",
-			"value": "Horizontal distance of item from the left edge of its offset parent in px, e.g. `10px`.",
-			"on": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
+			"name": "--mv-loader",
+			"on": "Mavo root",
+			"value": "data URI of Mavo loader (the three animated dots)"
 		},
 		{
-			"name": "--mv-item-top",
-			"value": "Vertical distance of item from the top edge of its offset parent in px, e.g. `10px`.",
-			"on": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
-		},
-		{
-			"name": "--mv-item-width",
-			"value": "Width of item in px, e.g. `100px`.",
-			"on": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
-		},
-		{
-			"name": "--mv-item-height",
-			"value": "Height of item in px, e.g. `100px`",
-			"on": "[Item bar](/docs/collections/#collectiion-editing-controls) of [simple collections](/docs/collections/#simple-collections)"
+			"name": "--mv-rubbish-bin",
+			"on": "Mavo root",
+			"value": "data URI of Mavo rubbish bin icon"
 		}
 	]
 }
