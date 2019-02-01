@@ -117,7 +117,7 @@ ${html}
 					})
 				},
 				{
-					tag: "button",
+					tag: "submit",
 					textContent: "Play!",
 					className: "play",
 					title: "Play with this example on codepen.io"
