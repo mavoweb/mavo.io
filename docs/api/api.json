@@ -1089,6 +1089,74 @@
 			]
 		},
 		{
+			"name": "Mavo.Actions",
+			"description": "Static, takes care of everything related to [data actions](/docs/actions).",
+			"member": [
+				{
+					"name": "run",
+					"static": true,
+					"role": "function",
+					"description": "Run an arbitrary data action in the context of a given element.",
+					"argument": [
+						{
+							"name": "code",
+							"optional": false,
+							"type": "String"
+						},
+						{
+							"name": "element",
+							"optional": false,
+							"type": "Element"
+						}
+					]
+				},
+				{
+					"name": "Functions.add",
+					"static": true,
+					"role": "function",
+					"description": "Implementation of the add() action",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "Functions.move",
+					"static": true,
+					"role": "function",
+					"description": "Implementation of the move() action",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "Function.clear",
+					"static": true,
+					"role": "function",
+					"description": "Implementation of the delete() action",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "Function.set",
+					"static": true,
+					"role": "function",
+					"description": "Implementation of the set() action",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "Mavo.Functions",
 			"filename": "functions.js",
 			"description": "Static, contains all functions available in [MavoScript](mavoscript)",
