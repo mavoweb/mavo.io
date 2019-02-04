@@ -818,6 +818,18 @@
 							"optional": false
 						}
 					]
+				},
+				{
+					"name": "identifiers",
+					"type": "Object",
+					"static": false,
+					"role": "property",
+					"description": "Object mapping identifiers to JavaScript `Set`s of `DOMExpression`s that include that identifier.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
 				}
 			]
 		},
@@ -893,6 +905,18 @@
 					"argument": [
 						{
 							"name": "value",
+							"optional": false
+						}
+					]
+				},
+				{
+					"name": "identifiers",
+					"type": "Array<String>",
+					"static": false,
+					"role": "property",
+					"description": "All identifiers that appear in child `Mavo.Expression`s.",
+					"argument": [
+						{
 							"optional": false
 						}
 					]
