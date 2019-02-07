@@ -920,6 +920,17 @@
 							"optional": false
 						}
 					]
+				},
+				{
+					"name": "special",
+					"static": true,
+					"role": "property",
+					"description": "A static object responsible for handling special properties such as `$mouse` and `$now` and `DOMExpression`s that feature these special properties.",
+					"argument": [
+						{
+							"optional": false
+						}
+					]
 				}
 			]
 		},
