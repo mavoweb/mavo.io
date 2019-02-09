@@ -180,11 +180,21 @@
 			"live": "initially"
 		},
 		{
+			"name": "mv-multiple-path",
+			"on": "Collections",
+			"purpose": "Same as `mv-path` but applies to the collection itself, not the item(s)."
+		},
+		{
 			"name": "mv-alias",
 			"on": "Properties",
 			"purpose": "If provided, Mavo will read data from this property **instead** of its real property name. Useful to read stored data properly after renaming a property in the HTML.",
 			"path": "/docs/migration/#mv-alias",
 			"link": "Migration"
+		},
+		{
+			"name": "mv-initial-items",
+			"on": "Collections",
+			"purpose": "How many items should the collection start with? If not provided, it is 1, unless `mv-like` is also specified, in which case it's 0 (to prevent infinite recursion)."
 		}
 	],
 	"generatedAttribute": [
