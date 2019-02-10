@@ -271,6 +271,18 @@
 			]
 		},
 		{
+			"name": "..",
+			"id": "..",
+			"unary": false,
+			"role": "operator",
+			"description": "Create a list with numbers from a to b. Same as `range(a, b)`",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
+		},
+		{
 			"name": "if",
 			"id": "if",
 			"unary": false,
@@ -1629,6 +1641,29 @@
 				}
 			],
 			"returnDescription": "The result of the first parameter."
+		},
+		{
+			"name": "range",
+			"id": "range",
+			"unary": false,
+			"role": "function",
+			"description": "Create a list with numbers starting from a and increasing one by one until b.",
+			"argument": [
+				{
+					"name": "a",
+					"optional": false,
+					"type": "Number",
+					"description": "The first number in the sequence."
+				},
+				{
+					"name": "b",
+					"optional": false,
+					"type": "Number",
+					"description": "The upper bound for the sequence. Please note that if `a` is not an integer, the last number in the sequence may not be equal to `b`. E.g. `range(.5, 2)` returns `list(0.5, 1.5)`."
+				}
+			],
+			"returnType": "List of numbers",
+			"returnDescription": "The sequence of numbers"
 		},
 		{
 			"name": "$now",
