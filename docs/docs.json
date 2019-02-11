@@ -25,7 +25,7 @@
 		{
 			"id": "plugins",
 			"title": "Writing Plugins",
-			"summary": "If you know JavaScript, you can make [plugins](http://plugins.mavo.io) that extend Mavo’s functionality and change how it works.",
+			"summary": "If you know JavaScript, you can make [plugins](https://plugins.mavo.io) that extend Mavo’s functionality and change how it works.",
 			"section": [
 				{
 					"id": "overview",
@@ -172,7 +172,7 @@
 					"id": "editing",
 					"advanced": false,
 					"title": "Editing",
-					"content": "If the `property` attribute is used on elements that are not form elements, they are made editable, and Mavo generates a button for switching between modes:\n\n##### Example\n\n```html\n<span property=\"firstName\">Lea</span>\n<span property=\"last_name\">Verou</span>\n<span>- I don’t have a property attribute, so I’m not editable.</span>\n```\n\n* * *\n\nYou can put the `property` attribute on **any** HTML5 element, and Mavo knows how to make it editable:\n\n##### Example\n\n```html\n<meter property=\"rating\" min=\"1\" value=\"3\" max=\"5\"></meter>\n<time property=\"birthday\" datetime=\"2014-06-01\">1 Jun 2014</time>\n<img property=\"avatar\" src=\"http://i.imgur.com/LPeWcag.png\" />\n```\n\nMavo can also be taught about new element types with different ways to be edited (e.g. rich text), via [plugins](https://plugins.mavo.io)."
+					"content": "If the `property` attribute is used on elements that are not form elements, they are made editable, and Mavo generates a button for switching between modes:\n\n##### Example\n\n```html\n<span property=\"firstName\">Lea</span>\n<span property=\"last_name\">Verou</span>\n<span>- I don’t have a property attribute, so I’m not editable.</span>\n```\n\n* * *\n\nYou can put the `property` attribute on **any** HTML5 element, and Mavo knows how to make it editable:\n\n##### Example\n\n```html\n<meter property=\"rating\" min=\"1\" value=\"3\" max=\"5\"></meter>\n<time property=\"birthday\" datetime=\"2014-06-01\">1 Jun 2014</time>\n<img property=\"avatar\" src=\"https://i.imgur.com/LPeWcag.png\" />\n```\n\nMavo can also be taught about new element types with different ways to be edited (e.g. rich text), via [plugins](https://plugins.mavo.io)."
 				},
 				{
 					"id": "mv-edit",

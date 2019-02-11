@@ -1518,7 +1518,7 @@
 							"name": "message",
 							"optional": false,
 							"type": "String | Object",
-							"description": "HTML of the message as a string or HTML element reference or anything that Bliss’ [`$.contents()`](http://blissfuljs.com/docs.html#fn-contents) accepts."
+							"description": "HTML of the message as a string or HTML element reference or anything that Bliss’ [`$.contents()`](https://blissfuljs.com/docs.html#fn-contents) accepts."
 						},
 						{
 							"name": "options",

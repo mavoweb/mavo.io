@@ -1622,7 +1622,7 @@
 					"type": "Text"
 				}
 			],
-			"description": "Gets all texts after the rightmost slash of an URL. For example, `filename(\"http://mavo.io/docs/functions.html\")` will return `functions.html`.\nIf the parameter is not an URL, `filename()` will return the value of the parameter as-is.",
+			"description": "Gets all texts after the rightmost slash of an URL. For example, `filename(\"https://mavo.io/docs/functions.html\")` will return `functions.html`.\nIf the parameter is not an URL, `filename()` will return the value of the parameter as-is.",
 			"returnType": "Text",
 			"returnDescription": "Text after the rightmost slash of an URL. Returns the value of the parameter as-is if not an URL."
 		},
