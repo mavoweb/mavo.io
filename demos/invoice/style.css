@@ -1,7 +1,7 @@
 /**
  * Style
  */
-@import url(http://fonts.googleapis.com/css?family=Raleway:100);
+@import url(https://fonts.googleapis.com/css?family=Raleway:100);
 * {
   margin: 0; }
 
@@ -205,7 +205,14 @@ body:not(.mv-target-within) article.invoice {
     body:not(.mv-target-within) article.invoice.mv-deleted .mv-close {
       margin-right: .5em;
       width: 1.4em; }
-  body:not(.mv-target-within) article.invoice header .company, body:not(.mv-target-within) article.invoice .recipient h1, body:not(.mv-target-within) article.invoice .services h1, body:not(.mv-target-within) article.invoice thead, body:not(.mv-target-within) article.invoice tbody, body:not(.mv-target-within) article.invoice tfoot td:first-child, body:not(.mv-target-within) article.invoice .mv-add-services {
+  body:not(.mv-target-within) article.invoice header .company,
+  body:not(.mv-target-within) article.invoice .recipient h1,
+  body:not(.mv-target-within) article.invoice .services h1,
+  body:not(.mv-target-within) article.invoice thead,
+  body:not(.mv-target-within) article.invoice tbody,
+  body:not(.mv-target-within) article.invoice tfoot td:first-child,
+  body:not(.mv-target-within) article.invoice .mv-add-services,
+  body:not(.mv-target-within) article.invoice [property="notes"] {
     display: none; }
   body:not(.mv-target-within) article.invoice header > a, body:not(.mv-target-within) article.invoice .invoice-date, body:not(.mv-target-within) article.invoice .recipient {
     padding: .5em 1em; }

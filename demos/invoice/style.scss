@@ -3,7 +3,7 @@ $heading-font: 'Helvetica Neue', Raleway, sans-serif;
 /**
  * Style
  */
-@import url(http://fonts.googleapis.com/css?family=Raleway:100);
+@import url(https://fonts.googleapis.com/css?family=Raleway:100);
 
 * { margin:0; }
 
@@ -289,7 +289,14 @@ body:not(.mv-target-within) {
 			}
 		}
 
-		header .company, .recipient h1, .services h1, thead, tbody, tfoot td:first-child, .mv-add-services {
+		header .company,
+		.recipient h1,
+		.services h1,
+		thead,
+		tbody,
+		tfoot td:first-child,
+		.mv-add-services,
+		[property="notes"] {
 			display: none;
 		}
 
