@@ -37,7 +37,7 @@
 		<button class="resume" mv-action="set(start, $now), set(running, true)" disabled="[!start]" mv-if="!running">Resume</button>
 	</div>
 	<div class="history">
-		<div property="lap" mv-multiple mv-optional mv-order="desc">
+		<div property="lap" mv-multiple mv-initial-items="0" mv-order="desc">
 
 			<button class="delete" mv-action="delete($item)" title="Delete">-</button>
 		</div>

@@ -16,7 +16,7 @@
 
 Sentence:
 <div class="sentence [if(join(orderedWord, ' ') = solution, correct)]" mv-mode="edit">
-	<span property="orderedWord" mv-multiple mv-accepts="word" mv-optional mv-mode="read"></span>
+	<span property="orderedWord" mv-multiple mv-accepts="word" mv-initial-items="0" mv-mode="read"></span>
 
 	<div class="buttons">
 		<button class="clear" mv-action="delete(orderedWord)">Clear</button>

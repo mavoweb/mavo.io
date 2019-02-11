@@ -10,7 +10,7 @@
 <body mv-app="shopping" mv-storage="local">
 	<fieldset>
 		<legend>Common items</legend>
-		<div property="commonItem" mv-multiple mv-optional></div>
+		<div property="commonItem" mv-multiple mv-initial-items="0"></div>
 		<div class="none-yet" mv-if="count(commonItem) = 0">No common items yet</div>
 	</fieldset>
 

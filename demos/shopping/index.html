@@ -14,7 +14,7 @@
 
 <fieldset>
 	<legend>Common items</legend>
-	<div property="commonItem" mv-multiple mv-optional mv-action="add(commonItem, item)"></div>
+	<div property="commonItem" mv-multiple mv-initial-items="0" mv-action="add(commonItem, item)"></div>
 	<div class="none-yet" mv-if="count(commonItem) = 0">No common items yet</div>
 </fieldset>
 
