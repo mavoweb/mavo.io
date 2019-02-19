@@ -404,12 +404,35 @@
 			"returnDescription": "Value of found key or a list of values if multiple keys are found. Returns a list of groups if the second parameter is \"key=value\". "
 		},
 		{
+			"shown": [
+				true,
+				true,
+				true
+			],
 			"name": "average",
 			"id": "average",
 			"unary": false,
 			"category": "math",
 			"role": "function",
 			"description": "Calculate the average of all numbers in the list.",
+			"argument": [
+				{
+					"name": "list",
+					"optional": false,
+					"type": "List of numbers",
+					"description": "The numbers to average"
+				}
+			],
+			"returnType": "Number",
+			"returnDescription": "The average"
+		},
+		{
+			"name": "median",
+			"id": "median",
+			"unary": false,
+			"category": "math",
+			"role": "function",
+			"description": "Calculate the median of all numbers in the list. New in v0.2.0.",
 			"argument": [
 				{
 					"name": "list",
