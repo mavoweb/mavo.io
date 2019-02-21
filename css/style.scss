@@ -502,25 +502,31 @@ body > footer {
 }
 
 .note, .tip, .warning {
-	border-left: .5em solid mix(white, $blue, 30%);
-	padding-left: .5em;
+	border-left: .5em solid mix(white, $green, 25%);
+	background: mix(white, $green, 85%);
+	padding: .5em;
 	margin-left: -1em;
 
 	&::before {
 		content: "Note: ";
 		font-weight: bold;
-		color: $blue;
+		color: $green;
 	}
 }
 
 .tip {
+	border-left: .5em solid mix(white, $blue, 30%);
+	background: mix(white, $blue, 90%);
+
 	&::before {
 		content: "Tip: ";
+		color: $blue;
 	}
 }
 
 .warning {
 	border-left-color: $orange;
+	background: mix(white, $orange, 90%);
 
 	&:not(.notice)::before {
 		content: "Warning: ";

@@ -398,19 +398,25 @@ body > footer {
       mix-blend-mode: multiply; }
 
 .note, .tip, .warning {
-  border-left: 0.5em solid #66c7f7;
-  padding-left: .5em;
+  border-left: 0.5em solid #a1db51;
+  background: #ecf8dc;
+  padding: .5em;
   margin-left: -1em; }
   .note::before, .tip::before, .warning::before {
     content: "Note: ";
     font-weight: bold;
+    color: #82cf17; }
+
+.tip {
+  border-left: 0.5em solid #66c7f7;
+  background: #e9f7fe; }
+  .tip::before {
+    content: "Tip: ";
     color: #25aff4; }
 
-.tip::before {
-  content: "Tip: "; }
-
 .warning {
-  border-left-color: #ff9500; }
+  border-left-color: #ff9500;
+  background: #fff4e6; }
   .warning:not(.notice)::before {
     content: "Warning: ";
     color: #ff9500; }
