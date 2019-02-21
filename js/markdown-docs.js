@@ -8,13 +8,20 @@ Mavo.hooks.add("markdown-render-before", function(env) {
 	}
 });
 
+let arr = selector => selector.split(/\s*,\s*/g);
+let and = (selector1, selector2) => {
+	var ret = [], arr2 = arr(selector2);
+	arr(selector1).forEach(s1 => ret.push(...arr2.map(s2 => s1 + s2)));
+	return ret.join(", ");
+};
+
 document.addEventListener("mv-markdown-render", function(evt) {
 	// Create live demos
 	var s = Mavo.selectors;
 
 	var demoHeading = "h2[id^=demo], h6";
-	var selector = s.and(demoHeading, " + pre, + p + pre");
-	selector = s.and(selector, "> code.language-markup, > code.language-html");
+	var selector = and(demoHeading, " + pre, + p + pre");
+	selector = and(selector, "> code.language-markup, > code.language-html");
 
 	$$(selector, evt.target).forEach(function createLiveDemo(code) {
 		var html = code.textContent;
@@ -123,7 +130,7 @@ ${html}
 					className: "play",
 					title: "Play with this example on codepen.io",
 					events: {
-						// This shouldn't be needed but for some reason the form won't submit otherwises
+						// This shouldn't be needed but for some reason the form won't submit otherwise
 						click: function(evt) { this.form.submit(); }
 					}
 				}
