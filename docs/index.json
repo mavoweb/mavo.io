@@ -195,6 +195,12 @@
 			"name": "mv-initial-items",
 			"on": "Collections",
 			"purpose": "How many items should the collection start with? If not provided, it is 1, unless `mv-like` is also specified, in which case it's 0 (to prevent infinite recursion)."
+		},
+		{
+			"name": "aria-label",
+			"on": "Simple properties",
+			"purpose": "Sets or contains the label the property will use during editing.",
+			"live": "yes"
 		}
 	],
 	"generatedAttribute": [
