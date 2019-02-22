@@ -3,7 +3,7 @@
 		{
 			"id": "migration",
 			"title": "Data Migration",
-			"summary": "Often you want to change your Mavo HTML after you’ve saved data. Or you're just using data from a source you don't control (e.g. an API).\nMavo will try its best to associate the data it reads with your app, but it may sometimes need a helping hand.",
+			"summary": "Often you want to change your Mavo HTML after you’ve saved data. Or you're just using data from a source you don't control (e.g. an API). Mavo will try its best to associate the data it reads with your app, but it may sometimes need a helping hand.",
 			"section": [
 				{
 					"id": "single-property-collection",
