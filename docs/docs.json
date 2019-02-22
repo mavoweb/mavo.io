@@ -8,8 +8,14 @@
 				{
 					"id": "single-property-collection",
 					"title": "Single property ↔ Collection",
-					"content": "When converting a single property to/from a collection (i.e. adding or removing `mv-multiple`), you don’t need to do anything, Mavo automatically handles it.\n\nIf you are **removing** `mv-multiple` and your data contains multiple items, Mavo will only display the first item. However, the rest will be retained, in case you change your mind later.\n\nIf your entire data is a list (i.e. JSON array), as often happens when you are reading data from an API, Mavo will do the following:\n- First, it will look for a collection with `property=\"main\"` and display the data there if one is present\n- If it doesn't find one, it will look for a collection that is writable (i.e. does not have `mv-value`) and use the first one.\n- If it fails to find any writable collection at all, it will use the first item and ignore (but preserve) the rest.",
+					"content": "When converting a single property to/from a collection (i.e. adding or removing `mv-multiple`), you don’t need to do anything, Mavo automatically handles it.\n\nIf you are **removing** `mv-multiple` and your data contains multiple items, Mavo will only display the first item. However, the rest will be retained, in case you change your mind later.",
 					"advanced": false
+				},
+				{
+					"id": "when-your-entire-data-is-a-list",
+					"advanced": false,
+					"title": "When your entire data is a list",
+					"content": "If your entire data is a list (i.e. a JSON array or CSV data), as often happens when you are reading data from an API, Mavo will do the following:\n- First, it will look for a collection with `property=\"main\"` and display the data there if one is present\n- If it doesn't find one, it will look for a collection that is writable (i.e. does not have `mv-value`) and use the first one it finds.\n- If it fails to find any writable collection at all, it will use the first data item and ignore (but preserve) the rest.\n\nWarning: In Mavo versions before v0.2.0, Mavo would expect to only find one collection, and would otherwise default to displaying the first item, with no way around it."
 				},
 				{
 					"id": "adding-or-removing-properties",
