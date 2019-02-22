@@ -143,7 +143,7 @@
 					"type": "Number",
 					"static": false,
 					"role": "property",
-					"description": "Throttle delay for autosaving. Taken from the value of `mv-autosave`, defaults to 3s if none.",
+					"description": "Throttle delay for autosaving. Taken from the value of `mv-autosave`, defaults to 0s if none.",
 					"argument": [
 						{
 							"optional": false
@@ -633,6 +633,27 @@
 							"optional": false
 						}
 					]
+				},
+				{
+					"name": "eval",
+					"static": false,
+					"role": "function",
+					"description": "One-off expression evaluation using this node as context. Mainly useful for debugging and/or plugins.",
+					"argument": [
+						{
+							"name": "expression",
+							"optional": false,
+							"type": "String",
+							"description": "The MavoScript expression to evaluate"
+						},
+						{
+							"name": "options",
+							"optional": true,
+							"type": "Object",
+							"description": "Any options to pass to [`Mavo.Expression#eval`](#Mavo.Expression#eval)"
+						}
+					],
+					"returnDescription": "Result of evaluating the expression"
 				}
 			]
 		},
