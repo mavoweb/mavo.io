@@ -57,7 +57,8 @@
 			"tag": [],
 			"id": "color-picker",
 			"video": "/demos/color-picker/video.mp4",
-			"url": "/demos/color-picker"
+			"url": "/demos/color-picker",
+			"description": "An HSLA color picker. Showcases how responsive Mavo expressions are, as well as properties that depend on other properties."
 		},
 		{
 			"name": "Decisions",
