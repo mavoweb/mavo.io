@@ -33,7 +33,7 @@
 			"url": "/demos/homepage"
 		},
 		{
-			"name": "E-shop with Paypal checkout",
+			"name": "Fully functional E-shop",
 			"tag": [
 				"Actions",
 				"Github",
@@ -41,7 +41,8 @@
 			],
 			"id": "eshop",
 			"video": "/demos/eshop/video.mp4",
-			"url": "/demos/eshop"
+			"url": "/demos/eshop",
+			"description": "Two Mavo apps: Product listing stored on Github, cart stored locally. Uses Paypal HTML API for checkout and a custom data action for adding to cart."
 		},
 		{
 			"name": "Mortgage Calculator",
