@@ -179,6 +179,16 @@
 			"url": "/demos/words",
 			"description": "A language learning game for two people, where one enters the phrase and the other tries to click on words to put them in the right order. Showcases [custom data actions](/docs/actions)",
 			"featured": false
+		},
+		{
+			"url": "https://forkgasm.com",
+			"name": "Forkgasm",
+			"featured": false,
+			"description": "Food blog with recipes and restaurant visits. Showcases how you can use Mavo to have truly multipage apps with different URLs (thanks to [Netlify](https://netlify.com)'s URL rewrite rules)",
+			"tag": [
+				"Multipage"
+			],
+			"id": "forkgasm"
 		}
 	]
 }
