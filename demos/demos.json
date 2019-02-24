@@ -5,7 +5,8 @@
 			"tag": [
 				"Actions"
 			],
-			"id": "todo"
+			"id": "todo",
+			"description": "Showcases many Mavo features (properties, collections, data actions, local storage) in very little code."
 		},
 		{
 			"name": "Artist Portfolio",
@@ -13,7 +14,8 @@
 				"Github",
 				"UPLOADS"
 			],
-			"id": "portfolio"
+			"id": "portfolio",
+			"description": "Artist portfolio with pictures and descriptions stored on Github. Showcases the various ways to edit images (linking, upload, copy/paste, drag & drop)."
 		},
 		{
 			"name": "Editable homepage",
@@ -21,7 +23,8 @@
 				"Github",
 				"TINYMCE"
 			],
-			"id": "homepage"
+			"id": "homepage",
+			"description": "Uses the TinyMCE plugin for rich text editing."
 		},
 		{
 			"name": "E-shop with Paypal checkout",
