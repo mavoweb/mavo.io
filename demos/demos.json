@@ -6,7 +6,8 @@
 				"Actions"
 			],
 			"id": "todo",
-			"description": "Showcases many Mavo features (properties, collections, data actions, local storage) in very little code."
+			"description": "Showcases many Mavo features (properties, collections, data actions, local storage) in very little code.",
+			"video": "/demos/todo/video.mp4"
 		},
 		{
 			"name": "Artist Portfolio",
@@ -15,7 +16,8 @@
 				"UPLOADS"
 			],
 			"id": "portfolio",
-			"description": "Artist portfolio with pictures and descriptions stored on Github. Showcases the various ways to edit images (linking, upload, copy/paste, drag & drop)."
+			"description": "Artist portfolio with pictures and descriptions stored on Github. Showcases the various ways to edit images (linking, upload, copy/paste, drag & drop).",
+			"video": "/demos/portfolio/video.mp4"
 		},
 		{
 			"name": "Editable homepage",
@@ -24,7 +26,8 @@
 				"TINYMCE"
 			],
 			"id": "homepage",
-			"description": "Uses the TinyMCE plugin for rich text editing."
+			"description": "Uses the TinyMCE plugin for rich text editing.",
+			"video": "/demos/homepage/video.mp4"
 		},
 		{
 			"name": "E-shop with Paypal checkout",
@@ -33,38 +36,44 @@
 				"Github",
 				"Multiple Apps"
 			],
-			"id": "eshop"
+			"id": "eshop",
+			"video": "/demos/eshop/video.mp4"
 		},
 		{
 			"name": "Mortgage Calculator",
 			"tag": [],
-			"id": "mortgage"
+			"id": "mortgage",
+			"video": "/demos/mortgage/video.mp4"
 		},
 		{
 			"name": "Color picker",
 			"tag": [],
-			"id": "color-picker"
+			"id": "color-picker",
+			"video": "/demos/color-picker/video.mp4"
 		},
 		{
 			"name": "Decisions (pros & cons)",
 			"tag": [
 				"Hierarchy"
 			],
-			"id": "decisions"
+			"id": "decisions",
+			"video": "/demos/decisions/video.mp4"
 		},
 		{
 			"name": "Restaurant visit log",
 			"tag": [
 				"Hierarchy"
 			],
-			"id": "foodie"
+			"id": "foodie",
+			"video": "/demos/foodie/video.mp4"
 		},
 		{
 			"name": "Interactive Mavo logo",
 			"tag": [
 				"SVG"
 			],
-			"id": "logo"
+			"id": "logo",
+			"video": "/demos/logo/video.mp4"
 		},
 		{
 			"name": "Talks list",
@@ -72,7 +81,8 @@
 				"Hierarchy",
 				"Github"
 			],
-			"id": "talks"
+			"id": "talks",
+			"video": "/demos/talks/video.mp4"
 		},
 		{
 			"name": "Invoicing system",
@@ -81,7 +91,8 @@
 				"Isolate item",
 				"Github"
 			],
-			"id": "invoice"
+			"id": "invoice",
+			"video": "/demos/invoice/video.mp4"
 		},
 		{
 			"name": "SVG Path builder",
@@ -89,35 +100,40 @@
 				"SVG",
 				"mv-if"
 			],
-			"id": "svgpath"
+			"id": "svgpath",
+			"video": "/demos/svgpath/video.mp4"
 		},
 		{
 			"name": "Contact manager",
 			"tag": [
 				"Hierarchy"
 			],
-			"id": "contacts"
+			"id": "contacts",
+			"video": "/demos/contacts/video.mp4"
 		},
 		{
 			"name": "Shopping list",
 			"tag": [
 				"Actions"
 			],
-			"id": "shopping"
+			"id": "shopping",
+			"video": "/demos/shopping/video.mp4"
 		},
 		{
 			"name": "Dice roller with history",
 			"tag": [
 				"Actions"
 			],
-			"id": "dice"
+			"id": "dice",
+			"video": "/demos/dice/video.mp4"
 		},
 		{
 			"name": "Language learning game",
 			"tag": [
 				"Actions"
 			],
-			"id": "words"
+			"id": "words",
+			"video": "/demos/words/video.mp4"
 		}
 	]
 }
