@@ -49,7 +49,8 @@
 			"tag": [],
 			"id": "mortgage",
 			"video": "/demos/mortgage/video.mp4",
-			"url": "/demos/mortgage"
+			"url": "/demos/mortgage",
+			"description": "Showcases a more spreadsheet-like Mavo application."
 		},
 		{
 			"name": "Color picker",
@@ -59,13 +60,14 @@
 			"url": "/demos/color-picker"
 		},
 		{
-			"name": "Decisions (pros & cons)",
+			"name": "Decisions",
 			"tag": [
 				"Hierarchy"
 			],
 			"id": "decisions",
 			"video": "/demos/decisions/video.mp4",
-			"url": "/demos/decisions"
+			"url": "/demos/decisions",
+			"description": "An app to list pros and cons (with weights!) to help you make a decision."
 		},
 		{
 			"name": "Restaurant visit log",
@@ -74,7 +76,8 @@
 			],
 			"id": "foodie",
 			"video": "/demos/foodie/video.mp4",
-			"url": "/demos/foodie"
+			"url": "/demos/foodie",
+			"description": "Showcases hierarchy (3 levels of nested collections) and how scoping works with it in expressions."
 		},
 		{
 			"name": "Interactive Mavo logo",
@@ -83,7 +86,8 @@
 			],
 			"id": "logo",
 			"video": "/demos/logo/video.mp4",
-			"url": "/demos/logo"
+			"url": "/demos/logo",
+			"description": "Showcases how well Mavo works with SVG."
 		},
 		{
 			"name": "Talks list",
@@ -93,7 +97,8 @@
 			],
 			"id": "talks",
 			"video": "/demos/talks/video.mp4",
-			"url": "/demos/talks"
+			"url": "/demos/talks",
+			"description": "The first Mavo demo ever created. Showcases dates and expressions with dates."
 		},
 		{
 			"name": "Invoicing system",
@@ -104,7 +109,8 @@
 			],
 			"id": "invoice",
 			"video": "/demos/invoice/video.mp4",
-			"url": "/demos/invoice"
+			"url": "/demos/invoice",
+			"description": "Showcases one of the many ways to make a \"multipage\" app that lets you open items to view more details without leaving the page. For actual using Mavo to make actual multipage apps, checkout the forkgasm demo."
 		},
 		{
 			"name": "SVG Path builder",
@@ -114,7 +120,8 @@
 			],
 			"id": "svgpath",
 			"video": "/demos/svgpath/video.mp4",
-			"url": "/demos/svgpath"
+			"url": "/demos/svgpath",
+			"description": "One of the most complex demos, showcases `mv-if` for conditionals, dynamic default values, custom UI, Mavo expressions in SVG"
 		},
 		{
 			"name": "Contact manager",
@@ -123,7 +130,8 @@
 			],
 			"id": "contacts",
 			"video": "/demos/contacts/video.mp4",
-			"url": "/demos/contacts"
+			"url": "/demos/contacts",
+			"description": "A replica of a contact list app, with multiple emails and phone numbers per person."
 		},
 		{
 			"name": "Shopping list",
@@ -132,7 +140,8 @@
 			],
 			"id": "shopping",
 			"video": "/demos/shopping/video.mp4",
-			"url": "/demos/shopping"
+			"url": "/demos/shopping",
+			"description": "Showcases [custom data actions](/docs/actions) for copying items across lists, even if the lists don't have exactly the same structure."
 		},
 		{
 			"name": "Dice roller with history",
@@ -141,16 +150,18 @@
 			],
 			"id": "dice",
 			"video": "/demos/dice/video.mp4",
-			"url": "/demos/dice"
+			"url": "/demos/dice",
+			"description": "Showcases [custom data actions](/docs/actions), including multiple data actions on the same control."
 		},
 		{
-			"name": "Language learning game",
+			"name": "Word game",
 			"tag": [
 				"Actions"
 			],
 			"id": "words",
 			"video": "/demos/words/video.mp4",
-			"url": "/demos/words"
+			"url": "/demos/words",
+			"description": "A language learning game for two people, where one enters the phrase and the other tries to click on words to put them in the right order. Showcases [custom data actions](/docs/actions)"
 		}
 	]
 }
