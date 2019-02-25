@@ -184,7 +184,7 @@
 			"url": "https://forkgasm.com",
 			"name": "Forkgasm",
 			"featured": true,
-			"description": "Food blog with recipes and restaurant visits. Showcases how you can use Mavo to have truly multipage apps with different URLs (thanks to [Netlify](https://netlify.com)'s URL rewrite rules)",
+			"description": "Food blog with recipes and restaurant visits. Showcases how you can use Mavo to have truly multipage apps with different URLs (thanks to [Netlify's URL rewrite rules](https://www.netlify.com/docs/redirects/))",
 			"tag": [
 				"Multipage",
 				"Github"
