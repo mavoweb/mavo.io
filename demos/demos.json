@@ -121,7 +121,7 @@
 			"id": "invoice",
 			"video": "/demos/invoice/video.mp4",
 			"url": "/demos/invoice",
-			"description": "Showcases one of the many ways to make a \"multipage\" app that lets you open items to view more details without leaving the page. For actual using Mavo to make actual multipage apps, checkout the forkgasm demo.",
+			"description": "Showcases one of the many ways to make a \"multipage\" app that lets you open items to view more details without leaving the page. For actual multipage apps with different URLs, checkout the [Forkgasm](https://forkgasm.com) demo.",
 			"featured": false
 		},
 		{
