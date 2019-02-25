@@ -188,7 +188,8 @@
 			"tag": [
 				"Multipage"
 			],
-			"id": "forkgasm"
+			"id": "forkgasm",
+			"image": "https://mavo.io/demos/images/forkgasm.png"
 		}
 	]
 }
