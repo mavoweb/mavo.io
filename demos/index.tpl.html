@@ -12,7 +12,7 @@
 	<div>
 		<article property="demo" mv-multiple mv-if="!tagFilter or count(tag = tagFilter) > 0" id="demo-[id]"
 		         class="[if(featured, 'featured')] [if(video, 'has-video')] [if(starts(url, 'http'), 'external')]">
-			<a href="/demos/[id]">
+			<a href="/demos/[id]" class="media-container">
 				<video property="video" preload="metadata" loop muted tabindex="0"></video>
 				<img property="image">
 			</a>

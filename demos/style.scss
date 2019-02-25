@@ -28,13 +28,16 @@ section[mv-app="demos"] {
 article[property="demo"] {
 	position: relative;
 	display: flex;
-	vertical-align: top;
-	width: min-content;
-	grid-row-end: span 2;
+
+	.media-container {
+		position: relative;
+		width: min-content;
+	}
 
 	&.featured {
 		order: -1;
 		flex-flow: column;
+		grid-row-end: span 2;
 	}
 
 	&:not(.featured) {
@@ -47,7 +50,7 @@ article[property="demo"] {
 	}
 
 	&.has-video {
-		&::before {
+		.media-container::before {
 			content: "🎬";
 			position: absolute;
 			z-index: 1;
@@ -57,15 +60,15 @@ article[property="demo"] {
 			transition: .5s opacity;
 		}
 
-		&:hover::before,
-		&:focus::before {
+		&:hover .media-container::before,
+		&:focus .media-container::before {
 			opacity: 0;
 			z-index: 20;
 		}
 	}
 
 	&.external {
-		&::after {
+		.media-container::after {
 			content: "➦";
 			position: absolute;
 			top: 0;

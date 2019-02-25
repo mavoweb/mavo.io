@@ -17,21 +17,22 @@ section[mv-app="demos"] {
 
 article[property="demo"] {
   position: relative;
-  display: flex;
-  vertical-align: top;
-  width: -webkit-min-content;
-  width: -moz-min-content;
-  width: min-content;
-  grid-row-end: span 2; }
+  display: flex; }
+  article[property="demo"] .media-container {
+    position: relative;
+    width: -webkit-min-content;
+    width: -moz-min-content;
+    width: min-content; }
   article[property="demo"].featured {
     order: -1;
-    flex-flow: column; }
+    flex-flow: column;
+    grid-row-end: span 2; }
   article[property="demo"]:not(.featured) {
     width: 29rem; }
     article[property="demo"]:not(.featured) h1 {
       font-size: 120%;
       margin-top: 0; }
-  article[property="demo"].has-video::before {
+  article[property="demo"].has-video .media-container::before {
     content: "🎬";
     position: absolute;
     z-index: 1;
@@ -39,10 +40,11 @@ article[property="demo"] {
     left: .3em;
     font-size: 150%;
     transition: .5s opacity; }
-  article[property="demo"].has-video:hover::before, article[property="demo"].has-video:focus::before {
+  article[property="demo"].has-video:hover .media-container::before,
+  article[property="demo"].has-video:focus .media-container::before {
     opacity: 0;
     z-index: 20; }
-  article[property="demo"].external::after {
+  article[property="demo"].external .media-container::after {
     content: "➦";
     position: absolute;
     top: 0;
