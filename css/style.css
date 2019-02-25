@@ -38,7 +38,7 @@
   --font-body: Roboto, Helvetica Neue, sans-serif;
   --font-heading: Didot, Didot LT STD, Bodoni 72, Bodoni, Bodoni MT, Libre Bodoni, Hoefler Text, Cambria, Georgia, serif;
   --font-mono: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
-  --content-width: $content-width; }
+  --content-width: 1050px; }
 
 body {
   display: flex;

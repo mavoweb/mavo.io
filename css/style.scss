@@ -51,7 +51,7 @@
 	--font-mono: #{$mono-font};
 
 	// Layout
-	--content-width: $content-width;
+	--content-width: #{$content-width};
 }
 
 body {

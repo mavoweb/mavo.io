@@ -44,7 +44,7 @@
 		<article property="demo" mv-multiple mv-if="!tagFilter or count(tag = tagFilter) > 0" id="demo-[id]"
 		         class="[if(featured, 'featured')] [if(video, 'has-video')] [if(starts(url, 'http'), 'external')]">
 			<a href="/demos/[id]">
-				<video property="video" preload="metadata" loop tabindex="0"></video>
+				<video property="video" preload="metadata" loop muted tabindex="0"></video>
 				<img property="image">
 			</a>
 			<div>
@@ -82,8 +82,8 @@
 <script>
 // Javascript to play videos on hover
 $.events(document.body, "mouseenter mouseleave focus blur", function(evt) {
-	if (evt.target.matches && evt.target.matches("article.has-video")) {
-		var video = $("video", evt.target);
+	if (evt.target.matches && evt.target.matches("article.has-video video")) {
+		var video = evt.target;
 
 		if (video && !video.error) {
 			if (evt.type === "mouseenter" || evt.type === "focus") {
@@ -91,11 +91,13 @@ $.events(document.body, "mouseenter mouseleave focus blur", function(evt) {
 				var isPlaying = video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2;
 
 				if (!isPlaying) {
-					video.play();
+					video.play().catch(e => console.log(e, e.name, e.message, e.code));
+					video.classList.add("playing");
 				}
 			}
 			else {
 				video.pause();
+				video.classList.remove("playing");
 			}
 		}
 	}
