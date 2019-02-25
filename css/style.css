@@ -303,7 +303,7 @@ body > footer {
   align-items: flex-start;
   padding: 3em 1em 1em;
   padding: 3em calc(50% - 525px) 1em;
-  background: #e9eaed;
+  background: rgba(213, 215, 221, 0.5);
   color: rgba(0, 0, 0, 0.8);
   font-size: 80%;
   -webkit-clip-path: polygon(0% 0%, 100% 2.5em, 100% 100%, 0% 100%);

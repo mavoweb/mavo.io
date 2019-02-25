@@ -35,21 +35,29 @@
 
 <h2>Demos</h2>
 
-<section mv-app="demos" mv-storage="https://github.com/mavoweb/mavo.io/demos/demos.json">
+<section mv-app="demos" mv-storage="https://github.com/mavoweb/mavo.io/demos/demos.json" mv-plugins="markdown" mv-upload-url="https://mavo.io/demos/">
 	<meta property="tagFilter" content="[url('tag')]">
 	<p class="notice" mv-if="tagFilter">
 		Some demos are hidden. <a href="?">Show All.</a>
 	</p>
 	<div>
-		<article property="demo" mv-multiple mv-if="!tagFilter or count(tag = tagFilter) > 0">
+		<article property="demo" mv-multiple mv-if="!tagFilter or count(tag = tagFilter) > 0" id="demo-[id]"
+		         class="[if(featured, 'featured')] [if(video, 'has-video')] [if(starts(url, 'http'), 'external')]">
 			<a href="/demos/[id]">
-				<video src="/demos/[id]/video.mp4" preload="metadata" loop tabindex="0"></video>
-				<div>
-					<h1 property="name"></h1>
-					<a href="?tag=[tag]" property="tag" mv-attribute="null" mv-multiple></a>
-					<meta property="id">
-				</div>
+				<video property="video" preload="metadata" loop tabindex="0"></video>
+				<img property="image">
 			</a>
+			<div>
+				<a mv-default="/demos/[id]" property="url">
+					<h1>
+						<span property="name"></span>
+						<span class="mv-toggle" property="featured">Featured</span>
+					</h1>
+				</a>
+				<div class="markdown" property="description"></div>
+				<a href="?tag=[tag]" property="tag" mv-attribute="none" mv-multiple title="See only demos with the [tag] tag"></a>
+				<meta property="id">
+			</div>
 		</article>
 	</div>
 
@@ -74,7 +82,7 @@
 <script>
 // Javascript to play videos on hover
 $.events(document.body, "mouseenter mouseleave focus blur", function(evt) {
-	if (evt.target.matches && evt.target.matches("article")) {
+	if (evt.target.matches && evt.target.matches("article.has-video")) {
 		var video = $("video", evt.target);
 
 		if (video && !video.error) {
