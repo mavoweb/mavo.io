@@ -110,6 +110,30 @@ pre > code mark[aria-label] {
 	color: inherit;
 	text-shadow: 0 1px 1px white;
 
+	&::after {
+		position: absolute;
+		top: 1.5em;
+		left: 0;
+		z-index: 1;
+		white-space: normal;
+		width: 15em;
+		padding: .8em 1.2em 2em;
+		background: white url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 900 60">\
+			<text y="1em" style="font: bold 40px/1 #{$body-font}" opacity=".4">Click to learn more about this feature!</text>\
+		</svg>') no-repeat bottom .7em left 1.2em;
+		border: 1px solid rgba(0,0,0,.2);
+		border-radius: .4em;
+		box-shadow: .1em .1em .5em rgba(0,0,0,.2);
+		color: black;
+		font-weight: 400;
+		font-family: $body-font;
+	}
+
+	&.right::after {
+		left: auto;
+		right: 0;
+	}
+
 	&:hover,
 	&:focus {
 		background: transparentize($orange, .7);
@@ -118,22 +142,10 @@ pre > code mark[aria-label] {
 
 		&::after {
 			content: attr(aria-label);
-			position: absolute;
-			top: 1.5em;
-			left: 0;
-			z-index: 1;
-			white-space: normal;
-			width: 15em;
-			padding: .8em 1.2em;
-			background: white;
-			border: 1px solid rgba(0,0,0,.2);
-			border-radius: .4em;
-			box-shadow: .1em .1em .5em rgba(0,0,0,.2);
-			color: black;
-			font-weight: 400;
-			font-family: $body-font;
 		}
 	}
+
+
 }
 
 button {

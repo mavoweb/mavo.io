@@ -90,6 +90,26 @@ pre > code mark[aria-label] {
   border-radius: .3em;
   color: inherit;
   text-shadow: 0 1px 1px white; }
+  pre > code a[aria-label]::after,
+  pre > code mark[aria-label]::after {
+    position: absolute;
+    top: 1.5em;
+    left: 0;
+    z-index: 1;
+    white-space: normal;
+    width: 15em;
+    padding: .8em 1.2em 2em;
+    background: white url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 900 60">			<text y="1em" style="font: bold 40px/1 Roboto, Helvetica Neue, sans-serif" opacity=".4">Click to learn more about this feature!</text>		</svg>') no-repeat bottom 0.7em left 1.2em;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: .4em;
+    box-shadow: 0.1em 0.1em 0.5em rgba(0, 0, 0, 0.2);
+    color: black;
+    font-weight: 400;
+    font-family: Roboto, "Helvetica Neue", sans-serif; }
+  pre > code a[aria-label].right::after,
+  pre > code mark[aria-label].right::after {
+    left: auto;
+    right: 0; }
   pre > code a[aria-label]:hover, pre > code a[aria-label]:focus,
   pre > code mark[aria-label]:hover,
   pre > code mark[aria-label]:focus {
@@ -99,21 +119,7 @@ pre > code mark[aria-label] {
     pre > code a[aria-label]:hover::after, pre > code a[aria-label]:focus::after,
     pre > code mark[aria-label]:hover::after,
     pre > code mark[aria-label]:focus::after {
-      content: attr(aria-label);
-      position: absolute;
-      top: 1.5em;
-      left: 0;
-      z-index: 1;
-      white-space: normal;
-      width: 15em;
-      padding: .8em 1.2em;
-      background: white;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-      border-radius: .4em;
-      box-shadow: 0.1em 0.1em 0.5em rgba(0, 0, 0, 0.2);
-      color: black;
-      font-weight: 400;
-      font-family: Roboto, "Helvetica Neue", sans-serif; }
+      content: attr(aria-label); }
 
 button {
   cursor: pointer; }

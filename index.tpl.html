@@ -104,7 +104,7 @@
 	<section class="manual example side-by-side">
 		<div class="demo-container">
 			<pre><code>
-				&lt;main mv-app="todo" <a href="/docs/primer/#mv-storage" aria-label="Store data locally, in the browser">mv-storage="local"</a> <a href="/docs/properties/#mv-mode" aria-label="Make entire app always editable, no need for a separate editing mode here">mv-mode="edit"</a>>
+				&lt;main mv-app="todo" <a href="/docs/primer/#mv-storage" aria-label="Store data locally, in the browser">mv-storage="local"</a> <a href="/docs/properties/#mv-mode" aria-label="Make entire app always editable, no need for a separate editing mode here" class="right">mv-mode="edit"</a>>
 					&lt;header>
 						&lt;h1>My tasks&lt;/h1>
 						&lt;p><a href="/docs/primer/#expressions" aria-label="Use brackets to refer to current values of properties and perform calculations. Mavo will automatically update this every time the “done” property changes in any item.">[count(done)]</a> done out of [count(task)] total&lt;/p>
@@ -117,6 +117,9 @@
 								&lt;span property="taskTitle">Do stuff&lt;/span>
 							&lt;/label>
 						&lt;/li>
+						&lt;button <a href="/docs/actions" aria-label="When this button is pressed, delete all tasks whose done property is checked">mv-action="delete(task where done)"</a>>
+							Clear Completed
+						&lt;/button>
 					&lt;/ul>
 				&lt;/main>
 			</code></pre>
