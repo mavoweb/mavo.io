@@ -36,7 +36,7 @@
 			"featured": false
 		},
 		{
-			"name": "E-shop with PayPal checkout",
+			"name": "E-shop",
 			"tag": [
 				"Actions",
 				"Github",
@@ -108,7 +108,7 @@
 			"id": "talks",
 			"video": "/demos/talks/video.mp4",
 			"url": "/demos/talks",
-			"description": "The first Mavo demo ever created. Showcases dates and expressions with dates.",
+			"description": "The first Mavo demo ever created. Showcases dates and expressions with dates. See a similar app in action on [Lea Verou's website](http://lea.verou.me/speaking) and [Chris Lilley's website](http://svgees.us/talks.html)",
 			"featured": false
 		},
 		{
@@ -182,7 +182,7 @@
 		},
 		{
 			"url": "https://forkgasm.com",
-			"name": "Forkgasm",
+			"name": "Forkgasm Food Blog",
 			"featured": true,
 			"description": "Food blog with recipes and restaurant visits. Showcases how you can use Mavo to have truly multipage apps with different URLs (thanks to [Netlify's URL rewrite rules](https://www.netlify.com/docs/redirects/))",
 			"tag": [
