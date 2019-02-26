@@ -13,13 +13,10 @@ section[mv-app="demos"] {
 	}
 
 	& > div {
-		// display: flex;
-		// flex-flow: row wrap;
-		// justify-content: center;
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(29rem, 1fr));
 		grid-auto-flow: dense;
-		grid-gap: .8em;
+		grid-gap: 1.2em;
 		margin: auto;
 		width: 100%;
 	}
@@ -28,21 +25,26 @@ section[mv-app="demos"] {
 article[property="demo"] {
 	position: relative;
 	display: flex;
+	width: 100%;
 
 	.media-container {
 		position: relative;
-		width: min-content;
+		display: block;
+		width: 14rem;
+		flex: none;
 	}
 
 	&.featured {
 		order: -1;
 		flex-flow: column;
-		grid-row-end: span 2;
+		grid-row-end: span 3;
+
+		.media-container {
+			width: 100%;
+		}
 	}
 
 	&:not(.featured) {
-		width: 29rem;
-
 		h1 {
 			font-size: 120%;
 			margin-top: 0;
@@ -95,13 +97,14 @@ article[property="demo"] {
 		font-family: $heading-font;
 		font-size: 180%;
 		text-shadow: .05em .05em white;
+		hyphens: none;
 	}
 }
 
 [property="video"],
 [property="image"] {
 	display: block;
-	width: 28rem;
+	width: 100%;
 	box-shadow: 0 0 .2em rgba(0,0,0,.2);
 	object-fit: cover;
 
@@ -109,10 +112,6 @@ article[property="demo"] {
 		background: url("/logo.svg") center / 40% auto no-repeat hsl(220, 10%, 90%);
 		background-blend-mode: luminosity;
 		height: 6rem;
-	}
-
-	article:not(.featured) & {
-		width: 14rem;
 	}
 }
 
@@ -123,18 +122,12 @@ article[property="demo"] {
 	transform-origin: top left;
 	z-index: 0;
 
-	&.playing {
+	article:not(.featured) &.playing {
 		transform: scale(2);
 		transition-timing-function: ease, step-start;
 		transition-delay: .5s;
 		z-index: 3;
-
-		article.featured & {
-			transform: scale(1.4);
-		}
 	}
-
-
 
 	&[mv-mode="edit"] + img[property="image"] {
 		margin-top: 1rem;
