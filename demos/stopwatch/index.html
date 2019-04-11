@@ -21,7 +21,7 @@
 
 	<div class="buttons">
 		<button mv-action="set(running, true), set(start, $now - previousElapsed)">Start</button>
-		<button mv-action="add(lap, timer)">Lap</button>
+		<button mv-action="add(timer, lap)">Lap</button>
 		<button mv-action="set(running, false), set(previousElapsed, elapsed), set(ended, timer)">Pause</button>
 	</div>
 	<div class="history">
