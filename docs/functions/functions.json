@@ -1003,13 +1003,19 @@
 			"unary": false,
 			"category": "datetime",
 			"role": "function",
-			"description": "Get the month of a date/time as a number from 1 to 12. You can add `.name` to the returned value to get the month name (e.g. \"February\"). You can also use `.shortname` to get a shorter name, like \"Feb\". Both of these are dependent on the document language.",
+			"description": "Get the month of a date/time as a number from 1 to 12. You can add `'name'` as the second parameter to get the month name (e.g. \"February\"). You can also use `'shortname'` to get a shorter name, like \"Feb\". Both of these are dependent on the document language.\nIf you want to display the month as a two digit number, add `'00'` as the second parameter. For example, `month(2019-02-01, '00')` returns `02`.",
 			"argument": [
 				{
 					"name": "date",
 					"optional": false,
 					"type": "Date/Time",
 					"description": "The date/time whose month we want to get."
+				},
+				{
+					"name": "display",
+					"optional": true,
+					"type": "Text",
+					"description": "The way we want this month to be displayed."
 				}
 			],
 			"returnType": "Number",
