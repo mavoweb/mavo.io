@@ -1013,7 +1013,7 @@
 					"description": "The date/time whose month we want to get."
 				},
 				{
-					"name": "display",
+					"name": "format",
 					"optional": true,
 					"type": "Text",
 					"description": "The way we want this month to be displayed."
