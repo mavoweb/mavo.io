@@ -280,7 +280,8 @@
 				{
 					"optional": false
 				}
-			]
+			],
+			"category": "lists"
 		},
 		{
 			"name": "if",
