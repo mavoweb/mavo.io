@@ -1,0 +1,18 @@
+@import "../css/vars";
+
+[property=post] {
+	footer {
+		font-size: 70%;
+		font-weight: bold;
+		color: $gray;
+
+		a {
+			color: inherit;
+		}
+
+		.avatar {
+			max-height: 1.4em;
+			vertical-align: -.3em;
+		}
+	}
+}

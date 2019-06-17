@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="blog">
+<html lang="en" class="blog blog-post">
 <head>
 	<meta charset="UTF-8">
 	<title>Mavo Blog</title>
@@ -39,20 +39,13 @@
 
 <div mv-app="blog"
      mv-storage="https://github.com/mavoweb/mavo.io/blog/posts.json" mv-github-commit-prefix="(Blog) "
-     mv-plugins="markdown twitter">
+     mv-path="page/id=[url('blog')]" mv-plugins="markdown">
 	<section id="[id]" mv-multiple property="post">
 		<h1 class="h1"><a href="/blog/[id]" property="title" mv-attribute="none">Post title</a></h1>
 
 		<div property="content" class="markdown">Post content<p></p></div>
 
-		<footer>
-			Posted on <time property="date" mv-default="[$today]"></time>
-			by <a class="author" href="https://github.com/[author]">
-				<img src="https://github.com/[author].png?size=40" alt="" class="avatar">
-				<span property="author">leaverou</span>
-			</a>
-			<meta property="id" mv-default="[idify(title)]">
-		</footer>
+		<meta property="id" mv-default="[idify(question)]">
 	</section>
 </div>
 

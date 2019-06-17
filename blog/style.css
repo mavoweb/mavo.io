@@ -1,0 +1,11 @@
+[property=post] footer {
+  font-size: 70%;
+  font-weight: bold;
+  color: #737b8c; }
+  [property=post] footer a {
+    color: inherit; }
+  [property=post] footer .avatar {
+    max-height: 1.4em;
+    vertical-align: -.3em; }
+
+/*# sourceMappingURL=style.css.map */
