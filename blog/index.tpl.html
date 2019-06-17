@@ -25,6 +25,8 @@
 				<img src="https://github.com/[author].png?size=40" alt="" class="avatar">
 				<span property="author">leaverou</span>
 			</a>
+			&bull;
+			<a href="https://mavo.io/blog/[id]#disqus_thread">Comments</a>
 			<meta property="id" mv-default="[idify(title)]">
 		</footer>
 	</section>
@@ -32,6 +34,12 @@
 
 <script src="https://plugins.mavo.io/markdown/mavo-markdown.js"></script>
 <script src="/js/markdown-docs.js"></script>
+<script id="dsq-count-scr" src="//mavo-blog.disqus.com/count.js" async></script>
+<script>
+	document.addEventListener("mv-load", evt => {
+		DISQUSWIDGETS.getCount({reset: true});
+	});
+</script>
 
 @@include('_footer.html')
 
