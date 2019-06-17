@@ -28,7 +28,26 @@
 		</header>
 		<div property="content" class="markdown">Post content<p></p></div>
 
-		<meta property="id" mv-default="[idify(question)]">
+		<div id="disqus_thread"></div>
+		<script>
+		// Wondering how to add Disqus comments to your Mavo-powered blog?
+		// Tutorial: http://laistomaz.com/post.html?post=how-to-use-disqus-in-mavo
+		var disqus_config = function () {
+			var id = Mavo.Functions.url("blog");
+			this.page.url = "https://mavo.io/blog/" + id;  // Replace PAGE_URL with your page's canonical URL variable
+			this.page.identifier = id; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+		};
+
+		(function() { // DON'T EDIT BELOW THIS LINE
+		var d = document, s = d.createElement('script');
+		s.src = 'https://mavo-blog.disqus.com/embed.js';
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+		})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
 	</section>
 </div>
 
