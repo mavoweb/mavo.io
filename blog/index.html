@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" class="docs">
+<head>
+	<meta charset="UTF-8">
+	<title> - Mavo Documentation</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css" />
+	<link rel="stylesheet" href="../css/style.css" />
+	<link rel="icon" href="/favicon.ico">
+
+	<link rel='stylesheet' href='/docs/style.css'>
+
+	<script src="https://dev.mavo.io/dist/mavo.es5.js"></script>
+</head>
+
+
+<body>
+
+<header>
+	<h1 class="logo">
+		<a href="/"><img src="../logo.svg" alt="Mavo"></a>
+	</h1>
+	<nav>
+	<a href="../docs/primer">Get started</a>
+	<a href="../docs">Docs</a>
+	<a href="../demos">Demos</a>
+	<a href="../faq">FAQ</a>
+	<a href="https://plugins.mavo.io">Plugins</a>
+	<a href="../get">Get Mavo</a>
+	<a href="https://play.mavo.io">Play!</a>
+	<a class="github-button" href="https://github.com/mavoweb/mavo" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star mavoweb/mavo on GitHub">Star</a>
+</nav>
+
+</header>
+
+
+<h2>
+	Mavo Blog
+</h2>
+
+<div mv-app="blog"
+     mv-storage="https://github.com/mavoweb/mavo.io/blog/posts.json" mv-github-commit-prefix="(Blog) "
+     mv-plugins="markdown">
+	<section id="[id]" mv-multiple property="questions">
+		<h1 class="h1"><a href="/blog/[id]" property="title" mv-attribute="none">Post title</a></h1>
+
+		<div property="content" class="markdown">Post content</div>
+
+		<meta property="id" mv-default="[idify(question)]">
+	</section>
+</div>
+
+<script src="https://plugins.mavo.io/markdown/mavo-markdown.js"></script>
+<script src="/js/markdown-docs.js"></script>
+
+<footer>
+	<p>
+		Made with &hearts; by <a href="https://lea.verou.me">Lea Verou</a> and <a href="https://github.com/mavoweb/mavo/graphs/contributors">all these awesome people</a>.
+		Proudly hosted by <a href="https://www.netlify.com" class="netlify">Netlify</a>.
+	</p>
+	<article>
+		<h1>Explore</h1>
+
+		<ul>
+			<li><a href="../docs/primer">Get started</a></li>
+			<li><a href="../docs">Docs</a></li>
+			<li><a href="../demos">Demos</a></li>
+			<li><a href="../faq">FAQ</a></li>
+			<li><a href="https://plugins.mavo.io">Plugins</a></li>
+			<li><a href="../get">Get Mavo</a></li>
+			<li><a href="https://test.mavo.io">Testsuite</a></li>
+			<li><a href="../credits">Credits</a></li>
+		</ul>
+	</article>
+	<article>
+		<h1>Social Mavo</h1>
+
+		<ul>
+			<li><a href="https://twitter.com/mavoweb">Follow @mavoweb on Twitter</a></li>
+			<li><a href="https://gitter.im/mavoweb">Chat with us on Gitter</a></li>
+			<li>
+				<a href="https://github.com/mavoweb/mavo">Github</a>
+				<a class="github-button" href="https://github.com/mavoweb/mavo" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star mavoweb/mavo on GitHub">Star</a>
+			</li>
+		</ul>
+	</article>
+
+	<a href="https://mit.edu" class="logo"><img src="../img/logo-mit.svg" alt="MIT" /></a>
+	<a href="https://csail.mit.edu" class="logo"><img src="../img/logo-csail.svg" alt="CSAIL" /></a>
+</footer>
+
+<script src="../js/prism.js"></script>
+<script src="/sitewide.js"></script>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-96752780-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</body>
+</html>

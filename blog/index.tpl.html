@@ -1,0 +1,30 @@
+@@include('_head-docs.html', {
+	"title": ""
+})
+<body>
+
+@@include('_header.html')
+
+<h2>
+	Mavo Blog
+</h2>
+
+<div mv-app="blog"
+     mv-storage="https://github.com/mavoweb/mavo.io/blog/posts.json" mv-github-commit-prefix="(Blog) "
+     mv-plugins="markdown">
+	<section id="[id]" mv-multiple property="questions">
+		<h1 class="h1"><a href="/blog/[id]" property="title" mv-attribute="none">Post title</a></h1>
+
+		<div property="content" class="markdown">Post content</div>
+
+		<meta property="id" mv-default="[idify(question)]">
+	</section>
+</div>
+
+<script src="https://plugins.mavo.io/markdown/mavo-markdown.js"></script>
+<script src="/js/markdown-docs.js"></script>
+
+@@include('_footer.html')
+
+</body>
+</html>
