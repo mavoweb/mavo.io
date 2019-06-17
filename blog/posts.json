@@ -1,0 +1,11 @@
+{
+	"post": [
+		{
+			"title": "Hello world!",
+			"content": "Although Mavo has been released more than 2 years ago, we never had an official blog before. Instead, we've been mostly using [Twitter](https://twitter.com/mavoweb) and the [Changelog](https://mavo.io/get/#releases) to announce new features and link to interesting Mavo-related resources. However, a blog is so much more. Besides new feature announcements, resources, and demos, we are hoping for this space to host tutorials and other learning resources that don’t fit in the docs, solicit feedback, and in general be a two-way communication channel between our users and contributors.\n\nAfter all, a website about Mavo really **should** have a Mavo-powered blog, shouldn’t it? 😉",
+			"date": "2019-06-17",
+			"author": "leaverou",
+			"id": "hello-world"
+		}
+	]
+}
