@@ -1,7 +1,17 @@
 @import "../css/vars";
 
-[property=post] {
-	footer {
+[property=post],
+.blog-post {
+	h1 {
+		margin: 0;
+	}
+
+	header {
+		font-size: 150%;
+	}
+
+	footer,
+	.subtitle {
 		font-size: 70%;
 		font-weight: bold;
 		color: $gray;
