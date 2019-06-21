@@ -322,7 +322,7 @@
 			"unary": false,
 			"category": "lists",
 			"role": "function",
-			"description": "Creates a list of values, just like the kind of thing you get when you use collection properties (or properties inside them).",
+			"description": "Creates a list of values, just like the kind of thing you get when you use collection properties (or properties inside them).\n\nFor those familiar with JS or JSON, something like `list(1, \"Lea\", 3)` is analogous to `[1, \"Lea\", 3]`.",
 			"argument": [
 				{
 					"name": "value1",
@@ -354,7 +354,7 @@
 			"unary": false,
 			"category": "other",
 			"role": "function",
-			"description": "Creates data that mimics the kind of data produced by a group. ",
+			"description": "Creates data that mimics the kind of data produced by a group.\n\nFor those familiar with JS or JSON, something like `group(name: 'Lea', age: 33)` is analogous to `{\"name\": \"Lea\", \"age\": 33}`)",
 			"argument": [
 				{
 					"name": "key1: value1",
