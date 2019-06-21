@@ -725,6 +725,42 @@
 			"returnDescription": "A list with its item orders reversed."
 		},
 		{
+			"name": "filter",
+			"id": "filter",
+			"unary": false,
+			"category": "lists",
+			"role": "function",
+			"description": "Filter a based on b. Both a and b should be multi-valued. Similar to the [`where` operator](#where) but with none of its scoping \"magic\".\nFor example, `filter(event, event.type = 'conference')` will return only events whose type is \"conference\". Note how with the `where` operator we can just say `event where type = 'conference'` whereas with the `filter()` function we need to be more explicit about where `type` comes from. This can be useful in case Mavo predicts the wrong scope for `where`.",
+			"argument": [
+				{
+					"name": "list",
+					"optional": false,
+					"type": "List",
+					"description": "The list to filter"
+				},
+				{
+					"name": "filter1",
+					"optional": false,
+					"type": "List",
+					"description": "The list whose values to use as filters"
+				},
+				{
+					"name": "filter2",
+					"optional": true,
+					"type": "List",
+					"description": "Optional extra filter(s)"
+				},
+				{
+					"name": "...",
+					"optional": false,
+					"type": "List",
+					"description": "Optional extra filter(s)"
+				}
+			],
+			"returnType": "List",
+			"returnDescription": "A list with the same number of items as `list` and empty values in the positions where at least one filter had a falsy value or the original values where all filters had truthy values."
+		},
+		{
 			"name": "join",
 			"id": "join",
 			"unary": false,
