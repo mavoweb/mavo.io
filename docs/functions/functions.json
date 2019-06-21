@@ -758,7 +758,7 @@
 				}
 			],
 			"returnType": "List",
-			"returnDescription": "A list with the same number of items as `list` and empty values in the positions where at least one filter had a falsy value or the original values where all filters had truthy values."
+			"returnDescription": "A list with the same number of items as list and empty values in the positions where at least one filter had a falsy value or the original values where all filters had truthy values."
 		},
 		{
 			"name": "join",
