@@ -1598,6 +1598,36 @@
 			]
 		},
 		{
+			"name": "phrase",
+			"id": "phrase",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "Provides access to Mavo's localization system, for language-sensitive text. You can define your own phrases as described [here](https://mavo.io/docs/ui#localization)",
+			"argument": [
+				{
+					"name": "id",
+					"optional": false,
+					"type": "Text",
+					"description": "The id of the phrase to use."
+				},
+				{
+					"name": "vars",
+					"optional": true,
+					"type": "Group",
+					"description": "If the phrase is parameterized, this includes values for the sub-phrases."
+				},
+				{
+					"name": "lang",
+					"optional": true,
+					"type": "Text",
+					"description": "Optional language code. If omitted, uses the Mavo app's language."
+				}
+			],
+			"returnType": "Text",
+			"returnDescription": "The localized text"
+		},
+		{
 			"name": "contains",
 			"id": "contains",
 			"unary": false,
