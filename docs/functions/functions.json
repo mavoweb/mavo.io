@@ -1943,6 +1943,19 @@
 				true,
 				true
 			]
+		},
+		{
+			"name": "$this",
+			"id": "$this",
+			"unary": false,
+			"category": "other",
+			"role": "special",
+			"description": "The closest group. Particularly useful in conjunction with [`where`](#where). E.g. `person where age > $this.age` from inside a person item to count how many people are older",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
 		}
 	]
 }
