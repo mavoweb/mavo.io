@@ -275,7 +275,7 @@
 			"id": "..",
 			"unary": false,
 			"role": "operator",
-			"description": "Create a list with numbers from a to b. Same as `range(a, b)`",
+			"description": "Create a list with numbers from a to b. Same as [`range(a, b)`](#range)",
 			"argument": [
 				{
 					"optional": false
@@ -988,7 +988,7 @@
 			"unary": false,
 			"category": "math",
 			"role": "function",
-			"description": "Create a list with numbers starting from a and increasing one by one until b. E.g. `range(5)`, `range(1, 5)`, and range(1, 5, 1) all produce `list(1, 2, 3, 4, 5)`. If only a and b are needed, `range(a, b)` can also be written more succinctly as `a .. b`.",
+			"description": "Create a list with numbers starting from a and increasing one by one until b. E.g. `range(5)`, `range(1, 5)`, and range(1, 5, 1) all produce `list(1, 2, 3, 4, 5)`. If only a and b are needed, `range(a, b)` can also be written more succinctly as [`a .. b`](#..).\n\nUseful both in `mv-value`, to repeat something a specific number of times, or in conjunction with multi-valued functions, to calculate something over a series of numbers.",
 			"argument": [
 				{
 					"name": "a",
