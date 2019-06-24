@@ -1388,7 +1388,7 @@
 			"unary": false,
 			"category": "datetime",
 			"role": "function",
-			"description": "Displays time intervals using a count of seconds, minutes, hours, days, months, or years, based on what would produce the most readable result. Supports localization. E.g. `duration(created - closed)` when `created - closed` is ",
+			"description": "Displays time intervals using a count of seconds, minutes, hours, days, months, or years, based on what would produce the most readable result. Supports localization. E.g. `duration(10000)` will print out \"10 seconds\", `duration(1000000)` will print out \"16 minutes\" and `duration(100000000)` will print out \"1 day\".",
 			"argument": [
 				{
 					"name": "ms",
@@ -1396,7 +1396,9 @@
 					"type": "Number",
 					"description": "Number of milliseconds"
 				}
-			]
+			],
+			"returnType": "Text",
+			"returnDescription": "Formatted and localized time interval"
 		},
 		{
 			"name": "len",
