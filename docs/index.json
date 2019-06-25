@@ -203,6 +203,15 @@
 			"purpose": "How many items should the collection start with? If not provided, it is 1, unless `mv-like` is also specified, in which case it's 0 (to prevent infinite recursion)."
 		},
 		{
+			"name": "mv-uploads",
+			"on": "Properties",
+			"purpose": "Sets the local path for uploads. Mandatory to enable uploads on `<a>` and `<link>`."
+		},
+		{
+			"name": "mv-upload-url",
+			"purpose": "Sets the URL for serving uploaded resources from."
+		},
+		{
 			"name": "aria-label",
 			"on": "Simple properties",
 			"purpose": "Sets or contains the label the property will use during editing.",
