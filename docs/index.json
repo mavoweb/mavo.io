@@ -103,8 +103,14 @@
 		{
 			"name": "mv-expressions",
 			"purpose": "Change the expression syntax or disable [expressions](/docs/expressions) altogether.",
-			"path": "/docs/mavoscript",
-			"link": "MavoScript"
+			"path": "/docs/expressions#using-expressions",
+			"link": "Expressions"
+		},
+		{
+			"name": "mv-expressions-ignore",
+			"purpose": "Disable expressions on specific attributes",
+			"path": "/docs/expressions#disabling-expressions",
+			"link": "Expressions"
 		},
 		{
 			"name": "mv-value",
