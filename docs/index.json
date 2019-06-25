@@ -205,11 +205,15 @@
 		{
 			"name": "mv-uploads",
 			"on": "Properties",
-			"purpose": "Sets the local path for uploads. Mandatory to enable uploads on `<a>` and `<link>`."
+			"purpose": "Sets the local path for uploads. Mandatory to enable uploads on `<a>` and `<link>`.",
+			"path": "/docs/storage#uploads",
+			"link": "Storage"
 		},
 		{
 			"name": "mv-upload-url",
-			"purpose": "Sets the URL for serving uploaded resources from."
+			"purpose": "Sets the URL for serving uploaded resources from.",
+			"path": "/docs/storage#uploads",
+			"link": "Storage"
 		},
 		{
 			"name": "aria-label",
