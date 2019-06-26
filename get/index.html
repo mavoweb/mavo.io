@@ -81,7 +81,7 @@
 				<input type="radio" name="path" value="[version]/">
 				Far from it, I actually want a <a href="#releases">specific version</a>:
 				<select property="version">
-					<option mv-multiple="versions" mv-value="replace(releases.tag_name, 'v')">0.1.5</option>
+					<option mv-multiple="versions" mv-value="first(count(releases.tag_name), releases.tag_name)" selected="[$index = 1]">0.1.5</option>
 				</select>
 			</label>
 		</article>
