@@ -70,15 +70,15 @@
 		<article>
 			<h1>Feeling adventurous?</h1>
 			<label>
-				<input type="radio" property name="path" value="https://dev.mavo.io/dist">
+				<input type="radio" property name="path" value="">
 				Yes, give me the absolute latest version <em>may have bugs!</em>
 			</label>
 			<label>
-				<input type="radio" name="path" value="https://get.mavo.io" checked>
+				<input type="radio" name="path" value="stable/" checked>
 				No, give me the latest stable version
 			</label>
 			<label>
-				<input type="radio" name="path" value="https://get.mavo.io/[version]">
+				<input type="radio" name="path" value="[version]/">
 				Far from it, I actually want a <a href="#releases">specific version</a>:
 				<select property="version">
 					<option mv-multiple="versions" mv-value="replace(releases.tag_name, 'v')">0.1.5</option>
@@ -90,8 +90,8 @@
 	<meta property="filename" content="mavo[if(transpile, '.' & transpile)][if(minify, '.' & min)].js">
 
 	<p>Now copy and paste the following code in your page’s <code>&lt;head></code> section, or click on the links below to download these files locally:</p>
-	<pre class="language-foo"><code>&lt;script src="<a href="[path]/[filename]" download>[path]/[filename]</a>">&lt;/script>
-&lt;link rel="stylesheet" href="<a href="[path]/mavo.css" download>[path]/mavo.css</a>"></code></pre>
+	<pre class="language-foo"><code>&lt;script src="<a href="https://get.mavo.io/[path][filename]" download>https://get.mavo.io/[path][filename]</a>">&lt;/script>
+&lt;link rel="stylesheet" href="<a href="https://get.mavo.io/[path]mavo.css" download>https://get.mavo.io/[path]mavo.css</a>"></code></pre>
 </section>
 
 <section mv-app id="releases" mv-source="https://api.github.com/repos/mavoweb/mavo/releases"
