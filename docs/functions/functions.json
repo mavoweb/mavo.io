@@ -1668,7 +1668,7 @@
 			"name": "has",
 			"id": "has",
 			"unary": false,
-			"category": "logical",
+			"category": "lists",
 			"role": "function",
 			"description": "Search for `needle` in one or more haystacks. If using multiple haystacks. the result is equivalent to `has(needle, haystack) and has(needle, haystack2) and has(needle, haystack3) and ...`.\n`has(needle, haystack)` can also be written more succinctly as [`needle in haystack`](#in).\n\nThe search is performed in the following way:\n- If `haystack` is a list, `needle` is compared against each value, and if it matches any of them, `true` is returned. This is the most common case. E.g. `has(\"Lea\", list(\"David\", \"Lea\", \"Chris\"))` returns `true`.\n- If `haystack` is a group, `true` is returned if `needle` matches the name of any property in the group. This is analogous to JavaScript's `in` operator. E.g. `has(\"Lea\", group(Lea: 33, David: 50))` returns `true`.\n- If `haystack` is a simple value (text, number etc), `has()` is equivalent to an equality comparison (`needle = haystack`). E.g. `has(1, 1)` returns `true` and `has(1, 2)` returns `false`.",
 			"argument": [
