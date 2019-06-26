@@ -271,6 +271,19 @@
 			]
 		},
 		{
+			"name": "in",
+			"id": "in",
+			"unary": false,
+			"category": "other",
+			"role": "operator",
+			"description": "Same as [`has(a, b)`](#has).",
+			"argument": [
+				{
+					"optional": false
+				}
+			]
+		},
+		{
 			"name": "..",
 			"id": "..",
 			"unary": false,
@@ -1631,7 +1644,7 @@
 			"name": "contains",
 			"id": "contains",
 			"unary": false,
-			"category": "math",
+			"category": "text",
 			"role": "function",
 			"description": "Check if a collection, group, list, or text contains another given text. For example, `contains(\"Kenneth\", \"Ken\")` returns `true`.\nIf both haystack and needle are a list, `contains()` checks if the first item of the haystack contains the first item of the needle, and so on, and returns a list of corresponding results. For example, `contains(list(\"Kenneth\", \"Verou\"), list(\"Ken\", \"Lea\"))` will return `list(true, false)`.",
 			"argument": [
@@ -1652,10 +1665,42 @@
 			"returnDescription": "True if the haystack contains the needle, false otherwise."
 		},
 		{
+			"name": "has",
+			"id": "has",
+			"unary": false,
+			"category": "logical",
+			"role": "function",
+			"description": "Search for `needle` in one or more haystacks. If using multiple haystacks. the result is equivalent to `has(needle, haystack) and has(needle, haystack2) and has(needle, haystack3) and ...`.\n`has(needle, haystack)` can also be written more succinctly as [`needle in haystack`](#in).\n\nThe search is performed in the following way:\n- If `haystack` is a list, `needle` is compared against each value, and if it matches any of them, `true` is returned. This is the most common case. E.g. `has(\"Lea\", list(\"David\", \"Lea\", \"Chris\"))` returns `true`.\n- If `haystack` is a group, `true` is returned if `needle` matches the name of any property in the group. This is analogous to JavaScript's `in` operator. E.g. `has(\"Lea\", group(Lea: 33, David: 50))` returns `true`.\n- If `haystack` is a simple value (text, number etc), `has()` is equivalent to an equality comparison (`needle = haystack`). E.g. `has(1, 1)` returns `true` and `has(1, 2)` returns `false`.",
+			"argument": [
+				{
+					"name": "needle",
+					"optional": false,
+					"description": "What to search for"
+				},
+				{
+					"name": "haystack",
+					"optional": false,
+					"description": "List or group to search in"
+				},
+				{
+					"name": "haystack2",
+					"optional": true,
+					"description": "Additional list or group to search in"
+				},
+				{
+					"name": "...",
+					"optional": false,
+					"description": "Additional list(s) or group(s) to search in"
+				}
+			],
+			"returnType": "True or False or list of True/False values",
+			"returnDescription": "true if the search is successful, false otherwise. If needle is a list, the result will also be a list"
+		},
+		{
 			"name": "starts",
 			"id": "starts",
 			"unary": false,
-			"category": "math",
+			"category": "text",
 			"role": "function",
 			"description": "Check if text starts with another bit of text",
 			"argument": [
@@ -1683,7 +1728,7 @@
 			"name": "ends",
 			"id": "ends",
 			"unary": false,
-			"category": "math",
+			"category": "text",
 			"role": "function",
 			"description": "Check if text ends with another bit of text",
 			"argument": [
