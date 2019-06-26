@@ -239,7 +239,7 @@
 			"id": "where",
 			"category": "lists",
 			"role": "operator",
-			"description": "Filter a based on b. Both a and b should be lists.\nFor example, `event where type = 'conference'` will return only events whose type is \"conference\".",
+			"description": "Filter a based on b. Both a and b should be lists.\nFor example, `event where type = 'conference'` will return only events whose type is \"conference\".\nSame as [filter(a, b)](#filter), except smarter about scoping. For example, let's say in addition to events with types you also had attendees with types. With `filter()` you would need to write `filter(event, event.type = 'conference')` to get the same result as  `event where type = 'conference'`, because in `filter()`, `type` would be interpreted independently of `event` and would give you both event and attendee types in one big list. However, since `filter()` is more low-level, it can be useful for cases when you want to override the heuristics of `where`.",
 			"argument": [
 				{
 					"optional": false
@@ -250,6 +250,19 @@
 				true,
 				true,
 				true
+			]
+		},
+		{
+			"name": "by",
+			"id": "by",
+			"unary": false,
+			"category": "lists",
+			"role": "operator",
+			"description": "Same as [groupby(a, b)](#groupby).",
+			"argument": [
+				{
+					"optional": false
+				}
 			]
 		},
 		{
@@ -772,6 +785,30 @@
 			],
 			"returnType": "List",
 			"returnDescription": "A list with the same number of items as list and empty values in the positions where at least one filter had a falsy value or the original values where all filters had truthy values."
+		},
+		{
+			"name": "groupby",
+			"id": "groupby",
+			"unary": false,
+			"category": "lists",
+			"role": "function",
+			"description": "**Experimental, introduced in v0.2.0**\nGroups a list of values based on another list. The intermediate structure returned can be either rendered by itself (with the help of `mv-value`) or fed into aggregate functions ([`count()`](#count), [`average()`](#average), [`median()`](#median), [`min()`](#min), [`max()`](#max)). For those who are familiar with SQL, the use cases this addresses are very similar to those addressed by SQL's `GROUP BY`.\nCan also be written more succinctly as `values by key`.\n\nFor example, let's assume you have a list of people with names and ages. `groupby(name, round(age / 10) * 10)` or `name by round(age / 10) * 10` will return a list of groups of names by decade of age. You can also name the key with `as`:  `groupby(name, round(age / 10) * 10) as decade` or `name by round(age / 10) * 10 as decade`\nYou can feed that into `count()` to get a count of how many people belong to each decade: `count(name by round(age / 10) * 10)`.",
+			"argument": [
+				{
+					"name": "values",
+					"optional": false,
+					"type": "List",
+					"description": "Values to create the groups from"
+				},
+				{
+					"name": "key",
+					"optional": false,
+					"type": "List",
+					"description": "Values to group by"
+				}
+			],
+			"returnType": "List",
+			"returnDescription": "List of the groups produced"
 		},
 		{
 			"name": "join",
