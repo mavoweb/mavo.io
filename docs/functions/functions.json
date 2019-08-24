@@ -1262,6 +1262,12 @@
 					"optional": false,
 					"type": "Date/Time",
 					"description": "The date/time that we want to format"
+				},
+				{
+					"name": "precision",
+					"optional": true,
+					"type": "\"minutes\", \"seconds\" or \"ms\"",
+					"description": "Precision for the returned timestamp. \"minutes\" returns times like \"14:00\", \"seconds\" returns times like \"14:00:05\", \"ms\" returns times like \"14:00:05.345\". Default is \"seconds\". Any unknown value is ignored."
 				}
 			],
 			"returnType": "Text",
