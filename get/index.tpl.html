@@ -15,10 +15,10 @@
 
 	<div class="questions">
 		<article>
-			<h1>Will you read the code in the JavaScript file?</h1>
+			<h1>Will you read the code in the JavaScript and CSS files?</h1>
 			<label>
 				<input type="radio" property name="minify" value="" checked>
-				Yes, give me something readable <em>+ 65% filesize</em>
+				Yes, give me something readable <em>+ 70% filesize</em>
 			</label>
 			<label>
 				<input type="radio" name="minify" value="min">
@@ -60,7 +60,7 @@
 
 	<p>Now copy and paste the following code in your page’s <code>&lt;head></code> section, or click on the links below to download these files locally:</p>
 	<pre class="language-foo"><code>&lt;script src="<a href="https://get.mavo.io/[path][filename]" download>https://get.mavo.io/[path][filename]</a>">&lt;/script>
-&lt;link rel="stylesheet" href="<a href="https://get.mavo.io/[path]mavo.css" download>https://get.mavo.io/[path]mavo.css</a>"></code></pre>
+&lt;link rel="stylesheet" href="<a href="https://get.mavo.io/[path]mavo[if(minify, '.' & min)].css" download>https://get.mavo.io/[path]mavo[if(minify, '.' & min)].css</a>"></code></pre>
 </section>
 
 <section mv-app id="releases" mv-source="https://api.github.com/repos/mavoweb/mavo/releases"
