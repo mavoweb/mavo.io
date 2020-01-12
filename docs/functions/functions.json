@@ -287,7 +287,7 @@
 			"name": "in",
 			"id": "in",
 			"unary": false,
-			"category": "other",
+			"category": "lists",
 			"role": "operator",
 			"description": "Same as [`has(a, b)`](#has).",
 			"argument": [
@@ -313,7 +313,7 @@
 			"name": "if",
 			"id": "if",
 			"unary": false,
-			"category": "math",
+			"category": "logical",
 			"role": "function",
 			"description": "Get a different value based on a test. For example, `if(rating > 3, 'good', 'bad')` returns `'good'` if the rating is bigger than 3 and `'bad'` otherwise.\nAny parameters can also be lists of values, in which case the `if()` is applied on each element individually (i.e. first the first element of each list, then the second, then the third etc).",
 			"argument": [
@@ -1036,7 +1036,7 @@
 			"name": "range",
 			"id": "range",
 			"unary": false,
-			"category": "math",
+			"category": "lists",
 			"role": "function",
 			"description": "Create a list with numbers starting from a and increasing one by one until b. E.g. `range(5)`, `range(1, 5)`, and range(1, 5, 1) all produce `list(1, 2, 3, 4, 5)`. If only a and b are needed, `range(a, b)` can also be written more succinctly as [`a .. b`](#..).\n\nUseful both in `mv-value`, to repeat something a specific number of times, or in conjunction with multi-valued functions, to calculate something over a series of numbers.",
 			"argument": [
@@ -1799,7 +1799,7 @@
 			"name": "url",
 			"id": "url",
 			"unary": false,
-			"category": "math",
+			"category": "other",
 			"role": "function",
 			"description": "If `param` is provided, returns the value of that parameter from the current page URL. This matches both parameters like `example.com/index.html?foo=bar` and `example.com/index.html/foo/bar` with the former having priority over the latter\nIf `param` is **not** provided, it returns the URL of the current page.",
 			"argument": [
