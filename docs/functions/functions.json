@@ -787,6 +787,24 @@
 			"returnDescription": "A list with the same number of items as list and empty values in the positions where at least one filter had a falsy value or the original values where all filters had truthy values."
 		},
 		{
+			"name": "condense",
+			"id": "condense",
+			"unary": false,
+			"category": "lists",
+			"role": "function",
+			"description": "Get rid of empty values in a list.\nFor example, assuming we have a list of events whose type is \"conference\": `event where type = 'conference'`. This list has the same number of items as the source list of events and might have empty values corresponding to events with types other than \"conference\". `condense(event where type = 'conference')` will return a list of conferences without empty values. In other words, `count(condense(event where type = 'conference')) <= count(event where type = 'conference')`.",
+			"argument": [
+				{
+					"name": "list",
+					"optional": false,
+					"type": "List",
+					"description": "The list to drop empty values from"
+				}
+			],
+			"returnType": "List",
+			"returnDescription": "A list without empty values in it"
+		},
+		{
 			"name": "groupby",
 			"id": "groupby",
 			"unary": false,
