@@ -320,7 +320,7 @@ table.attributes {
 		background: rgba(0,0,0,.05);
 	}
 
-	[property=mavoClass] {
+	[property=className] {
 		margin-top: 1em;
 		border: 1px solid #eee;
 		padding: .8em 1em;
@@ -516,7 +516,7 @@ table.attributes {
 		}
 	}
 
-	[property=mavoClass].mv-target-within {
+	[property=className].mv-target-within {
 		box-shadow: 0 0 1em .1em orange;
 		animation: target 1s 1s both;
 	}

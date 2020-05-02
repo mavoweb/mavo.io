@@ -221,38 +221,38 @@ table.attributes td:nth-last-child(2) {
   margin: 1em 0;
   background: rgba(0, 0, 0, 0.05); }
 
-[mv-app="api"] [id="api"] [property=mavoClass],
-[mv-app="functions"] [id="functions"] [property=mavoClass] {
+[mv-app="api"] [id="api"] [property=className],
+[mv-app="functions"] [id="functions"] [property=className] {
   margin-top: 1em;
   border: 1px solid #eee;
   padding: .8em 1em; }
-  [mv-app="api"] [id="api"] [property=mavoClass] > summary,
-  [mv-app="functions"] [id="functions"] [property=mavoClass] > summary {
+  [mv-app="api"] [id="api"] [property=className] > summary,
+  [mv-app="functions"] [id="functions"] [property=className] > summary {
     display: flex;
     align-items: baseline; }
-    [mv-app="api"] [id="api"] [property=mavoClass] > summary h2,
-    [mv-app="functions"] [id="functions"] [property=mavoClass] > summary h2 {
+    [mv-app="api"] [id="api"] [property=className] > summary h2,
+    [mv-app="functions"] [id="functions"] [property=className] > summary h2 {
       font-size: 200%;
       margin-right: .3em; }
-      [mv-app="api"] [id="api"] [property=mavoClass] > summary h2 a,
-      [mv-app="functions"] [id="functions"] [property=mavoClass] > summary h2 a {
+      [mv-app="api"] [id="api"] [property=className] > summary h2 a,
+      [mv-app="functions"] [id="functions"] [property=className] > summary h2 a {
         color: inherit; }
-    [mv-app="api"] [id="api"] [property=mavoClass] > summary p,
-    [mv-app="functions"] [id="functions"] [property=mavoClass] > summary p {
+    [mv-app="api"] [id="api"] [property=className] > summary p,
+    [mv-app="functions"] [id="functions"] [property=className] > summary p {
       font-style: italic;
       color: gray; }
-      [mv-app="api"] [id="api"] [property=mavoClass] > summary p a,
-      [mv-app="functions"] [id="functions"] [property=mavoClass] > summary p a {
+      [mv-app="api"] [id="api"] [property=className] > summary p a,
+      [mv-app="functions"] [id="functions"] [property=className] > summary p a {
         color: inherit; }
-    [mv-app="api"] [id="api"] [property=mavoClass] > summary p:last-of-type,
-    [mv-app="functions"] [id="functions"] [property=mavoClass] > summary p:last-of-type {
+    [mv-app="api"] [id="api"] [property=className] > summary p:last-of-type,
+    [mv-app="functions"] [id="functions"] [property=className] > summary p:last-of-type {
       flex: 1;
       text-align: right; }
-  [mv-app="api"] [id="api"] [property=mavoClass] > h3,
-  [mv-app="functions"] [id="functions"] [property=mavoClass] > h3 {
+  [mv-app="api"] [id="api"] [property=className] > h3,
+  [mv-app="functions"] [id="functions"] [property=className] > h3 {
     margin-top: 1em; }
-  [mv-app="api"] [id="api"] [property=mavoClass]:not([mv-mode=edit]) .no-inherits,
-  [mv-app="functions"] [id="functions"] [property=mavoClass]:not([mv-mode=edit]) .no-inherits {
+  [mv-app="api"] [id="api"] [property=className]:not([mv-mode=edit]) .no-inherits,
+  [mv-app="functions"] [id="functions"] [property=className]:not([mv-mode=edit]) .no-inherits {
     display: none; }
 
 [mv-app="api"] [id="api"] [property=member],
@@ -443,8 +443,8 @@ table.attributes td:nth-last-child(2) {
   to {
     box-shadow: 0 0 10em .1em transparent; } }
 
-[mv-app="api"] [id="api"] [property=mavoClass].mv-target-within,
-[mv-app="functions"] [id="functions"] [property=mavoClass].mv-target-within {
+[mv-app="api"] [id="api"] [property=className].mv-target-within,
+[mv-app="functions"] [id="functions"] [property=className].mv-target-within {
   box-shadow: 0 0 1em .1em orange;
   -webkit-animation: target 1s 1s both;
   animation: target 1s 1s both; }
