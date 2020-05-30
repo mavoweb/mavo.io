@@ -205,7 +205,7 @@
 		{
 			"name": "mv-uploads",
 			"on": "Mavo root",
-			"purpose": "Provide different upload backend than storage backend.\n**Note:** For now, it is only available in [the development version](https://mavo.io/get/).",
+			"purpose": "Provide different upload backend than storage backend.",
 			"live": "yes",
 			"path": "https://mavo.io/docs/storage#uploads",
 			"link": "Storage"
