@@ -17,15 +17,15 @@
   },
   "homepage": "http://mavo.io",
   "devDependencies": {
-    "gulp": "^3",
+    "gulp": "^4.0.2",
     "gulp-autoprefixer": "^5",
     "gulp-concat": "^2.6.0",
-    "gulp-file-include": "^2",
+    "gulp-file-include": "^2.2.2",
     "gulp-notify": "^3",
-    "gulp-rename": "^1",
+    "gulp-rename": "^1.4.0",
     "gulp-replace": "^1",
-    "gulp-sass": "^4",
-    "gulp-sourcemaps": "^2",
+    "gulp-sass": "^4.1.0",
+    "gulp-sourcemaps": "^2.6.5",
     "gulp-util": "^3"
   }
 }

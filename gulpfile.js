@@ -53,9 +53,9 @@ gulp.task("study", function() {
 });
 
 gulp.task("watch", function() {
-	gulp.watch(["**/*.scss"], ["sass"]);
-	gulp.watch(["**/*.tpl.html", "./templates/*.html"], ["html"]);
-	gulp.watch(["studies/uist2018/*/index.html", "!studies/uist2018/people/index.html"], ["study"]);
+	gulp.watch(["**/*.scss"], gulp.series("sass"));
+	gulp.watch(["**/*.tpl.html", "./templates/*.html"], gulp.series("html"));
+	gulp.watch(["studies/uist2018/*/index.html", "!studies/uist2018/people/index.html"], gulp.series("study"));
 });
 
-gulp.task("default", ["sass", "html"]);
+gulp.task("default", gulp.parallel("sass", "html"));
