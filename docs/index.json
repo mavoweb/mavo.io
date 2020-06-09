@@ -159,7 +159,7 @@
 		{
 			"name": "mv-format",
 			"on": "Mavo root",
-			"purpose": "Render and edit only a subset of the remote data, by providing a (slash-separated) path to the data it handles.",
+			"purpose": "Declare the data format, if not JSON and if it cannot be determined from your data URL.",
 			"live": "initially",
 			"path": "/docs/formats",
 			"link": "Formats"
@@ -182,7 +182,7 @@
 		{
 			"name": "mv-path",
 			"on": "Properties",
-			"purpose": "Render and edit only a subset of the stored data.",
+			"purpose": "Render and edit only a subset of the remote data, by providing a (slash-separated) path to the data it handles.",
 			"live": "initially"
 		},
 		{
@@ -205,7 +205,7 @@
 		{
 			"name": "mv-uploads",
 			"on": "Mavo root",
-			"purpose": "Provide different upload backend than storage backend.\n**Note:** For now, it is only available in [the development version](https://mavo.io/get/).",
+			"purpose": "Provide different upload backend than storage backend.",
 			"live": "yes",
 			"path": "https://mavo.io/docs/storage#uploads",
 			"link": "Storage"
