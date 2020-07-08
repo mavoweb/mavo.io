@@ -30,7 +30,7 @@ gulp.task("sass", function() {
 });
 
 gulp.task("html", function() {
-	gulp.src(["**/*.tpl.html"])
+	return gulp.src(["**/*.tpl.html"])
 		.pipe(fileinclude({
 			basepath: "templates/"
 		}).on("error", function(error) {
