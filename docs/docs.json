@@ -441,7 +441,7 @@
 				{
 					"id": "mv-source",
 					"advanced": false,
-					"title": "Reading from a different data source",
+					"title": "Providing initial data vs Reading from a different data source",
 					"content": "Sometimes you want to load data from one place and save to a different place, for a variety of reasons. If this is what you want, Mavo has you covered! Just use the `mv-source` attribute to specify where the data will be read **from** and the `mv-storage` attribute to specify where the data will be stored. Note that if you use both `mv-source` and `mv-storage`, only login controls for the latter will be shown in the Mavo bar."
 				},
 				{
