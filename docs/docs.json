@@ -445,12 +445,6 @@
 					"content": "Sometimes you want to load data from one place and save to a different place, for a variety of reasons. If this is what you want, Just use the `mv-source` attribute to specify where the data will be read **from** and the `mv-storage` attribute to specify where the data will be stored. Note that if you use both `mv-source` and `mv-storage`, only login controls for the latter will be shown in the Mavo bar.\n\nOther times you want to store your application’s data in the local store or another initially empty storage, but you want the app to start with some data already in place, _if its storage is empty_. For this purpose, you can use the `mv-init` attribute. It will be used just like the `mv-source` attribute above, but only **if no data has been stored yet**.\n\nIn short, `mv-source` provides default source data when reloaded (such that user updates will only appear in the `mv-storage` file), whereas `mv-init` provides placeholder data and preserves changes when reloaded."
 				},
 				{
-					"id": "mv-init",
-					"advanced": false,
-					"title": "Providing initial data",
-					"content": "Sometimes you want to store your application’s data in the local store or another initially empty storage, but you want the app to start with some data already in place, _if its storage is empty_. For this purpose, you can use the `mv-init` attribute. It will be used just like the `mv-source` attribute above, but only **if no data has been stored yet**."
-				},
-				{
 					"id": "url-params",
 					"advanced": false,
 					"title": "Changing mv-storage, mv-source, and mv-init via the URL",
