@@ -131,7 +131,7 @@ ${html}
 					title: "Play with this example on codepen.io",
 					events: {
 						// This shouldn't be needed but for some reason the form won't submit otherwise
-						click: function(evt) { this.form.submit(); }
+						click: function(evt) {}
 					}
 				}
 			],
