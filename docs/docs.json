@@ -532,7 +532,7 @@
 					"id": "useful-events",
 					"advanced": true,
 					"title": "Useful events",
-					"content": "Mavo comes with a bunch of custom events you can listen to, in order to react to changes in the state of your application. All Mavo events are prefixed with `mv-`, just like Mavo CSS classes and HTML attributes. All Mavo events bubble.\n\n| Event Name | On | When is it triggered? | Event Object Properties |\n|--------------------|-------|--------------------------------|-------------------------------------|\n| `mv-change` | Properties | When the data changes for any reason | `action` (one of `\"propertychange\"`, `\"add\"`, `\"delete\"`, `\"move\"`), `property` (property name as string), `mavo` (Mavo instance), `node` (Mavo node that changed) |\n| `mv-load` | Mavo root | When the data has loaded | |\n| `mv-login` | Mavo root | User has logged in | `backend` (`Mavo.Backend` object on which the login occurred) |\n| `mv-logout` | Mavo root | User has logged out | `backend` (`Mavo.Backend` object on which the logout occurred) |"
+					"content": "Mavo comes with a bunch of custom events you can listen to, in order to react to changes in the state of your application. All Mavo events are prefixed with `mv-`, just like Mavo CSS classes and HTML attributes. All Mavo events bubble.\n\n| Event Name | On | When is it triggered? | Event Object Properties |\n|--------------------|-------|--------------------------------|-------------------------------------|\n| `mv-change` | Properties | When the data changes for any reason | `action` (one of `\"propertychange\"`, `\"add\"`, `\"delete\"`, `\"move\"`), `property` (property name as string), `mavo` (Mavo instance), `node` (Mavo node that changed) |\n| `mv-load` | Mavo root | When the data has loaded | |\n| `mv-login` | Mavo root | User has logged in | `backend` (`Mavo.Backend` object on which the login occurred) |\n| `mv-logout` | Mavo root | User has logged out | `backend` (`Mavo.Backend` object on which the logout occurred) |\n| `mv-save` | Mavo root | When the data has been saved | |"
 				},
 				{
 					"id": "running-js-when-things-are-ready",
@@ -540,7 +540,8 @@
 					"title": "Running JS when things are ready",
 					"content": "Mavo's API heavily uses promises, and tries to have them available as early as possible. Here are some useful ones for deferring code until things are ready:\n\n| Promise | Resolves when |\n|------|------|\n| [`Mavo.ready`](/docs/api/#Mavo.ready) | All dependencies (e.g. plugins and polyfills) have loaded, but apps have not been initialized yet |\n| [`Mavo.inited`](/docs/api/#Mavo.inited) | Apps have been initialized. You can now use `Mavo.all` to get a reference to them. |\n| [`mavo.treeBuilt`](/docs/api/#Mavo#treeBuilt) | The Mavo tree has been created, but data has not necessarily been rendered yet |\n| [`mavo.dataLoaded`](/docs/api/#Mavo#dataLoaded) | Data has been loaded and rendered. Similar to the `mv-load` event. |\n\nFor example, to render some new data only after the first app's data has been rendered, you could do something like:\n\n```js\n(async () => {\n\tawait Mavo.inited;\n\tawait Mavo.all[0].dataLoaded;\n\tMavo.all[0].render({\"foo\": [\"e\", \"f\", \"g\", \"h\", \"i\", \"j\"]});\n})();\n```\n\nor:\n\n```js\nMavo.inited\n\t.then(() => Mavo.all[0].dataLoaded)\n\t.then(() => Mavo.all[0].render({\"foo\": [\"e\", \"f\", \"g\", \"h\", \"i\", \"j\"]}));\n```"
 				}
-			]
+			],
+			"language": "markup"
 		}
 	]
 }
