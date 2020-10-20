@@ -132,7 +132,7 @@
 					"id": "using-mavo",
 					"advanced": false,
 					"title": "Using Mavo",
-					"content": "order to use Mavo, you first need to [download or link to its JS and CSS files](/get) and include them in your page. If you have never done this before, you could put both in the `<head>` section, like this:\n\n```html\n<head>\n\t...\n\t<link rel=\"stylesheet\" href=\"https://get.mavo.io/mavo.css\"/>\n\t<script src=\"https://get.mavo.io/mavo.js\"></script>\n\t...\n</head>\n```"
+					"content": "In order to use Mavo, you first need to [download or link to its JS and CSS files](/get) and include them in your page. If you have never done this before, you could put both in the `<head>` section, like this:\n\n```html\n<head>\n\t...\n\t<link rel=\"stylesheet\" href=\"https://get.mavo.io/mavo.css\"/>\n\t<script src=\"https://get.mavo.io/mavo.js\"></script>\n\t...\n</head>\n```"
 				},
 				{
 					"id": "mv-app",
@@ -164,8 +164,7 @@
 					"title": "Expressions",
 					"content": "You can dynamically refer to the value of any property you have defined, anywhere in your Mavo app, by putting its name inside brackets (like this: `[propertyName]`).\n\n##### Example\n\nMove the slider and check how both expressions are updated:\n\n```html\n<p>Slider value: [strength]/100</p>\n<input type=\"range\" property=\"strength\" title=\"[strength]%\" />\n```\n\nWe can also do math with properties, e.g. divide by 100:\n\n##### Example\n\nMove the slider and check how both expressions are updated:\n\n```html\n<p>Slider value: [strength/100]</p>\n<input type=\"range\" property=\"strength\" title=\"[strength]%\" />\n```\n\nIf you set a `property` attribute on an element containing an expression, you can use that property in other expressions too, regardless of whether they come before or after the element.\n\n##### Example\n\nMaking a bare-bones HSL color picker with Mavo expressions:\n\n```html\n<div mv-app=\"colorpicker\" mv-storage=\"local\"\n     style=\"background-color: [color];\">\n\t<input type=\"range\" property=\"hue\" max=\"360\" />\n\t<input type=\"range\" property=\"saturation\" />\n\t<input type=\"range\" property=\"lightness\" />\n\n\t<input property=\"color\" readonly\n\t       value=\"hsl([hue], [saturation]%, [lightness]%)\" />\n</div>\n<style>\ninput { display: block; }\ndiv { padding: 1em; }\n</style>\n```\n\nThere are also [a number of math functions](/docs/mavoscript/#math-functions) you can use for more complicated tasks, akin to spreadsheets.\n\n* * *\n\nExpressions become very powerful when combined with collections. Try adding and removing items in the list below:\n\n##### Example: Expressions & Simple lists\n\n```html\n<div mv-app=\"people\" class=\"mv-autoedit\" mv-source=\"https://test.mavo.io/data/persons.json\">\n[count(person)] people, [average(age)] years old on average:\n<ul>\n\t<li property=\"person\" mv-multiple>\n\t\t<strong property=\"name\"></strong>\n\t\t<br><span property=\"age\"></span> years old\n\t\t<br>Next year I will be [age + 1] years old.\n\t</li>\n</ul>\n</div>\n```\n\nYou can use any property defined **anywhere** in your Mavo app, or even properties from other Mavo apps (by using `appid.propertyName`). **Its value depends on the placement of your expression**: Note that `age` outside the collection gives you all ages (so `average()` allows us to average them) where when we use `age` inside the person, it refers to **that person’s age only**.\n\n<p class=\"learn-more\">[Expressions](/docs/expressions)\n<p class=\"learn-more\">[All functions, symbols, special properties](/docs/functions)"
 				}
-			],
-			"summary": "hey"
+			]
 		},
 		{
 			"id": "properties",
@@ -533,7 +532,7 @@
 					"id": "useful-events",
 					"advanced": true,
 					"title": "Useful events",
-					"content": "Mavo comes with a bunch of custom events you can listen to, in order to react to changes in the state of your application. All Mavo events are prefixed with `mv-`, just like Mavo CSS classes and HTML attributes. All Mavo events bubble.\n\n| Event Name | On | When is it triggered? | Event Object Properties |\n|--------------------|-------|--------------------------------|-------------------------------------|\n| `mv-change` | Properties | When the data changes for any reason | `action` (one of `\"propertychange\"`, `\"add\"`, `\"delete\"`, `\"move\"`), `property` (property name as string), `mavo` (Mavo instance), `node` (Mavo node that changed) |\n| `mv-load` | Mavo root | When the data has loaded | |\n| `mv-login` | Mavo root | User has logged in | `backend` (`Mavo.Backend` object on which the login occurred) |\n| `mv-logout` | Mavo root | User has logged out | `backend` (`Mavo.Backend` object on which the logout occurred) |"
+					"content": "Mavo comes with a bunch of custom events you can listen to, in order to react to changes in the state of your application. All Mavo events are prefixed with `mv-`, just like Mavo CSS classes and HTML attributes. All Mavo events bubble.\n\n| Event Name | On | When is it triggered? | Event Object Properties |\n|--------------------|-------|--------------------------------|-------------------------------------|\n| `mv-change` | Properties | When the data changes for any reason | `action` (one of `\"propertychange\"`, `\"add\"`, `\"delete\"`, `\"move\"`), `property` (property name as string), `mavo` (Mavo instance), `node` (Mavo node that changed) |\n| `mv-load` | Mavo root | When the data has loaded | |\n| `mv-login` | Mavo root | User has logged in | `backend` (`Mavo.Backend` object on which the login occurred) |\n| `mv-logout` | Mavo root | User has logged out | `backend` (`Mavo.Backend` object on which the logout occurred) |\n| `mv-save` | Mavo root | When the data is saved | |"
 				},
 				{
 					"id": "running-js-when-things-are-ready",
@@ -541,7 +540,8 @@
 					"title": "Running JS when things are ready",
 					"content": "Mavo's API heavily uses promises, and tries to have them available as early as possible. Here are some useful ones for deferring code until things are ready:\n\n| Promise | Resolves when |\n|------|------|\n| [`Mavo.ready`](/docs/api/#Mavo.ready) | All dependencies (e.g. plugins and polyfills) have loaded, but apps have not been initialized yet |\n| [`Mavo.inited`](/docs/api/#Mavo.inited) | Apps have been initialized. You can now use `Mavo.all` to get a reference to them. |\n| [`mavo.treeBuilt`](/docs/api/#Mavo#treeBuilt) | The Mavo tree has been created, but data has not necessarily been rendered yet |\n| [`mavo.dataLoaded`](/docs/api/#Mavo#dataLoaded) | Data has been loaded and rendered. Similar to the `mv-load` event. |\n\nFor example, to render some new data only after the first app's data has been rendered, you could do something like:\n\n```js\n(async () => {\n\tawait Mavo.inited;\n\tawait Mavo.all[0].dataLoaded;\n\tMavo.all[0].render({\"foo\": [\"e\", \"f\", \"g\", \"h\", \"i\", \"j\"]});\n})();\n```\n\nor:\n\n```js\nMavo.inited\n\t.then(() => Mavo.all[0].dataLoaded)\n\t.then(() => Mavo.all[0].render({\"foo\": [\"e\", \"f\", \"g\", \"h\", \"i\", \"j\"]}));\n```"
 				}
-			]
+			],
+			"language": "markup"
 		}
 	]
 }
