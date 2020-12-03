@@ -324,7 +324,7 @@
 			"section": [
 				{
 					"id": "using-expressions",
-					"advanced": false,
+					"advanced": true,
 					"title": "Using Expressions",
 					"content": "By default, Mavo expressions are delineated by square brackets, e.g. `[5 + 5]`. We explored many different syntaxes and found that format to have the best readability. \n\nIf your HTML text contains brackets whose content you don’t want to be an expression, you can change the syntax with the `mv-expressions` attribute. For example, to switch to a double curly brace syntax (common in other systems), you can use `mv-expressions=\"{{ }}\"` and then expressions would be specified like `{{5 + 5}}`. To disable expressions in an element and its descendants altogether, use `mv-expressions=\"none\"`.\n\n"
 				},
