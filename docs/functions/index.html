@@ -82,13 +82,7 @@
 			<meta property="id" mv-default="[name]" />
 			<meta property="unary" mv-if="role = 'operator'" datatype="boolean" />
 			<span property="category" mv-edit="#categories"></span>
-			<span property="role">
-				<select>
-					<option value="function">Function</option>
-					<option value="special">Special Property</option>
-					<option value="operator">Operator</option>
-				</select>
-			</span>
+			<span property="role" mv-edit="#role-select"></span>
 		</summary>
 
 		<p property="description" class="markdown"></p>
@@ -135,8 +129,12 @@
 	</ul>
 </section>
 
-<div xhidden>
-
+<div hidden>
+	<select id="role-select">
+		<option value="function">Function</option>
+		<option value="special">Special Property</option>
+		<option value="operator">Operator</option>
+	</select>
 </div>
 
 <aside id="contents" class="no-toc">

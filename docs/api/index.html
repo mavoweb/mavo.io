@@ -86,14 +86,7 @@
 				<span property="type" mv-if="role != 'constructor' and role != 'function'" foo="role != 'function'"></span>
 				<span class="type">[returnType]</span>
 				<span property="static" class="mv-toggle" mv-if="role != 'constructor'">Static</span>
-				<span property="role">
-					<select>
-						<option value="property">Property</option>
-						<option value="accessor">Accessor</option>
-						<option value="function">Function</option>
-						<option value="constructor">Constructor</option>
-					</select>
-				</span>
+				<span property="role" mv-edit="#role-select"></span>
 			</summary>
 
 			<p property="description" class="markdown"></p>
@@ -137,6 +130,15 @@
 		</li>
 	</ul>
 </section>
+
+<div hidden>
+	<select id="role-select">
+		<option value="property">Property</option>
+		<option value="accessor">Accessor</option>
+		<option value="function">Function</option>
+		<option value="constructor">Constructor</option>
+	</select>
+</div>
 
 <aside id="contents" class="no-toc">
 	<ul class="index">
