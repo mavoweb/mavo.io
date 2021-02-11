@@ -18,14 +18,7 @@
 		<meta property="upcoming" content="[date > $now]" />
 		<h1 mv-multiple property="talk">
 			<span property="title" mv-default>TBD</span>
-			<span property class="type">
-				<select>
-					<option selected>Talk</option>
-					<option>Keynote</option>
-					<option>Workshop</option>
-					<option>Panel</option>
-				</select>
-			</span>
+			<span property class="type" mv-edit="#talk-type"></span>
 			<a property class="video" target="_blank">Video</a>
 			<a property class="slides" target="_blank">Slides</a>
 		</h1>
@@ -50,6 +43,13 @@
 	<select id="countries">
 		<option value="online">Online</option>
 		<option value="[code]" property="country" mv-multiple typeof>[name]</option>
+	</select>
+
+	<select id="talk-type">
+		<option selected>Talk</option>
+		<option>Keynote</option>
+		<option>Workshop</option>
+		<option>Panel</option>
 	</select>
 </div>
 
