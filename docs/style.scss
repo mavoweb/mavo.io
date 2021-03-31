@@ -587,3 +587,31 @@ table.attributes {
 	border-radius: .25em;
 	text-shadow: 0 -1px 1px white;
 }
+
+
+section.mv-logged-out p {
+	max-width: 100%;
+	margin-left: auto;
+	padding: 0.5em 0.8em;
+	text-align: right;
+	background-color: whitesmoke;
+	border-radius: 0.3em;
+
+	.mv-login {
+		text-decoration: none;
+	}
+
+	.mv-login:not(:hover) {
+		color: hsl(210, 10%, 70%);
+	}
+
+	.mv-login::before {
+		content: "✎ ";
+	}
+}
+
+@media (max-width: 1150px) {
+	section.mv-logged-out {
+		width: calc(100% - 2rem);
+	}
+}
