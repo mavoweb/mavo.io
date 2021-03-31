@@ -507,4 +507,22 @@ table.attributes td:nth-last-child(2) {
   border-radius: .25em;
   text-shadow: 0 -1px 1px white; }
 
+section.mv-logged-out p {
+  max-width: 100%;
+  margin-left: auto;
+  padding: 0.5em 0.8em;
+  text-align: right;
+  background-color: whitesmoke;
+  border-radius: 0.3em; }
+  section.mv-logged-out p .mv-login {
+    text-decoration: none; }
+  section.mv-logged-out p .mv-login:not(:hover) {
+    color: #abb3ba; }
+  section.mv-logged-out p .mv-login::before {
+    content: "✎ "; }
+
+@media (max-width: 1150px) {
+  section.mv-logged-out {
+    width: calc(100% - 2rem); } }
+
 /*# sourceMappingURL=style.css.map */
