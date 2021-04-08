@@ -150,6 +150,12 @@
 			"link": "Properties"
 		},
 		{
+			"name": "mv-edit-type",
+			"on": "Properties",
+			"purpose": "Customize whether a property is edited via a popup or not.",
+			"link": "Properties"
+		},
+		{
 			"name": "mv-mode",
 			"purpose": "Control whether a property is in read or edit mode independently of the mode of the rest of the Mavo app.",
 			"live": "yes",
