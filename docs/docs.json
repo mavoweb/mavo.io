@@ -197,6 +197,12 @@
 					"content": "In some cases, you don’t want to entirely replace the element used for editing by default, but merely to set a few attributes on it. For example, to change an `<input>` type, or to add autocomplete via `<datalist>`. For that, you can use `mv-editor-attributeName=\"value\"` and `attributeName=\"value\"` will be set on the default editing control.\n\n##### Example\n\nEdit the country and type \"United\" to see a list of suggestions:\n\n```html\nI’m from\n<span property=\"country\" mv-editor-list=\"countries2\">Greece</span>\n\n<div>\n\t<datalist id=\"countries2\">\n\t\t<option>Greece</option>\n\t\t<option>United Kingdom</option>\n\t\t<option>United States</option>\n\t</datalist>\n</div>\n```\n\nNote: In versions of Mavo up to 0.2.3 you will need to use `mv-edit-*` attributes instead of `mv-editor-*` attributes."
 				},
 				{
+					"id": "mv-edit-type",
+					"advanced": false,
+					"title": "The mv-edit-type attribute",
+					"content": "Mavo does its best to decide how a property should be edited: Either via the editor replacing the contents of the property element for the duration of editing or via a popup. In some cases, you may need to correct Mavo's assumption. For that, you can use the `mv-edit-type` attribute. Its possible values are `auto`, `inline`, `popup`, and `self`.\n\n* Use `mv-edit-type=\"auto\"` to let Mavo decide what best suits your needs: A nested editor or a popup. This is the default value\n* Use `mv-edit-type=\"inline\"` to use an editor nested in the property element\n* Use `mv-edit-type=\"popup\"` to edit a property via a popup\n* Use `mv-edit-type=\"self\"` for cases where the editing happens via changes on the element itself, like in form elements or in `<meter>`.\n\n##### Example\n\nEdit properties to see the difference between default and customized behavior:\n\n```html\n<h2>Default</h2>\n<span property=\"num\" mv-editor-type=\"range\">50</span>\n<time datetime=\"15:00\" property=\"date\"></time>\n\n<h2>Customized via <code>mv-edit-type</code></h2>\n<span property=\"numCustom\" mv-editor-type=\"range\" mv-edit-type=\"popup\">50</span>\n<time datetime=\"15:00\" property=\"dateCustom\" mv-edit-type=\"inline\"></time>\n```\n\nWarning: In versions of Mavo up to 0.2.3 this attribute may have another meaning. See [The mv-editor-* family of attributes](/docs/properties#mv-editor-star) for details."
+				},
+				{
 					"id": "mv-default",
 					"advanced": false,
 					"title": "Default values: The mv-default attribute",
