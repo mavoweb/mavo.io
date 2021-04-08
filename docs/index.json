@@ -153,6 +153,7 @@
 			"name": "mv-edit-type",
 			"on": "Properties",
 			"purpose": "Customize whether a property is edited via a popup or not.",
+			"path": "/docs/properties/#mv-edit-type",
 			"link": "Properties"
 		},
 		{
