@@ -551,6 +551,12 @@
 					"advanced": true,
 					"title": "Running JS when things are ready",
 					"content": "Mavo's API heavily uses promises, and tries to have them available as early as possible. Here are some useful ones for deferring code until things are ready:\n\n| Promise | Resolves when |\n|------|------|\n| [`Mavo.ready`](/docs/api/#Mavo.ready) | All dependencies (e.g. plugins and polyfills) have loaded, but apps have not been initialized yet |\n| [`Mavo.inited`](/docs/api/#Mavo.inited) | Apps have been initialized. You can now use `Mavo.all` to get a reference to them. |\n| [`mavo.treeBuilt`](/docs/api/#Mavo#treeBuilt) | The Mavo tree has been created, but data has not necessarily been rendered yet |\n| [`mavo.dataLoaded`](/docs/api/#Mavo#dataLoaded) | Data has been loaded and rendered. Similar to the `mv-load` event. |\n\nFor example, to render some new data only after the first app's data has been rendered, you could do something like:\n\n```js\n(async () => {\n\tawait Mavo.inited;\n\tawait Mavo.all[0].dataLoaded;\n\tMavo.all[0].render({\"foo\": [\"e\", \"f\", \"g\", \"h\", \"i\", \"j\"]});\n})();\n```\n\nor:\n\n```js\nMavo.inited\n\t.then(() => Mavo.all[0].dataLoaded)\n\t.then(() => Mavo.all[0].render({\"foo\": [\"e\", \"f\", \"g\", \"h\", \"i\", \"j\"]}));\n```"
+				},
+				{
+					"id": "transforming-root-data",
+					"advanced": true,
+					"title": "Transforming root data before render and/or save",
+					"content": "Sometimes you need to transform the data your app works with before it's rendered and/or stored. The current [Mavo hook system](https://mavo.io/docs/plugins#hooks) lets you solve this task with ease.\n\nTo apply any transformations to the root data before they are rendered, use the `render-start` hook. To undo any previously performed transformations, use the `getdata-end` hook.\n\n# Example\n\nSuppose your app's name is `myMavoApp`. To add a new property `foo` to its root data and assign it the value of `1`, you could do something like:\n\n```js\nMavo.hooks.add(\"render-start\", function(env) {\n\tif (this.id !== \"myMavoApp\") {\n\t\treturn;\n\t}\n\n\t// Transform env.data before rendering\n\tenv.data.foo = 1;\n});\n```\n\nTo get rid of the previously added property `foo` before the data is stored, you could do the following:\n\n```js\nMavo.hooks.add(\"getdata-end\", function(env) {\n\tif (this.id !== \"myMavoApp\") {\n\t\treturn;\n\t}\n\n\t// Undo env.data transformation before saving\n\tdelete env.data.foo;\n});\n```\n"
 				}
 			],
 			"language": "markup"
