@@ -66,11 +66,7 @@
 			<thead>
 				<tr>
 					<td>Description</td>
-					<td>Amount (<span property="currency"><select>
-						<option>$</option>
-						<option>€</option>
-						<option>£</option>
-					</select></span>)</td>
+					<td>Amount (<span property="currency" mv-editor="#currencies"></span>)</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -96,6 +92,14 @@
 		<div property="notes"></div>
 	</section>
 </article>
+
+<div hidden>
+	<select id="currencies">
+		<option>$</option>
+		<option>€</option>
+		<option>£</option>
+	</select>
+</div>
 
 <script src="/js/demo.js"></script>
 </body>
