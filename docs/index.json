@@ -134,19 +134,26 @@
 			"link": "Collections"
 		},
 		{
-			"name": "mv-edit",
+			"name": "mv-editor",
 			"on": "Properties",
 			"purpose": "Customize how an element is edited by linking to another element, anywhere in the page.",
 			"live": "initially",
-			"path": "/docs/properties/#mv-edit",
+			"path": "/docs/properties/#mv-editor",
 			"link": "Properties"
 		},
 		{
-			"name": "mv-edit-*",
+			"name": "mv-editor-*",
 			"on": "Properties",
 			"purpose": "Any attributes set this way will be copied over to the property's editor.",
 			"live": "initially",
-			"path": "/docs/properties/#mv-edit-star",
+			"path": "/docs/properties/#mv-editor-star",
+			"link": "Properties"
+		},
+		{
+			"name": "mv-edit-type",
+			"on": "Properties",
+			"purpose": "Customize whether a property is edited via a popup or not.",
+			"path": "/docs/properties/#mv-edit-type",
 			"link": "Properties"
 		},
 		{
