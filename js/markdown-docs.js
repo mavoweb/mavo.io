@@ -26,7 +26,7 @@ document.addEventListener("mv-markdown-render", function(evt) {
 	$$(selector, evt.target).forEach(function createLiveDemo(code) {
 		var html = code.textContent;
 		var pre = code.parentNode;
-		var mavoURL = "https://dev.mavo.io/dist";
+		var mavoURL = "https://get.mavo.io";
 		var css = "";
 
 		var styleTag = /<style>([\S\s]+?)<\/style>/ig, match;
