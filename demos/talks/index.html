@@ -18,7 +18,7 @@
 		<meta property="upcoming" content="[date > $now]" />
 		<h1 mv-multiple property="talk">
 			<span property="title" mv-default>TBD</span>
-			<span property class="type" mv-editor="#talk-type"></span>
+			<span property class="type" mv-edit="#talk-type"></span>
 			<a property class="video" target="_blank">Video</a>
 			<a property class="slides" target="_blank">Slides</a>
 		</h1>
@@ -30,7 +30,7 @@
 		<p class="date"><time property="date"></time></p>
 		<address class="flag-[country]">
 			<span property="city"></span>,
-			<span property="country" mv-editor="#countries"></span>
+			<span property="country" mv-edit="#countries"></span>
 		</address>
 		<p class="comment" property></p>
 		<p class="comment" style="display: [iff(feedback, block, none)]">
