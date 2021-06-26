@@ -34,7 +34,7 @@ body {
 	}
 
 	// Restaurant
-	& > article {
+	& article[property="restaurant"] {
 		$padding: 2.5em;
 		font-size: 120%;
 
@@ -139,7 +139,7 @@ body {
 			}
 
 			// Visit
-			& > article {
+			& article[property="visit"] {
 				$padding: 1em;
 
 				padding: $padding;
