@@ -34,7 +34,7 @@ body {
 	}
 }
 
-[property=painting],
+a[property=painting],
 .mv-add-painting {
 	display: inline-block;
 	vertical-align: top;
@@ -47,8 +47,11 @@ body {
 		height: 13rem;
 		object-fit: cover;
 		background: #ddd;
-		background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" stroke="black" stroke-opacity=".3">
-			<line x2="100" y2="100" /><line x1="100" y2="100" /></svg>')
+
+		&.mv-empty {
+			background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" stroke="black" stroke-opacity=".3">
+				<line x2="100" y2="100" /><line x1="100" y2="100" /></svg>');
+		}
 	}
 
 	p {
@@ -98,7 +101,7 @@ body {
 }
 
 @media (max-width: 600px) {
-	html.lite [property=painting] img,
+	html.lite a[property=painting] img,
 	.mv-add-painting {
 		width: 10.5rem;
 		height: 10.5rem;
