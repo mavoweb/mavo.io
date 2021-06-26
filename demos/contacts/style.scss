@@ -67,6 +67,11 @@ details {
 			background: hsla(0,0%,100%,.2);
 		}
 
+		&::marker {
+			// Hide disclosure marker in Firefox
+			content: "";
+		}
+
 		&::-webkit-details-marker {
 		  display: none
 		}
@@ -91,11 +96,10 @@ details {
 			box-shadow: 0 0 0 .2em hsla(0,0%,100%,.3);
 		}
 
-		img[src=""],
-		img:not([src]) {
+		img[property].mv-empty {
 			// Default image
 			background: white;
-			content: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" fill="%23666">\
+			background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" fill="%23666">\
 						<circle cx="50" cy="40" r="22" />\
 						<circle cx="50" cy="110" r="50" />\
 					</svg>');
