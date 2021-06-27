@@ -62,6 +62,8 @@ body {
     text-decoration: line-through;
     color: gray;
     mix-blend-mode: multiply; }
+    body :checked + [property=taskTitle][mv-mode="edit"] > input.mv-editor {
+      text-decoration: inherit; }
   body input::-webkit-input-placeholder {
     font-style: italic;
     color: #999;
