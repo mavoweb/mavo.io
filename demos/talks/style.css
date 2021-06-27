@@ -76,18 +76,18 @@ h1#past, h1#upcoming {
 		font-weight: normal;
 	}
 
-.talks > article {
+.talks article[property="event"] {
 	padding: .8em 0;
 	border-bottom: 1px solid silver;
 	text-indent: 0;
 	list-style: none;
 }
 
-.talks > article:last-child {
+.talks article[property="event"]:last-child {
 	border-bottom:5px solid #eee;
 }
 
-.talks > article:before {
+.talks article[property="event"]:before {
 	content:none;
 }
 
