@@ -64,7 +64,10 @@ body > header {
   body > header input[type=range] {
     width: 2em; }
   body > header > section {
-    padding: 0 .5em; }
+    padding: 0 .5em;
+    display: flex;
+    gap: 0.2em;
+    align-items: center; }
 
 main {
   flex: 1;
@@ -123,24 +126,24 @@ main > section > h1 {
     .preview svg * {
       transform-box: fill-box; }
 
-[property=segment] {
+article[property=segment] {
   --color: hsl(220, 10%, 50%);
   position: relative;
   margin: .8em 0;
   border: 1px solid var(--color);
   border-radius: .3em;
   background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)) var(--color); }
-  [property=segment].mv-deleted {
+  article[property=segment].mv-deleted {
     padding: 1em; }
-    [property=segment].mv-deleted::before {
+    article[property=segment].mv-deleted::before {
       content: none; }
-  [property=segment] .mv-item-bar {
+  article[property=segment] .mv-item-bar {
     position: static;
     opacity: 1 !important;
     border: 0; }
-    [property=segment] .mv-item-bar:not(:hover):not(:focus) {
+    article[property=segment] .mv-item-bar:not(:hover):not(:focus) {
       mix-blend-mode: multiply; }
-  [property=segment] h1 {
+  article[property=segment] h1 {
     display: flex;
     align-items: center;
     padding: .5em;
@@ -148,10 +151,10 @@ main > section > h1 {
     margin: 0;
     background: var(--color);
     color: rgba(255, 255, 255, 0.8); }
-    [property=segment] h1 input[type=number] {
+    article[property=segment] h1 input[type=number] {
       border-color: rgba(255, 255, 255, 0.5);
       color: white; }
-  [property=segment]::before {
+  article[property=segment]::before {
     content: attr(data-segtype);
     min-width: 1em;
     position: absolute;
@@ -165,24 +168,24 @@ main > section > h1 {
     font-size: 120%;
     text-align: center;
     line-height: 1; }
-  [property=segment].absolute::before {
+  article[property=segment].absolute::before {
     text-transform: uppercase; }
-  [property=segment][data-segtype="m"] {
+  article[property=segment][data-segtype="m"] {
     --color: hsl(90, 50%, 45%); }
-  [property=segment][data-segtype="l"] {
+  article[property=segment][data-segtype="l"] {
     --color: #f47; }
-  [property=segment][data-segtype="h"] {
+  article[property=segment][data-segtype="h"] {
     --color: hsl(210, 40%, 50%); }
-  [property=segment][data-segtype="v"] {
+  article[property=segment][data-segtype="v"] {
     --color: hsl(10, 70%, 45%); }
-  [property=segment][data-segtype="a"] {
+  article[property=segment][data-segtype="a"] {
     --color: hsl(170, 40%, 50%); }
-  [property=segment] label {
+  article[property=segment] label {
     margin-right: .5em; }
-  [property=segment] input[type=number] {
+  article[property=segment] input[type=number] {
     border-color: white;
     background: rgba(255, 255, 255, 0.3); }
-  [property=segment] > div {
+  article[property=segment] > div {
     padding: 1em; }
 
 input[type=number] {

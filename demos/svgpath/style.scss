@@ -102,6 +102,9 @@ body > header {
 
 	& > section {
 		padding: 0 .5em;
+		display: flex;
+		gap: 0.2em;
+		align-items: center;
 	}
 }
 
@@ -204,7 +207,7 @@ main > section {
 	}
 }
 
-[property=segment] {
+article[property=segment] {
 	--color: hsl(220, 10%, 50%);
 	position: relative;
 	margin: .8em 0;
