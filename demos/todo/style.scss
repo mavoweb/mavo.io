@@ -63,6 +63,10 @@ body {
 		text-decoration: line-through;
 		color: gray;
 		mix-blend-mode: multiply;
+
+		&[mv-mode="edit"] > input.mv-editor { // Fix for Firefox
+			text-decoration: inherit;
+		}
 	}
 
 	input::-webkit-input-placeholder {

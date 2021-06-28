@@ -146,14 +146,14 @@ article {
       background: #fff0f0;
       color: maroon; }
 
-main > .mv-add {
+main .mv-add-decision {
   padding: .4em .6em;
   border: 1px solid rgba(0, 0, 0, 0.05);
   background: #757c8a;
   color: white;
   font-size: 120%;
   border-radius: .2em; }
-  main > .mv-add:hover {
+  main .mv-add-decision:hover {
     background: #5e636e; }
 
 footer {

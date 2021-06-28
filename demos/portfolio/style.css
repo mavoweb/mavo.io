@@ -21,22 +21,24 @@ body {
     font-weight: 300;
     color: rgba(0, 0, 0, 0.6); }
 
-[property=painting],
+a[property=painting],
 .mv-add-painting {
   display: inline-block;
   vertical-align: top;
   margin: .3rem;
   position: relative; }
-  [property=painting] img,
+  a[property=painting] img,
   .mv-add-painting img {
     display: block;
     width: 13rem;
     height: 13rem;
     -o-object-fit: cover;
     object-fit: cover;
-    background: #ddd;
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" stroke="black" stroke-opacity=".3">\a 			<line x2="100" y2="100" /><line x1="100" y2="100" /></svg>'); }
-  [property=painting] p,
+    background: #ddd; }
+    a[property=painting] img.mv-empty,
+    .mv-add-painting img.mv-empty {
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" stroke="black" stroke-opacity=".3">\a 				<line x2="100" y2="100" /><line x1="100" y2="100" /></svg>'); }
+  a[property=painting] p,
   .mv-add-painting p {
     position: absolute;
     bottom: 0;
@@ -49,25 +51,25 @@ body {
     backdrop-filter: blur(4px);
     color: white;
     transition: .2s bottom; }
-    [property=painting] p ::-webkit-input-placeholder,
+    a[property=painting] p ::-webkit-input-placeholder,
     .mv-add-painting p ::-webkit-input-placeholder {
       color: rgba(255, 255, 255, 0.6); }
-    [property=painting] p ::-moz-placeholder,
+    a[property=painting] p ::-moz-placeholder,
     .mv-add-painting p ::-moz-placeholder {
       color: rgba(255, 255, 255, 0.6); }
-    [property=painting] p :-ms-input-placeholder,
+    a[property=painting] p :-ms-input-placeholder,
     .mv-add-painting p :-ms-input-placeholder {
       color: rgba(255, 255, 255, 0.6); }
-    [property=painting] p ::-ms-input-placeholder,
+    a[property=painting] p ::-ms-input-placeholder,
     .mv-add-painting p ::-ms-input-placeholder {
       color: rgba(255, 255, 255, 0.6); }
-    [property=painting] p ::placeholder,
+    a[property=painting] p ::placeholder,
     .mv-add-painting p ::placeholder {
       color: rgba(255, 255, 255, 0.6); }
-  [property=painting]:not([mv-mode="edit"]),
+  a[property=painting]:not([mv-mode="edit"]),
   .mv-add-painting:not([mv-mode="edit"]) {
     overflow: hidden; }
-    [property=painting]:not([mv-mode="edit"]):not(:hover) p,
+    a[property=painting]:not([mv-mode="edit"]):not(:hover) p,
     .mv-add-painting:not([mv-mode="edit"]):not(:hover) p {
       bottom: -6em; }
 
@@ -88,7 +90,7 @@ body {
     color: white; }
 
 @media (max-width: 600px) {
-  html.lite [property=painting] img,
+  html.lite a[property=painting] img,
   .mv-add-painting {
     width: 10.5rem;
     height: 10.5rem; } }

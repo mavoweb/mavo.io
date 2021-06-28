@@ -45,6 +45,8 @@ details {
     outline: none; }
     details > summary:hover {
       background: rgba(255, 255, 255, 0.2); }
+    details > summary::marker {
+      content: ""; }
     details > summary::-webkit-details-marker {
       display: none; }
     details > summary::before {
@@ -68,10 +70,9 @@ details {
       -o-object-fit: cover;
       object-fit: cover;
       box-shadow: 0 0 0 0.2em rgba(255, 255, 255, 0.3); }
-    details > summary img[src=""],
-    details > summary img:not([src]) {
+    details > summary img[property].mv-empty {
       background: white;
-      content: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" fill="%23666">						<circle cx="50" cy="40" r="22" />						<circle cx="50" cy="110" r="50" />					</svg>'); }
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" fill="%23666">						<circle cx="50" cy="40" r="22" />						<circle cx="50" cy="110" r="50" />					</svg>'); }
     details > summary h1 {
       margin: 0;
       font-size: 150%;

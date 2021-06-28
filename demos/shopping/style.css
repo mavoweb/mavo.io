@@ -36,7 +36,7 @@ ul {
 	padding: 0;
 }
 
-[property=item] {
+li[property=item] {
 	display: flex;
 	align-items: center;
 	list-style: none;
