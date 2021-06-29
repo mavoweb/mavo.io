@@ -1,28 +1,30 @@
 [property=post] h1,
 .blog-post h1 {
-  margin: 0; }
-
+  margin: 0;
+}
 [property=post] header,
 .blog-post header {
-  font-size: 150%; }
-
+  font-size: 150%;
+}
 [property=post] footer,
 [property=post] .subtitle,
 .blog-post footer,
 .blog-post .subtitle {
   font-size: 70%;
   font-weight: bold;
-  color: #737b8c; }
-  [property=post] footer a,
-  [property=post] .subtitle a,
-  .blog-post footer a,
-  .blog-post .subtitle a {
-    color: inherit; }
-  [property=post] footer .avatar,
-  [property=post] .subtitle .avatar,
-  .blog-post footer .avatar,
-  .blog-post .subtitle .avatar {
-    max-height: 1.4em;
-    vertical-align: -.3em; }
-
+  color: #737b8c;
+}
+[property=post] footer a,
+[property=post] .subtitle a,
+.blog-post footer a,
+.blog-post .subtitle a {
+  color: inherit;
+}
+[property=post] footer .avatar,
+[property=post] .subtitle .avatar,
+.blog-post footer .avatar,
+.blog-post .subtitle .avatar {
+  max-height: 1.4em;
+  vertical-align: -0.3em;
+}
 /*# sourceMappingURL=style.css.map */

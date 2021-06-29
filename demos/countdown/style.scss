@@ -33,12 +33,35 @@ p {
 }
 
 article[property=event] {
+	position: relative;
 	list-style: none;
-	padding: .5em .5em;
+	padding: .5rem;
 	background: white;
 	margin: .5em 0;
 	box-shadow: 0 .05em .05em hsla(220, 10%, 50%, .5);
 	text-align: center;
+
+	&::before {
+		position: absolute;
+		top: .5rem;
+		right: .5rem;
+		padding: .2em .5em;
+		text-transform: uppercase;
+		border-radius: .2em;
+		color: white;
+		font-size: smaller;
+		font-weight: bold;
+	}
+
+	&.past::before {
+		content: "Past";
+		background: hsl(220 50% 50%);
+	}
+
+	&.future::before {
+		content: "future";
+		background: hsl(280 50% 50%);
+	}
 }
 
 .duration {

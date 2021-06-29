@@ -26,6 +26,7 @@
     "gulp-replace": "^1",
     "gulp-sass": "^4.1.0",
     "gulp-sourcemaps": "^2.6.5",
-    "gulp-util": "^3"
+    "gulp-util": "^3",
+    "sass": "^1.35.1"
   }
 }

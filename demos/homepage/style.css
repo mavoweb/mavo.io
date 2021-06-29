@@ -1,28 +1,32 @@
 @font-face {
-  font-family: 'Mavo Icons';
+  font-family: "Mavo Icons";
   src: url("https://mavo.io/css/fonts/mavo-icons.woff") format("woff");
   font-weight: normal;
-  font-style: normal; }
-
+  font-style: normal;
+}
 body {
   padding: 1em;
   max-width: 90vw;
   margin: auto;
   text-align: center;
   box-shadow: none;
-  font: 100%/1.5 Roboto, "Helvetica Neue", sans-serif; }
+  font: 100%/1.5 Roboto, "Helvetica Neue", sans-serif;
+}
 
 a {
-  text-decoration: none; }
+  text-decoration: none;
+}
 
 h1 {
-  font: 250%/1 Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif; }
+  font: 250%/1 Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
+}
 
 img[property=image] {
   display: block;
-  margin: 0 auto .5em;
+  margin: 0 auto 0.5em;
   max-width: 5em;
-  border-radius: 50%; }
+  border-radius: 50%;
+}
 
 p[property=description] {
   text-align: justify;
@@ -32,33 +36,39 @@ p[property=description] {
   -webkit-font-kerning: normal;
   font-kerning: normal;
   max-width: 30em;
-  margin: 1em auto; }
-  p[property=description] a {
-    color: #4095bf; }
+  margin: 1em auto;
+}
+p[property=description] a {
+  color: #4095bf;
+}
 
 .links {
-  margin: 2em 0; }
-  .links a {
-    display: inline-block;
-    width: 1.5em;
-    padding: .3em;
-    margin: .2em;
-    background: var(--color);
-    color: white;
-    font: 150%/1.5 Mavo Icons;
-    border-radius: 50%;
-    text-align: center; }
-    .links a:hover, .links a:focus {
-      color: var(--color);
-      background: white;
-      box-shadow: 0 0 0 0.2em var(--color);
-      text-decoration: none; }
-  .links a.twitter {
-    --color: #1da1f2; }
-  .links a.facebook {
-    --color: #3b5998
-	; }
-  .links a.wikipedia {
-    --color: #636466; }
-
+  margin: 2em 0;
+}
+.links a {
+  display: inline-block;
+  width: 1.5em;
+  padding: 0.3em;
+  margin: 0.2em;
+  background: var(--color);
+  color: white;
+  font: 150%/1.5 Mavo Icons;
+  border-radius: 50%;
+  text-align: center;
+}
+.links a:hover, .links a:focus {
+  color: var(--color);
+  background: white;
+  box-shadow: 0 0 0 0.2em var(--color);
+  text-decoration: none;
+}
+.links a.twitter {
+  --color: #1da1f2;
+}
+.links a.facebook {
+  --color: #3b5998 ;
+}
+.links a.wikipedia {
+  --color: #636466;
+}
 /*# sourceMappingURL=style.css.map */

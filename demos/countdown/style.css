@@ -1,45 +1,73 @@
 html {
   background: #f4f4f6;
-  min-height: 100vh; }
+  min-height: 100vh;
+}
 
 body {
   font: 120%/1.5 Helvetica Neue, sans-serif;
   padding: 0;
   max-width: 50rem;
-  margin: 1em auto; }
+  margin: 1em auto;
+}
 
 button {
   font: inherit;
   font-weight: bold;
   background: #e3e5e8;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 0 .4em;
-  cursor: pointer; }
+  padding: 0 0.4em;
+  cursor: pointer;
+}
 
 fieldset {
   border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: .3em; }
+  border-radius: 0.3em;
+}
 
 main {
-  margin-top: 1em; }
+  margin-top: 1em;
+}
 
 p {
-  margin: 0; }
+  margin: 0;
+}
 
 article[property=event] {
+  position: relative;
   list-style: none;
-  padding: .5em .5em;
+  padding: 0.5rem;
   background: white;
-  margin: .5em 0;
+  margin: 0.5em 0;
   box-shadow: 0 0.05em 0.05em rgba(115, 123, 140, 0.5);
-  text-align: center; }
+  text-align: center;
+}
+article[property=event]::before {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.2em 0.5em;
+  text-transform: uppercase;
+  border-radius: 0.2em;
+  color: white;
+  font-size: smaller;
+  font-weight: bold;
+}
+article[property=event].past::before {
+  content: "Past";
+  background: #406abf;
+}
+article[property=event].future::before {
+  content: "future";
+  background: #9540bf;
+}
 
 .duration {
   display: block;
-  font-size: 150%; }
+  font-size: 150%;
+}
 
 .mv-add-event {
   margin-top: 1em;
-  font-size: 120%; }
-
+  font-size: 120%;
+}
 /*# sourceMappingURL=style.css.map */

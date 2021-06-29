@@ -4,56 +4,70 @@ body > header {
   text-align: center;
   -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 5em), 0% 100%);
   clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 5em), 0% 100%);
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.5)), url(img/header.jpg) bottom/cover; }
-  body > header a {
-    color: inherit; }
-  body > header .masthead {
-    display: flex;
-    justify-content: space-between; }
-    body > header .masthead .logo img {
-      display: block; }
-      body > header .masthead .logo img:not(:hover) {
-        -webkit-filter: grayscale(100%) brightness(400%);
-        filter: grayscale(100%) brightness(400%); }
-  body > header .promo {
-    padding: 5em;
-    padding: 3em calc(50% - 16em) 5em;
-    font-size: 150%; }
-    body > header .promo .tagline {
-      font-size: 280%;
-      line-height: 1;
-      margin-bottom: 0;
-      font-weight: 100; }
-    body > header .promo p {
-      -webkit-hyphens: manual;
-      -ms-hyphens: manual;
-      hyphens: manual;
-      font-weight: 500; }
-    body > header .promo .button:not(:hover) {
-      background: white;
-      color: black;
-      mix-blend-mode: screen; }
-    body > header .promo .button:hover {
-      background: #82cf17;
-      color: white; }
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.5)), url(img/header.jpg) bottom/cover;
+}
+body > header a {
+  color: inherit;
+}
+body > header .masthead {
+  display: flex;
+  justify-content: space-between;
+}
+body > header .masthead .logo img {
+  display: block;
+}
+body > header .masthead .logo img:not(:hover) {
+  -webkit-filter: grayscale(100%) brightness(400%);
+  filter: grayscale(100%) brightness(400%);
+}
+body > header .promo {
+  padding: 5em;
+  padding: 3em calc(50% - 16em) 5em;
+  font-size: 150%;
+}
+body > header .promo .tagline {
+  font-size: 280%;
+  line-height: 1;
+  margin-bottom: 0;
+  font-weight: 100;
+}
+body > header .promo p {
+  -webkit-hyphens: manual;
+  -ms-hyphens: manual;
+  hyphens: manual;
+  font-weight: 500;
+}
+body > header .promo .button:not(:hover) {
+  background: white;
+  color: black;
+  mix-blend-mode: screen;
+}
+body > header .promo .button:hover {
+  background: #82cf17;
+  color: white;
+}
 
 body > header nav iframe {
-  display: inline-block; }
-  body > header nav iframe:not(:hover) {
-    mix-blend-mode: screen;
-    -webkit-filter: invert(100%);
-    filter: invert(100%); }
-  body > header nav iframe:hover, body > header nav iframe:focus {
-    mix-blend-mode: luminosity; }
+  display: inline-block;
+}
+body > header nav iframe:not(:hover) {
+  mix-blend-mode: screen;
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+body > header nav iframe:hover, body > header nav iframe:focus {
+  mix-blend-mode: luminosity;
+}
 
 #what ul {
   font-size: 150%;
   -webkit-hyphens: none;
   -ms-hyphens: none;
-  hyphens: none; }
-
+  hyphens: none;
+}
 #what a {
-  font-weight: 400; }
+  font-weight: 400;
+}
 
 #pros {
   display: flex;
@@ -65,71 +79,82 @@ body > header nav iframe {
   -webkit-clip-path: polygon(0% 0%, 100% 4em, 100% calc(100% - 7em), 0% 100%);
   clip-path: polygon(0% 0%, 100% 4em, 100% calc(100% - 7em), 0% 100%);
   font-weight: 400;
-  margin: 0 -2rem; }
-  @media (max-width: 1150px) {
-    #pros {
-      margin: 0 -1rem; } }
+  margin: 0 -2rem;
+}
+@media (max-width: 1150px) {
+  #pros {
+    margin: 0 -1rem;
+  }
+}
+#pros article {
+  box-sizing: border-box;
+  padding: 0.4em;
+}
+@media (min-width: 800px) {
   #pros article {
-    box-sizing: border-box;
-    padding: .4em; }
-    @media (min-width: 800px) {
-      #pros article {
-        width: 50%; } }
-    #pros article h1 {
-      margin: 0;
-      color: white;
-      font: bold 150%/1 Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif; }
-      #pros article h1::before {
-        content: "✓";
-        display: inline-block;
-        vertical-align: text-bottom;
-        margin-right: .3em;
-        width: 1em;
-        background: white;
-        color: #6ec9f7;
-        border-radius: 50%;
-        text-align: center;
-        font-size: 135%;
-        line-height: 1; }
-    #pros article a, #pros article strong {
-      font-weight: 900; }
-    #pros article a {
-      color: inherit;
-      text-decoration: underline;
-      -webkit-text-decoration-color: rgba(0, 0, 0, 0.3);
-      text-decoration-color: rgba(0, 0, 0, 0.3); }
+    width: 50%;
+  }
+}
+#pros article h1 {
+  margin: 0;
+  color: white;
+  font: bold 150%/1 Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
+}
+#pros article h1::before {
+  content: "✓";
+  display: inline-block;
+  vertical-align: text-bottom;
+  margin-right: 0.3em;
+  width: 1em;
+  background: white;
+  color: #6ec9f7;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 135%;
+  line-height: 1;
+}
+#pros article a, #pros article strong {
+  font-weight: 900;
+}
+#pros article a {
+  color: inherit;
+  text-decoration: underline;
+  -webkit-text-decoration-color: rgba(0, 0, 0, 0.3);
+  text-decoration-color: rgba(0, 0, 0, 0.3);
+}
 
-.manual.example [mv-app="shopping"] h1 {
+.manual.example [mv-app=shopping] h1 {
   margin: 0;
   color: #668899;
   font: bold 200% Helvetica Neue, sans-serif;
-  letter-spacing: -.04em; }
-
-.manual.example [mv-app="shopping"] ul {
-  padding: 0; }
-
-.manual.example [mv-app="shopping"] li {
-  padding: .5em; }
-
-.manual.example [mv-app="shopping"] li:not(.mv-deleted) {
+  letter-spacing: -0.04em;
+}
+.manual.example [mv-app=shopping] ul {
+  padding: 0;
+}
+.manual.example [mv-app=shopping] li {
+  padding: 0.5em;
+}
+.manual.example [mv-app=shopping] li:not(.mv-deleted) {
   display: flex;
-  background: #f6f8f9; }
-  .manual.example [mv-app="shopping"] li:not(.mv-deleted):nth-child(odd) {
-    background: #edf1f3; }
-
-.manual.example [mv-app="shopping"] :checked + span {
+  background: #f6f8f9;
+}
+.manual.example [mv-app=shopping] li:not(.mv-deleted):nth-child(odd) {
+  background: #edf1f3;
+}
+.manual.example [mv-app=shopping] :checked + span {
   font-style: italic;
   text-decoration: line-through;
-  color: gray; }
-
-.manual.example [mv-app="shopping"] label {
-  flex: 1; }
-
-.manual.example [mv-app="shopping"] .mv-item-bar.mv-ui {
+  color: gray;
+}
+.manual.example [mv-app=shopping] label {
+  flex: 1;
+}
+.manual.example [mv-app=shopping] .mv-item-bar.mv-ui {
   position: static;
   pointer-events: auto;
   opacity: 1;
   mix-blend-mode: multiply;
-  border: 0; }
-
+  border: 0;
+}
 /*# sourceMappingURL=style.css.map */

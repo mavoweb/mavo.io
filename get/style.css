@@ -2,38 +2,43 @@
   flex: 1;
   border: 1px solid rgba(0, 0, 0, 0.2);
   padding: 1em;
-  margin: .5em;
-  margin-left: 0; }
-
+  margin: 0.5em;
+  margin-left: 0;
+}
 .questions h1 {
-  margin: 0 0 .5em; }
-
+  margin: 0 0 0.5em;
+}
 .questions label {
-  display: block; }
-  .questions label em {
-    font-size: 75%;
-    font-weight: bold;
-    color: #bf4040; }
+  display: block;
+}
+.questions label em {
+  font-size: 75%;
+  font-weight: bold;
+  color: #bf4040;
+}
 
-#releases [property="release"] h2 {
-  display: flex; }
-  #releases [property="release"] h2 > a {
-    flex: 1; }
-
-#releases [property="tag_name"] {
-  margin-right: .5ch; }
-
-#releases [property="created_at"] {
+#releases [property=release] h2 {
+  display: flex;
+}
+#releases [property=release] h2 > a {
+  flex: 1;
+}
+#releases [property=tag_name] {
+  margin-right: 0.5ch;
+}
+#releases [property=created_at] {
   font-style: italic;
-  opacity: .6; }
-  #releases [property="created_at"]::before {
-    content: "on "; }
-
-#releases [property="body"]:empty {
-  display: block; }
-  #releases [property="body"]:empty::before {
-    content: "(No description)";
-    font-style: italic;
-    opacity: .6; }
-
+  opacity: 0.6;
+}
+#releases [property=created_at]::before {
+  content: "on ";
+}
+#releases [property=body]:empty {
+  display: block;
+}
+#releases [property=body]:empty::before {
+  content: "(No description)";
+  font-style: italic;
+  opacity: 0.6;
+}
 /*# sourceMappingURL=style.css.map */

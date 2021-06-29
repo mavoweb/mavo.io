@@ -12,6 +12,8 @@ var fileinclude = require("gulp-file-include");
 var notify = require("gulp-notify");
 var replace = require("gulp-replace");
 
+sass.compiler = require("sass");
+
 gulp.task("sass", function() {
 	return gulp.src(["**/*.scss", "!node_modules/**"])
 		.pipe(sourcemaps.init())
