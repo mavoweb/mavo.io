@@ -1,0 +1,58 @@
+html {
+	display: flex;
+	height: 100%;
+}
+
+body {
+	position: relative;
+	width: fit-content;
+	margin: auto;
+	--dark: rgb(0 0 0 / .1);
+	background: conic-gradient(var(--dark) 25%, transparent 0 50%, var(--dark) 0 75%, transparent 0) hsl(220 10% 95%);
+	background-size: 1em 1em;
+	--p: 50%;
+}
+
+header {
+	margin-bottom: 1em;
+}
+
+input[type=range] {
+	width: 100%;
+}
+
+.image-container {
+	display: grid;
+	grid-template-columns: auto;
+}
+
+	.image-container > img {
+		grid-column: 1;
+		grid-row: 1;
+		max-width: 100vw;
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	.image-container > img:first-of-type,
+	.image-container.flip > img + img {
+		clip-path: polygon(var(--p) 0, 100% 0, 100% 100%, var(--p) 100%);
+	}
+
+	.image-container > img + img,
+	.image-container.flip > img:first-of-type {
+		clip-path: polygon(0 0, var(--p) 0, var(--p) 100%, 0 100%);
+	}
+
+.mv-bar.mv-ui {
+	margin-top: 1em;
+	width: fit-content;
+}
+
+input[type=url] {
+	width: 100%;
+}
+
+.indicator {
+	position: absolute;
+}

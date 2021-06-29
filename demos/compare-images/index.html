@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Compare any two images!</title>
+	<link rel="stylesheet" href="https://get.mavo.io/mavo.css" />
+	<link rel="stylesheet" href="style.css" />
+	<script src="https://get.mavo.io/mavo.es5.min.js" async></script>
+</head>
+<body mv-app="compareImages" style="--p:[divider]%;">
+
+<header>
+	<button mv-action="set(flip, !flip)">↔️</button>
+	<input type="checkbox" property="flip" hidden>
+	<input type="range" property="divider">
+	<span class="indicator">[divider]%</span>
+</header>
+
+<div class="image-container [if(flip, 'flip')]">
+	<img src="" mv-default="[url('image1') or 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/photoshop-face-before.jpg']" alt="" property class="image1" />
+	<img src="" alt="" mv-default="[url('image2') or 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/photoshop-face-after.jpg']" property class="image2" />
+</div>
+
+<div class="mv-ui mv-bar"></div>
+
+<label>
+	Permalink:
+	<input type="url" readonly value="https://[location.host + location.pathname]?image1=[image1]&image2=[image2]">
+</label>
+
+<script src="/js/demo.js"></script>
+
+</body>
+</html>
