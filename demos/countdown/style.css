@@ -1,27 +1,45 @@
-.countdown {
-  margin: 0; }
-  .countdown li {
-    list-style: none;
-    display: inline; }
-  .countdown span {
-    font-weight: bold; }
+html {
+  background: #f4f4f6;
+  min-height: 100vh; }
 
-[property="event"] {
-  padding: 1em;
-  margin: 1em 0;
+body {
+  font: 120%/1.5 Helvetica Neue, sans-serif;
+  padding: 0;
+  max-width: 50rem;
+  margin: 1em auto; }
+
+button {
+  font: inherit;
+  font-weight: bold;
   background: #e3e5e8;
-  text-align: center;
-  font-size: 200%; }
-  [property="event"] p {
-    margin: 0; }
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0 .4em;
+  cursor: pointer; }
 
-[property="name"] {
+fieldset {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: .3em; }
+
+main {
+  margin-top: 1em; }
+
+p {
+  margin: 0; }
+
+article[property=event] {
+  list-style: none;
+  padding: .5em .5em;
+  background: white;
+  margin: .5em 0;
+  box-shadow: 0 0.05em 0.05em rgba(115, 123, 140, 0.5);
+  text-align: center; }
+
+.duration {
+  display: block;
   font-size: 150%; }
 
-.date {
-  font-style: italic; }
-
 .mv-add-event {
-  font-size: 200%; }
+  margin-top: 1em;
+  font-size: 120%; }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,119 +1,43 @@
 <!DOCTYPE html>
-<html lang="en" class="demos single">
+<html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Countdown &bull; Mavo Demos</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://get.mavo.io/stable/mavo.min.css" />
-	<link rel="stylesheet" href="../../css/style.css" />
-	<link rel="icon" href="/favicon.ico">
 
-	<link rel='stylesheet' href='/demos/style.css'><link rel='stylesheet' href='style.css'>
-
-	<script src="https://get.mavo.io/stable/mavo.es5.min.js"></script>
+<meta charset="UTF-8">
+<title>Shopping list</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://get.mavo.io/stable/mavo.css">
+<link rel="stylesheet" href="style.css">
+<script src="https://get.mavo.io/stable/mavo.es5.min.js"></script>
 </head>
+<body mv-app="countdown" mv-mode="edit" mv-storage="local" mv-autosave
+      mv-init='data:application/json,{"event":{"dateTime": "2017-05-16T10:00", "name": "Mavo’s%20release"}}'>
 
+<fieldset>
+	<legend>Settings</legend>
+	<label>
+		Show up to <input property="granularity" type="number" min="1" max="8" value="3"> terms
+	</label>
+</fieldset>
 
-<body>
-
-<header>
-	<h1 class="logo">
-		<a href="/"><img src="../../logo.svg" alt="Mavo"></a>
-	</h1>
-	<nav>
-	<a href="../../docs/primer">Get started</a>
-	<a href="../../docs">Docs</a>
-	<a href="../../demos">Demos</a>
-	<a href="../../faq">FAQ</a>
-	<a href="https://plugins.mavo.io">Plugins</a>
-	<a href="../../get">Get Mavo</a>
-	<a href="https://play.mavo.io">Play!</a>
-	<a class="github-button" href="https://github.com/mavoweb/mavo" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star mavoweb/mavo on GitHub">Star</a>
-</nav>
-
-</header>
-
-
-<h2>Demos</h2>
-
-<section>
-	<h1>Countdown</h1>
-
-
-<main mv-app="countdown" mv-storage="local" mv-mode="edit">
+<main>
 	<article property="event" mv-multiple>
 		[if(difference < 0, 'It has been', 'It is')]
-		<ul class="countdown">
-			<li hidden="[!years]"><span property="years">[years(difference)]</span> years</li>
-			<li hidden="[!months]"><span property="months">[months(difference) mod 12]</span> months</li>
-			<li hidden="[!days]"><span property="days">[days(difference) mod 31]</span> days</li>
-			<li hidden="[!hours]"><span property="hours">[hours(difference) mod 24]</span> hours</li>
-			<li hidden="[!minutes]"><span property="minutes">[minutes(difference) mod 60]</span> minutes</li>
-			<li hidden="[!seconds]"><span property="seconds">[round(difference mod 60)]</span> seconds</li>
-		</ul>
+		<strong class="duration">[duration(abs(difference), granularity)]</strong>
 
 		<p>[if(difference < 0, since, until)]</p>
 
-		<strong property="name">The holidays!</strong>
-		<p class="date"><time property="dateTime" datetime="2017-12-23 08:00"></time></p>
+
+		<p class="date">
+			<strong property="name">Mavo’s release</strong>
+			on
+			<time property="dateTime" datetime="2017-05-16 10:00" mv-default="[$today]"></time>
+		</p>
 		<meta property="difference" content="[dateTime - $now]" />
 	</article>
 </main>
 
-</section>
-
-<footer>
-	<p>
-		Made with &hearts; by <a href="https://lea.verou.me">Lea Verou</a> and <a href="https://github.com/mavoweb/mavo/graphs/contributors">all these awesome people</a>.
-		Proudly hosted by <a href="https://www.netlify.com" class="netlify">Netlify</a>.
-	</p>
-	<article>
-		<h1>Explore</h1>
-
-		<ul>
-			<li><a href="../../docs/primer">Get started</a></li>
-			<li><a href="../../docs">Docs</a></li>
-			<li><a href="../../demos">Demos</a></li>
-			<li><a href="../../faq">FAQ</a></li>
-			<li><a href="https://plugins.mavo.io">Plugins</a></li>
-			<li><a href="../../get">Get Mavo</a></li>
-			<li><a href="https://test.mavo.io">Testsuite</a></li>
-			<li><a href="../../credits">Credits</a></li>
-			<li><a href="../../privacy.html">Privacy Policy</a></li>
-		</ul>
-	</article>
-	<article>
-		<h1>Social Mavo</h1>
-
-		<ul>
-			<li><a href="https://twitter.com/mavoweb">Follow @mavoweb on Twitter</a></li>
-			<li><a href="https://gitter.im/mavoweb">Chat with us on Gitter</a></li>
-			<li>
-				<a href="https://github.com/mavoweb/mavo">Github</a>
-				<a class="github-button" href="https://github.com/mavoweb/mavo" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star mavoweb/mavo on GitHub">Star</a>
-			</li>
-		</ul>
-	</article>
-
-	<a href="https://mit.edu" class="logo"><img src="../../img/logo-mit.svg" alt="MIT" /></a>
-	<a href="https://csail.mit.edu" class="logo"><img src="../../img/logo-csail.svg" alt="CSAIL" /></a>
-</footer>
-
-<script src="../../js/prism.js"></script>
-<script src="/sitewide.js"></script>
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-96752780-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
+<!-- This adds the demo navigation toolbar. It's not actually needed for the demo to work -->
+<script src="/js/demo.js"></script>
 
 </body>
 </html>
-
