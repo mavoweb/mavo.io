@@ -49,7 +49,7 @@
 		{
 			"name": "mv-multiple",
 			"on": "Properties",
-			"purpose": "Makes elements repeatable. Only has meaning on property elements, if there is no `property` attribute, one will be added automatically with a generated name like \"collection\". Elements with this attribute are called **Collections**.\t",
+			"purpose": "Makes elements repeatable. Only has meaning on property elements, if there is no `property` attribute, one will be added automatically with a generated name like \"collection\". Elements with this attribute are called **Collections**.\t\n\n**Note:** Starting with v1.0.x instead of `mv-multiple` on the item collections will be specified with `mv-list` and `mv-list-item` attributes on the collection and collection item respectively.",
 			"path": "/docs/collections",
 			"link": "Collections"
 		}
