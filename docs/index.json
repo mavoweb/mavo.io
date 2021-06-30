@@ -47,9 +47,21 @@
 			"purpose": "The value of this property element is not just an attribute or its text content, but the union of the values of the properties inside it. This is almost always inferred from the structure of your properties and added automatically, but you can use it to force an element to be a group, or to declare the type of the group (e.g. `typeof=\"Person\"`) for better semantic value. Elements with this attribute are called **groups**, objects, or complex properties."
 		},
 		{
+			"name": "mv-list",
+			"on": "Properties",
+			"purpose": "(v0.3.0+) Makes its child element repeatable. Only has meaning on property elements, if there is no `property` attribute, one will be added automatically with a generated name like \"items\". Elements with this attribute are called **Collections**. If its child does not have the `mv-list-item`\tattribute, it will be added (or a wrapper around its children will be created, if there are many).",
+			"path": "/docs/collections",
+			"link": "Collections"
+		},
+		{
+			"name": "mv-list-item",
+			"on": "Properties",
+			"purpose": "(v0.3.0+) Makes elements repeatable. Only has meaning on property elements, if there is no `property` attribute, one will be added automatically with a generated name like \"items\". Elements with this attribute are called **Collection items**. If its parent does not have the `mv-list-item` attribute, it will be added (or a wrapper will be created, depending on your HTML)."
+		},
+		{
 			"name": "mv-multiple",
 			"on": "Properties",
-			"purpose": "Makes elements repeatable. Only has meaning on property elements, if there is no `property` attribute, one will be added automatically with a generated name like \"collection\". Elements with this attribute are called **Collections**.\t",
+			"purpose": "(< v0.2.4) Makes elements repeatable. Only has meaning on property elements, if there is no `property` attribute, one will be added automatically with a generated name like \"collection\". Elements with this attribute are called **Collections**. Deprecated in v0.3.0 in favor of `mv-list` and `mv-list-item` (see above), but markup using is transformed automatically (with a warning).",
 			"path": "/docs/collections",
 			"link": "Collections"
 		}
@@ -144,7 +156,15 @@
 		{
 			"name": "mv-editor-*",
 			"on": "Properties",
-			"purpose": "Any attributes set this way will be copied over to the property's editor.",
+			"purpose": "(v0.2.4+) Any attributes set this way will be copied over to the property's editor.",
+			"live": "initially",
+			"path": "/docs/properties/#mv-editor-star",
+			"link": "Properties"
+		},
+		{
+			"name": "mv-edit-*",
+			"on": "Properties",
+			"purpose": "(v0.2.3-) Any attributes set this way will be copied over to the property's editor.",
 			"live": "initially",
 			"path": "/docs/properties/#mv-editor-star",
 			"link": "Properties"
@@ -152,7 +172,7 @@
 		{
 			"name": "mv-edit-type",
 			"on": "Properties",
-			"purpose": "Customize whether a property is edited via a popup or not.",
+			"purpose": "(v0.2.4+) Customize whether a property is edited via a popup or inline.",
 			"path": "/docs/properties/#mv-edit-type",
 			"link": "Properties"
 		},
