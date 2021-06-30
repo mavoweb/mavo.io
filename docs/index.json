@@ -65,7 +65,7 @@
 		{
 			"name": "mv-list-item",
 			"on": "Properties",
-			"purpose": "(v0.3.0+) Makes elements repeatable. Only has meaning on property elements, if there is no `property` attribute, one will be added automatically with a generated name like \"items\". Elements with this attribute are called **Collection items**. If its parent does not have the `mv-list-item` attribute, it will be added (or a wrapper will be created, depending on your HTML).",
+			"purpose": "(v0.3.0+) Makes elements repeatable. Only has meaning on property elements, if there is no `property` attribute, one will be added automatically with the same property name as its parent `mv-list`. Elements with this attribute are called **Collection items**. If its parent does not have the `mv-list-item` attribute, it will be added (or a wrapper will be created, depending on your HTML).",
 			"path": "/docs/collections",
 			"link": "Collections"
 		},
