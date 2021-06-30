@@ -546,6 +546,24 @@ body > footer {
 	}
 }
 
+.version {
+	display: inline-block;
+	vertical-align: bottom;
+	padding: .25em .6em .2em;
+	border-radius: .3em;
+	--color: #{$blue};
+	color: var(--color);
+	border: 1px solid var(--color);
+	font-size: 70%;
+	font-weight: bold;
+
+	&:hover {
+		background: var(--color);
+		color: white;
+		text-decoration: none;
+	}
+}
+
 figure {
 	counter-increment: figure;
 

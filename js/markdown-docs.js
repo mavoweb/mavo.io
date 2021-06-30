@@ -5,6 +5,25 @@ Mavo.hooks.add("markdown-render-before", function(env) {
 		env.markdown = env.markdown.replace(/^(Note|Tip|Warning): /mig, function($0, $1) {
 			return "<p class=" + $1.toLowerCase() + ">";
 		});
+
+		env.markdown = env.markdown.replace(/\(([<>]?\s*(v\d+\.\d+\.\d+)[-+]?)\)/ig, function($0, all, v) {
+			let title = "";
+
+			if (all.startsWith("<")) {
+				title = `On versions before ${v}`;
+			}
+			else if (all.startsWith(">")) {
+				title = `On versions after ${v}`;
+			}
+			else if (all.endsWith("+")) {
+				title = `On ${v} and later versions`;
+			}
+			else if (all.endsWith("-")) {
+				title = `On ${v} and earlier versions`;
+			}
+
+			return `<a href="https://mavo.io/get/#${v}" target="_blank" title="${title}" class="version">${all}</a>`;
+		});
 	}
 });
 
