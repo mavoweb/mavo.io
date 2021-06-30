@@ -64,7 +64,7 @@
 		},
 		{
 			"name": "mv-action",
-			"purpose": "Run an action that modifies the data when an element is clicked or a form is submitted. (v0.2.0+)",
+			"purpose": "(v0.2.0+) Run an action that modifies the data when an element is clicked or a form is submitted.",
 			"live": "expressions",
 			"path": "/docs/actions",
 			"link": "Actions"
