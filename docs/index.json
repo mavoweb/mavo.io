@@ -159,8 +159,8 @@
 		{
 			"name": "mv-editor",
 			"on": "Properties",
-			"purpose": "Customize how an element is edited by linking to another element, anywhere in the page.",
-			"live": "initially",
+			"purpose": "(v0.2.4+) Customize how an element is edited by linking to another element, anywhere in the page.",
+			"live": "yes",
 			"path": "/docs/properties/#mv-editor",
 			"link": "Properties"
 		},
