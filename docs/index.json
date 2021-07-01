@@ -185,7 +185,8 @@
 			"on": "Properties",
 			"purpose": "(v0.2.4+) Customize whether a property is edited via a popup or inline.",
 			"path": "/docs/properties/#mv-edit-type",
-			"link": "Properties"
+			"link": "Properties",
+			"live": "yes"
 		},
 		{
 			"name": "mv-mode",
