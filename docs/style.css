@@ -160,7 +160,9 @@ h2 .to-contents:hover, h2 .to-contents:focus {
 @media (min-width: 1300px) and (max-width: 1650px) {
   .has-contents body > section,
 .has-contents body > .mv-container > section,
-.has-contents body > div {
+.has-contents body > div,
+.has-contents .mv-add-section {
+    max-width: calc(100vw - 24rem);
     margin-left: 21rem;
     margin-right: auto;
   }
