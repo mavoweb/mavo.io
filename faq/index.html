@@ -35,12 +35,20 @@
 <h2>FAQ</h2>
 
 <div mv-app="faq" mv-storage="https://github.com/mavoweb/mavo.io/faq/questions.json" mv-storage-branch="master" mv-plugins="markdown github-pr">
+	<div class="mv-bar mv-ui" mv-bar="with no-login"></div>
+
 	<section id="[id]" mv-multiple property="questions">
 		<h1 class="h1"><a href="#[id]" property="question" mv-attribute="none">Question</a></h1>
 
 		<div property="answer" class="markdown"></div>
 
 		<meta property="id" mv-default="[idify(question)]">
+	</section>
+
+	<section class="mv-logged-out">
+		<p>
+			<a href="?login" class="mv-login">Edit this page with Mavo</a>
+		</p>
 	</section>
 </div>
 
