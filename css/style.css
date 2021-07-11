@@ -354,6 +354,7 @@ body > div,
 .mv-add-section {
     width: auto;
     max-width: 100vw;
+    margin: initial;
     padding-left: 1rem;
     padding-right: 1rem;
   }

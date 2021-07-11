@@ -175,8 +175,10 @@ h2 .to-contents {
 .has-contents {
 	body > section,
 	body > .mv-container > section,
-	body > div {
+	body > div,
+	.mv-add-section {
 		@media (min-width: 1300px) and (max-width: 1650px) {
+			max-width: calc(100vw - 24rem);
 			margin-left: 21rem;
 			margin-right: auto;
 		}
