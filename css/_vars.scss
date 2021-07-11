@@ -12,6 +12,7 @@ $mono-font: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 
 // Layout
 $content-width: 1050px;
+$content-offset: 21rem;
 
 @mixin run-in {
 	display: inline-block;

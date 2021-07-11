@@ -178,8 +178,8 @@ h2 .to-contents {
 	body > div,
 	.mv-add-section {
 		@media (min-width: 1300px) and (max-width: 1650px) {
-			max-width: calc(100vw - 24rem);
-			margin-left: 21rem;
+			max-width: calc(100vw - #{$content-offset} - 3rem);
+			margin-left: $content-offset;
 			margin-right: auto;
 		}
 	}

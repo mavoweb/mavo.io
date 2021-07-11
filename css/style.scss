@@ -52,6 +52,7 @@
 
 	// Layout
 	--content-width: #{$content-width};
+	--content-offset: #{$content-offset};
 }
 
 body {
@@ -489,6 +490,10 @@ body > footer {
 			opacity: .4;
 			background: url("https://www.netlify.com/img/global/favicon/safari-pinned-tab.svg") no-repeat center / 100% 100%;
 		}
+	}
+
+	@media (min-width: 1300px) and (max-width: 1650px) {
+		padding-left: $content-offset;
 	}
 }
 
