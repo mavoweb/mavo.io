@@ -39,6 +39,7 @@
   --font-heading: Didot, Didot LT STD, Bodoni 72, Bodoni, Bodoni MT, Libre Bodoni, Hoefler Text, Cambria, Georgia, serif;
   --font-mono: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
   --content-width: 1050px;
+  --content-offset: 21rem;
 }
 
 body {
@@ -458,6 +459,11 @@ body > footer .netlify::before {
   margin-right: 0.1em;
   opacity: 0.4;
   background: url("https://www.netlify.com/img/global/favicon/safari-pinned-tab.svg") no-repeat center/100% 100%;
+}
+@media (min-width: 1300px) and (max-width: 1650px) {
+  body > footer {
+    padding-left: 21rem;
+  }
 }
 
 .notice {
