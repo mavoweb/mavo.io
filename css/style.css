@@ -736,6 +736,24 @@ body > section.mv-bar.mv-ui {
   margin: auto;
 }
 
+section.mv-logged-out p {
+  max-width: 100%;
+  margin-left: auto;
+  padding: 0.5em 0.8em;
+  text-align: right;
+  background-color: whitesmoke;
+  border-radius: 0.3em;
+}
+section.mv-logged-out p .mv-login {
+  text-decoration: none;
+}
+section.mv-logged-out p .mv-login:not(:hover) {
+  color: #abb3ba;
+}
+section.mv-logged-out p .mv-login::before {
+  content: "✎ ";
+}
+
 pre, code {
   background: whitesmoke;
   font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
