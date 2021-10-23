@@ -560,6 +560,19 @@
 				}
 			],
 			"language": "markup"
+		},
+		{
+			"language": "markup",
+			"id": "mavo-migration",
+			"title": "Migration to newer versions of Mavo",
+			"section": [
+				{
+					"id": "v030",
+					"advanced": false,
+					"title": "Migrating to v0.3.0",
+					"content": "The current development version is going to be released as v.0.3.0. It includes several changes, the biggest of which is the syntax change for collections.\n\n## Migrating to the new collection syntax\n\nCollections are now defined by two elements: an element with an `mv-list` attribute and an element with an `mv-list-item` attribute (the same element that previously had the `mv-multiple` attribute). You can name the collection either by specifying a `property` attribute, or by assigning a value to `mv-list` or `mv-list-item`.\n\nWarning: If you use multiple conflicting names, there are rules about which one wins, but don't do that because it makes your code confusing to yourself and other people. \n\nRegardless of how you specify the collection name, eventually both the list and the list item element will get a `property` attribute with the collection name. This is important because if you have any `[property=\"foo\"]` selectors, they are now targeting both elements!\n\nMavo will do its best to rewrite any existing markup with `mv-multiple` to use the new syntax, but your CSS may break if it was written to depend on markup structure too closely. Here are the most common problems and fixes:\n\n- If you have `[property=\"foo\"]` selectors in your CSS to target collection items, they are now targeting both the list and the list item. Change them to only target the item by adding a tag name, changing them to `[property=\"foo\"][mv-list-item]` or any other way that makes them only target the item.\n- If Mavo cannot find a suitable element to add `mv-list` to, it will create one, which may break any child selectors (`>`) that you may have. Change child selectors to descendant selectors if possible, or convert `>` to `> .mv-container >` to account for the new markup (or adjust your markup)."
+				}
+			]
 		}
 	]
 }
