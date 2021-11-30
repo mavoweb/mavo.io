@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" mv-app="countdown" mv-mode="edit" mv-storage="local" mv-autosave
+mv-init='data:application/json,{"event":{"dateTime": "2017-05-16T10:00", "name": "Mavo’s%20release"}}'>
 <head>
 
 <meta charset="UTF-8">
-<title>Countdown</title>
+<title>Countdown: [first(duration)]</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://get.mavo.io/stable/mavo.css">
 <link rel="stylesheet" href="style.css">
 <script src="https://get.mavo.io/stable/mavo.es5.min.js"></script>
 </head>
-<body mv-app="countdown" mv-mode="edit" mv-storage="local" mv-autosave
-      mv-init='data:application/json,{"event":{"dateTime": "2017-05-16T10:00", "name": "Mavo’s%20release"}}'>
+<body>
 
 <fieldset>
 	<legend>Settings</legend>
@@ -22,7 +22,7 @@
 <main>
 	<article property="event" mv-multiple class="[if(difference < 0, 'past', 'future')]">
 		[if(difference < 0, 'It has been', 'It is')]
-		<strong class="duration">[duration(abs(difference), granularity)]</strong>
+		<strong property class="duration">[duration(abs(difference), granularity)]</strong>
 
 		<p>[if(difference < 0, since, until)]</p>
 
