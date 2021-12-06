@@ -191,6 +191,19 @@
 			],
 			"id": "forkgasm",
 			"image": "https://mavo.io/demos/images/forkgasm.png"
+		},
+		{
+			"url": "https://dmitrysharabin.github.io/mavo-memory-game/",
+			"name": "Memory Game",
+			"featured": true,
+			"description": "A card matching game (also known as [Concentration](https://en.wikipedia.org/wiki/Concentration_(game))). Showcases a way to divide an app's features between separate Mavo apps (game state, game board, themes, attempts stats), [UI customization](/docs/ui), and [custom data actions](/docs/actions) (including multiple data actions on the same control).",
+			"tag": [
+				"Actions",
+				"Multiple Apps",
+				"Hierarchy"
+			],
+			"id": "memory-game",
+			"video": "https://dmitrysharabin.github.io/mavo-memory-game/video_short.mp4"
 		}
 	]
 }
