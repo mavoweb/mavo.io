@@ -1,7 +1,7 @@
 {
 	"category": [
 		{
-			"name": "Basic",
+			"name": "Basic demos",
 			"demo": [
 				{
 					"name": "To-Do List",
@@ -103,7 +103,7 @@
 			]
 		},
 		{
-			"name": "Complex",
+			"name": "Complex demos",
 			"demo": [
 				{
 					"name": "E-shop",
@@ -164,19 +164,7 @@
 					"url": "/demos/invoice",
 					"description": "Showcases one of the many ways to make a \"multipage\" app that lets you open items to view more details without leaving the page. For actual multipage apps with different URLs, checkout the [Forkgasm](https://forkgasm.com) demo.",
 					"featured": false
-				},
-				{
-					"name": "SVG Path builder",
-					"tag": [
-						"SVG",
-						"mv-if"
-					],
-					"id": "svgpath",
-					"video": "/demos/svgpath/video.mp4",
-					"url": "/demos/svgpath",
-					"description": "One of the most complex demos, showcases `mv-if` for conditionals, dynamic default values, custom UI, Mavo expressions in SVG",
-					"featured": false
-				},
+				}
 				{
 					"name": "Contact manager",
 					"tag": [
@@ -199,6 +187,23 @@
 					],
 					"id": "forkgasm",
 					"image": "https://mavo.io/demos/images/forkgasm.png"
+				}
+			]
+		},
+		{
+			"name": "Full applications",
+			"demo": [
+				{
+					"name": "SVG Path builder",
+					"tag": [
+						"SVG",
+						"mv-if"
+					],
+					"id": "svgpath",
+					"video": "/demos/svgpath/video.mp4",
+					"url": "/demos/svgpath",
+					"description": "One of the most complex demos, showcases `mv-if` for conditionals, dynamic default values, custom UI, Mavo expressions in SVG",
+					"featured": false
 				},
 				{
 					"url": "https://dmitrysharabin.github.io/mavo-memory-game/",

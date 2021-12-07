@@ -21,10 +21,6 @@ section[mv-app="demos"] {
 			margin-bottom: 0.5em;
 			font: bold 200% $heading-font;
 			color: $orange;
-
-			&::after {
-				content: " demos";
-			}
 		}
 
 		& > div {
