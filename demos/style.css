@@ -181,6 +181,34 @@ article:not(.featured) [mv-app=demos] [property=video].playing {
   opacity: 0.7;
 }
 
+@media (max-width: 420px) {
+  nav {
+    margin-left: 1.5em;
+  }
+
+  section[mv-app=demos] {
+    margin: 0;
+  }
+  section[mv-app=demos] > details > summary {
+    font-size: 170%;
+  }
+  section[mv-app=demos] > details > div {
+    grid-template-columns: 1fr;
+  }
+
+  article[property=demo] {
+    flex-flow: column;
+  }
+  article[property=demo] .media-container {
+    width: 100%;
+  }
+  article[property=demo] > div {
+    padding: 0;
+  }
+  article[property=demo] h1 {
+    font-size: 150%;
+  }
+}
 html:not(.lite) body:not(.has-demo-bar) main {
   padding: 1rem;
   margin: 1rem 1rem 2rem;
