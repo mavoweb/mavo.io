@@ -16,7 +16,7 @@ section[mv-app=demos] > details + details {
 section[mv-app=demos] > details > summary {
   margin-bottom: 0.5em;
   font: bold 200% Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
-  color: #ff9500;
+  color: #25aff4;
 }
 section[mv-app=demos] > details > div {
   display: grid;
