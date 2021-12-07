@@ -40,26 +40,31 @@
 	<p class="notice" mv-if="tagFilter">
 		Some demos are hidden. <a href="?">Show All.</a>
 	</p>
-	<div>
-		<article property="demo" mv-multiple mv-if="!tagFilter or count(tag = tagFilter) > 0" id="demo-[id]"
-		         class="[if(featured, 'featured')] [if(video, 'has-video')] [if(starts(url, 'http'), 'external')]">
-			<a href="[url]" class="media-container">
-				<video property="video" preload="metadata" loop muted tabindex="0"></video>
-				<img property="image">
-			</a>
-			<div>
-				<a mv-default="/demos/[id]" property="url">
-					<h1>
-						<span property="name"></span>
-						<span class="mv-toggle" property="featured">Featured</span>
-					</h1>
+
+	<details property="category" mv-multiple open>
+		<summary property="name">Category</summary>
+
+		<div>
+			<article property="demo" mv-multiple mv-if="!tagFilter or count(tag = tagFilter) > 0" id="demo-[id]"
+								class="[if(featured, 'featured')] [if(video, 'has-video')] [if(starts(url, 'http'), 'external')]">
+				<a href="[url]" class="media-container">
+					<video property="video" preload="metadata" loop muted tabindex="0"></video>
+					<img property="image">
 				</a>
-				<div class="markdown" property="description"></div>
-				<a href="?tag=[tag]" property="tag" mv-attribute="none" mv-multiple title="See only demos with the [tag] tag"></a>
-				<meta property="id">
-			</div>
-		</article>
-	</div>
+				<div>
+					<a mv-default="/demos/[id]" property="url">
+						<h1>
+							<span property="name"></span>
+							<span class="mv-toggle" property="featured">Featured</span>
+						</h1>
+					</a>
+					<div class="markdown" property="description"></div>
+					<a href="?tag=[tag]" property="tag" mv-attribute="none" mv-multiple title="See only demos with the [tag] tag"></a>
+					<meta property="id">
+				</div>
+			</article>
+		</div>
+	</details>
 
 	<p class="tip">Use <code>?storage=<em>your_path</em></code> in the URL of any of these demos to change its data source! <a href="/docs/storage/#url-params">Learn More</a></p>
 </section>

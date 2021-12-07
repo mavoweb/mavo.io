@@ -10,7 +10,18 @@ section[mv-app=demos] {
 section[mv-app=demos][mv-permissions~=login] > .mv-bar {
   display: none;
 }
-section[mv-app=demos] > div {
+section[mv-app=demos] > details + details {
+  margin-top: 1.5em;
+}
+section[mv-app=demos] > details > summary {
+  margin-bottom: 0.5em;
+  font: bold 200% Didot, "Didot LT STD", "Bodoni 72", Bodoni, "Bodoni MT", "Libre Bodoni", "Hoefler Text", Cambria, Georgia, serif;
+  color: #ff9500;
+}
+section[mv-app=demos] > details > summary::after {
+  content: " demos";
+}
+section[mv-app=demos] > details > div {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(29rem, 1fr));
   grid-auto-flow: dense;

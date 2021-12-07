@@ -12,13 +12,29 @@ section[mv-app="demos"] {
 		display: none;
 	}
 
-	& > div {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(29rem, 1fr));
-		grid-auto-flow: dense;
-		grid-gap: 1.2em;
-		margin: auto;
-		width: 100%;
+	& > details {
+		& + details {
+			margin-top: 1.5em;
+		}
+
+		& > summary {
+			margin-bottom: 0.5em;
+			font: bold 200% $heading-font;
+			color: $orange;
+
+			&::after {
+				content: " demos";
+			}
+		}
+
+		& > div {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(29rem, 1fr));
+			grid-auto-flow: dense;
+			grid-gap: 1.2em;
+			margin: auto;
+			width: 100%;
+		}
 	}
 }
 
