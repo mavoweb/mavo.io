@@ -1,209 +1,224 @@
 {
-	"demo": [
+	"category": [
 		{
-			"name": "To-Do List",
-			"tag": [
-				"Actions"
-			],
-			"id": "todo",
-			"description": "Showcases many Mavo features (properties, collections, data actions, local storage) in very little code.",
-			"video": "/demos/todo/video.mp4",
-			"url": "/demos/todo",
-			"featured": true
+			"name": "Basic demos",
+			"demo": [
+				{
+					"name": "To-Do List",
+					"tag": [
+						"Actions"
+					],
+					"id": "todo",
+					"description": "Showcases many Mavo features (properties, collections, data actions, local storage) in very little code.",
+					"video": "/demos/todo/video.mp4",
+					"url": "/demos/todo",
+					"featured": true
+				},
+				{
+					"name": "Artist Portfolio",
+					"tag": [
+						"Github",
+						"UPLOADS"
+					],
+					"id": "portfolio",
+					"description": "Artist portfolio with pictures and descriptions stored on Github. Showcases the various ways to edit images (linking, upload, copy/paste, drag & drop).",
+					"video": "/demos/portfolio/video.mp4",
+					"url": "/demos/portfolio",
+					"featured": false
+				},
+				{
+					"name": "Editable homepage",
+					"tag": [
+						"Github",
+						"TINYMCE"
+					],
+					"id": "homepage",
+					"description": "Uses the TinyMCE plugin for rich text editing.",
+					"video": "/demos/homepage/video.mp4",
+					"url": "/demos/homepage",
+					"featured": false
+				},
+				{
+					"name": "Mortgage Calculator",
+					"tag": [],
+					"id": "mortgage",
+					"video": "/demos/mortgage/video.mp4",
+					"url": "/demos/mortgage",
+					"description": "Showcases a more spreadsheet-like Mavo application.",
+					"featured": false
+				},
+				{
+					"name": "Color picker",
+					"tag": [],
+					"id": "color-picker",
+					"video": "/demos/color-picker/video.mp4",
+					"url": "/demos/color-picker",
+					"description": "An HSLA color picker. Showcases how responsive Mavo expressions are, as well as properties that depend on other properties.",
+					"featured": false
+				},
+				{
+					"name": "Interactive Mavo logo",
+					"tag": [
+						"SVG"
+					],
+					"id": "logo",
+					"video": "/demos/logo/video.mp4",
+					"url": "/demos/logo",
+					"description": "Showcases how well Mavo works with SVG.",
+					"featured": false
+				},
+				{
+					"name": "Shopping list",
+					"tag": [
+						"Actions"
+					],
+					"id": "shopping",
+					"video": "/demos/shopping/video.mp4",
+					"url": "/demos/shopping",
+					"description": "Showcases [custom data actions](/docs/actions) for copying items across lists, even if the lists don't have exactly the same structure.",
+					"featured": false
+				},
+				{
+					"name": "Dice roller with history",
+					"tag": [
+						"Actions"
+					],
+					"id": "dice",
+					"video": "/demos/dice/video.mp4",
+					"url": "/demos/dice",
+					"description": "Showcases [custom data actions](/docs/actions), including multiple data actions on the same control.",
+					"featured": false
+				},
+				{
+					"name": "Word game",
+					"tag": [
+						"Actions"
+					],
+					"id": "words",
+					"video": "/demos/words/video.mp4",
+					"url": "/demos/words",
+					"description": "A language learning game for two people, where one enters the phrase and the other tries to click on words to put them in the right order. Showcases [custom data actions](/docs/actions)",
+					"featured": false
+				}
+			]
 		},
 		{
-			"name": "Artist Portfolio",
-			"tag": [
-				"Github",
-				"UPLOADS"
-			],
-			"id": "portfolio",
-			"description": "Artist portfolio with pictures and descriptions stored on Github. Showcases the various ways to edit images (linking, upload, copy/paste, drag & drop).",
-			"video": "/demos/portfolio/video.mp4",
-			"url": "/demos/portfolio",
-			"featured": false
+			"name": "Complex demos",
+			"demo": [
+				{
+					"name": "E-shop",
+					"tag": [
+						"Actions",
+						"Github",
+						"Multiple Apps"
+					],
+					"id": "eshop",
+					"video": "/demos/eshop/video.mp4",
+					"url": "/demos/eshop",
+					"description": "Two Mavo apps: Product listing stored on Github, cart stored locally. Uses Paypal HTML API for checkout and a custom data action for adding to cart.",
+					"featured": true
+				},
+				{
+					"name": "Decisions",
+					"tag": [
+						"Hierarchy"
+					],
+					"id": "decisions",
+					"video": "/demos/decisions/video.mp4",
+					"url": "/demos/decisions",
+					"description": "An app to list pros and cons (with weights!) to help you make a decision.",
+					"featured": false
+				},
+				{
+					"name": "Restaurant visit log",
+					"tag": [
+						"Hierarchy"
+					],
+					"id": "foodie",
+					"video": "/demos/foodie/video.mp4",
+					"url": "/demos/foodie",
+					"description": "Showcases hierarchy (3 levels of nested collections) and how scoping works with it in expressions.",
+					"featured": false
+				},
+				{
+					"name": "Talks list",
+					"tag": [
+						"Hierarchy",
+						"Github"
+					],
+					"id": "talks",
+					"video": "/demos/talks/video.mp4",
+					"url": "/demos/talks",
+					"description": "The first Mavo demo ever created. Showcases dates and expressions with dates. See a similar app in action on [Lea Verou's website](http://lea.verou.me/speaking) and [Chris Lilley's website](http://svgees.us/talks.html)",
+					"featured": false
+				},
+				{
+					"name": "Invoicing system",
+					"tag": [
+						"Hierarchy",
+						"Multipage",
+						"Github"
+					],
+					"id": "invoice",
+					"video": "/demos/invoice/video.mp4",
+					"url": "/demos/invoice",
+					"description": "Showcases one of the many ways to make a \"multipage\" app that lets you open items to view more details without leaving the page. For actual multipage apps with different URLs, checkout the [Forkgasm](https://forkgasm.com) demo.",
+					"featured": false
+				},
+				{
+					"name": "Contact manager",
+					"tag": [
+						"Hierarchy"
+					],
+					"id": "contacts",
+					"video": "/demos/contacts/video.mp4",
+					"url": "/demos/contacts",
+					"description": "A replica of a contact list app, with multiple emails and phone numbers per person.",
+					"featured": false
+				},
+				{
+					"url": "https://forkgasm.com",
+					"name": "Forkgasm Food Blog",
+					"featured": true,
+					"description": "Food blog with recipes and restaurant visits. Showcases how you can use Mavo to have truly multipage apps with different URLs (thanks to [Netlify's URL rewrite rules](https://www.netlify.com/docs/redirects/))",
+					"tag": [
+						"Multipage",
+						"Github"
+					],
+					"id": "forkgasm",
+					"image": "https://mavo.io/demos/images/forkgasm.png"
+				}
+			]
 		},
 		{
-			"name": "Editable homepage",
-			"tag": [
-				"Github",
-				"TINYMCE"
-			],
-			"id": "homepage",
-			"description": "Uses the TinyMCE plugin for rich text editing.",
-			"video": "/demos/homepage/video.mp4",
-			"url": "/demos/homepage",
-			"featured": false
-		},
-		{
-			"name": "E-shop",
-			"tag": [
-				"Actions",
-				"Github",
-				"Multiple Apps"
-			],
-			"id": "eshop",
-			"video": "/demos/eshop/video.mp4",
-			"url": "/demos/eshop",
-			"description": "Two Mavo apps: Product listing stored on Github, cart stored locally. Uses Paypal HTML API for checkout and a custom data action for adding to cart.",
-			"featured": true
-		},
-		{
-			"name": "Mortgage Calculator",
-			"tag": [],
-			"id": "mortgage",
-			"video": "/demos/mortgage/video.mp4",
-			"url": "/demos/mortgage",
-			"description": "Showcases a more spreadsheet-like Mavo application.",
-			"featured": false
-		},
-		{
-			"name": "Color picker",
-			"tag": [],
-			"id": "color-picker",
-			"video": "/demos/color-picker/video.mp4",
-			"url": "/demos/color-picker",
-			"description": "An HSLA color picker. Showcases how responsive Mavo expressions are, as well as properties that depend on other properties.",
-			"featured": false
-		},
-		{
-			"name": "Decisions",
-			"tag": [
-				"Hierarchy"
-			],
-			"id": "decisions",
-			"video": "/demos/decisions/video.mp4",
-			"url": "/demos/decisions",
-			"description": "An app to list pros and cons (with weights!) to help you make a decision.",
-			"featured": false
-		},
-		{
-			"name": "Restaurant visit log",
-			"tag": [
-				"Hierarchy"
-			],
-			"id": "foodie",
-			"video": "/demos/foodie/video.mp4",
-			"url": "/demos/foodie",
-			"description": "Showcases hierarchy (3 levels of nested collections) and how scoping works with it in expressions.",
-			"featured": false
-		},
-		{
-			"name": "Interactive Mavo logo",
-			"tag": [
-				"SVG"
-			],
-			"id": "logo",
-			"video": "/demos/logo/video.mp4",
-			"url": "/demos/logo",
-			"description": "Showcases how well Mavo works with SVG.",
-			"featured": false
-		},
-		{
-			"name": "Talks list",
-			"tag": [
-				"Hierarchy",
-				"Github"
-			],
-			"id": "talks",
-			"video": "/demos/talks/video.mp4",
-			"url": "/demos/talks",
-			"description": "The first Mavo demo ever created. Showcases dates and expressions with dates. See a similar app in action on [Lea Verou's website](http://lea.verou.me/speaking) and [Chris Lilley's website](http://svgees.us/talks.html)",
-			"featured": false
-		},
-		{
-			"name": "Invoicing system",
-			"tag": [
-				"Hierarchy",
-				"Multipage",
-				"Github"
-			],
-			"id": "invoice",
-			"video": "/demos/invoice/video.mp4",
-			"url": "/demos/invoice",
-			"description": "Showcases one of the many ways to make a \"multipage\" app that lets you open items to view more details without leaving the page. For actual multipage apps with different URLs, checkout the [Forkgasm](https://forkgasm.com) demo.",
-			"featured": false
-		},
-		{
-			"name": "SVG Path builder",
-			"tag": [
-				"SVG",
-				"mv-if"
-			],
-			"id": "svgpath",
-			"video": "/demos/svgpath/video.mp4",
-			"url": "/demos/svgpath",
-			"description": "One of the most complex demos, showcases `mv-if` for conditionals, dynamic default values, custom UI, Mavo expressions in SVG",
-			"featured": false
-		},
-		{
-			"name": "Contact manager",
-			"tag": [
-				"Hierarchy"
-			],
-			"id": "contacts",
-			"video": "/demos/contacts/video.mp4",
-			"url": "/demos/contacts",
-			"description": "A replica of a contact list app, with multiple emails and phone numbers per person.",
-			"featured": false
-		},
-		{
-			"name": "Shopping list",
-			"tag": [
-				"Actions"
-			],
-			"id": "shopping",
-			"video": "/demos/shopping/video.mp4",
-			"url": "/demos/shopping",
-			"description": "Showcases [custom data actions](/docs/actions) for copying items across lists, even if the lists don't have exactly the same structure.",
-			"featured": false
-		},
-		{
-			"name": "Dice roller with history",
-			"tag": [
-				"Actions"
-			],
-			"id": "dice",
-			"video": "/demos/dice/video.mp4",
-			"url": "/demos/dice",
-			"description": "Showcases [custom data actions](/docs/actions), including multiple data actions on the same control.",
-			"featured": false
-		},
-		{
-			"name": "Word game",
-			"tag": [
-				"Actions"
-			],
-			"id": "words",
-			"video": "/demos/words/video.mp4",
-			"url": "/demos/words",
-			"description": "A language learning game for two people, where one enters the phrase and the other tries to click on words to put them in the right order. Showcases [custom data actions](/docs/actions)",
-			"featured": false
-		},
-		{
-			"url": "https://forkgasm.com",
-			"name": "Forkgasm Food Blog",
-			"featured": true,
-			"description": "Food blog with recipes and restaurant visits. Showcases how you can use Mavo to have truly multipage apps with different URLs (thanks to [Netlify's URL rewrite rules](https://www.netlify.com/docs/redirects/))",
-			"tag": [
-				"Multipage",
-				"Github"
-			],
-			"id": "forkgasm",
-			"image": "https://mavo.io/demos/images/forkgasm.png"
-		},
-		{
-			"url": "https://dmitrysharabin.github.io/mavo-memory-game/",
-			"name": "Memory Game",
-			"featured": true,
-			"description": "A card matching game (also known as [Concentration](https://en.wikipedia.org/wiki/Concentration_(game))). Showcases a way to divide an app's features between separate Mavo apps (game state, game board, themes, attempts stats), [UI customization](/docs/ui), and [custom data actions](/docs/actions) (including multiple data actions on the same control).",
-			"tag": [
-				"Actions",
-				"Multiple Apps",
-				"Hierarchy"
-			],
-			"id": "memory-game",
-			"video": "https://dmitrysharabin.github.io/mavo-memory-game/video_short.mp4"
+			"name": "Full applications",
+			"demo": [
+				{
+					"name": "SVG Path builder",
+					"tag": [
+						"SVG",
+						"mv-if"
+					],
+					"id": "svgpath",
+					"video": "/demos/svgpath/video.mp4",
+					"url": "/demos/svgpath",
+					"description": "One of the most complex demos, showcases `mv-if` for conditionals, dynamic default values, custom UI, Mavo expressions in SVG",
+					"featured": false
+				},
+				{
+					"url": "https://dmitrysharabin.github.io/mavo-memory-game/",
+					"name": "Memory Game",
+					"featured": true,
+					"description": "A card matching game (also known as [Concentration](https://en.wikipedia.org/wiki/Concentration_(game))). Showcases a way to divide an app's features between separate Mavo apps (game state, game board, themes, attempts stats), [UI customization](/docs/ui), and [custom data actions](/docs/actions) (including multiple data actions on the same control).",
+					"tag": [
+						"Actions",
+						"Multiple Apps",
+						"Hierarchy"
+					],
+					"id": "memory-game",
+					"video": "https://dmitrysharabin.github.io/mavo-memory-game/video_short.mp4"
+				}
+			]
 		}
 	]
 }
