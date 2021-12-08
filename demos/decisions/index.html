@@ -19,7 +19,7 @@
 	</h1>
 
 	<article property="decision" mv-multiple>
-		<header class="answer-[answer]">
+		<header class="answer answer-[answer]">
 			<h1 property="decision">Should I go to the party?</h1>
 
 			<p>
@@ -31,9 +31,9 @@
 		<section>
 			<h2>[count(pro)] pro(s)</h2>
 			<ul>
-				<li property="pro" class="weight-[weight]" mv-multiple mv-accepts="con">
+				<li property="pro" class="reason" style="--weight: [weight]" mv-multiple mv-accepts="con">
 					<p property="argument">Fun with friends!</p>
-					<p>
+					<p class="weight">
 						Weight:
 						<meter property="weight" min="1" mv-default="1" max="5"></meter>
 						[weight]
@@ -45,9 +45,9 @@
 		<section>
 			<h2>[count(con)] con(s)</h2>
 			<ul>
-				<li property="con" class="weight-[weight]" mv-multiple mv-accepts="pro">
+				<li property="con" class="reason" style="--weight: [weight]" mv-multiple mv-accepts="pro">
 					<p property="argument">I have tons of work to do.</p>
-					<p>
+					<p class="weight">
 						Weight:
 						<meter property="weight" min="1" mv-default="1" max="5"></meter>
 						[weight]

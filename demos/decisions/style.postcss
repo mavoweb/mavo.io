@@ -1,12 +1,31 @@
-$background: hsl(220,8%,60%);
-$pro-color: hsl(80, 80%, 50%);
-$con-color: hsl(0, 100%, 50%);
+
+:root {
+	--pro-color-hs: 80 80%;
+	--pro-color-hsl: var(--pro-color-hs) 50%;
+	--pro-color: hsl(var(--pro-color-hsl));
+
+	--maybe-color-hs: 51 100%;
+	--maybe-color-hsl: var(--maybe-color-hs) 50%;
+	--maybe-color: hsl(var(--maybe-color-hsl));
+
+	--con-color-hs: 0 100%;
+	--con-color-hsl: var(--con-color-hs)  50%;
+	--con-color: hsl(var(--con-color-hsl));
+
+	--background: hsl(220 8% 60%);
+}
+
+:root.vs {
+	--con-color-hs: 200 80%;
+	--con-color-hsl: var(--con-color-hs)  50%;
+	--con-color: hsl(var(--con-color-hsl));
+}
 
 body {
 	min-height: 100vh;
 	box-sizing: border-box;
 	padding: 1em;
-	background: $background;
+	background: var(--background);
 	font: 100% Helvetica Neue, sans-serif;
 	text-align: center;
 }
@@ -27,24 +46,26 @@ main > h1 {
 	font-size: 177%;
 	line-height: 1.1;
 
-	span {
+	& span {
 		display: block;
 		color: black;
 		position: relative;
 		z-index: 1;
 	}
+}
 
+html:not(.vs) main > h1 {
 	&::before,
 	&::after {
 		content: "?";
 		position: absolute;
-		right: -1.2rem;
-		top: -0.89rem;
+		left: 90%;
+		top: -0.5rem;
 		min-width: 1.1em;
 		text-align: center;
 		border-radius: 50%;
 
-		color: $background;
+		color: var(--background);
 		font-size: 250%;
 		font-weight: bold;
 	}
@@ -61,13 +82,13 @@ h1 {
 }
 
 article {
-	$padding: 2.5em;
+	--padding: 2.5em;
 
 	position: relative;
 	display: flex;
 	flex-wrap: wrap;
 	max-width: 35em;
-	padding: $padding;
+	padding: var(--padding);
 	margin: 2em auto;
 	background: white;
 	color: black;
@@ -76,26 +97,31 @@ article {
 	& > header {
 		width: 100%;
 		padding: inherit;
-		padding-bottom: $padding/2;
-		margin: -$padding;
+		padding-bottom: calc(var(--padding) / 2);
+		margin: calc(-1 * var(--padding));
 		margin-bottom: 0;
 		transition: .5s background;
 
-		&.answer-Yes {
-			background: darken($pro-color, 10%);
+		&.answer {
+			background: hsl(var(--color-hs) 40%);
 			color: white;
+		}
+
+		&.answer-Yes {
+			--color-hs: var(--pro-color-hs);
 		}
 
 		&.answer-Maybe {
+			--color-hs: var(--maybe-color-hs);
 			background: gold;
+			color: black;
 		}
 
 		&.answer-No {
-			background: darken($con-color, 10%);
-			color: white;
+			--color-hs: var(--con-color-hs);
 		}
 
-		h1 {
+		& h1 {
 			margin: 0;
 			font-size: 250%;
 			font-weight: 300;
@@ -107,42 +133,42 @@ article {
 	}
 
 	& > section {
+		--color: hsl(var(--color-hs) 50%);
 		flex: 1;
 		margin: 2em 1px 0;
 		text-align: left;
 
-		h2 {
+		& h2 {
 			color: white;
 			margin: 0;
 			padding: .3rem .5rem;
 			border-bottom: .2em solid;
 			line-height: 1;
 			font-weight: normal;
+			color: hsl(var(--color-hs) 40%);
 		}
 
-		ul {
+		& ul {
 			list-style: none;
 			padding: 0;
 			margin: 0;
 
-			li {
+			& li {
 				margin: 1px 0;
 				transition: .5s background;
+				padding: .8em;
+				background: hsl(var(--color-hs) 90%);
+				color: hsl(var(--color-hs) 20%);
 
-				p {
+				& p {
 					margin: 0;
 				}
 
-				p + p {
-					margin-top: 1em;
-					font-size: 80%;
-				}
-
-				meter {
-					$width: 8em;
+				& meter {
+					--width: 8em;
 					display: inline-block;
 					vertical-align: middle;
-					width: $width;
+					width: var(--width);
 					height: .8em;
 					margin-right: .3em;
 					background: transparent;
@@ -150,7 +176,7 @@ article {
 					&::-webkit-meter-bar {
 						background: transparent;
 						border: 1px solid;
-						border-left-width: $width/5;
+						border-left-width: calc(var(--width) / 5);
 					}
 
 					&::-webkit-meter-optimum-value,
@@ -161,41 +187,25 @@ article {
 			}
 		}
 
-		li {
-			padding: .8em;
-			margin-bottom: 1em;
+		& .weight {
+			margin-top: 1em;
+			font-size: 80%;
+			color: hsl(var(--color-hs) 30%);
 		}
 
-		// Pros
+		& .reason {
+			--overlay: hsl(0 0% 100% / calc(.9 - .05 * var(--weight)));
+			background: hsl(var(--color-hs) 50%) linear-gradient(var(--overlay), var(--overlay));
+		}
+
+		/* Pros */
 		&:first-of-type {
-			h2, p:last-of-type {
-				color: darken($pro-color, 10%);
-			}
-
-			@for $i from 1 through 5 {
-				.weight-#{$i}:not(#enough-specificity) { background: lighten($pro-color, 50% - $i*8%); }
-			}
-
-			li {
-				background: lighten($pro-color, 40%);
-				color: darken($pro-color, 30%);
-			}
+			--color-hs: var(--pro-color-hs);
 		}
 
-		// Cons
+		/* Cons */
 		&:nth-of-type(2) {
-			h2, p:last-of-type {
-				color: darken($con-color, 10%);
-			}
-
-			@for $i from 1 through 5 {
-				.weight-#{$i}:not(#enough-specificity) { background: lighten($con-color, 52% - $i*5%); }
-			}
-
-			li {
-				background: lighten($con-color, 47%);
-				color: darken($con-color, 25%);
-			}
+			--color-hs: var(--con-color-hs);
 		}
 	}
 }
@@ -203,21 +213,22 @@ article {
 main .mv-add-decision {
 	padding: .4em .6em;
 	border: 1px solid rgba(0,0,0,.05);
-	background: darken($background, 10%);
+	background: rgb(0 0 0 / .15);
 	color: white;
 	font-size: 120%;
 	border-radius: .2em;
 
 	&:hover {
-		background: darken($background, 20%);
+		background: rgb(0 0 0 / .25);
 	}
 }
 
 footer {
 	margin-top: 2em;
-	color: darken($background, 15%);
+	color: rgb(0 0 0 / .35);
 }
 
 ::placeholder {
-	color: hsla(0,0%,46%,.6);
+	color: inherit;
+	opacity: .6;
 }

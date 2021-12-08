@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" class="vs">
+<head>
+
+<meta charset="UTF-8">
+<title>Decisions, Decisions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://get.mavo.io/mavo.min.css">
+<script src="https://get.mavo.io/mavo.es5.min.js"></script>
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<main mv-storage="local" class="mv-autoedit" mv-app id="decisions">
+	<h1>
+		This <span>vs</span> That
+	</h1>
+
+	<article property="decision" mv-multiple>
+		<header class="answer answer-[if(score > 0, 'Yes', if(score < 0, 'No', 'Maybe'))]">
+			<h1>
+				<span property="This">Cats</span>
+				vs
+				<span property="That">Dogs</span>
+			</h1>
+
+			<p>
+				Answer: <span property="answer">[if(score > 0, This, if(score < 0, That, 'It’s a tie'))]</span>!
+				(score: <span property="score">[sum(this_reason.weight) - sum(that_reason.weight)]</span>)
+			</p>
+		</header>
+
+		<section>
+			<h2>[pluralize(count(this_reasons), 'reason', 'reasons')] for [This]</h2>
+			<ul>
+				<li property="this_reason" class="reason" style="--weight: [weight]" mv-multiple mv-accepts="that_reasons">
+					<p property="argument">Super cute!</p>
+					<p class="weight">
+						Weight:
+						<meter property="weight" min="1" mv-default="1" max="5"></meter>
+						[weight]
+					</p>
+				</li>
+			</ul>
+		</section>
+
+		<section>
+			<h2>[pluralize(count(that_reasons), 'reason', 'reasons')] for [That]</h2>
+			<ul>
+				<li property="that_reason" class="reason" style="--weight: [weight]" mv-multiple mv-accepts="this_reasons">
+					<p property="argument">Loyal</p>
+					<p class="weight">
+						Weight:
+						<meter property="weight" min="1" mv-default="1" max="5"></meter>
+						[weight]
+					</p>
+				</li>
+			</ul>
+		</section>
+	</article>
+</main>
+
+<script src="/js/demo.js"></script>
+
+</body>
+</html>

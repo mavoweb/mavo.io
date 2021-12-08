@@ -4,6 +4,8 @@
   "description": "Mavo website",
   "main": "mavo.js",
   "scripts": {
+    "build:css": "npx postcss **/*.postcss ./*.postcss --base . --dir . --ext .css",
+    "watch:css": "npx postcss **/*.postcss ./*.postcss --base . --dir . --ext .css --watch",
     "test": "open tests"
   },
   "repository": {
@@ -27,6 +29,9 @@
     "gulp-sass": "^4.1.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-util": "^3",
+    "postcss": "^8.4.4",
+    "postcss-cli": "^9.0.2",
+    "postcss-nesting": "^10.0.2",
     "sass": "^1.35.1"
   }
 }
