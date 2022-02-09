@@ -185,6 +185,12 @@
 					"content": "If the `property` attribute is used on elements that are not form elements, they are made editable, and Mavo generates a button for switching between modes:\n\n##### Example\n\n```html\n<span property=\"firstName\">Lea</span>\n<span property=\"last_name\">Verou</span>\n<span>- I don’t have a property attribute, so I’m not editable.</span>\n```\n\n* * *\n\nYou can put the `property` attribute on **any** HTML5 element, and Mavo knows how to make it editable:\n\n##### Example\n\n```html\n<meter property=\"rating\" min=\"1\" value=\"3\" max=\"5\"></meter>\n<time property=\"birthday\" datetime=\"2014-06-01\">1 Jun 2014</time>\n<img property=\"avatar\" src=\"https://i.imgur.com/LPeWcag.png\" />\n```\n\nMavo can also be taught about new element types with different ways to be edited (e.g. rich text), via [plugins](https://plugins.mavo.io)."
 				},
 				{
+					"id": "radio-buttons",
+					"advanced": false,
+					"title": "Working with radio buttons",
+					"content": "When you need to use radio buttons in your app and you want Mavo to handle them properly, follow these three simple steps:\n1. Put the `name` attribute with the same value on **each** radio in the group\n2. Put the `value` attribute with a unique value on **each** radio in the group. This value becomes the property value when the corresponding button is checked.\n3. Put the `property` attribute on **only one** (either) radio in the group, not all of them.\n\n##### Example\n\n```html\n<p>Contact me by:</p>\n<label>\n\t<input type=\"radio\" name=\"contact\" value=\"email\" property=\"contact\" /> Email\n</label>\n<label>\n\t<input type=\"radio\" name=\"contact\" value=\"phone\" checked /> Phone\n</label>\n<label>\n\t<input type=\"radio\" name=\"contact\" value=\"mail\" /> Mail\n</label>\n```"
+				},
+				{
 					"id": "mv-editor",
 					"advanced": false,
 					"title": "Customize editing: The mv-editor attribute",
