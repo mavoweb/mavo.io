@@ -5,12 +5,44 @@
 			"description": "W3C CSS WG, Disposition of Comments tool"
 		},
 		{
+			"url": "https://social.cs.washington.edu/",
+			"description": "The Social Futures Lab"
+		},
+		{
 			"url": "http://www.ekia.net/",
-			"description": "Martial Arts School website"
+			"description": "Martial Arts School"
+		},
+		{
+			"url": "https://hygenicsolutions.com/index.html",
+			"description": "Hygenic Solutions LLC"
+		},
+		{
+			"url": "https://clubornithobigorre.com/index.html",
+			"description": "Le Club Ornithologique de Bigorre"
+		},
+		{
+			"url": "https://christiandiscipleshiplibrary.com/books/pilgrims-progress.html",
+			"description": "The Christian Discipleship Library (The Pilgrim's Progress book)"
+		},
+		{
+			"url": "http://palpoll.surge.sh",
+			"description": "A Proposal for a Polling Application"
 		},
 		{
 			"url": "https://house-energy-consumption.pages.dev",
 			"description": "House Consuption App"
+		},
+		{
+			"url": "https://uh20.digitaleinitiativen.at",
+			"description": "Umma Hüsla Hackathon 2019"
+		},
+		{
+			"url": "https://tipkadpo.ru/",
+			"description": "Tatar Institute for the Retraining of Agribusiness Personnel (in Russian)"
+		},
+		{
+			"url": "https://eloyesp.gitlab.io/recetarios/",
+			"description": "Form Fill tool (in Spanish)"
 		},
 		{
 			"url": "http://getresume.herokuapp.com/resume",
