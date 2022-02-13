@@ -217,6 +217,19 @@
 					],
 					"id": "memory-game",
 					"video": "https://dmitrysharabin.github.io/mavo-memory-game/video_short.mp4"
+				},
+				{
+					"video": "https://dmitrysharabin.github.io/mavo-wordle/video.mov",
+					"url": "https://dmitrysharabin.github.io/mavo-wordle/",
+					"name": "Mavordle",
+					"featured": true,
+					"description": "Clone of the famous [Wordle game](https://www.powerlanguage.co.uk/wordle/).",
+					"tag": [
+						"Actions",
+						"Multiple Apps",
+						"Mv-if"
+					],
+					"id": "mavordle"
 				}
 			]
 		}
