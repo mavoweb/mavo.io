@@ -666,7 +666,7 @@
 					"description": "The list to return items from."
 				}
 			],
-			"returnDescription": "If n is not provided or is 1, the last item. Otherwise, a list of the first n items.",
+			"returnDescription": "If n is not provided or is 1, the last item. Otherwise, a list of the last n items.",
 			"shown": [
 				true,
 				true,
