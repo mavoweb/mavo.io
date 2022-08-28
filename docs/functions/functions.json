@@ -185,7 +185,7 @@
 			"name": "!",
 			"category": "logical",
 			"role": "operator",
-			"description": "Check if a does not have a value",
+			"description": "logical NOT. Returns `true` if a is empty. Note that for the purposes of logical operators, `0`, `''` and `false` are considered empty.",
 			"argument": [
 				{
 					"optional": false
@@ -208,7 +208,7 @@
 					"optional": false
 				}
 			],
-			"description": "Check that both a and b have a value",
+			"description": "Check that both a and b are not empty. Note that for the purposes of logical operators, `0`, `''` and `false` are considered empty.",
 			"unary": false,
 			"shown": [
 				true,
@@ -221,7 +221,7 @@
 			"id": "or",
 			"category": "logical",
 			"role": "operator",
-			"description": "Check that at least a or b have a value",
+			"description": "Check that at least a or b are not empty. Note that for the purposes of logical operators, `0`, `''` and `false` are considered empty.",
 			"argument": [
 				{
 					"optional": false
