@@ -1462,13 +1462,19 @@
 			"unary": false,
 			"category": "datetime",
 			"role": "function",
-			"description": "Displays time intervals using a count of seconds, minutes, hours, days, months, or years, based on what would produce the most readable result. Supports localization. E.g. `duration(10000)` will print out \"10 seconds\", `duration(1000000)` will print out \"16 minutes\" and `duration(100000000)` will print out \"1 day\".",
+			"description": "Displays time intervals using a count of seconds, minutes, hours, days, months, or years, based on what would produce the most readable result. Supports localization. For more granular results, you can supply a number of terms, or even a specific unit.\nTo display the interval between two days in human readable text, you just subtract the two dates for the `ms` argument.\n\nExamples:\n- `duration(10000)` will print out \"10 seconds\"\n- `duration(100000000)` will print out \"1 day\".\n- `duration(100000000, 2)` will print out \"1 day, 3 hours\"\n- `duration(100000000, 'hours')` will print out \"27 hours\"\n- `duration($now - end_date)` will display the time that has passed between `end_date` and now",
 			"argument": [
 				{
 					"name": "ms",
 					"optional": false,
 					"type": "Number",
 					"description": "Number of milliseconds"
+				},
+				{
+					"name": "unit",
+					"optional": true,
+					"type": "Number | Text",
+					"description": "Number of max terms or specific unit (e.g. 'days'). If omitted, only 1 term (the most suitable) will be used."
 				}
 			],
 			"returnType": "Text",
