@@ -418,7 +418,8 @@ table.attributes {
 			--color: #{$magenta};
 		}
 
-		&.role-accessor {
+		&.role-accessor,
+		&.role-action {
 			--color: #{$orange};
 		}
 

@@ -395,10 +395,13 @@ table.attributes td:nth-last-child(2):empty::before {
 [mv-app=functions] [id=functions] details[property=term].role-operator {
   --color: #ff0080;
 }
-[mv-app=api] [id=api] details[property=member].role-accessor,
+[mv-app=api] [id=api] details[property=member].role-accessor, [mv-app=api] [id=api] details[property=member].role-action,
 [mv-app=api] [id=api] details[property=term].role-accessor,
+[mv-app=api] [id=api] details[property=term].role-action,
 [mv-app=functions] [id=functions] details[property=member].role-accessor,
-[mv-app=functions] [id=functions] details[property=term].role-accessor {
+[mv-app=functions] [id=functions] details[property=member].role-action,
+[mv-app=functions] [id=functions] details[property=term].role-accessor,
+[mv-app=functions] [id=functions] details[property=term].role-action {
   --color: #ff9500;
 }
 [mv-app=api] [id=api] details[property=member].role-function,
