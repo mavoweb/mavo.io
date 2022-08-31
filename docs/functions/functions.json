@@ -1791,7 +1791,7 @@
 					"name": "property",
 					"optional": false,
 					"type": "Property",
-					"description": "The name of a property whose value needs to be changed."
+					"description": "The property whose value needs to be changed."
 				},
 				{
 					"name": "value",
