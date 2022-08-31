@@ -1801,6 +1801,35 @@
 				}
 			],
 			"demo": "# Demo\n\n```html\n<div mv-app>\n    <div property=\"counter\">0</div>\n    <button mv-action=\"set(counter, counter + 1)\">Increment</button>\n    <button mv-action=\"set(counter, 0)\">Reset</button>\n</div>\n```"
+		},
+		{
+			"name": "add",
+			"id": "add",
+			"unary": false,
+			"category": "other",
+			"role": "action",
+			"description": "Adds items to collections.\nExamples:\n- `add(\"Garlic\", shopping_list)` will add `Garlic` at the end of the `shopping_list` collection\n- `add(cat, cats)` will add the new cat (the value of the property `cat`) at the end of the `cats` collection\n- `add(group(first_name: \"Lea\", last_name: \"Verou\"), people)` will add the new person (`Lea Verou`) at the end of the `people` collection\n- `add(\"Garlic\", shopping_list, 0)` will add `Garlic` at the start of the `shopping_list` collection\n- `add(cats)` will add a new blank item at the end of the `cats` collection\n\nFor more details, see [the Actions section](https://mavo.io/docs/actions#add) of the docs.",
+			"argument": [
+				{
+					"name": "item",
+					"optional": true,
+					"type": "Anything",
+					"description": "The value(s) the adding item will have."
+				},
+				{
+					"name": "collection",
+					"optional": false,
+					"type": "Collection",
+					"description": "The collection the new item should be added to."
+				},
+				{
+					"name": "position",
+					"optional": true,
+					"type": "Number",
+					"description": "The position the new item should be inserted in. The first item of a collection has the position `0`."
+				}
+			],
+			"demo": "# Demo\n\n```html\n<div mv-app>\n\t<form mv-action=\"add(item, shopping_list) set(item, '')\">\n\t\t<label for=\"item\">We need to buy</label>\n\t\t<input id=\"item\" property placeholder=\"E.g., milk\" />\n\t\t<input type=\"submit\" value=\"Add to list\" />\n\t</form>\n\n\t<h2>Shopping List</h2>\n\t<ul mv-list=\"shopping_list\" mv-initial-items=\"0\">\n\t\t<li>Garlic</li>\n\t\t<li mv-list-item></li>\n\t</ul>\n</div>\n```"
 		}
 	]
 }
