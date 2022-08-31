@@ -1071,13 +1071,13 @@
 			"unary": false,
 			"category": "datetime",
 			"role": "function",
-			"description": "Get a date (without time) in ISO format (e.g. 1986-13-06).",
+			"description": "Get a date (without time) in ISO format (e.g. 1986-06-13).",
 			"argument": [
 				{
 					"name": "date",
 					"optional": false,
 					"type": "Date/Time",
-					"description": "The date/time that we want to format"
+					"description": "The date/time that we want to format."
 				}
 			],
 			"returnType": "Text"
@@ -1094,13 +1094,13 @@
 					"name": "date",
 					"optional": false,
 					"type": "Date/Time",
-					"description": "The date/time that we want to format"
+					"description": "The date/time that we want to format."
 				},
 				{
 					"name": "precision",
 					"optional": true,
-					"type": "\"hours\", \"minutes\", \"seconds\" or \"ms\"",
-					"description": "Precision for the returned timestamp. \"hours\" returns times like \"14:00\" (ignores minutes), \"minutes\" returns times like \"14:27\", \"seconds\" returns times like \"14:27:05\", \"ms\" returns times like \"14:27:05.345\". Default is \"seconds\". Any unknown value is ignored."
+					"type": "\"hours\", \"minutes\", \"seconds\", or \"ms\"",
+					"description": "Precision for the returned timestamp. \"hours\" returns times like \"14:00\" (ignores minutes), \"minutes\" returns times like \"14:27\", \"seconds\" returns times like \"14:27:05\", \"ms\" returns times like \"14:27:05.345\". Default is \"minutes\". Any unknown value is ignored."
 				}
 			],
 			"returnType": "Text"
