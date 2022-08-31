@@ -1141,7 +1141,7 @@
 			"unary": false,
 			"category": "datetime",
 			"role": "function",
-			"description": "Get a date and time in ISO format (e.g., 1986-06-13T16:45).\nExamples:\nSuppose the special property `$now` returned a number of milliseconds corresponding to the following date and time: 2022-08-31T14:09:18.543.\n- `datetime($now)` will return 2022-08-31T14:09\n- `datetime($now, \"years\")` will return 2022\n- `datetime($now, \"months\")` will return 2022-08\n- `datetime($now, \"days\")` will return 2022-08-31\n- `datetime($now, \"hours\")` will return 2022-08-31T14:00\n- `datetime($now, \"minutes\")` will return 2022-08-31T14:09\n- `datetime($now, \"seconds\")` will return 2022-08-31T14:09:18\n- `datetime($now, \"ms\")` will return 2022-08-31T14:09:18.543\n\n",
+			"description": "Get a date and time in ISO format (e.g., 1986-06-13T16:45).\nExamples:\nSuppose the special property `$now` returned a number of milliseconds corresponding to the following date and time: 2022-08-31T14:09:18.543.\n- `datetime($now)` will print out \"2022-08-31T14:09\"\n- `datetime($now, \"years\")` will print out \"2022\"\n- `datetime($now, \"months\")` will print out \"2022-08\"\n- `datetime($now, \"days\")` will print out \"2022-08-31\"\n- `datetime($now, \"hours\")` will print out \"2022-08-31T14:00\"\n- `datetime($now, \"minutes\")` will print out \"2022-08-31T14:09\"\n- `datetime($now, \"seconds\")` will print out \"2022-08-31T14:09:18\"\n- `datetime($now, \"ms\")` will print out \"2022-08-31T14:09:18.543\"\n\n",
 			"argument": [
 				{
 					"name": "date",
