@@ -1887,6 +1887,35 @@
 					"description": "You can provide as many as you want."
 				}
 			]
+		},
+		{
+			"name": "move",
+			"id": "move",
+			"unary": false,
+			"category": "other",
+			"role": "action",
+			"description": "Moves **existing** items either to a different place in the same collection, or to another collection.\nExamples:\n- `move(pro, con, 0)` will move the current item of the `pro` collection at the start of the `con` collection\n- `move(pro, 0)` will make the current item of the `pro` collection first\n- `move(person, cat)` will move the current item of the `person` collection at the end of the `cat` collection\n\nFor more details, see [the Actions section](https://mavo.io/docs/actions#move) of the docs.",
+			"argument": [
+				{
+					"name": "item",
+					"optional": false,
+					"type": "Item",
+					"description": "The item to be moved."
+				},
+				{
+					"name": "collection",
+					"optional": true,
+					"type": "Collection",
+					"description": "The collection to move the item on."
+				},
+				{
+					"name": "position",
+					"optional": true,
+					"type": "Number",
+					"description": "The position the item should be moved to. The first item of a collection has the position `0`."
+				}
+			],
+			"demo": "# Demo\n\n```html\n<table mv-app mv-source=\"https://test.mavo.io/data/creatures.json\">\n\t<tbody mv-list>\n\t\t<tr mv-list-item=\"person\">\n\t\t\t<td property=\"name\"></td>\n\t\t\t<td property=\"age\"></td>\n\t\t\t<td><button mv-action=\"move(person, cat)\">Make [name] a cat</button></td>\n\t\t</tr>\n\t</tbody>\n\t<tbody mv-list>\n\t\t<tr mv-list-item=\"cat\">\n\t\t\t<td property=\"name\"></td>\n\t\t\t<td property=\"age\"></td>\n\t\t\t<td><button mv-action=\"move(cat, 0)\">Move cat to top</button></td>\n\t\t</tr>\n\t</tbody>\n</table>\n\n<style>\n\ttbody {\n\t\tbackground: hsl(80, 60%, 80%)\n\t}\n\n\ttbody+tbody {\n\t\tbackground: hsl(180, 60%, 85%)\n\t}\n\n\ttd {\n\t\tpadding: .2em\n\t}\n\n\ttr[property=person] td:first-child::before {\n\t\tcontent: \"😀 \"\n\t}\n\n\ttr[property=cat] td:first-child::before {\n\t\tcontent: \"😺 \"\n\t}\n</style>\n```"
 		}
 	]
 }
