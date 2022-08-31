@@ -1830,6 +1830,63 @@
 				}
 			],
 			"demo": "# Demo\n\n```html\n<div mv-app>\n\t<form mv-action=\"add(item, shopping_list) set(item, '')\">\n\t\t<label for=\"item\">We need to buy</label>\n\t\t<input id=\"item\" property placeholder=\"E.g., milk\" />\n\t\t<input type=\"submit\" value=\"Add to list\" />\n\t</form>\n\n\t<h2>Shopping List</h2>\n\t<ul mv-list=\"shopping_list\" mv-initial-items=\"0\">\n\t\t<li>Garlic</li>\n\t\t<li mv-list-item></li>\n\t</ul>\n</div>\n```"
+		},
+		{
+			"name": "delete",
+			"id": "delete",
+			"unary": false,
+			"category": "other",
+			"role": "action",
+			"description": "Deletes collections' items, empties collections, and clears property values.\nExamples:\n- `delete(shopping_list)` will empty the `shopping_list` collection\n- `delete(cat where name = 'Vector', cat where name = 'Çiki')` will delete all cats with the name either `Vector` or `Çiki` from the collection of cats\n- `delete(name)` will clear the `name` property\n\nFor more details, see [the Actions section](https://mavo.io/docs/actions#delete) of the docs.",
+			"argument": [
+				{
+					"name": "item1",
+					"optional": false,
+					"type": "Item | Collection | Property",
+					"description": "The item to delete or the collection to empty, or the property to clear."
+				},
+				{
+					"name": "item2",
+					"optional": true,
+					"type": "Item | Collection | Property",
+					"description": "Another item to delete or another collection to empty, or another property to clear."
+				},
+				{
+					"name": "...",
+					"optional": false,
+					"type": "Item | Collection | Property",
+					"description": "You can provide as many as you want."
+				}
+			],
+			"demo": "# Demo\n\n```html\n<div mv-app mv-source=\"https://test.mavo.io/data/creatures.json\">\n\t<button mv-action=\"delete(cat where name = 'Vector')\">\n\t\tDelete Vector\n\t</button>\n\t<table>\n\t\t<tbody mv-list>\n\t\t\t<tr mv-list-item=\"cat\">\n\t\t\t\t<td property=\"name\"></td>\n\t\t\t\t<td property=\"age\"></td>\n\t\t\t\t<td><button mv-action=\"delete(cat)\">Delete cat</button></td>\n\t\t\t</tr>\n\t\t</tbody>\n\t</table>\n</div>\n```"
+		},
+		{
+			"name": "clear",
+			"id": "clear",
+			"unary": false,
+			"category": "other",
+			"role": "action",
+			"description": "Same as [`delete(item1, item2?, ...)`](https://mavo.io/docs/functions/#delete). `clear()` may read more nicely in cases where you are emptying entire collections.",
+			"argument": [
+				{
+					"name": "item1",
+					"optional": false,
+					"type": "Item | Collection | Property",
+					"description": "The item to delete or the collection to empty, or the property to clear."
+				},
+				{
+					"name": "item2",
+					"optional": true,
+					"type": "Item | Collection | Property",
+					"description": "Another item to delete or another collection to empty, or another property to clear."
+				},
+				{
+					"name": "...",
+					"optional": false,
+					"type": "Item | Collection | Property",
+					"description": "You can provide as many as you want."
+				}
+			]
 		}
 	]
 }
