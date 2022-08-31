@@ -1778,6 +1778,29 @@
 					"optional": false
 				}
 			]
+		},
+		{
+			"name": "set",
+			"id": "set",
+			"unary": false,
+			"category": "other",
+			"role": "action",
+			"description": "Changes the values of **existing** properties.\nExamples:\n- `set(age, 13)` will set the value of the `age` property to 13\n- `set(name, \"Chris\")` will set the value of the `name` property to `Chris`\n- `set(date, $today)` will set the value of the `date` property to the current date\n- `set(counter, counter + 1)` will increase the value of the `counter` property by 1\n\nFor more details, see [the Actions section](https://mavo.io/docs/actions#set) of the docs.",
+			"argument": [
+				{
+					"name": "property",
+					"optional": false,
+					"type": "Property",
+					"description": "The name of a property whose value needs to be changed."
+				},
+				{
+					"name": "value",
+					"optional": false,
+					"type": "Anything",
+					"description": "The new value of the property."
+				}
+			],
+			"demo": "# Demo\n\n```html\n<div mv-app>\n    <div property=\"counter\">0</div>\n    <button mv-action=\"set(counter, counter + 1)\">Increment</button>\n    <button mv-action=\"set(counter, 0)\">Reset</button>\n</div>\n```"
 		}
 	]
 }
