@@ -437,6 +437,7 @@ table.attributes {
 		}
 
 		&.role-function,
+		&.role-action,
 		&.role-constructor {
 			& > summary [property=name]::after {
 				content: "(" attr(data-arguments) ")";

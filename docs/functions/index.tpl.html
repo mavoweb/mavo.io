@@ -59,7 +59,7 @@
 
 		<p property="description" class="markdown"></p>
 
-		<details mv-if="role = 'function'" class="[if(!returnType and !returnDescription and isVoid, 'hide-on-read')]" open="[!collapse.arguments]">
+		<details mv-if="role = 'function' or role = 'action'" class="[if(!returnType and !returnDescription and isVoid, 'hide-on-read')]" open="[!collapse.arguments]">
 			<summary>Parameters ([count(argument.name)])</summary>
 
 			<table>
