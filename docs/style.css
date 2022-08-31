@@ -425,12 +425,15 @@ table.attributes td:nth-last-child(2):empty::before {
 [mv-app=functions] [id=functions] details[property=term].role-constructor [property=name] {
   color: rgba(0, 0, 0, 0.5);
 }
-[mv-app=api] [id=api] details[property=member].role-function > summary [property=name]::after, [mv-app=api] [id=api] details[property=member].role-constructor > summary [property=name]::after,
+[mv-app=api] [id=api] details[property=member].role-function > summary [property=name]::after, [mv-app=api] [id=api] details[property=member].role-action > summary [property=name]::after, [mv-app=api] [id=api] details[property=member].role-constructor > summary [property=name]::after,
 [mv-app=api] [id=api] details[property=term].role-function > summary [property=name]::after,
+[mv-app=api] [id=api] details[property=term].role-action > summary [property=name]::after,
 [mv-app=api] [id=api] details[property=term].role-constructor > summary [property=name]::after,
 [mv-app=functions] [id=functions] details[property=member].role-function > summary [property=name]::after,
+[mv-app=functions] [id=functions] details[property=member].role-action > summary [property=name]::after,
 [mv-app=functions] [id=functions] details[property=member].role-constructor > summary [property=name]::after,
 [mv-app=functions] [id=functions] details[property=term].role-function > summary [property=name]::after,
+[mv-app=functions] [id=functions] details[property=term].role-action > summary [property=name]::after,
 [mv-app=functions] [id=functions] details[property=term].role-constructor > summary [property=name]::after {
   content: "(" attr(data-arguments) ")";
   color: rgba(0, 0, 0, 0.5);
