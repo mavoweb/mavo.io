@@ -604,6 +604,28 @@
 			"returnDescription": "True if there is an intersection and false if not."
 		},
 		{
+			"name": "intersection",
+			"id": "intersection",
+			"unary": false,
+			"category": "lists",
+			"role": "function",
+			"description": "Get items shared by two lists.\nFor example, `intersection(list(1, 2, 3), list(4, 3, 5))` will return `list(3)` because both lists share the item `3`.",
+			"argument": [
+				{
+					"name": "list1",
+					"optional": false,
+					"type": "List"
+				},
+				{
+					"name": "list2",
+					"optional": false,
+					"type": "List"
+				}
+			],
+			"returnType": "List",
+			"returnDescription": "A list of shared items."
+		},
+		{
 			"name": "reverse",
 			"id": "reverse",
 			"unary": false,
