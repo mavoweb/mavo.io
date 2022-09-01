@@ -1609,7 +1609,7 @@
 					"name": "rule2",
 					"optional": false,
 					"type": "Text | Key:Value pair",
-					"description": "Pluralization rule to apply. If there is only one plural form of a word in the language, this parameter should provide the **plural form** of the word."
+					"description": "Pluralization rule to apply. If there is only one plural word form in the language (which is the case in English), this parameter should provide the **plural form** of the word."
 				},
 				{
 					"name": "rule3",
