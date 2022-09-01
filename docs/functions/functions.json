@@ -1148,7 +1148,7 @@
 			"unary": false,
 			"category": "datetime",
 			"role": "function",
-			"description": "Get a date (without time) in ISO format (e.g., 1986-06-13).",
+			"description": "Get a date (without time) in ISO format (e.g., 1986-06-13). That is the format you need to perform calculations on dates.",
 			"argument": [
 				{
 					"name": "date",
@@ -1172,7 +1172,7 @@
 			"unary": false,
 			"category": "datetime",
 			"role": "function",
-			"description": "Get the time part of a date/time (without date information) in ISO format (e.g., 13:00).",
+			"description": "Get the time part of a date/time (without date information) in ISO format (e.g., `\"13:00\"`). That is the format you need for performing calculations.\n\nExamples:\n- `time('1986-06-13T13:56')` will return `'13:56'`\n- `time($now)` will return the current time",
 			"argument": [
 				{
 					"name": "date",
@@ -1848,7 +1848,7 @@
 			"name": "$now",
 			"category": "datetime",
 			"role": "special",
-			"description": "Current date and time as number of milliseconds since January 1st, 1970. Note that using `$now` in expressions makes them update automatically as `$now` changes. Mostly useful in conjunction with [date and time functions](?category=datetime) or the `mod` operator.",
+			"description": "Current date and time as number of milliseconds since January 1st, 1970. Note that using `$now` in expressions makes them update automatically as `$now` changes. Mostly useful in conjunction with [date and time functions](?category=datetime) or the `mod` operator.\n\nExamples:\n- `readable_date($now)` returns the current date only (no time) in a human readable format\n- `readable_datetime($now)` returns the current date and time in a human readable format\n- `time($now)` returns the current time",
 			"argument": [
 				{
 					"optional": false
