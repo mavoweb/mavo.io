@@ -604,6 +604,28 @@
 			"returnDescription": "True if there is an intersection and false if not."
 		},
 		{
+			"name": "intersection",
+			"id": "intersection",
+			"unary": false,
+			"category": "lists",
+			"role": "function",
+			"description": "Get items shared by two lists.\nFor example, `intersection(list(1, 2, 3), list(4, 3, 5))` will return `list(3)` because both lists share the item `3`.",
+			"argument": [
+				{
+					"name": "list1",
+					"optional": false,
+					"type": "List"
+				},
+				{
+					"name": "list2",
+					"optional": false,
+					"type": "List"
+				}
+			],
+			"returnType": "List",
+			"returnDescription": "A list of shared items."
+		},
+		{
 			"name": "reverse",
 			"id": "reverse",
 			"unary": false,
@@ -655,6 +677,61 @@
 			],
 			"returnType": "List",
 			"returnDescription": "A list with the same number of items as list and empty values in the positions where at least one filter had a falsy value or the original values where all filters had truthy values."
+		},
+		{
+			"name": "sort",
+			"id": "sort",
+			"unary": false,
+			"category": "lists",
+			"role": "function",
+			"description": "Sort the list.\nExamples:\n- `sort(list(42, 13, 11, 7))` will return `list(7, 11, 13, 42)`\n- `sort(list(\"b\", \"a\", \"c\"))` will return `list(\"a\", \"b\", \"c\")`\n- `sort(list(\"b\", \"a\", \"c\", 42, 13, 11, 7))` will return `list(7, 11, 13, 42, \"a\", \"b\", \"c\")`\n- `sort(list(42, 13, 11, 7), order: \"desc\")` will return `list(42, 13, 11, 7)`\n- `sort(list(group(name: \"Lea Verou\", age: 36), group(name: \"David Karger\", age: 54)), \"age\", order: \"desc\")` will return `list(group(name: \"David Karger\", age: 54), group(name: \"Lea Verou\", age: 36))`\n\nSupports different languages and options provided by the [Intl.Collator object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/Collator) which Mavo uses under the hood.\nExamples:\n- `sort(list(\"б\", \"а\", \"в\"), lang: \"ru\")` will return `list(\"а\", \"б\", \"в\")`\n- `sort(list(\"Z\", \"a\", \"z\", \"ä\"), lang: \"de\", caseFirst: \"upper\")` will return `list(\"a\", \"ä\", \"Z\", \"z\")`.",
+			"argument": [
+				{
+					"name": "list",
+					"optional": false,
+					"type": "List",
+					"description": "List to sort."
+				},
+				{
+					"name": "property",
+					"optional": true,
+					"type": "Text | List",
+					"description": "If the list is a list of groups, the name of the property on which value the groups will be sorted."
+				},
+				{
+					"name": "order",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Sort order. By default, the list will be sorted in the ascending order. To sort it in the descending order, add the `order: \"desc\"` parameter. "
+				},
+				{
+					"name": "lang",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Optional language code in the `lang: \"language_code\"` format. For example, `lang: \"el\"` for the Greek language, `lang: \"ru\"` — for Russian. If omitted, uses the Mavo app's language."
+				},
+				{
+					"name": "option1",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "One of the options supported by the [Intl.Collator object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/Collator)."
+				},
+				{
+					"name": "option2",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "One of the options supported by the [Intl.Collator object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/Collator)."
+				},
+				{
+					"name": "...",
+					"optional": false,
+					"type": "Key:Value pair",
+					"description": "You may provide as many options supported by the [Intl.Collator object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/Collator) as you need."
+				}
+			],
+			"returnType": "List",
+			"returnDescription": "Sorted list.",
+			"demo": "# Demo\n\n```html\n<div mv-app mv-source=\"https://test.mavo.io/data/creatures.json\">\n\t<p>\n\t\tSort cats by\n\t\t<label>\n\t\t\t<input type=\"radio\" property name=\"sort_order\" value=\"name\" checked /> name\n\t\t</label>\n\t\t<label>\n\t\t\t<input type=\"radio\" name=\"sort_order\" value=\"age\" /> age\n\t\t</label>\n\t</p>\n\n\t<table>\n\t\t<tbody mv-list mv-value=\"sort(cat, sort_order)\">\n\t\t\t<tr mv-list-item>\n\t\t\t\t<td property=\"name\"></td>\n\t\t\t\t<td property=\"age\"></td>\n\t\t\t</tr>\n\t\t</tbody>\n\t</table>\n</div>\n<style>\np {\n\tdisplay: flex;\n\tgap: 0.5em;\n}\n\nlabel {\n\tdisplay: inline-flex;\n}\n\ntd + td {\n\tpadding-inline-start: 1.5em;\n}\n</style>\n```"
 		},
 		{
 			"name": "condense",
@@ -1071,24 +1148,7 @@
 			"unary": false,
 			"category": "datetime",
 			"role": "function",
-			"description": "Get a date (without time) in ISO format (e.g. 1986-06-13).",
-			"argument": [
-				{
-					"name": "date",
-					"optional": false,
-					"type": "Date/Time",
-					"description": "The date/time that we want to format."
-				}
-			],
-			"returnType": "Text"
-		},
-		{
-			"name": "time",
-			"id": "time",
-			"unary": false,
-			"category": "datetime",
-			"role": "function",
-			"description": "Get the time part of a date/time (without date information) in ISO format (e.g. 13:00).",
+			"description": "Get a date (without time) in ISO format (e.g., 1986-06-13).",
 			"argument": [
 				{
 					"name": "date",
@@ -1099,11 +1159,84 @@
 				{
 					"name": "precision",
 					"optional": true,
-					"type": "\"hours\", \"minutes\", \"seconds\", or \"ms\"",
-					"description": "Precision for the returned timestamp. \"hours\" returns times like \"14:00\" (ignores minutes), \"minutes\" returns times like \"14:27\", \"seconds\" returns times like \"14:27:05\", \"ms\" returns times like \"14:27:05.345\". Default is \"minutes\". Any unknown value is ignored."
+					"type": "\"years\" | \"months\" | \"days\"",
+					"description": "What parts of the date should be returned:\n- only year, if precision equals to \"years\" (e.g., 1986),\n- or year and month, if precision equals to \"months\" (e.g., 1986-06),\n- or year, month, and day, if precision equals to \"days\" (e.g., 1986-06-13).\n\nDefault is \"days\"."
 				}
 			],
-			"returnType": "Text"
+			"returnType": "Text",
+			"demo": "# Demo\n\n```html\n<div mv-app>\n\t<h2><code>date($now, precision?)</code></h2>\n\t<table>\n\t\t<thead>\n\t\t\t<th>Expression</th>\n\t\t\t<th>Output</th>\n\t\t</thead>\n\t\t<tbody mv-list mv-value=\"list('years', 'months', 'days')\">\n\t\t\t<tr>\n\t\t\t\t<td><code>date($now)</code></td>\n\t\t\t\t<td><output>[date($now)]</output></td>\n\t\t\t</tr>\n\t\t\t<tr mv-list-item=\"precision\" mv-attribute=\"content\">\n\t\t\t\t<td><code>date($now, \"[precision]\")</code></td>\n\t\t\t\t<td><output>[date($now, precision)]</output></td>\n\t\t\t</tr>\n\t\t</tbody>\n\t</table>\n</div>\n<style>\nth {\n\ttext-align: left;\n}\n\ntd, th {\n\tmin-inline-size: 25ch;\n}\n</style>\n```"
+		},
+		{
+			"name": "time",
+			"id": "time",
+			"unary": false,
+			"category": "datetime",
+			"role": "function",
+			"description": "Get the time part of a date/time (without date information) in ISO format (e.g., 13:00).",
+			"argument": [
+				{
+					"name": "date",
+					"optional": false,
+					"type": "Date/Time",
+					"description": "The date/time that we want to format."
+				},
+				{
+					"name": "precision",
+					"optional": true,
+					"type": "\"hours\" | \"minutes\" | \"seconds\" | \"ms\"",
+					"description": "Precision for the returned timestamp. \"hours\" returns times like \"14:00\" (ignores minutes), \"minutes\" returns times like \"14:27\", \"seconds\" returns times like \"14:27:05\", \"ms\" returns times like \"14:27:05.345\".\n\nDefault is \"minutes\". Any unknown value is ignored."
+				}
+			],
+			"returnType": "Text",
+			"demo": "# Demo\n\n```html\n<div mv-app>\n\t<h2><code>time($now, precision?)</code></h2>\n\t<table>\n\t\t<thead>\n\t\t\t<th>Expression</th>\n\t\t\t<th>Output</th>\n\t\t</thead>\n\t\t<tbody mv-list mv-value=\"list('hours', 'minutes', 'seconds', 'ms')\">\n\t\t\t<tr>\n\t\t\t\t<td><code>time($now)</code></td>\n\t\t\t\t<td><output>[time($now)]</output></td>\n\t\t\t</tr>\n\t\t\t<tr mv-list-item=\"precision\" mv-attribute=\"content\">\n\t\t\t\t<td><code>time($now, \"[precision]\")</code></td>\n\t\t\t\t<td><output>[time($now, precision)]</output></td>\n\t\t\t</tr>\n\t\t</tbody>\n\t</table>\n</div>\n<style>\nth {\n\ttext-align: left;\n}\n\ntd, th {\n\tmin-inline-size: 25ch;\n}\n</style>\n```"
+		},
+		{
+			"name": "datetime",
+			"id": "datetime",
+			"unary": false,
+			"category": "datetime",
+			"role": "function",
+			"description": "Get a date and time in ISO format (e.g., 1986-06-13T16:45).\nExamples:\nSuppose the special property `$now` returned a number of milliseconds corresponding to the following date and time: 2022-08-31T14:09:18.543.\n- `datetime($now)` will print out \"2022-08-31T14:09\"\n- `datetime($now, \"years\")` will print out \"2022\"\n- `datetime($now, \"months\")` will print out \"2022-08\"\n- `datetime($now, \"days\")` will print out \"2022-08-31\"\n- `datetime($now, \"hours\")` will print out \"2022-08-31T14:00\"\n- `datetime($now, \"minutes\")` will print out \"2022-08-31T14:09\"\n- `datetime($now, \"seconds\")` will print out \"2022-08-31T14:09:18\"\n- `datetime($now, \"ms\")` will print out \"2022-08-31T14:09:18.543\"\n\n",
+			"argument": [
+				{
+					"name": "date",
+					"optional": false,
+					"type": "Date/Time",
+					"description": "The date/time to format."
+				},
+				{
+					"name": "precision",
+					"optional": true,
+					"type": "\"years\" | \"months\" | \"days\" | \"hours\" | \"minutes\" | \"seconds\" | \"ms\"",
+					"description": "Precision for the returned timestamp. Defaults to \"minutes\"."
+				}
+			],
+			"returnType": "Text",
+			"demo": "# Demo\n\n```html\n<div mv-app>\n\t<h2><code>datetime($now, precision?)</code></h2>\n\t<table>\n\t\t<thead>\n\t\t\t<th>Expression</th>\n\t\t\t<th>Output</th>\n\t\t</thead>\n\t\t<tbody mv-list mv-value=\"list('years', 'months', 'days', 'hours', 'minutes', 'seconds', 'ms')\">\n\t\t\t<tr>\n\t\t\t\t<td><code>datetime($now)</code></td>\n\t\t\t\t<td><output>[datetime($now)]</output></td>\n\t\t\t</tr>\n\t\t\t<tr mv-list-item=\"precision\" mv-attribute=\"content\">\n\t\t\t\t<td><code>datetime($now, \"[precision]\")</code></td>\n\t\t\t\t<td><output>[datetime($now, precision)]</output></td>\n\t\t\t</tr>\n\t\t</tbody>\n\t</table>\n</div>\n<style>\nth {\n\ttext-align: left;\n}\n\ntd, th {\n\tmin-inline-size: 30ch;\n}\n</style>\n```"
+		},
+		{
+			"name": "readable_datetime",
+			"id": "readable_datetime",
+			"unary": false,
+			"category": "datetime",
+			"role": "function",
+			"description": "Get a date and time in human-readable text (e.g., 13 Jun 1986 16:45). The returned value is dependent on the document language.\nExamples:\nSuppose the special property `$now` returned a number of milliseconds corresponding to the following date and time: 2022-08-31T14:09:18.543. The language of the document is English.\n- `readable_datetime($now)` will print out \"31 Aug 2022 14:09\"\n- `readable_datetime($now, \"years\")` will print out \"2022\"\n- `readable_datetime($now, \"months\")` will print out \"August 2022\"\n- `readable_datetime($now, \"days\")` will print out \"31 Aug 2022\"\n- `readable_datetime($now, \"hours\")` will print out \"31 Aug 2022 14:00\"\n- `readable_datetime($now, \"minutes\")` will print out \"31 Aug 2022 14:09\"\n- `readable_datetime($now, \"seconds\")` will print out \"31 Aug 2022 14:09:18\"\n- `readable_datetime($now, \"ms\")` will print out \"31 Aug 2022 14:09:18.543\"",
+			"argument": [
+				{
+					"name": "date",
+					"optional": false,
+					"type": "Date/Time",
+					"description": "The date/time to format."
+				},
+				{
+					"name": "precision",
+					"optional": true,
+					"type": "\"years\" | \"months\" | \"days\" | \"hours\" | \"minutes\" | \"seconds\" | \"ms\"",
+					"description": "Precision for the returned timestamp. Defaults to \"minutes\"."
+				}
+			],
+			"returnType": "Text",
+			"demo": "# Demo\n\n```html\n<div mv-app>\n\t<h2><code>readable_datetime($now, precision?)</code></h2>\n\t<table>\n\t\t<thead>\n\t\t\t<th>Expression</th>\n\t\t\t<th>Output</th>\n\t\t</thead>\n\t\t<tbody mv-list mv-value=\"list('years', 'months', 'days', 'hours', 'minutes', 'seconds', 'ms')\">\n\t\t\t<tr>\n\t\t\t\t<td><code>readable_datetime($now)</code></td>\n\t\t\t\t<td><output>[readable_datetime($now)]</output></td>\n\t\t\t</tr>\n\t\t\t<tr mv-list-item=\"precision\" mv-attribute=\"content\">\n\t\t\t\t<td><code>readable_datetime($now, \"[precision]\")</code></td>\n\t\t\t\t<td><output>[readable_datetime($now, precision)]</output></td>\n\t\t\t</tr>\n\t\t</tbody>\n\t</table>\n</div>\n<style>\nth {\n\ttext-align: left;\n}\n\ntd, th {\n\tmin-inline-size: 40ch;\n}\n</style>\n```"
 		},
 		{
 			"name": "seconds",
@@ -1451,6 +1584,77 @@
 			],
 			"returnType": "Text",
 			"returnDescription": "The localized text"
+		},
+		{
+			"name": "pluralize",
+			"id": "pluralize",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "Get the correct plural form of a word corresponding to the given number.\n\nExamples:\n- `pluralize(1, \"country\", \"countries\")` will print out \"1 country\"\n- `pluralize(2, \"country\", \"countries\")` will print out \"2 countries\"\n- `pluralize(1, \"χώρα\", \"χώρες\", lang: \"el\")` will print out \"1 χώρα\"\n- `pluralize(2, \"χώρα\", \"χώρες\", lang: \"el\")` will print out \"2 χώρες\"\n\nIf your language has more complex rules of pluralization than e.g., English or Greek, you can specify additional parameters that will help Mavo figure out the needed form of a word. Those parameters are `key:value` pairs, where `key` is either `zero`, `one`, `two`, `few`, `many`, or `other`. And the `value` is the respective form of the needed word.\nFor example,\n- `pluralize(1, one: \"страна\", few: \"страны\", many: \"стран\", lang: \"ru\")` will print out \"1 страна\"\n- `pluralize(2, one: \"страна\", few: \"страны\", many: \"стран\", lang: \"ru\")` will print out \"2 страны\"\n- `pluralize(5, one: \"страна\", few: \"страны\", many: \"стран\", lang: \"ru\")` will print out \"5 стран\"",
+			"argument": [
+				{
+					"name": "n",
+					"optional": false,
+					"type": "Number",
+					"description": "Number to get the plural form of the word for."
+				},
+				{
+					"name": "rule1",
+					"optional": false,
+					"type": "Text | Key:Value pair",
+					"description": "Pluralization rule to apply. If there is only one plural form of a word in the language (which is the case in English), this parameter should provide the **singular form** of the word."
+				},
+				{
+					"name": "rule2",
+					"optional": false,
+					"type": "Text | Key:Value pair",
+					"description": "Pluralization rule to apply. If there is only one plural word form in the language (which is the case in English), this parameter should provide the **plural form** of the word."
+				},
+				{
+					"name": "rule3",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Pluralization rule to apply."
+				},
+				{
+					"name": "rule4",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Pluralization rule to apply."
+				},
+				{
+					"name": "rule5",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Pluralization rule to apply."
+				},
+				{
+					"name": "rule6",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Pluralization rule to apply."
+				},
+				{
+					"name": "lang",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Optional language code in the `lang: \"language_code\"` format, so that Mavo could use the correct pluralization rules. For example, `lang: \"el\"` for the Greek language, `lang: \"ru\"` — for Russian.\nIf omitted, uses the Mavo app's language."
+				},
+				{
+					"name": "text_only",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Option `text_only: true` lets you get the plural form of the word without the preceding number. For example, `pluralize(42, \"country\", \"countries\", text_only: true)` will print out \"countries\", not \"42 countries\"."
+				},
+				{
+					"name": "type",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Option `type: \"ordinal\"` lets you get the ordinal indicator (like \"st\", \"nd\", \"rd\", and \"th\" in English) of a given number. For example, `pluralize(42, one: \"st\", two: \"nd\", few: \"rd\", other: \"th\", type: \"ordinal\")` will print out \"42nd\"."
+				}
+			],
+			"returnType": "Text"
 		},
 		{
 			"name": "contains",
