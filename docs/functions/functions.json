@@ -679,6 +679,61 @@
 			"returnDescription": "A list with the same number of items as list and empty values in the positions where at least one filter had a falsy value or the original values where all filters had truthy values."
 		},
 		{
+			"name": "sort",
+			"id": "sort",
+			"unary": false,
+			"category": "lists",
+			"role": "function",
+			"description": "Sort the list.\nExamples:\n- `sort(list(42, 13, 11, 7))` will return `list(7, 11, 13, 42)`\n- `sort(list(\"b\", \"a\", \"c\"))` will return `list(\"a\", \"b\", \"c\")`\n- `sort(list(\"b\", \"a\", \"c\", 42, 13, 11, 7))` will return `list(7, 11, 13, 42, \"a\", \"b\", \"c\")`\n- `sort(list(42, 13, 11, 7), order: \"desc\")` will return `list(42, 13, 11, 7)`\n- `sort(list(group(name: \"Lea Verou\", age: 36), group(name: \"David Karger\", age: 54)), \"age\", order: \"desc\")` will return `list(group(name: \"David Karger\", age: 54), group(name: \"Lea Verou\", age: 36))`\n\nSupports different languages and options provided by the [Intl.Collator object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/Collator) which Mavo uses under the hood.\nExamples:\n- `sort(list(\"б\", \"а\", \"в\"), lang: \"ru\")` will return `list(\"а\", \"б\", \"в\")`\n- `sort(list(\"Z\", \"a\", \"z\", \"ä\"), lang: \"de\", caseFirst: \"upper\")` will return `list(\"a\", \"ä\", \"Z\", \"z\")`.",
+			"argument": [
+				{
+					"name": "list",
+					"optional": false,
+					"type": "List",
+					"description": "List to sort."
+				},
+				{
+					"name": "property",
+					"optional": true,
+					"type": "Text | List",
+					"description": "If the list is a list of groups, the name of the property on which value the groups will be sorted."
+				},
+				{
+					"name": "order",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Sort order. By default, the list will be sorted in the ascending order. To sort it in the descending order, add the `order: \"desc\"` parameter. "
+				},
+				{
+					"name": "lang",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Optional language code in the `lang: \"language_code\"` format. For example, `lang: \"el\"` for the Greek language, `lang: \"ru\"` — for Russian. If omitted, uses the Mavo app's language."
+				},
+				{
+					"name": "option1",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "One of the options supported by the [Intl.Collator object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/Collator)."
+				},
+				{
+					"name": "option2",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "One of the options supported by the [Intl.Collator object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/Collator)."
+				},
+				{
+					"name": "...",
+					"optional": false,
+					"type": "Key:Value pair",
+					"description": "You may provide as many options supported by the [Intl.Collator object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/Collator) as you need."
+				}
+			],
+			"returnType": "List",
+			"returnDescription": "Sorted list.",
+			"demo": "# Demo\n\n```html\n<div mv-app mv-source=\"https://test.mavo.io/data/creatures.json\">\n\t<p>\n\t\tSort cats by\n\t\t<label>\n\t\t\t<input type=\"radio\" property name=\"sort_order\" value=\"name\" checked /> name\n\t\t</label>\n\t\t<label>\n\t\t\t<input type=\"radio\" name=\"sort_order\" value=\"age\" /> age\n\t\t</label>\n\t</p>\n\n\t<table>\n\t\t<tbody mv-list mv-value=\"sort(cat, sort_order)\">\n\t\t\t<tr mv-list-item>\n\t\t\t\t<td property=\"name\"></td>\n\t\t\t\t<td property=\"age\"></td>\n\t\t\t</tr>\n\t\t</tbody>\n\t</table>\n</div>\n<style>\np {\n\tdisplay: flex;\n\tgap: 0.5em;\n}\n\nlabel {\n\tdisplay: inline-flex;\n}\n\ntd + td {\n\tpadding-inline-start: 1.5em;\n}\n</style>\n```"
+		},
+		{
 			"name": "condense",
 			"id": "condense",
 			"unary": false,
