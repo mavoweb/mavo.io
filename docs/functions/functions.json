@@ -1531,6 +1531,77 @@
 			"returnDescription": "The localized text"
 		},
 		{
+			"name": "pluralize",
+			"id": "pluralize",
+			"unary": false,
+			"category": "text",
+			"role": "function",
+			"description": "Get the correct plural form of a word corresponding to the given number.\n\nExamples:\n- `pluralize(1, \"country\", \"countries\")` will print out \"1 country\"\n- `pluralize(2, \"country\", \"countries\")` will print out \"2 countries\"\n- `pluralize(1, \"χώρα\", \"χώρες\", lang: \"el\")` will print out \"1 χώρα\"\n- `pluralize(2, \"χώρα\", \"χώρες\", lang: \"el\")` will print out \"2 χώρες\"\n\nIf your language has more complex rules of pluralization than e.g., English or Greek, you can specify additional parameters that will help Mavo figure out the needed form of a word. Those parameters are `key:value` pairs, where `key` is either `zero`, `one`, `two`, `few`, `many`, or `other`. And the `value` is the respective form of the needed word.\nFor example,\n- `pluralize(1, one: \"страна\", few: \"страны\", many: \"стран\", lang: \"ru\")` will print out \"1 страна\"\n- `pluralize(2, one: \"страна\", few: \"страны\", many: \"стран\", lang: \"ru\")` will print out \"2 страны\"\n- `pluralize(5, one: \"страна\", few: \"страны\", many: \"стран\", lang: \"ru\")` will print out \"5 стран\"",
+			"argument": [
+				{
+					"name": "n",
+					"optional": false,
+					"type": "Number",
+					"description": "Number to get the plural form of the word for."
+				},
+				{
+					"name": "rule1",
+					"optional": false,
+					"type": "Text | Key:Value pair",
+					"description": "Pluralization rule to apply. If there is only one plural form of a word in the language, this parameter should provide the **singular form** of the word."
+				},
+				{
+					"name": "rule2",
+					"optional": false,
+					"type": "Text | Key:Value pair",
+					"description": "Pluralization rule to apply. If there is only one plural form of a word in the language, this parameter should provide the **plural form** of the word."
+				},
+				{
+					"name": "rule3",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Pluralization rule to apply."
+				},
+				{
+					"name": "rule4",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Pluralization rule to apply."
+				},
+				{
+					"name": "rule5",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Pluralization rule to apply."
+				},
+				{
+					"name": "rule6",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Pluralization rule to apply."
+				},
+				{
+					"name": "lang",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Language specified in the form of `lang: \"language_code\"`, so that Mavo could use the correct pluralization rules. For example, `lang: \"el\"` for the Greek language, `lang: \"ru\"` — for Russian.\nIf omitted, uses the Mavo app's language."
+				},
+				{
+					"name": "text_only",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Option `text_only: true` lets you get the plural form of the word without the preceding number. For example, `pluralize(42, \"country\", \"countries\", text_only: true)` will print out \"countries\", not \"42 countries\"."
+				},
+				{
+					"name": "type",
+					"optional": true,
+					"type": "Key:Value pair",
+					"description": "Option `type: \"ordinal\"` lets you get the ordinal indicator (like \"st\", \"nd\", \"rd\", and \"th\" in English) of a given number. For example, `pluralize(42, one: \"st\", two: \"nd\", few: \"rd\", other: \"th\", type: \"ordinal\")` will print out \"42nd\"."
+				}
+			],
+			"returnType": "Text"
+		},
+		{
 			"name": "contains",
 			"id": "contains",
 			"unary": false,
