@@ -1196,13 +1196,19 @@
 			"unary": false,
 			"category": "datetime",
 			"role": "function",
-			"description": "Get a date and time in ISO format (e.g., 1986-06-13T16:45).\nExamples:\nSuppose the special property `$now` returned a number of milliseconds corresponding to the following date and time: 2022-08-31T14:09:18.543.\n- `datetime($now)` will print out \"2022-08-31T14:09\"\n- `datetime($now, \"years\")` will print out \"2022\"\n- `datetime($now, \"months\")` will print out \"2022-08\"\n- `datetime($now, \"days\")` will print out \"2022-08-31\"\n- `datetime($now, \"hours\")` will print out \"2022-08-31T14:00\"\n- `datetime($now, \"minutes\")` will print out \"2022-08-31T14:09\"\n- `datetime($now, \"seconds\")` will print out \"2022-08-31T14:09:18\"\n- `datetime($now, \"ms\")` will print out \"2022-08-31T14:09:18.543\"\n\n",
+			"description": "Get a date and time in ISO format (e.g., 1986-06-13T16:45).\nExamples:\nSuppose the special property `$now` returned a number of milliseconds corresponding to the following date and time: 2022-08-31T14:09:18.543.\n- `datetime($now)` will print out \"2022-08-31T14:09\"\n- `datetime($now, \"years\")` will print out \"2022\"\n- `datetime($now, \"months\")` will print out \"2022-08\"\n- `datetime($now, \"days\")` will print out \"2022-08-31\"\n- `datetime($now, \"hours\")` will print out \"2022-08-31T14:00\"\n- `datetime($now, \"minutes\")` will print out \"2022-08-31T14:09\"\n- `datetime($now, \"seconds\")` will print out \"2022-08-31T14:09:18\"\n- `datetime($now, \"ms\")` will print out \"2022-08-31T14:09:18.543\"\n- `datetime($now, \"16:45:18\", \"hours\")` will print out \"2022-08-31T16:00\"\n- `datetime($now, \"16:45:18\", \"ms\")` will print out \"2022-08-31T16:45:18.000\"\n",
 			"argument": [
 				{
 					"name": "date",
 					"optional": false,
 					"type": "Date/Time",
 					"description": "The date/time to format."
+				},
+				{
+					"name": "time",
+					"optional": true,
+					"type": "Time",
+					"description": "If specified, will be used as the time part of the date. If the date already has the time part, it will be replaced by this one."
 				},
 				{
 					"name": "precision",
@@ -1212,7 +1218,7 @@
 				}
 			],
 			"returnType": "Text",
-			"demo": "# Demo\n\n```html\n<div mv-app>\n\t<h2><code>datetime($now, precision?)</code></h2>\n\t<table>\n\t\t<thead>\n\t\t\t<th>Expression</th>\n\t\t\t<th>Output</th>\n\t\t</thead>\n\t\t<tbody mv-list mv-value=\"list('years', 'months', 'days', 'hours', 'minutes', 'seconds', 'ms')\">\n\t\t\t<tr>\n\t\t\t\t<td><code>datetime($now)</code></td>\n\t\t\t\t<td><output>[datetime($now)]</output></td>\n\t\t\t</tr>\n\t\t\t<tr mv-list-item=\"precision\" mv-attribute=\"content\">\n\t\t\t\t<td><code>datetime($now, \"[precision]\")</code></td>\n\t\t\t\t<td><output>[datetime($now, precision)]</output></td>\n\t\t\t</tr>\n\t\t</tbody>\n\t</table>\n</div>\n<style>\nth {\n\ttext-align: left;\n}\n\ntd, th {\n\tmin-inline-size: 30ch;\n}\n</style>\n```"
+			"demo": "# Demo\n\n```html\n<div mv-app>\n\t<h2><code>datetime($now, \"16:45:18\", precision?)</code></h2>\n\t<table>\n\t\t<thead>\n\t\t\t<th>Expression</th>\n\t\t\t<th>Output</th>\n\t\t</thead>\n\t\t<tbody mv-list mv-value=\"list('years', 'months', 'days', 'hours', 'minutes', 'seconds', 'ms')\">\n\t\t\t<tr>\n\t\t\t\t<td><code>datetime($now, \"16:45:18\")</code></td>\n\t\t\t\t<td><output>[datetime($now, \"16:45:18\")]</output></td>\n\t\t\t</tr>\n\t\t\t<tr mv-list-item=\"precision\" mv-attribute=\"content\">\n\t\t\t\t<td><code>datetime($now, \"16:45:18\", \"[precision]\")</code></td>\n\t\t\t\t<td><output>[datetime($now, \"16:45:18\", precision)]</output></td>\n\t\t\t</tr>\n\t\t</tbody>\n\t</table>\n</div>\n<style>\nth {\n\ttext-align: left;\n}\n\ntd, th {\n\tmin-inline-size: 40ch;\n}\n</style>\n```"
 		},
 		{
 			"name": "readable_datetime",
@@ -1220,7 +1226,7 @@
 			"unary": false,
 			"category": "datetime",
 			"role": "function",
-			"description": "Get a date and time in human-readable text (e.g., 13 Jun 1986 16:45). The returned value is dependent on the document language.\nExamples:\nSuppose the special property `$now` returned a number of milliseconds corresponding to the following date and time: 2022-08-31T14:09:18.543. The language of the document is English.\n- `readable_datetime($now)` will print out \"31 Aug 2022 14:09\"\n- `readable_datetime($now, \"years\")` will print out \"2022\"\n- `readable_datetime($now, \"months\")` will print out \"August 2022\"\n- `readable_datetime($now, \"days\")` will print out \"31 Aug 2022\"\n- `readable_datetime($now, \"hours\")` will print out \"31 Aug 2022 14:00\"\n- `readable_datetime($now, \"minutes\")` will print out \"31 Aug 2022 14:09\"\n- `readable_datetime($now, \"seconds\")` will print out \"31 Aug 2022 14:09:18\"\n- `readable_datetime($now, \"ms\")` will print out \"31 Aug 2022 14:09:18.543\"",
+			"description": "Get a date and time in human-readable text (e.g., 13 Jun 1986 16:45). The returned value is dependent on the document language.\nExamples:\nSuppose the special property `$now` returned a number of milliseconds corresponding to the following date and time: 2022-08-31T14:09:18.543. The language of the document is English.\n- `readable_datetime($now)` will print out \"31 Aug 2022 14:09\"\n- `readable_datetime($now, \"years\")` will print out \"2022\"\n- `readable_datetime($now, \"months\")` will print out \"August 2022\"\n- `readable_datetime($now, \"days\")` will print out \"31 Aug 2022\"\n- `readable_datetime($now, \"hours\")` will print out \"31 Aug 2022 14:00\"\n- `readable_datetime($now, \"minutes\")` will print out \"31 Aug 2022 14:09\"\n- `readable_datetime($now, \"seconds\")` will print out \"31 Aug 2022 14:09:18\"\n- `readable_datetime($now, \"ms\")` will print out \"31 Aug 2022 14:09:18.543\"\n\n**Note:** If you need `readable_datetime($now, \"months\")` to return \"Aug 2022\" instead of \"August 2022\", add `month: \"short\"` as the third parameter of the function, like so: `readable_datetime($now, \"months\", month: \"short\")`.",
 			"argument": [
 				{
 					"name": "date",
