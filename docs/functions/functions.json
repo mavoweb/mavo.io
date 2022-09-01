@@ -1584,7 +1584,7 @@
 					"name": "lang",
 					"optional": true,
 					"type": "Key:Value pair",
-					"description": "Language specified in the form of `lang: \"language_code\"`, so that Mavo could use the correct pluralization rules. For example, `lang: \"el\"` for the Greek language, `lang: \"ru\"` — for Russian.\nIf omitted, uses the Mavo app's language."
+					"description": "Optional language code in the `lang: \"language_code\"` format, so that Mavo could use the correct pluralization rules. For example, `lang: \"el\"` for the Greek language, `lang: \"ru\"` — for Russian.\nIf omitted, uses the Mavo app's language."
 				},
 				{
 					"name": "text_only",
