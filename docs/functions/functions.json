@@ -508,7 +508,7 @@
 			"unary": false,
 			"category": "lists",
 			"role": "function",
-			"description": "Get the first item(s) in a list of values.",
+			"description": "Get the first non-empty item(s) in a list of values.",
 			"argument": [
 				{
 					"name": "n",
@@ -531,7 +531,7 @@
 			"unary": false,
 			"category": "lists",
 			"role": "function",
-			"description": "Get the last item(s) in a list of values. \nFor example, assuming there is a collection with the name `event`, `last(event)` gets you the last event and `last(3, event)` gets you the last 3 events.",
+			"description": "Get the last non-empty item(s) in a list of values. \nFor example, assuming there is a collection with the name `event`, `last(event)` gets you the last event and `last(3, event)` gets you the last 3 events.",
 			"argument": [
 				{
 					"name": "n",
