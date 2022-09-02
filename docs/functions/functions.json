@@ -1930,7 +1930,7 @@
 			"unary": false,
 			"category": "lists",
 			"role": "special",
-			"description": "If inside a collection, the closest item’s previous item.",
+			"description": "The closest item’s previous item (when used inside a collection). To get specific named properties from the previous item, you can use a dot notation (`.`). For example, to get the value of the previous item’s \"cost\" property, you’d write `$previous.cost`.\n\nYou can also use it in conjunction with [`$all`](#$all), to get *all* previous items: `$all.$previous`.\nDo try to avoid using that unless absolutely necessary, as it can be quite slow. For example, assume you have a list of entries with a \"cost\" property each. You *could* do a cumulative sum of cost for each entry by writing `$all.$previous.cost + cost`, or you could simply define a `cumulative_cost` property, with value `$previous.cumulative_cost + cost`. The latter is both simpler, and faster.",
 			"argument": [
 				{
 					"optional": false
@@ -1943,7 +1943,7 @@
 			"unary": false,
 			"category": "lists",
 			"role": "special",
-			"description": "If inside a collection, the closest item’s next item.",
+			"description": "The closest item’s next item (when used inside a collection). To get specific named properties from the next item, you can use a dot notation (`.`). For example, to get the value of the previous item’s \"cost\" property, you’d write `$next.cost`.\n\nYou can also use it in conjunction with [`$all`](#$all), to get *all* next items: `$all.$next`.\n",
 			"argument": [
 				{
 					"optional": false
