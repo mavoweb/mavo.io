@@ -1848,7 +1848,7 @@
 			"name": "$now",
 			"category": "datetime",
 			"role": "special",
-			"description": "Current date and time as number of milliseconds since January 1st, 1970. Note that using `$now` in expressions makes them update automatically as `$now` changes. Mostly useful in conjunction with [date and time functions](?category=datetime) or the `mod` operator.\n\nExamples:\n- `readable_date($now)` returns the current date only (no time) in a human readable format\n- `readable_datetime($now)` returns the current date and time in a human readable format\n- `time($now)` returns the current time",
+			"description": "Current date and time as number of milliseconds since January 1st, 1970. Note that using `$now` in expressions makes them update automatically as `$now` changes. Mostly useful in conjunction with [date and time functions](?category=datetime) or the `mod` operator.\n\nExamples:\n- `readable_datetime($now)` returns the current date and time in a human readable format\n- `time($now)` returns the current time",
 			"argument": [
 				{
 					"optional": false
