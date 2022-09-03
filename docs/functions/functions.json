@@ -929,8 +929,8 @@
 			"returnDescription": "All texts before the needle."
 		},
 		{
-			"name": "tolast",
-			"id": "tolast",
+			"name": "tofirst",
+			"id": "tofirst",
 			"unary": false,
 			"category": "text",
 			"role": "function",
