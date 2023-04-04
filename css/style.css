@@ -55,6 +55,7 @@ body {
   hyphens: auto;
   counter-reset: figure;
   padding: 0 1rem;
+  overflow-x: hidden;
 }
 
 a {
