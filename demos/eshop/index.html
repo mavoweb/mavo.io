@@ -15,13 +15,15 @@
 <div mv-app="eshop" mv-storage="https://github.com/mavoweb/mavo.io/demos/eshop/products.json" mv-storage-branch="master" mv-bar="no-login">
 	<h1>Products</h1>
 
-	<article property="product" mv-multiple>
-		<img property="image" alt="" />
-		<span property="name"></span>
-		<!-- Dot notation because cart is a separate Mavo app, due to separate storage (local) -->
-		<button mv-action="add(product, cart.product)" class="add-to-cart">Add to cart</button>
-		<span property="amount" class="price"></span>
-	</article>
+	<div class="mv-container" mv-list>
+		<article property="product" mv-list-item>
+			<img property="image" alt="" />
+			<span property="name"></span>
+			<!-- Dot notation because cart is a separate Mavo app, due to separate storage (local) -->
+			<button mv-action="add(product, cart.product)" class="add-to-cart">Add to cart</button>
+			<span property="amount" class="price"></span>
+		</article>
+	</div>
 
 	<footer>
 		Products from <a href="http://theworstthingsforsale.com/">The Worst Things For Sale</a>
@@ -56,18 +58,20 @@
 				<th>Subtotal</th>
 			</tr>
 		</thead>
-		<tr property="product" mv-multiple mv-initial-items="0">
-			<!-- Anything with a name attribute is sent to PayPal -->
-			<td><button type="button" title="Remove from cart" mv-action="delete(product)" class="remove">❌</button></td>
-			<td property="name"></td>
-			<td><input type="number" property="quantity" value="1" min="1" name="quantity_[$index + 1]"></td>
-			<td class="price" property="amount"></td>
-			<td>
-				<span property="subtotal" class="price">[amount * quantity]</span>
-				<input type="hidden" name="item_name_[$index + 1]" value="[name]">
-				<input type="hidden" name="amount_[$index + 1]" value="[amount]">
-			</td>
-		</tr>
+		<tbody mv-list mv-initial-items="0">
+			<tr property="product" mv-list-item>
+				<!-- Anything with a name attribute is sent to PayPal -->
+				<td><button type="button" title="Remove from cart" mv-action="delete(product)" class="remove">❌</button></td>
+				<td property="name"></td>
+				<td><input type="number" property="quantity" value="1" min="1" name="quantity_[$index + 1]"></td>
+				<td class="price" property="amount"></td>
+				<td>
+					<span property="subtotal" class="price">[amount * quantity]</span>
+					<input type="hidden" name="item_name_[$index + 1]" value="[name]">
+					<input type="hidden" name="amount_[$index + 1]" value="[amount]">
+				</td>
+			</tr>
+		</tbody>
 		<tr mv-if="count(product) = 0" class="empty-cart-message">
 			<td colspan="4">(Cart is empty)</td>
 			<td></td>

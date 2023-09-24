@@ -14,12 +14,14 @@
 
 <fieldset>
 	<legend>Common items</legend>
-	<div property="commonItem" mv-multiple mv-initial-items="0" mv-action="add(commonItem, item)"></div>
+	<ul property="commonItem" mv-list mv-initial-items="0" class="mv-container">
+		<li mv-list-item mv-action="add(commonItem, item)"></li>
+	</ul>
 	<div class="none-yet" mv-if="count(commonItem) = 0">No common items yet</div>
 </fieldset>
 
-<ul>
-	<li property="item" mv-multiple>
+<ul mv-list>
+	<li property="item" mv-list-item>
 		<input type="checkbox" property="bought">
 		<span property="name">Garlic</span>
 		<button class="add-to-common" mv-action="add(item.name, commonItem)">+ common items</button>

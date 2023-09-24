@@ -32,66 +32,68 @@
 
 <a href="#" class="show-all">↩ Back to all invoices</a>
 
-<article class="invoice" property="invoice" mv-multiple id="invoice[id]" mv-order="desc">
-	<header>
-		<a href="#invoice[id]" title="Isolate invoice"><h1>#<span property="id" mv-expressions="{ }">?</span></h1></a>
-		<div class="company">
-			<img src="[companyLogo]" />
-			<div>
-				<h2>[companyName]</h2>
-				<address>[companyAddress]</address>
+<main class="mv-container" mv-list mv-order="desc">
+	<article class="invoice" property="invoice" mv-list-item id="invoice[id]">
+		<header>
+			<a href="#invoice[id]" title="Isolate invoice"><h1>#<span property="id" mv-expressions="{ }">?</span></h1></a>
+			<div class="company">
+				<img src="[companyLogo]" />
+				<div>
+					<h2>[companyName]</h2>
+					<address>[companyAddress]</address>
+				</div>
+				<div class="online">
+					<a href="[companyURL]" target="_blank">[companyURL]</a>
+					<a href="mailto:[companyEmail]">[companyEmail]</a>
+				</div>
 			</div>
-			<div class="online">
-				<a href="[companyURL]" target="_blank">[companyURL]</a>
-				<a href="mailto:[companyEmail]">[companyEmail]</a>
+		</header>
+	
+		<p class="invoice-date">
+			<time property="date">Invoice date</time>
+		</p>
+	
+		<article class="recipient">
+			<h1>Recipient:</h1>
+			<div property="recipient">
+				<h2 property="name">Recipient name</h2>
+				<address property="address">Recipient address</address>
 			</div>
-		</div>
-	</header>
-
-	<p class="invoice-date">
-		<time property="date">Invoice date</time>
-	</p>
-
-	<article class="recipient">
-		<h1>Recipient:</h1>
-		<div property="recipient">
-			<h2 property="name">Recipient name</h2>
-			<address property="address">Recipient address</address>
-		</div>
+		</article>
+	
+		<section class="services">
+			<h1>Services provided:</h1>
+			<table>
+				<thead>
+					<tr>
+						<td>Description</td>
+						<td>Amount (<span property="currency" mv-editor="#currencies"></span>)</td>
+					</tr>
+				</thead>
+				<tbody mv-list>
+					<tr property="services" mv-list-item>
+						<td property="description">
+							Description of service provided
+						</td>
+						<td>
+							[currency]<span property="amount">Amount</span>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td>Total due:</td>
+						<td>[currency][sum(amount)]</td>
+					</tr>
+				</tfoot>
+			</table>
+		</section>
+	
+		<section class="notes">
+			<div property="notes"></div>
+		</section>
 	</article>
-
-	<section class="services">
-		<h1>Services provided:</h1>
-		<table>
-			<thead>
-				<tr>
-					<td>Description</td>
-					<td>Amount (<span property="currency" mv-editor="#currencies"></span>)</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr property="services" mv-multiple>
-					<td property="description">
-						Description of service provided
-					</td>
-					<td>
-						[currency]<span property="amount">Amount</span>
-					</td>
-				</tr>
-			</tbody>
-			<tfoot>
-				<tr>
-					<td>Total due:</td>
-					<td>[currency][sum(amount)]</td>
-				</tr>
-			</tfoot>
-		</table>
-	</section>
-
-	<section class="notes">
-		<div property="notes"></div>
-	</section>
-</article>
+</main>
 
 <div hidden>
 	<select id="currencies">

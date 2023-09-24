@@ -36,67 +36,64 @@
 		</label>
 	</div>
 
-	<details property="className" open="[!collapse.classes or $hash = name]" mv-multiple id="[name]">
-		<summary>
-			<h2><a href="#[name]" property="name" mv-attribute="none">Mavo</a></h2>
-			<p class="[if(!parent, 'hide-on-read')] inherits">
-				Inherits from <a href="#[parent]" property="parent" mv-attribute="none"></a>
-			</p>
-			<p class="defined">Defined in <a href="https://github.com/mavoweb/mavo/blob/master/src/[filename]" property="filename" mv-attribute="none" target="_blank">mavo.js</a></p>
-		</summary>
-
-		<p property="description" class="markdown">`Mavo` is the main class. Every Mavo app is an instance of `Mavo` and `mavo.js` is the entry point of Mavo itself.</p>
-
-		<h3>Members</h3>
-
-		<details property="member" open="[!collapse.members]" mv-multiple class="role-[role]" id="[id]">
-			<meta property="id" content="[className.name][if(static, '.', '#')][name]" />
-
+	<div class="mv-container" mv-list>
+		<details property="className" open="[!collapse.classes or $hash = name]" mv-list-item id="[name]">
 			<summary>
-				<h4><a href="#[id]" property="name" mv-default="[if(role = 'constructor', 'new ' & className.name)]" mv-attribute="none" data-arguments="[join(argument.summary, ', ')]"></a></h4>
-				<span property="type" mv-if="role != 'constructor' and role != 'function'" foo="role != 'function'"></span>
-				<span class="type">[returnType]</span>
-				<span property="static" class="mv-toggle" mv-if="role != 'constructor'">Static</span>
-				<span property="role" mv-editor="#role-select"></span>
+				<h2><a href="#[name]" property="name" mv-attribute="none">Mavo</a></h2>
+				<p class="[if(!parent, 'hide-on-read')] inherits">
+					Inherits from <a href="#[parent]" property="parent" mv-attribute="none"></a>
+				</p>
+				<p class="defined">Defined in <a href="https://github.com/mavoweb/mavo/blob/master/src/[filename]" property="filename" mv-attribute="none" target="_blank">mavo.js</a></p>
 			</summary>
-
-			<p property="description" class="markdown"></p>
-
-			<details mv-if="role = 'function' or role = 'constructor'" class="[if(!returnType and !returnDescription and isVoid, 'hide-on-read')]" open="[!collapse.arguments]">
-				<summary>Arguments ([count(argument.name)])<span mv-if="role != 'constructor'"> & Return Value</span></summary>
-
-				<table>
-					<thead>
-						<th>Name</th>
-						<th>Type</th>
-						<th>Description</th>
-					</thead>
-					<tbody class="[if(isVoid, 'hide-on-read')]">
-						<tr property="argument" mv-multiple>
-							<td>
-								<span property="name"></span>
-								<span property="optional" class="mv-toggle">Optional</span>
-								<meta property="summary" mv-value="if(optional, '[' & name & ']', name)">
-							</td>
-							<td property="type"></td>
-							<td property="description" class="markdown"></td>
-						</tr>
-					</tbody>
-					<tfoot mv-if="role != 'constructor'" class="[if(!returnType and !returnDescription, 'hide-on-read')]">
-						<tr>
-							<td>Returns</td>
-							<td property="returnType"></td>
-							<td property="returnDescription"></td>
-						</tr>
-					</tfoot>
-				</table>
-			</details>
-			<meta property="isVoid" content="[count(argument.name) = 0]">
+			<p property="description" class="markdown">`Mavo` is the main class. Every Mavo app is an instance of `Mavo` and `mavo.js` is the entry point of Mavo itself.</p>
+			<h3>Members</h3>
+			<div class="mv-container" mv-list>
+				<details property="member" open="[!collapse.members]" mv-list-item class="role-[role]" id="[id]">
+					<meta property="id" content="[className.name][if(static, '.', '#')][name]" />
+					<summary>
+						<h4><a href="#[id]" property="name" mv-default="[if(role = 'constructor', 'new ' & className.name)]" mv-attribute="none" data-arguments="[join(argument.summary, ', ')]"></a></h4>
+						<span property="type" mv-if="role != 'constructor' and role != 'function'" foo="role != 'function'"></span>
+						<span class="type">[returnType]</span>
+						<span property="static" class="mv-toggle" mv-if="role != 'constructor'">Static</span>
+						<span property="role" mv-editor="#role-select"></span>
+					</summary>
+					<p property="description" class="markdown"></p>
+					<details mv-if="role = 'function' or role = 'constructor'" class="[if(!returnType and !returnDescription and isVoid, 'hide-on-read')]" open="[!collapse.arguments]">
+						<summary>Arguments ([count(argument.name)])<span mv-if="role != 'constructor'"> & Return Value</span></summary>
+						<table>
+							<thead>
+								<th>Name</th>
+								<th>Type</th>
+								<th>Description</th>
+							</thead>
+							<tbody class="[if(isVoid, 'hide-on-read')]" mv-list>
+								<tr property="argument" mv-list-item>
+									<td>
+										<span property="name"></span>
+										<span property="optional" class="mv-toggle">Optional</span>
+										<meta property="summary" mv-value="if(optional, '[' & name & ']', name)">
+									</td>
+									<td property="type"></td>
+									<td property="description" class="markdown"></td>
+								</tr>
+							</tbody>
+							<tfoot mv-if="role != 'constructor'" class="[if(!returnType and !returnDescription, 'hide-on-read')]">
+								<tr>
+									<td>Returns</td>
+									<td property="returnType"></td>
+									<td property="returnDescription"></td>
+								</tr>
+							</tfoot>
+						</table>
+					</details>
+					<meta property="isVoid" content="[count(argument.name) = 0]">
+				</details>
+			</div>
 		</details>
-	</details>
+	</div>
 
-	<ul id="toc">
-		<li mv-multiple="toc" mv-value="className" mv-group>
+	<ul id="toc" mv-list mv-value="className">
+		<li mv-list-item="toc" mv-group>
 			<a href="#[name]">[name]</a>
 		</li>
 	</ul>

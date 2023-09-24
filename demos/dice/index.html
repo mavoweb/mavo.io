@@ -11,8 +11,8 @@
 </head>
 <body mv-app="dice" mv-mode="read">
 
-<div class="history">
-	<div property="diceHistory" class="dice number-[diceHistory]" mv-multiple mv-initial-items="0"></div>
+<div class="history" mv-list mv-initial-items="0">
+	<div property="diceHistory" class="dice number-[diceHistory]" mv-list-item></div>
 </div>
 
 <div property="dice" class="dice number-[dice]">6</div>

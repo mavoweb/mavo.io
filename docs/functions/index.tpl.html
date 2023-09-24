@@ -31,68 +31,68 @@
 			</select>
 			<select id="categories" property="categoryFilter" mv-default="[url('category')]" mv-storage="none">
 				<option value=""></option>
-				<option property="category" mv-multiple mv-group mv-value="list(
-					group(id: 'math', text: 'Math'),
-					group(id: 'lists', text: 'Lists'),
-					group(id: 'text', text: 'Text'),
-					group(id: 'datetime', text: 'Dates and Times'),
-					group(id: 'logical', text: 'Logical'),
-					group(id: 'other', text: 'Other')
-				)" value="[id]">[text]</option>
+				<optgroup label="Categories" mv-list mv-value="list(
+						group(id: 'math', text: 'Math'),
+						group(id: 'lists', text: 'Lists'),
+						group(id: 'text', text: 'Text'),
+						group(id: 'datetime', text: 'Dates and Times'),
+						group(id: 'logical', text: 'Logical'),
+						group(id: 'other', text: 'Other')
+					)">
+					<option property="category" mv-list-item mv-group value="[id]">[text]</option>
+				</optgroup>
 			</select>
 		</fieldset>
 	</div>
 	<button class="hide-on-read" mv-action="set(opened, true)">Expand All</button>
 
-	<details property="term" mv-multiple class="role-[role] [if(unary, 'unary')] [if(!and(shown), 'filtered')]" id="[id]" open="[opened or $hash = id]">
-		<meta property="shown" content="[!search or search(json(term), search) > -1]">
-		<meta property="shown" content="[!categoryFilter or categoryFilter = category]">
-		<meta property="shown" content="[!roleFilter or roleFilter = role]">
-		<summary>
-			<h4><a href="#[id]" property="name" mv-attribute="none" data-arguments="[join(argument.summary, ', ')]"></a></h4>
-			<span class="description-preview">[description]</span>
-			<meta property="id" mv-default="[name]" />
-			<meta property="unary" mv-if="role = 'operator'" datatype="boolean" />
-			<span property="category" mv-editor="#categories"></span>
-			<span property="role" mv-editor="#role-select"></span>
-		</summary>
-
-		<p property="description" class="markdown"></p>
-
-		<details mv-if="role = 'function' or role = 'action'" class="[if(!returnType and !returnDescription and isVoid, 'hide-on-read')]" open="[!collapse.arguments]">
-			<summary>Parameters ([count(argument.name)])</summary>
-
-			<table>
-				<thead>
-					<th>Name</th>
-					<th>Type</th>
-					<th>Description</th>
-				</thead>
-				<tbody class="[if(isVoid, 'hide-on-read')]">
-					<tr property="argument" mv-multiple>
-						<td>
-							<span property="name"></span>
-							<span property="optional" class="mv-toggle">Optional</span>
-							<meta property="summary" mv-value="if(optional, name & '?', name)">
-						</td>
-						<td property="type"></td>
-						<td property="description" class="markdown"></td>
-					</tr>
-				</tbody>
-				<tfoot class="[if(!returnType and !returnDescription, 'hide-on-read')]">
-					<tr>
-						<td>Returns</td>
-						<td property="returnType"></td>
-						<td property="returnDescription"></td>
-					</tr>
-				</tfoot>
-			</table>
+	<div class="mv-container" mv-list>
+		<details property="term" mv-list-item class="role-[role] [if(unary, 'unary')] [if(!and(shown), 'filtered')]" id="[id]" open="[opened or $hash = id]">
+			<meta property="shown" content="[!search or search(json(term), search) > -1]">
+			<meta property="shown" content="[!categoryFilter or categoryFilter = category]">
+			<meta property="shown" content="[!roleFilter or roleFilter = role]">
+			<summary>
+				<h4><a href="#[id]" property="name" mv-attribute="none" data-arguments="[join(argument.summary, ', ')]"></a></h4>
+				<span class="description-preview">[description]</span>
+				<meta property="id" mv-default="[name]" />
+				<meta property="unary" mv-if="role = 'operator'" datatype="boolean" />
+				<span property="category" mv-editor="#categories"></span>
+				<span property="role" mv-editor="#role-select"></span>
+			</summary>
+			<p property="description" class="markdown"></p>
+			<details mv-if="role = 'function' or role = 'action'" class="[if(!returnType and !returnDescription and isVoid, 'hide-on-read')]" open="[!collapse.arguments]">
+				<summary>Parameters ([count(argument.name)])</summary>
+				<table>
+					<thead>
+						<th>Name</th>
+						<th>Type</th>
+						<th>Description</th>
+					</thead>
+					<tbody class="[if(isVoid, 'hide-on-read')]" mv-list>
+						<tr property="argument" mv-list-item>
+							<td>
+								<span property="name"></span>
+								<span property="optional" class="mv-toggle">Optional</span>
+								<meta property="summary" mv-value="if(optional, name & '?', name)">
+							</td>
+							<td property="type"></td>
+							<td property="description" class="markdown"></td>
+						</tr>
+					</tbody>
+					<tfoot class="[if(!returnType and !returnDescription, 'hide-on-read')]">
+						<tr>
+							<td>Returns</td>
+							<td property="returnType"></td>
+							<td property="returnDescription"></td>
+						</tr>
+					</tfoot>
+				</table>
+			</details>
+			<meta property="isVoid" content="[count(argument.name) = 0]">
+			<div property="demo" class="markdown live-demo" mv-markdown-options="headerLevelStart: 6"></div>
+			<meta property="opened" mv-storage="none" />
 		</details>
-		<meta property="isVoid" content="[count(argument.name) = 0]">
-
-		<div property="demo" class="markdown live-demo" mv-markdown-options="headerLevelStart: 6"></div>
-		<meta property="opened" mv-storage="none" />
-	</details>
+	</div>
 
 	<ul id="toc">
 		<!-- <li mv-multiple="toc" mv-value="mavoClass">

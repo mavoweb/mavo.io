@@ -15,32 +15,34 @@
 	[count(contact)]<span>contacts</span>
 </h1>
 
-<details property="contact" typeof="Person" mv-multiple open>
-	<summary>
-		<img property="picture" src="https://pbs.twimg.com/profile_images/584963092120899586/TxkxQ7Y5_400x400.png">
-		<h1>
-			<span property="name">Lea Verou</span>
-			<span property class="affiliation">MIT CSAIL</span>
-		</h1>
-	</summary>
-	<section>
-		<section class="phones">
-			<article property="phoneNumber" typeof="ContactPoint" mv-multiple>
-				<span property="name" mv-default>Mobile</span>
-				<span property="telephone">555-123-4567</span>
-				<a href="tel:[telephone]" title="Call">📞</a>
-			</article>
+<main class="mv-container" mv-list>
+	<details property="contact" typeof="Person" mv-list-item open>
+		<summary>
+			<img property="picture" src="https://pbs.twimg.com/profile_images/584963092120899586/TxkxQ7Y5_400x400.png">
+			<h1>
+				<span property="name">Lea Verou</span>
+				<span property class="affiliation">MIT CSAIL</span>
+			</h1>
+		</summary>
+		<section>
+			<section class="phones" mv-list>
+				<article property="phoneNumber" typeof="ContactPoint" mv-list-item>
+					<span property="name" mv-default>Mobile</span>
+					<span property="telephone">555-123-4567</span>
+					<a href="tel:[telephone]" title="Call">📞</a>
+				</article>
+			</section>
+	
+			<section class="emails" mv-list>
+				<article property="emailAddress" typeof="ContactPoint" mv-list-item>
+					<span property="name" mv-default>Email</span>
+					<span property="email">leaverou@mit.edu</span>
+					<a href="mailto:[email]" title="Send email">✉</a>
+				</article>
+			</section>
 		</section>
-
-		<section class="emails">
-			<article property="emailAddress" typeof="ContactPoint" mv-multiple>
-				<span property="name" mv-default>Email</span>
-				<span property="email">leaverou@mit.edu</span>
-				<a href="mailto:[email]" title="Send email">✉</a>
-			</article>
-		</section>
-	</section>
-</details>
+	</details>
+</main>
 
 <footer>
 	Rolodex photo used with permission from <a href="https://www.flickr.com/photos/jamamakitty/14815114243">flickr.com/photos/jamamakitty/14815114243</a>

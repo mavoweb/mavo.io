@@ -16,7 +16,9 @@
 
 Sentence:
 <div class="sentence [if(join(orderedWord, ' ') = solution, correct)]" mv-mode="edit">
-	<span property="orderedWord" mv-multiple mv-accepts="word" mv-initial-items="0" mv-mode="read"></span>
+	<div class="mv-container" mv-list mv-accepts="word" mv-initial-items="0" mv-mode="read">
+		<span property="orderedWord" mv-list-item></span>
+	</div>
 
 	<div class="buttons">
 		<button class="clear" mv-action="delete(orderedWord)">Clear</button>
@@ -24,7 +26,9 @@ Sentence:
 	</div>
 </div>
 
-<span property="word" mv-multiple mv-value="shuffle(split(solution))" mv-action="add(word, orderedWord)"></span>
+<div class="mv-container" mv-list mv-value="shuffle(split(solution))">
+	<span property="word" mv-list-item mv-action="add(word, orderedWord)"></span>
+</div>
 
 <details>
 	<summary>Solution</summary>

@@ -11,12 +11,14 @@
 <div mv-app="faq" mv-storage="https://github.com/mavoweb/mavo.io/faq/questions.json" mv-storage-branch="master" mv-plugins="markdown github-pr">
 	<div class="mv-bar mv-ui" mv-bar="with no-login"></div>
 
-	<section id="[id]" mv-multiple property="questions">
-		<h1 class="h1"><a href="#[id]" property="question" mv-attribute="none">Question</a></h1>
-
-		<div property="answer" class="markdown"></div>
-
-		<meta property="id" mv-default="[idify(question)]">
+	<section class="mv-container" mv-list>
+		<article id="[id]" mv-list-item property="questions">
+			<h1 class="h1"><a href="#[id]" property="question" mv-attribute="none">Question</a></h1>
+		
+			<div property="answer" class="markdown"></div>
+		
+			<meta property="id" mv-default="[idify(question)]">
+		</article>
 	</section>
 
 	<section class="mv-logged-out">
