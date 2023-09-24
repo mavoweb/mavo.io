@@ -65,7 +65,7 @@ if (!parent || parent === window) {
 		});
 
 		$.fetch("/demos/demos.json", {responseType: "json"}).then(xhr => {
-			var demos = xhr.response.demo;
+			var demos = xhr.response.category.flatMap(category => category.demo);
 			var ids = demos.map(demo => demo.id);
 			var index = ids.indexOf(id);
 			var previous = ids[index - 1];
