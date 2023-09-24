@@ -262,7 +262,7 @@
 					"id": "mv-accepts",
 					"advanced": false,
 					"title": "The mv-accepts attribute",
-					"content": "By default, collection items can only be dragged either within the same collection, or to collections of the same type. The `mv-accepts` attribute takes a space-separated list of property names as its value and is specified on properties with `mv-multiple`. When specified, the current collection can accept items from those other collections as well.\n\nNote that if you want to drag and drop items between two collections, you will need to specify `mv-accepts` twice, once on each collection.\n\nAn example of `mv-accepts` can be found in the [Decisions](/demos/decisions/) demo. Try dragging pros to cons or vice versa."
+					"content": "By default, collection items can only be dragged either within the same collection, or to collections of the same type. The `mv-accepts` attribute takes a space-separated list of property names as its value and is specified on collection containers, i.e., properties with `mv-list`. When specified, the current collection can accept items from those other collections as well.\n\nNote that if you want to drag and drop items between two collections, you will need to specify `mv-accepts` twice, once on each collection.\n\nAn example of `mv-accepts` can be found in the [Decisions](/demos/decisions/) demo. Try dragging pros to cons or vice versa."
 				},
 				{
 					"id": "mv-order",
