@@ -8,7 +8,7 @@
 				{
 					"id": "single-property-collection",
 					"title": "Single property ↔ Collection",
-					"content": "When converting a single property to/from a collection (i.e. adding or removing `mv-multiple`), you don’t need to do anything, Mavo automatically handles it.\n\nIf you are **removing** `mv-multiple` and your data contains multiple items, Mavo will only display the first item. However, the rest will be retained, in case you change your mind later.",
+					"content": "When converting a single property to/from a collection (i.e. adding or removing `mv-list`/`mv-list-item`), you don’t need to do anything, Mavo automatically handles it.\n\nIf you are **removing** `mv-list`/`mv-list-item` and your data contains multiple items, Mavo will only display the first item. However, the rest will be retained, in case you change your mind later.",
 					"advanced": false
 				},
 				{
