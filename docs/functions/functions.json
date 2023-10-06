@@ -954,7 +954,8 @@
 				}
 			],
 			"returnType": "Text",
-			"returnDescription": "All texts after the needle."
+			"returnDescription": "All texts after the needle.",
+			"category": "text"
 		},
 		{
 			"name": "to",
@@ -1025,7 +1026,8 @@
 				}
 			],
 			"returnType": "Text",
-			"returnDescription": "All texts before the needle."
+			"returnDescription": "All texts before the needle.",
+			"category": "text"
 		},
 		{
 			"name": "random",
