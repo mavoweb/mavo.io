@@ -752,11 +752,6 @@
 			"returnDescription": "A list without empty values in it"
 		},
 		{
-			"shown": [
-				true,
-				true,
-				true
-			],
 			"name": "group_by",
 			"id": "group_by",
 			"unary": false,
