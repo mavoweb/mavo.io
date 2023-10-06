@@ -886,7 +886,7 @@
 			"unary": false,
 			"category": "text",
 			"role": "function",
-			"description": "Same as `from()` but searches for the needle starting with the **last** character of the haystack instead of the first.",
+			"description": "Same as [`from()`](#from) but searches for the needle starting with the **last** character of the haystack instead of the first.",
 			"argument": [
 				{
 					"name": "haystack",
@@ -934,7 +934,7 @@
 			"unary": false,
 			"category": "text",
 			"role": "function",
-			"description": "Same as `to()` but searches for the needle starting with the **first** character of the haystack instead of the last.",
+			"description": "Same as [`to()`](#to) but searches for the needle starting with the **first** character of the haystack instead of the last.",
 			"argument": [
 				{
 					"name": "haystack",
