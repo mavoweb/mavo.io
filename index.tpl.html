@@ -74,7 +74,7 @@
 			<pre><code>
 				&lt;main <a href="/docs/primer/#mv-app" aria-label="Give your app a name and tell Mavo to be active on this portion of the page.">mv-app="homepage"</a>
 				      <a href="/docs/primer/#mv-storage" aria-label="mv-storage tells Mavo where to store the data, in this case on GitHub.">mv-storage="https://github.com/mavoweb/data"</a>
-				      <a href="http://plugins.mavo.io/plugin/tinymce" aria-label="Load the TinyMCE plugin for rich text editing">mv-plugins="tinymce"</a>>
+				      <a href="http://plugins.mavo.io/plugin/tinymce" aria-label="Load the TinyMCE plugin for rich text editing.">mv-plugins="tinymce"</a>>
 
 				&lt;h1>
 					&lt;img <a href="/docs/primer/#property" aria-label="Name important elements. Makes elements editable and saveable when that makes sense.">property</a>="image" alt="">
@@ -84,7 +84,7 @@
 				&lt;p property="description" <a href="http://plugins.mavo.io/plugin/tinymce" aria-label="This tells the TinyMCE plugin to be active on this property, i.e. that this property should be edited as rich text.">class="tinymce"</a>>&lt;/p>
 
 				&lt;div class="links">
-					&lt;a <a href="/docs/primer/#property" aria-label="Note that property doesn’t need a value if it’s the same as its first class (or id, or name, or itemprop)">property</a> class="twitter" title="Twitter">🐦&lt;/a>
+					&lt;a <a href="/docs/primer/#property" aria-label="Note that property doesn’t need a value if it’s the same as its first class (or id, or name, or itemprop).">property</a> class="twitter" title="Twitter">🐦&lt;/a>
 					&lt;a property class="facebook" title="Facebook">f&lt;/a>
 					&lt;a property class="wikipedia" title="Wikipedia">W&lt;/a>
 				&lt;/div>
@@ -104,20 +104,20 @@
 	<section class="manual example side-by-side">
 		<div class="demo-container">
 			<pre><code>
-				&lt;main mv-app="todo" <a href="/docs/primer/#mv-storage" aria-label="Store data locally, in the browser">mv-storage="local"</a> <a href="/docs/properties/#mv-mode" aria-label="Make entire app always editable, no need for a separate editing mode here" class="right">mv-mode="edit"</a>>
+				&lt;main mv-app="todo" <a href="/docs/primer/#mv-storage" aria-label="Store data locally, in the browser.">mv-storage="local"</a> <a href="/docs/properties/#mv-mode" aria-label="Make entire app always editable, no need for a separate editing mode here." class="right">mv-mode="edit"</a>>
 					&lt;header>
 						&lt;h1>My tasks&lt;/h1>
 						&lt;p><a href="/docs/primer/#expressions" aria-label="Use brackets to refer to current values of properties and perform calculations. Mavo will automatically update this every time the “done” property changes in any item.">[count(done)]</a> done out of [count(task)] total&lt;/p>
 					&lt;/header>
 
-					&lt;ul>
-						&lt;li property="task" <a href="docs/primer/#mv-multiple" aria-label="mv-multiple turns an element into an editable collection of items, complete with controls to add and delete items, reorder items via drag and drop, and even keyboard shortcuts for all these!">mv-multiple</a>>
+					&lt;ul <a href="docs/primer/#mv-list-and-mv-list-item" aria-label="mv-list turns an element into an editable collection of items, complete with controls to add and delete items, reorder items via drag and drop, and even keyboard shortcuts for all these!">mv-list</a>>
+						&lt;li property="task" <a href="docs/primer/#mv-list-and-mv-list-item" aria-label="mv-list-item turns an element into the collection item—the one that is repeated.">mv-list-item</a>>
 							&lt;label>
 								&lt;input property="done" type="checkbox" />
 								&lt;span property="taskTitle">Do stuff&lt;/span>
 							&lt;/label>
 						&lt;/li>
-						&lt;button <a href="/docs/actions" aria-label="When this button is pressed, delete all tasks whose done property is checked">mv-action="delete(task where done)"</a>>
+						&lt;button <a href="/docs/actions" aria-label="When this button is pressed, delete all tasks whose done property is checked.">mv-action="delete(task where done)"</a>>
 							Clear Completed
 						&lt;/button>
 					&lt;/ul>
@@ -142,11 +142,11 @@
 						&lt;h1>&lt;a href="http://julesmuck.com">muck&lt;/a>&lt;/h1>
 					&lt;/header>
 
-					&lt;div>
-						&lt;a property="painting" mv-multiple mv-attribute="none">
+					&lt;div mv-list>
+						&lt;a property="painting" mv-list-item mv-attribute="none">
 							&lt;img property="image" />
 							&lt;p property="name"
-							   <a aria-label="mv-default allows setting default values for properties. As evidenced here, these could be dynamic, set via expressions.">mv-default</a>="<a href="" aria-label="Expression that uses Mavo functions to extract a default description for the image from its URL">[readable(to(filename(image), '.'))]</a>">
+							   <a aria-label="mv-default allows setting default values for properties. As evidenced here, these could be dynamic, set via expressions.">mv-default</a>="<a href="" aria-label="Expression that uses Mavo functions to extract a default description for the image from its URL.">[readable(to(filename(image), '.'))]</a>">
 							&lt;/p>
 						&lt;/a>
 					&lt;/div>

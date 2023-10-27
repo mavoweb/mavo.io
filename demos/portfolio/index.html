@@ -16,8 +16,8 @@
 	<h1><a href="http://julesmuck.com"><img src="http://julesmuck.com/wp-content/uploads/2016/04/mucklogoBLCK.png" alt="Jules Muck" class="logo" /></a></h1>
 </header>
 
-<div>
-	<a property="painting" typeof="Painting" mv-multiple mv-attribute="none">
+<div mv-list>
+	<a property="painting" typeof="Painting" mv-list-item mv-attribute="none">
 		<img property="image" />
 		<p property="name" mv-default="[readable(to(filename(image), '.'))]"></p>
 	</a>

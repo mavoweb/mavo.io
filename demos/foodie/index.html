@@ -13,49 +13,52 @@
 
 <body mv-storage="local" mv-app id="foodie" class="mv-autoedit">
 
-<article property="restaurant" mv-multiple>
-	<header style="background-image: url('[picture]')">
-		<img property="picture" src="https://www.toscanoboston.com/common/images/thumb-cucina.jpg">
-		<a property="url" href="http://www.toscanoboston.com/beacon-hill">
-			<h1 property="name">Toscano</h1>
-		</a>
-
-		<p>
-			<meter property="rating" min="0" max="5" value="[average(visitRating)]" title="Overall rating: [rating]"></meter>
-		</p>
-	</header>
-
-	<section>
-		<h1>[count(visit)] Visit(s)</h1>
-
-		<article property="visit" mv-multiple>
-			<header>
-				<h1>
-					<time datetime="2016-03-15" property="date">15 Mar 2016</time>
-					<div property="title">Date night!</div>
-				</h1>
-				<p>
-					Average dish rating
-					<span property="visitRating">[average(dishRating)]</span>
-				</p>
-			</header>
-
-			<section>
-				<h1>[count(dish)] Notable Dish(es)</h1>
-				<ul>
-					<li property="dish" mv-multiple>
-						<p property="name">Filet mignon with black truffle and foie gras</p>
+<main class="mv-container" mv-list>
+	<article property="restaurant" mv-list-item>
+		<header style="background-image: url('[picture]')">
+			<img property="picture" src="https://www.toscanoboston.com/common/images/thumb-cucina.jpg">
+			<a property="url" href="http://www.toscanoboston.com/beacon-hill">
+				<h1 property="name">Toscano</h1>
+			</a>
+	
+			<p>
+				<meter property="rating" min="0" max="5" value="[average(visitRating)]" title="Overall rating: [rating]"></meter>
+			</p>
+		</header>
+	
+		<section>
+			<h1>[count(visit)] Visit(s)</h1>
+	
+			<div class="mv-container" mv-list>
+				<article property="visit" mv-list-item>
+					<header>
+						<h1>
+							<time datetime="2016-03-15" property="date">15 Mar 2016</time>
+							<div property="title">Date night!</div>
+						</h1>
 						<p>
-							Rating:
-							<meter property="dishRating" min="0" value="4" max="5" mv-editor-step="0.5"></meter>
-							[dishRating]
+							Average dish rating
+							<span property="visitRating">[average(dishRating)]</span>
 						</p>
-					</li>
-				</ul>
-			</section>
-		</article>
-	</section>
-</article>
+					</header>
+					<section>
+						<h1>[count(dish)] Notable Dish(es)</h1>
+						<ul mv-list>
+							<li property="dish" mv-list-item>
+								<p property="name">Filet mignon with black truffle and foie gras</p>
+								<p>
+									Rating:
+									<meter property="dishRating" min="0" value="4" max="5" mv-editor-step="0.5"></meter>
+									[dishRating]
+								</p>
+							</li>
+						</ul>
+					</section>
+				</article>
+			</div>
+		</section>
+	</article>
+</main>
 
 <footer>Total: [count(rating > 3)] good restaurants out of [count(restaurant)] total</footer>
 

@@ -19,17 +19,19 @@
 
 <section property="summary" id="intro" class="markdown"></section>
 
-<section property="section" mv-multiple id="[id]" class="[if(advanced, 'advanced language-javascript')]">
-	<h1>
-		<meta property="id" mv-default="[idify(title)]">
-		<span class="mv-toggle" property="advanced">Advanced</span>
-		<a href="#[id]">
-			<span property="title"></span>
-		</a>
-	</h1>
-
-	<div property="content" mv-markdown-options="headerLevelStart: 2"></div>
-</section>
+<div class="mv-container" mv-list>
+	<section property="section" mv-list-item id="[id]" class="[if(advanced, 'advanced language-javascript')]">
+		<h1>
+			<meta property="id" mv-default="[idify(title)]">
+			<span class="mv-toggle" property="advanced">Advanced</span>
+			<a href="#[id]">
+				<span property="title"></span>
+			</a>
+		</h1>
+	
+		<div property="content" mv-markdown-options="headerLevelStart: 2"></div>
+	</section>
+</div>
 
 <section class="mv-logged-out">
 	<p>
@@ -37,8 +39,8 @@
 	</p>
 </section>
 
-<ul id="toc">
-	<li mv-multiple="toc" mv-value="section" mv-group>
+<ul id="toc" mv-list mv-value="section">
+	<li mv-list-item="toc" mv-group>
 		<a href="#[id]">[title]</a>
 	</li>
 </ul>

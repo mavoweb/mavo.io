@@ -19,8 +19,8 @@ mv-init='data:application/json,{"event":{"dateTime": "2017-05-16T10:00", "name":
 	</label>
 </fieldset>
 
-<main>
-	<article property="event" mv-multiple class="[if(difference < 0, 'past', 'future')]">
+<main mv-list>
+	<article property="event" mv-list-item class="[if(difference < 0, 'past', 'future')]">
 		[if(difference < 0, 'It has been', 'It is')]
 		<strong property class="duration">[duration(abs(difference), granularity)]</strong>
 

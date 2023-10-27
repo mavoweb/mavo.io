@@ -30,7 +30,7 @@ fieldset {
 	opacity: .5;
 }
 
-ul {
+ul[property=item] {
 	width: 20em;
 	font-size: 200%;
 	padding: 0;
@@ -56,7 +56,7 @@ li[property=item] {
 	opacity: .5;
 }
 
-[property=commonItem]  {
+li[property=commonItem]  {
 	display: inline-block;
 	padding: .1em .4em;
 	margin: .2em;

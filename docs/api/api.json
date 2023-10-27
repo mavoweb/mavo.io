@@ -682,7 +682,7 @@
 			"name": "Mavo.Collection",
 			"parent": "Mavo.Node",
 			"filename": "collection.js",
-			"description": "Collection nodes are analogous to JSON arrays, and correspond to `mv-multiple` elements. However, the collection itself is not represented by any HTML element, what is represented in the HTML is the collection *items*.",
+			"description": "Collection nodes are analogous to JSON arrays and correspond to the `mv-list`/`mv-list-item` pair of elements. Collection items correspond to `mv-list-item` elements. An HTML element with `mv-list` represents the collection itself.",
 			"member": [
 				{
 					"name": "children",

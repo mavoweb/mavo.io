@@ -50,8 +50,8 @@
 			<textarea property="path">[replace(join(pathsummary, ' '), '  ', ' ', 10)]</textarea>
 		</details>
 	</h1>
-	<div>
-		<article property="segment" data-segtype="[type]" class="[if(absolute, 'absolute')]" mv-multiple mv-mode="edit">
+	<div mv-list mv-mode="edit">
+		<article property="segment" data-segtype="[type]" class="[if(absolute, 'absolute')]" mv-list-item>
 			<h1>
 				<select property="type">
 					<option value="m">Move</option>
