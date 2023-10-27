@@ -189,6 +189,14 @@
 			"live": "yes"
 		},
 		{
+			"name": "mv-options",
+			"on": "Properties",
+			"purpose": "(v0.3.0+) Limit properties to predefined options without having to create a `<select>`.",
+			"live": "yes",
+			"path": "/docs/properties#mv-options",
+			"link": "Properties"
+		},
+		{
 			"name": "mv-mode",
 			"purpose": "Control whether a property is in read or edit mode independently of the mode of the rest of the Mavo app.",
 			"live": "yes",
