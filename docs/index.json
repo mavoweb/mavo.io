@@ -137,9 +137,16 @@
 		},
 		{
 			"name": "mv-value",
-			"purpose": "Set an element's content to the result of an [expressions](/docs/expressions/#providing-fallbacks-the-mv-value-attribute).",
+			"purpose": "Set an element's content to the result of an [expression](/docs/expressions/#providing-fallbacks-the-mv-value-attribute).",
 			"live": "expressions",
 			"path": "/docs/expressions/#providing-fallbacks-the-mv-value-attribute",
+			"link": "Expressions"
+		},
+		{
+			"name": "mv-attr-*",
+			"purpose": "(v0.3.0+) A way for attributes to contain expressions without triggering browser errors or false loading.",
+			"live": "expressions",
+			"path": "/docs/expressions/#mv-attr-star",
 			"link": "Expressions"
 		},
 		{
