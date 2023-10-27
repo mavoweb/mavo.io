@@ -752,8 +752,8 @@
 			"returnDescription": "A list without empty values in it"
 		},
 		{
-			"name": "groupby",
-			"id": "groupby",
+			"name": "group_by",
+			"id": "group_by",
 			"unary": false,
 			"category": "lists",
 			"role": "function",
@@ -763,17 +763,41 @@
 					"name": "values",
 					"optional": false,
 					"type": "List",
-					"description": "Values to create the groups from"
+					"description": "Values to create the groups from."
 				},
 				{
 					"name": "key",
 					"optional": false,
 					"type": "List",
-					"description": "Values to group by"
+					"description": "Values to group by."
 				}
 			],
 			"returnType": "List",
-			"returnDescription": "List of the groups produced"
+			"returnDescription": "List of the groups produced."
+		},
+		{
+			"name": "groupby",
+			"id": "groupby",
+			"unary": false,
+			"category": "lists",
+			"role": "function",
+			"description": "Deprecated alias of [`group_by()`](#group_by).",
+			"argument": [
+				{
+					"name": "values",
+					"optional": false,
+					"type": "List",
+					"description": "Values to create the groups from."
+				},
+				{
+					"name": "key",
+					"optional": false,
+					"type": "List",
+					"description": "Values to group by."
+				}
+			],
+			"returnType": "List",
+			"returnDescription": "List of the groups produced."
 		},
 		{
 			"name": "join",
@@ -881,12 +905,12 @@
 			"returnDescription": "All texts after the needle."
 		},
 		{
-			"name": "fromlast",
-			"id": "fromlast",
+			"name": "from_last",
+			"id": "from_last",
 			"unary": false,
 			"category": "text",
 			"role": "function",
-			"description": "Same as `from()` but searches for the needle starting with the **last** character of the haystack instead of the first.",
+			"description": "Same as [`from()`](#from) but searches for the needle starting with the **last** character of the haystack instead of the first.",
 			"argument": [
 				{
 					"name": "haystack",
@@ -903,6 +927,30 @@
 			],
 			"returnType": "Text",
 			"returnDescription": "All texts after the needle."
+		},
+		{
+			"name": "fromlast",
+			"id": "fromlast",
+			"unary": false,
+			"role": "function",
+			"description": "Deprecated alias of [`from_last()`](#from_last).",
+			"argument": [
+				{
+					"name": "haystack",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look in."
+				},
+				{
+					"name": "needle",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look for."
+				}
+			],
+			"returnType": "Text",
+			"returnDescription": "All texts after the needle.",
+			"category": "text"
 		},
 		{
 			"name": "to",
@@ -929,12 +977,12 @@
 			"returnDescription": "All texts before the needle."
 		},
 		{
-			"name": "tofirst",
-			"id": "tofirst",
+			"name": "to_first",
+			"id": "to_first",
 			"unary": false,
 			"category": "text",
 			"role": "function",
-			"description": "Same as `to()` but searches for the needle starting with the **first** character of the haystack instead of the last.",
+			"description": "Same as [`to()`](#to) but searches for the needle starting with the **first** character of the haystack instead of the last.",
 			"argument": [
 				{
 					"name": "haystack",
@@ -951,6 +999,30 @@
 			],
 			"returnType": "Text",
 			"returnDescription": "All texts before the needle."
+		},
+		{
+			"name": "tofirst",
+			"id": "tofirst",
+			"unary": false,
+			"role": "function",
+			"description": "Deprecated alias of [`to_first()`](#to_first).",
+			"argument": [
+				{
+					"name": "haystack",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look in."
+				},
+				{
+					"name": "needle",
+					"optional": false,
+					"type": "Text",
+					"description": "Text to look for."
+				}
+			],
+			"returnType": "Text",
+			"returnDescription": "All texts before the needle.",
+			"category": "text"
 		},
 		{
 			"name": "random",
