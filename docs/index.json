@@ -219,6 +219,13 @@
 			"link": "UI-Customization"
 		},
 		{
+			"name": "mv-item-bar",
+			"on": "Collection items",
+			"purpose": "(v0.3.0+) Customize list item controls (remove controls, add custom ones), or hide the item bar completely.",
+			"path": "/docs/ui/#item-controls",
+			"link": "UI-Customization"
+		},
+		{
 			"name": "mv-path",
 			"on": "Properties",
 			"purpose": "Render and edit only a subset of the remote data, by providing a (slash-separated) path to the data it handles.",
