@@ -1890,16 +1890,41 @@
 			"unary": false,
 			"category": "other",
 			"role": "function",
-			"description": "If `param` is provided, returns the value of that parameter from the current page URL. This matches both parameters like `example.com/index.html?foo=bar` and `example.com/index.html/foo/bar` with the former having priority over the latter\nIf `param` is **not** provided, it returns the URL of the current page.",
+			"description": "If `param` is provided, returns the value of that parameter from the current page URL. This matches both parameters like `example.com/index.html?foo=bar` and `example.com/index.html/foo/bar`, with the former having priority over the latter.\nIf `param` is **not** provided, it returns the URL of the current page.\n\n**Starting from v0.3.0**, the function supports additional options and does case-insensitive matching by default. You can opt-in to case-sensitive matching via `case_sensitive: true`.",
 			"argument": [
 				{
 					"name": "param",
 					"optional": true,
 					"type": "Text",
 					"description": "The parameter to get."
+				},
+				{
+					"name": "url",
+					"optional": true,
+					"type": "Text | URL",
+					"description": "URL to get parameter from. Defaults to current page URL."
+				},
+				{
+					"name": "type",
+					"optional": true,
+					"type": "\"query\" | \"path\"",
+					"description": "Type of parameter to get:\n* `\"query\"`—for query string type URLs (`?foo=value`)\n* `\"path\"`—for path type URLs (`/foo/value`).\n\nIf not specified, it will search for both, with query string parameters taking precedence."
+				},
+				{
+					"name": "case_sensitive",
+					"optional": true,
+					"type": "true | false",
+					"description": "Whether to do a case sensitive search. Defaults to `false`."
+				},
+				{
+					"name": "multiple",
+					"optional": true,
+					"type": "true | false",
+					"description": "Whether to return multiple values if there are multiple parameters with the same name. Defaults to `false`."
 				}
 			],
-			"returnType": "Text"
+			"returnType": "Text | List",
+			"demo": "# Demo\n\n```html\n<dl>\n\t<dt>Parameter value from a path type URL</dt>\n\t<dd>[url(\"foo\", url: \"https://mavo.io/foo/bar?foo=baz\", type: \"path\")]</dd>\n\t\t\t\n\t<dt>Case-sensitive search</dt>\n\t<dd>[url(\"Foo\", url: \"https://mavo.io/Foo/bar?Foo=baz\", case_sensitive: true)]</dd>\n\n\t<dt>Multiple values</dt>\n\t<dd>[url(\"foo\", url: \"https://mavo.io/foo/bar?foo=baz&foo=yolo\", multiple: true)]</dd>\n</dl>\n```"
 		},
 		{
 			"name": "filename",
