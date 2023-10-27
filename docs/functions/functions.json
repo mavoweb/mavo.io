@@ -318,12 +318,17 @@
 			"returnType": "Group data"
 		},
 		{
+			"shown": [
+				true,
+				true,
+				true
+			],
 			"name": "get",
 			"id": "get",
 			"unary": false,
 			"category": "other",
 			"role": "function",
-			"description": "Get a value of a group by key. For example, `get(group(bar:4), bar)` will return `4`.\nIf the first parameter is a collection, all values of the given key are returned. For example, `get(list(group(id:\"foo\", name:\"fooname\"), group(id:\"bar\", name:\"barname\")), name)` returns `list(\"fooname\", \"barname\")`.\nIf the first parameter is a collection and the second parameter is in the form `\"key=value\"`, then the group(s) that satisfies this condition will be returned as a list. For example, `get(list(group(id:\"foo\", name:\"fooname\"), group(id:\"bar\", name:\"barname\")), \"name=fooname\")` returns `list(group(id:\"foo\", name:\"fooname\"))`.\nYou can attach a **key** to the end of `get()` with a `.` operator to get the value of a key. For example, `get(list(group(id:\"foo\", name:\"fooname\"), group(id:\"bar\", name:\"barname\")), \"id=foo\").name` returns `\"fooname\"`.",
+			"description": "Get a value of a group by key. For example, `get(group(bar:4), bar)` will return `4`.\nIf the first parameter is a collection, all values of the given key are returned. For example, `get(list(group(id:\"foo\", name:\"fooname\"), group(id:\"bar\", name:\"barname\")), name)` returns `list(\"fooname\", \"barname\")`.\n\nYou can attach a **key** to the end of `get()` with a `.` operator to get the value of a key. For example, `get(list(group(id:\"foo\", name:\"fooname\"), group(id:\"bar\", name:\"barname\")), \"id\").name` returns `list(\"foo\", \"bar\")`.",
 			"argument": [
 				{
 					"name": "object",
@@ -335,10 +340,34 @@
 					"name": "key",
 					"optional": false,
 					"type": "Text",
-					"description": "The key to look for or the condition to match if in the form `\"key=value\"`."
+					"description": "The key to look for."
 				}
 			],
-			"returnDescription": "Value of found key or a list of values if multiple keys are found. Returns a list of groups if the second parameter is \"key=value\". "
+			"returnDescription": "Value of found key or a list of values if multiple keys are found."
+		},
+		{
+			"name": "map",
+			"id": "map",
+			"unary": false,
+			"category": "other",
+			"role": "function",
+			"description": "Get properties from list items.",
+			"argument": [
+				{
+					"name": "list",
+					"optional": false,
+					"type": "List of Groups",
+					"description": "Where to look up keys and find values."
+				},
+				{
+					"name": "key",
+					"optional": false,
+					"type": "Text",
+					"description": "The key to look for."
+				}
+			],
+			"returnDescription": "A list of values corresponding to the key.",
+			"demo": "# Demo\n\n```html\n<div mv-app=\"map_function\" mv-source=\"https://test.mavo.io/data/creatures.json\">\n\t<ul mv-list mv-value=\"map(list(person, cat), 'name')\">\n\t\t<li>Name</li>\n\t</ul>\n</div>\n```"
 		},
 		{
 			"name": "average",
