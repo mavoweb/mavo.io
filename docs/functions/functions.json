@@ -1339,7 +1339,7 @@
 			"unary": false,
 			"category": "datetime",
 			"role": "function",
-			"description": "Get a date and time in human-readable text (e.g., 13 Jun 1986 16:45). The returned value is dependent on the document language.\nExamples:\nSuppose the special property `$now` returned a number of milliseconds corresponding to the following date and time: 2022-08-31T14:09:18.543. The language of the document is English.\n- `readable_datetime($now)` will print out \"31 Aug 2022 14:09\"\n- `readable_datetime($now, \"years\")` will print out \"2022\"\n- `readable_datetime($now, \"months\")` will print out \"August 2022\"\n- `readable_datetime($now, \"days\")` will print out \"31 Aug 2022\"\n- `readable_datetime($now, \"hours\")` will print out \"31 Aug 2022 14:00\"\n- `readable_datetime($now, \"minutes\")` will print out \"31 Aug 2022 14:09\"\n- `readable_datetime($now, \"seconds\")` will print out \"31 Aug 2022 14:09:18\"\n- `readable_datetime($now, \"ms\")` will print out \"31 Aug 2022 14:09:18.543\"\n\n**Note:** If you need `readable_datetime($now, \"months\")` to return \"Aug 2022\" instead of \"August 2022\", add `month: \"short\"` as the third parameter of the function, like so: `readable_datetime($now, \"months\", month: \"short\")`.",
+			"description": "Get a date and time in human-readable text (e.g., 13 Jun 1986 16:45). The returned value is dependent on the document language.\nExamples:\nSuppose the special property `$now` returned a number of milliseconds corresponding to the following date and time: 2022-08-31T14:09:18.543. The language of the document is English.\n- `readable_datetime($now)` will print out \"31 Aug 2022 14:09\"\n- `readable_datetime($now, \"years\")` will print out \"2022\"\n- `readable_datetime($now, \"months\")` will print out \"August 2022\"\n- `readable_datetime($now, \"days\")` will print out \"31 Aug 2022\"\n- `readable_datetime($now, \"hours\")` will print out \"31 Aug 2022 14:00\"\n- `readable_datetime($now, \"minutes\")` will print out \"31 Aug 2022 14:09\"\n- `readable_datetime($now, \"seconds\")` will print out \"31 Aug 2022 14:09:18\"\n- `readable_datetime($now, \"ms\")` will print out \"31 Aug 2022 14:09:18.543\"\n\n**Note:** If you need `readable_datetime($now, \"months\")` to return \"Aug 2022\" instead of \"August 2022\", add `month: \"shortname\"` as the third parameter of the function, like so: `readable_datetime($now, \"months\", month: \"shortname\")`.",
 			"argument": [
 				{
 					"name": "date",
@@ -1352,6 +1352,12 @@
 					"optional": true,
 					"type": "\"years\" | \"months\" | \"days\" | \"hours\" | \"minutes\" | \"seconds\" | \"ms\"",
 					"description": "Precision for the returned timestamp. Defaults to \"minutes\"."
+				},
+				{
+					"name": "month_format",
+					"optional": true,
+					"type": "month: \"shortname\"",
+					"description": "The way we want this month to be displayed. If specified, the short local-aware name of the month will be used."
 				}
 			],
 			"returnType": "Text",
