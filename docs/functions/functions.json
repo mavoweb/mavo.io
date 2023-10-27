@@ -328,7 +328,7 @@
 			"unary": false,
 			"category": "other",
 			"role": "function",
-			"description": "Get a value of a group by key. For example, `get(group(bar:4), bar)` will return `4`.\nIf the first parameter is a collection, all values of the given key are returned. For example, `get(list(group(id:\"foo\", name:\"fooname\"), group(id:\"bar\", name:\"barname\")), name)` returns `list(\"fooname\", \"barname\")`.\n\nYou can attach a **key** to the end of `get()` with a `.` operator to get the value of a key. For example, `get(list(group(id:\"foo\", name:\"fooname\"), group(id:\"bar\", name:\"barname\")), \"id\").name` returns `list(\"foo\", \"bar\")`.",
+			"description": "Get a value of a group by key. For example, `get(group(bar:4), bar)` will return `4`.\nIf the first parameter is a collection, all values of the given key are returned. For example, `get(list(group(id:\"foo\", name:\"fooname\"), group(id:\"bar\", name:\"barname\")), name)` returns `list(\"fooname\", \"barname\")`.\n\nYou can attach a **key** to the end of `get()` with a `.` operator to get the value of a key. For example, `get(list(group(id:\"foo\", name:\"fooname\"), group(id:\"bar\", name:\"barname\")), \"id\").name` returns `list(\"foo\", \"bar\")`.\n\n**Starting from v0.3.0**, you can provide multiple keys instead of nesting multiple `get()`, e.g., `get(group(\"foo\": group(\"bar\": \"baz\")), \"foo\", \"bar\")` will return `baz`.",
 			"argument": [
 				{
 					"name": "object",
@@ -337,10 +337,22 @@
 					"description": "Where to look up keys and find values."
 				},
 				{
-					"name": "key",
+					"name": "key1",
 					"optional": false,
 					"type": "Text",
 					"description": "The key to look for."
+				},
+				{
+					"name": "key2",
+					"optional": true,
+					"type": "Text",
+					"description": "The (following in the chain) key to look for."
+				},
+				{
+					"name": "...",
+					"optional": true,
+					"type": "Text",
+					"description": "You can provide as many as you need."
 				}
 			],
 			"returnDescription": "Value of found key or a list of values if multiple keys are found."
