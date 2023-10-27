@@ -189,6 +189,13 @@
 			"live": "yes"
 		},
 		{
+			"name": "mv-edit-as",
+			"on": "Properties",
+			"purpose": "(v0.3.0+) Teach Mavo how to edit new elements, e.g., web components.",
+			"path": "/docs/properties#mv-edit-as",
+			"link": "Properties"
+		},
+		{
 			"name": "mv-options",
 			"on": "Properties",
 			"purpose": "(v0.3.0+) Limit properties to predefined options without having to create a `<select>`.",
