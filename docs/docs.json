@@ -183,7 +183,7 @@
 					"id": "editing",
 					"advanced": false,
 					"title": "Editing",
-					"content": "If the `property` attribute is used on elements that are not form elements, they are made editable, and Mavo generates a button for switching between modes:\n\n##### Example\n\n```html\n<span property=\"firstName\">Lea</span>\n<span property=\"last_name\">Verou</span>\n<span>- I don’t have a property attribute, so I’m not editable.</span>\n```\n\n* * *\n\nYou can put the `property` attribute on **any** HTML5 element, and Mavo knows how to make it editable:\n\n##### Example\n\n```html\n<meter property=\"rating\" min=\"1\" value=\"3\" max=\"5\"></meter>\n<time property=\"birthday\" datetime=\"2014-06-01\">1 Jun 2014</time>\n<img property=\"avatar\" src=\"https://i.imgur.com/LPeWcag.png\" />\n```\n\nMavo can also be taught about new element types with different ways to be edited (e.g. rich text), via [plugins](https://plugins.mavo.io)."
+					"content": "If the `property` attribute is used on elements that are not form elements, they are made editable, and Mavo generates a button for switching between modes:\n\n##### Example\n\n```html\n<span property=\"firstName\">Lea</span>\n<span property=\"last_name\">Verou</span>\n<span>- I don’t have a property attribute, so I’m not editable.</span>\n```\n\n* * *\n\nYou can put the `property` attribute on **any** HTML5 element, and Mavo knows how to make it editable:\n\n##### Example\n\n```html\n<meter property=\"rating\" min=\"1\" value=\"3\" max=\"5\"></meter>\n<time property=\"birthday\" datetime=\"2014-06-01\">1 Jun 2014</time>\n<img property=\"avatar\" src=\"https://i.imgur.com/LPeWcag.png\" />\n```\n\nMavo can also be taught about new element types with different ways to be edited (e.g. rich text), via [plugins](https://plugins.mavo.io) or [`mv-edit-as`](#mv-edit-as) attribute."
 				},
 				{
 					"id": "radio-buttons",
@@ -208,6 +208,12 @@
 					"advanced": false,
 					"title": "The mv-edit-type attribute",
 					"content": "Mavo does its best to decide how a property should be edited: Either via the editor replacing the contents of the property element for the duration of editing or via a popup. In some cases, you may need to correct Mavo's assumption. For that, you can use the `mv-edit-type` attribute. Its possible values are `auto`, `inline`, `popup`, and `self`.\n\n* Use `mv-edit-type=\"auto\"` to let Mavo decide what best suits your needs: A nested editor or a popup. This is the default value\n* Use `mv-edit-type=\"inline\"` to use an editor nested in the property element\n* Use `mv-edit-type=\"popup\"` to edit a property via a popup\n* Use `mv-edit-type=\"self\"` for cases where the editing happens via changes on the element itself, like in form elements or in `<meter>`.\n\n##### Example\n\nEdit properties to see the difference between default and customized behavior:\n\n```html\n<h2>Default</h2>\n<span property=\"num\" mv-editor-type=\"range\">50</span>\n<time datetime=\"15:00\" property=\"date\"></time>\n\n<h2>Customized via <code>mv-edit-type</code></h2>\n<span property=\"numCustom\" mv-editor-type=\"range\" mv-edit-type=\"popup\">50</span>\n<time datetime=\"15:00\" property=\"dateCustom\" mv-edit-type=\"inline\"></time>\n```\n\nWarning: In versions of Mavo up to 0.2.3 this attribute may have another meaning. See [The mv-editor-* family of attributes](/docs/properties#mv-editor-star) for details."
+				},
+				{
+					"id": "mv-edit-as",
+					"advanced": false,
+					"title": "The mv-edit-as attribute",
+					"content": "Mavo can be taught about new elements (e.g., web components) and how to edit them via the `mv-edit-as` attribute. Its value is the name of an element Mavo already knows how to edit.\n\n##### Example\n\n```html\n<script src=\"https://nudeui.com/meter-discrete/meter-discrete.js\" type=\"module\"></script>\n\n<div mv-app=\"appName\" class=\"mv-autoedit\">\n\t<meter-discrete property=\"rating\" mv-edit-as=\"meter\"></meter-discrete>\n</div>\n```"
 				},
 				{
 					"id": "mv-options",
