@@ -1448,13 +1448,13 @@
 			"unary": false,
 			"category": "datetime",
 			"role": "function",
-			"description": "Displays time intervals using a count of seconds, minutes, hours, days, months, or years, based on what would produce the most readable result. Supports localization. For more granular results, you can supply a number of terms, or even a specific unit.\nTo display the interval between two days in human readable text, you just subtract the two dates for the `ms` argument.\n\nExamples:\n- `duration(10000)` will print out \"10 seconds\"\n- `duration(100000000)` will print out \"1 day\".\n- `duration(100000000, 2)` will print out \"1 day, 3 hours\"\n- `duration(100000000, 'hours')` will print out \"27 hours\"\n- `duration($now - end_date)` will display the time that has passed between `end_date` and now",
+			"description": "Displays time intervals using a count of seconds, minutes, hours, days, months, or years, based on what would produce the most readable result. Supports localization. For more granular results, you can supply a number of terms, or even a specific unit.\nTo display the interval between two days in human readable text, you just subtract the two dates for the `ms` argument.\n\nExamples:\n- `duration(10000)` will print out \"10 seconds\".\n- `duration(100000000)` will print out \"1 day\".\n- `duration(100000000, 2)` will print out \"1 day, 3 hours\".\n- `duration(100000000, 'hours')` will print out \"27 hours\".\n- `duration($now - end_date)` will display the time that has passed between `end_date` and now.",
 			"argument": [
 				{
 					"name": "ms",
 					"optional": false,
 					"type": "Number",
-					"description": "Number of milliseconds"
+					"description": "Number of milliseconds."
 				},
 				{
 					"name": "unit",
@@ -1464,7 +1464,8 @@
 				}
 			],
 			"returnType": "Text",
-			"returnDescription": "Formatted and localized time interval"
+			"returnDescription": "Formatted and localized time interval.",
+			"demo": "# Demo\n\n```html\nIt has been\n<span>[duration($now - release_date, 3)]</span>\nsince <strong>Mavo’s release</strong> on\n<time property=\"release_date\" datetime=\"2017-05-16 10:00\" mv-mode=\"read\"></time>.\n\n<style>\n  span {\n    display: block;\n    margin-block: 0.3em;\n    font-size: 150%;\n    font-weight: bold;\n  }\n</style>\n```"
 		},
 		{
 			"name": "len",
