@@ -414,6 +414,12 @@
 					"content": "We’ve seen above how `mv-value` can be used to create fallback content for expressions. However, it’s much more powerful than that. When used on a collection, mv-value renders its value **on the entire collection**, enabling you to create lists of items that depend on other lists.\n\nAs a simple example, note how these two lists are synchronized:\n\n##### Example\n\n```html\n<div mv-list mv-mode=\"edit\"><span property=\"list1\" mv-list-item>[$index + 1]</span></div>\n<div mv-list mv-value=\"list1\"><span property=\"list2\" mv-list-item></span></div>\n<style>\n[mv-list-item] {\n\tdisplay: inline-block;\n\tpadding: .5em;\n\tborder: 1px solid rgba(0, 0, 0, .1);\n\tmargin: .5em .1em;\n}\n</style>\n```"
 				},
 				{
+					"id": "mv-attr-star",
+					"advanced": false,
+					"title": "The mv-attr-* family of attributes",
+					"content": "Mavo provides a way for attributes to contain expressions without triggering browser errors or false loading.\n\nSuppose we have `<img src=\"[foo]\" />`. Till the expression is evaluated, this causes a browser error since `[foo]` is not a valid URL. With the `mv-attr-src`, we can avoid this error, like so: `<img src=\"fallback_URL\" mv-attr-src=\"foo\" />`. When `foo` is evaluated, its value will replace `fallback_URL`, and a new image will be loaded.\n\nIf we have both attributes, `foo` and `mv-attr-foo`, the value of `foo` becomes the fallback value for the `mv-attr-foo` expression. At the same time, if `foo` is an expression too, its value will be ignored, i.e., `mv-attr-foo` has priority over `foo`.\n\n##### Example\n\n```html\n<meta property=\"url\" content=\"https://designftw.mit.edu/lectures/html/img/adamcatlace.jpg\" />\n<img property=\"image\"\n\t src=\"https://designftw.mit.edu/lectures/html/img/html5.jpg\"\n\t mv-attr-src=\"url\" />\n<p>Image URL: [image]</p>\n\n<style>\nimg {\n\tmax-width: 10rem;\n}\n</style>\n```\n\nNote: The value of `mv-attr-*` is an expression, and it doesn't require braces (or whatever other syntax is defined via [`mv-expressions`](#using-expressions)) around it. If you include them, they will be considered part of your expression."
+				},
+				{
 					"id": "mavoscript-vs-javascript",
 					"advanced": true,
 					"title": "MavoScript vs JavaScript",
