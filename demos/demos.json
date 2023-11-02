@@ -9,7 +9,7 @@
 						"Actions"
 					],
 					"id": "todo",
-					"description": "Showcases many Mavo features (properties, collections, data actions, local storage) in very little code.",
+					"description": "Showcases many Mavo features (properties, lists, data actions, local storage) in very little code.",
 					"video": "/demos/todo/video.mp4",
 					"url": "/demos/todo",
 					"featured": true
@@ -137,7 +137,7 @@
 					"id": "foodie",
 					"video": "/demos/foodie/video.mp4",
 					"url": "/demos/foodie",
-					"description": "Showcases hierarchy (3 levels of nested collections) and how scoping works with it in expressions.",
+					"description": "Showcases hierarchy (3 levels of nested lists) and how scoping works with it in expressions.",
 					"featured": false
 				},
 				{
