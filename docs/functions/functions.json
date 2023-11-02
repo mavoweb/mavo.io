@@ -268,7 +268,7 @@
 			"unary": false,
 			"category": "lists",
 			"role": "function",
-			"description": "Creates a list of values, just like the kind of thing you get when you use collection properties (or properties inside them).\n\nFor those familiar with JS or JSON, something like `list(1, \"Lea\", 3)` is analogous to `[1, \"Lea\", 3]`.",
+			"description": "Creates a list of values, just like the kind of thing you get when you use list properties (or properties inside them).\n\nFor those familiar with JS or JSON, something like `list(1, \"Lea\", 3)` is analogous to `[1, \"Lea\", 3]`.",
 			"argument": [
 				{
 					"name": "value1",
@@ -328,7 +328,7 @@
 			"unary": false,
 			"category": "other",
 			"role": "function",
-			"description": "Get a value of a group by key. For example, `get(group(bar:4), bar)` will return `4`.\nIf the first parameter is a collection, all values of the given key are returned. For example, `get(list(group(id:\"foo\", name:\"fooname\"), group(id:\"bar\", name:\"barname\")), name)` returns `list(\"fooname\", \"barname\")`.\n\nYou can attach a **key** to the end of `get()` with a `.` operator to get the value of a key. For example, `get(list(group(id:\"foo\", name:\"fooname\"), group(id:\"bar\", name:\"barname\")), \"id\").name` returns `list(\"foo\", \"bar\")`.\n\n**Starting from v0.3.0**, you can provide multiple keys instead of nesting multiple `get()`, e.g., `get(group(\"foo\": group(\"bar\": \"baz\")), \"foo\", \"bar\")` will return `baz`.",
+			"description": "Get a value of a group by key. For example, `get(group(bar:4), bar)` will return `4`.\nIf the first parameter is a list, all values of the given key are returned. For example, `get(list(group(id:\"foo\", name:\"fooname\"), group(id:\"bar\", name:\"barname\")), name)` returns `list(\"fooname\", \"barname\")`.\n\nYou can attach a **key** to the end of `get()` with a `.` operator to get the value of a key. For example, `get(list(group(id:\"foo\", name:\"fooname\"), group(id:\"bar\", name:\"barname\")), \"id\").name` returns `list(\"foo\", \"bar\")`.\n\n**Starting from v0.3.0**, you can provide multiple keys instead of nesting multiple `get()`, e.g., `get(group(\"foo\": group(\"bar\": \"baz\")), \"foo\", \"bar\")` will return `baz`.",
 			"argument": [
 				{
 					"name": "object",
@@ -572,7 +572,7 @@
 			"unary": false,
 			"category": "lists",
 			"role": "function",
-			"description": "Get the last non-empty item(s) in a list of values. \nFor example, assuming there is a collection with the name `event`, `last(event)` gets you the last event and `last(3, event)` gets you the last 3 events.",
+			"description": "Get the last non-empty item(s) in a list of values. \nFor example, assuming there is a list with the name `event`, `last(event)` gets you the last event and `last(3, event)` gets you the last 3 events.",
 			"argument": [
 				{
 					"name": "n",
@@ -1788,7 +1788,7 @@
 			"unary": false,
 			"category": "text",
 			"role": "function",
-			"description": "Check if a collection, group, list, or text contains another given text. For example, `contains(\"Kenneth\", \"Ken\")` returns `true`.\nIf both haystack and needle are a list, `contains()` checks if the first item of the haystack contains the first item of the needle, and so on, and returns a list of corresponding results. For example, `contains(list(\"Kenneth\", \"Verou\"), list(\"Ken\", \"Lea\"))` will return `list(true, false)`.",
+			"description": "Check if a list, group, or text contains another given text. For example, `contains(\"Kenneth\", \"Ken\")` returns `true`.\nIf both haystack and needle are a list, `contains()` checks if the first item of the haystack contains the first item of the needle, and so on, and returns a list of corresponding results. For example, `contains(list(\"Kenneth\", \"Verou\"), list(\"Ken\", \"Lea\"))` will return `list(true, false)`.",
 			"argument": [
 				{
 					"name": "haystack",
@@ -2062,7 +2062,7 @@
 			"unary": false,
 			"category": "lists",
 			"role": "special",
-			"description": "If inside a collection, the closest item’s position in its collection, starting from 0.",
+			"description": "If inside a list, the closest item’s position in its list, starting from 0.",
 			"argument": [
 				{
 					"optional": false
@@ -2075,7 +2075,7 @@
 			"unary": false,
 			"category": "lists",
 			"role": "special",
-			"description": "The closest item’s previous item (when used inside a collection). To get specific named properties from the previous item, you can use a dot notation (`.`). For example, to get the value of the previous item’s \"cost\" property, you’d write `$previous.cost`.\n\nYou can also use it in conjunction with [`$all`](#$all), to get *all* previous items: `$all.$previous`.\nDo try to avoid using that unless absolutely necessary, as it can be quite slow. For example, assume you have a list of entries with a \"cost\" property each. You *could* do a cumulative sum of cost for each entry by writing `$all.$previous.cost + cost`, or you could simply define a `cumulative_cost` property, with value `$previous.cumulative_cost + cost`. The latter is both simpler, and faster.",
+			"description": "The closest item’s previous item (when used inside a list). To get specific named properties from the previous item, you can use a dot notation (`.`). For example, to get the value of the previous item’s \"cost\" property, you’d write `$previous.cost`.\n\nYou can also use it in conjunction with [`$all`](#$all), to get *all* previous items: `$all.$previous`.\nDo try to avoid using that unless absolutely necessary, as it can be quite slow. For example, assume you have a list of entries with a \"cost\" property each. You *could* do a cumulative sum of cost for each entry by writing `$all.$previous.cost + cost`, or you could simply define a `cumulative_cost` property, with value `$previous.cumulative_cost + cost`. The latter is both simpler, and faster.",
 			"argument": [
 				{
 					"optional": false
@@ -2088,7 +2088,7 @@
 			"unary": false,
 			"category": "lists",
 			"role": "special",
-			"description": "The closest item’s next item (when used inside a collection). To get specific named properties from the next item, you can use a dot notation (`.`). For example, to get the value of the previous item’s \"cost\" property, you’d write `$next.cost`.\n\nYou can also use it in conjunction with [`$all`](#$all), to get *all* next items: `$all.$next`.\n",
+			"description": "The closest item’s next item (when used inside a list). To get specific named properties from the next item, you can use a dot notation (`.`). For example, to get the value of the previous item’s \"cost\" property, you’d write `$next.cost`.\n\nYou can also use it in conjunction with [`$all`](#$all), to get *all* next items: `$all.$next`.\n",
 			"argument": [
 				{
 					"optional": false
@@ -2101,7 +2101,7 @@
 			"unary": false,
 			"category": "lists",
 			"role": "special",
-			"description": "If inside a collection, the closest item. Same as using the property name.",
+			"description": "If inside a list, the closest item. Same as using the property name.",
 			"argument": [
 				{
 					"optional": false
@@ -2114,7 +2114,7 @@
 			"unary": false,
 			"category": "lists",
 			"role": "special",
-			"description": "If inside a collection, the collection (since the collection property will give you the current item)",
+			"description": "If inside a list, the list (since the list property will give you the current item)",
 			"argument": [
 				{
 					"optional": false
@@ -2163,7 +2163,7 @@
 			"unary": false,
 			"category": "other",
 			"role": "action",
-			"description": "Adds items to collections.\nExamples:\n- `add(\"Garlic\", shopping_list)` will add `Garlic` at the end of the `shopping_list` collection\n- `add(cat, cats)` will add the new cat (the value of the property `cat`) at the end of the `cats` collection\n- `add(group(first_name: \"Lea\", last_name: \"Verou\"), people)` will add the new person (`Lea Verou`) at the end of the `people` collection\n- `add(\"Garlic\", shopping_list, 0)` will add `Garlic` at the start of the `shopping_list` collection\n- `add(cats)` will add a new blank item at the end of the `cats` collection\n\nFor more details, see [the Actions section](https://mavo.io/docs/actions#add) of the docs.",
+			"description": "Adds items to lists.\nExamples:\n- `add(\"Garlic\", shopping_list)` will add `Garlic` at the end of the `shopping_list` list\n- `add(cat, cats)` will add the new cat (the value of the property `cat`) at the end of the `cats` list\n- `add(group(first_name: \"Lea\", last_name: \"Verou\"), people)` will add the new person (`Lea Verou`) at the end of the `people` list\n- `add(\"Garlic\", shopping_list, 0)` will add `Garlic` at the start of the `shopping_list` list\n- `add(cats)` will add a new blank item at the end of the `cats` list\n\nFor more details, see [the Actions section](https://mavo.io/docs/actions#add) of the docs.",
 			"argument": [
 				{
 					"name": "item",
@@ -2172,16 +2172,16 @@
 					"description": "The value(s) the adding item will have."
 				},
 				{
-					"name": "collection",
+					"name": "list",
 					"optional": false,
-					"type": "Collection",
-					"description": "The collection the new item should be added to."
+					"type": "List",
+					"description": "The list the new item should be added to."
 				},
 				{
 					"name": "position",
 					"optional": true,
 					"type": "Number",
-					"description": "The position the new item should be inserted in. The first item of a collection has the position `0`."
+					"description": "The position the new item should be inserted in. The first item of a list has the position `0`."
 				}
 			],
 			"demo": "# Demo\n\n```html\n<div mv-app>\n\t<form mv-action=\"add(item, shopping_list) set(item, '')\">\n\t\t<label for=\"item\">We need to buy</label>\n\t\t<input id=\"item\" property placeholder=\"E.g., milk\" />\n\t\t<input type=\"submit\" value=\"Add to list\" />\n\t</form>\n\n\t<h2>Shopping List</h2>\n\t<ul mv-list=\"shopping_list\" mv-initial-items=\"0\">\n\t\t<li>Garlic</li>\n\t\t<li mv-list-item></li>\n\t</ul>\n</div>\n```"
@@ -2192,24 +2192,24 @@
 			"unary": false,
 			"category": "other",
 			"role": "action",
-			"description": "Deletes collections' items, empties collections, and clears property values.\nExamples:\n- `delete(shopping_list)` will empty the `shopping_list` collection\n- `delete(cat where name = 'Vector', cat where name = 'Çiki')` will delete all cats with the name either `Vector` or `Çiki` from the collection of cats\n- `delete(name)` will clear the `name` property\n\nFor more details, see [the Actions section](https://mavo.io/docs/actions#delete) of the docs.",
+			"description": "Deletes lists' items, empties lists, and clears property values.\nExamples:\n- `delete(shopping_list)` will empty the `shopping_list` list\n- `delete(cat where name = 'Vector', cat where name = 'Çiki')` will delete all cats with the name either `Vector` or `Çiki` from the list of cats\n- `delete(name)` will clear the `name` property\n\nFor more details, see [the Actions section](https://mavo.io/docs/actions#delete) of the docs.",
 			"argument": [
 				{
 					"name": "item1",
 					"optional": false,
-					"type": "Item | Collection | Property",
-					"description": "The item to delete or the collection to empty, or the property to clear."
+					"type": "Item | List | Property",
+					"description": "The item to delete or the list to empty, or the property to clear."
 				},
 				{
 					"name": "item2",
 					"optional": true,
-					"type": "Item | Collection | Property",
-					"description": "Another item to delete or another collection to empty, or another property to clear."
+					"type": "Item | List | Property",
+					"description": "Another item to delete or another list to empty, or another property to clear."
 				},
 				{
 					"name": "...",
 					"optional": false,
-					"type": "Item | Collection | Property",
+					"type": "Item | List | Property",
 					"description": "You can provide as many as you want."
 				}
 			],
@@ -2221,24 +2221,24 @@
 			"unary": false,
 			"category": "other",
 			"role": "action",
-			"description": "Same as [`delete(item1, item2?, ...)`](https://mavo.io/docs/functions/#delete). `clear()` may read more nicely in cases where you are emptying entire collections.",
+			"description": "Same as [`delete(item1, item2?, ...)`](https://mavo.io/docs/functions/#delete). `clear()` may read more nicely in cases where you are emptying entire lists.",
 			"argument": [
 				{
 					"name": "item1",
 					"optional": false,
-					"type": "Item | Collection | Property",
-					"description": "The item to delete or the collection to empty, or the property to clear."
+					"type": "Item | List | Property",
+					"description": "The item to delete or the list to empty, or the property to clear."
 				},
 				{
 					"name": "item2",
 					"optional": true,
-					"type": "Item | Collection | Property",
-					"description": "Another item to delete or another collection to empty, or another property to clear."
+					"type": "Item | List | Property",
+					"description": "Another item to delete or another list to empty, or another property to clear."
 				},
 				{
 					"name": "...",
 					"optional": false,
-					"type": "Item | Collection | Property",
+					"type": "Item | List | Property",
 					"description": "You can provide as many as you want."
 				}
 			]
@@ -2249,7 +2249,7 @@
 			"unary": false,
 			"category": "other",
 			"role": "action",
-			"description": "Moves **existing** items either to a different place in the same collection, or to another collection.\nExamples:\n- `move(pro, con, 0)` will move the current item of the `pro` collection at the start of the `con` collection\n- `move(pro, 0)` will make the current item of the `pro` collection first\n- `move(person, cat)` will move the current item of the `person` collection at the end of the `cat` collection\n\nFor more details, see [the Actions section](https://mavo.io/docs/actions#move) of the docs.",
+			"description": "Moves **existing** items either to a different place in the same list, or to another list.\nExamples:\n- `move(pro, con, 0)` will move the current item of the `pro` list at the start of the `con` list\n- `move(pro, 0)` will make the current item of the `pro` list first\n- `move(person, cat)` will move the current item of the `person` list at the end of the `cat` list\n\nFor more details, see [the Actions section](https://mavo.io/docs/actions#move) of the docs.",
 			"argument": [
 				{
 					"name": "item",
@@ -2258,16 +2258,16 @@
 					"description": "The item to be moved."
 				},
 				{
-					"name": "collection",
+					"name": "list",
 					"optional": true,
-					"type": "Collection",
-					"description": "The collection to move the item on."
+					"type": "List",
+					"description": "The list to move the item on."
 				},
 				{
 					"name": "position",
 					"optional": true,
 					"type": "Number",
-					"description": "The position the item should be moved to. The first item of a collection has the position `0`."
+					"description": "The position the item should be moved to. The first item of a list has the position `0`."
 				}
 			],
 			"demo": "# Demo\n\n```html\n<table mv-app mv-source=\"https://test.mavo.io/data/creatures.json\">\n\t<tbody mv-list>\n\t\t<tr mv-list-item=\"person\">\n\t\t\t<td property=\"name\"></td>\n\t\t\t<td property=\"age\"></td>\n\t\t\t<td><button mv-action=\"move(person, cat)\">Make [name] a cat</button></td>\n\t\t</tr>\n\t</tbody>\n\t<tbody mv-list>\n\t\t<tr mv-list-item=\"cat\">\n\t\t\t<td property=\"name\"></td>\n\t\t\t<td property=\"age\"></td>\n\t\t\t<td><button mv-action=\"move(cat, 0)\">Move cat to top</button></td>\n\t\t</tr>\n\t</tbody>\n</table>\n\n<style>\n\ttbody {\n\t\tbackground: hsl(80, 60%, 80%)\n\t}\n\n\ttbody+tbody {\n\t\tbackground: hsl(180, 60%, 85%)\n\t}\n\n\ttd {\n\t\tpadding: .2em\n\t}\n\n\ttr[property=person] td:first-child::before {\n\t\tcontent: \"😀 \"\n\t}\n\n\ttr[property=cat] td:first-child::before {\n\t\tcontent: \"😺 \"\n\t}\n</style>\n```"
