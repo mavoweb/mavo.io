@@ -861,3 +861,26 @@ pre {
   cursor: help;
 }
 /*# sourceMappingURL=style.css.map */
+
+/* adding scroll back to top feature */
+.top-visible{
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: #82cf17;
+  z-index: 10000;
+  transition: .5s;
+}
+.top-visible:hover{
+  background: #ff0080;
+  text-decoration: none;
+}
+.top-visible i{
+  color: #fff;
+}
