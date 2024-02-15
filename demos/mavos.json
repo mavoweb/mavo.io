@@ -45,7 +45,7 @@
 			"description": "Form Fill tool (in Spanish)"
 		},
 		{
-			"url": "http://getresume.herokuapp.com/resume",
+			"url": "https://getresumeapp.vercel.app/cv.html",
 			"description": "Resume Builder"
 		},
 		{
