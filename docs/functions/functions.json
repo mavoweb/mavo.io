@@ -772,7 +772,7 @@
 			],
 			"returnType": "List",
 			"returnDescription": "Sorted list.",
-			"demo": "# Demo\n\n```html\n<div mv-app mv-source=\"https://test.mavo.io/data/creatures.json\">\n\t<p>\n\t\tSort cats by\n\t\t<label>\n\t\t\t<input type=\"radio\" property name=\"sort_order\" value=\"name\" checked /> name\n\t\t</label>\n\t\t<label>\n\t\t\t<input type=\"radio\" name=\"sort_order\" value=\"age\" /> age\n\t\t</label>\n\t</p>\n\n\t<table>\n\t\t<tbody mv-list mv-value=\"sort(cat, sort_order)\">\n\t\t\t<tr mv-list-item>\n\t\t\t\t<td property=\"name\"></td>\n\t\t\t\t<td property=\"age\"></td>\n\t\t\t</tr>\n\t\t</tbody>\n\t</table>\n</div>\n<style>\np {\n\tdisplay: flex;\n\tgap: 0.5em;\n}\n\nlabel {\n\tdisplay: inline-flex;\n}\n\ntd + td {\n\tpadding-inline-start: 1.5em;\n}\n</style>\n```"
+			"demo": "# Demo\n\n```html\n<div mv-app mv-source=\"https://test.mavo.io/data/creatures.json\">\n\t<p>\n\t\tSort cats by\n\t\t<label>\n\t\t\t<input type=\"radio\" property name=\"sort_property\" value=\"name\" checked /> name\n\t\t</label>\n\t\t<label>\n\t\t\t<input type=\"radio\" name=\"sort_property\" value=\"age\" /> age\n\t\t</label>\n\t</p>\n\n\t<table>\n\t\t<tbody mv-list mv-value=\"sort(cat, sort_property)\">\n\t\t\t<tr mv-list-item>\n\t\t\t\t<td property=\"name\"></td>\n\t\t\t\t<td property=\"age\"></td>\n\t\t\t</tr>\n\t\t</tbody>\n\t</table>\n</div>\n<style>\np {\n\tdisplay: flex;\n\tgap: 0.5em;\n}\n\nlabel {\n\tdisplay: inline-flex;\n}\n\ntd + td {\n\tpadding-inline-start: 1.5em;\n}\n</style>\n```"
 		},
 		{
 			"name": "condense",
