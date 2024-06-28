@@ -26,17 +26,6 @@
 			</label>
 		</article>
 		<article>
-			<h1>What browser support do you need?</h1>
-			<label>
-				<input type="radio" property name="transpile" value="" checked>
-				Modern browsers only
-			</label>
-			<label>
-				<input type="radio" name="transpile" value="es5">
-				Slightly older browsers <em>+ 20% filesize</em>
-			</label>
-		</article>
-		<article>
 			<h1>Feeling adventurous?</h1>
 			<label>
 				<input type="radio" property name="path" value="">
@@ -58,7 +47,7 @@
 		</article>
 	</div>
 
-	<meta property="filename" content="mavo[if(transpile, '.' & transpile)][if(minify, '.' & min)].js">
+	<meta property="filename" content="mavo[if(minify, '.' & min)].js">
 
 	<p>Now copy and paste the following code in your page’s <code>&lt;head></code> section, or click on the links below to download these files locally:</p>
 	<pre class="language-foo"><code>&lt;script src="<a href="https://get.mavo.io/[path][filename]" download>https://get.mavo.io/[path][filename]</a>">&lt;/script>
