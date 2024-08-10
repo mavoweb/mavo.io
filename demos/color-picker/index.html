@@ -21,26 +21,26 @@
 		<div class="sliders">
 			<input type="range" property="hue" max="360"
 			       style="background-image: linear-gradient(to right,
-				       hsla(0, [saturation]%, [lightness]%, [alpha]),
-				       hsla(60, [saturation]%, [lightness]%, [alpha]),
-				       hsla(120, [saturation]%, [lightness]%, [alpha]),
-				       hsla(180, [saturation]%, [lightness]%, [alpha]),
-				       hsla(240, [saturation]%, [lightness]%, [alpha]),
-				       hsla(300, [saturation]%, [lightness]%, [alpha]),
-				       hsla(360, [saturation]%, [lightness]%, [alpha])
+				       hsl(0 [saturation]% [lightness]% / [alpha]%),
+				       hsl(60 [saturation]% [lightness]% / [alpha]%),
+				       hsl(120 [saturation]% [lightness]% / [alpha]%),
+				       hsl(180 [saturation]% [lightness]% / [alpha]%),
+				       hsl(240 [saturation]% [lightness]% / [alpha]%),
+				       hsl(300 [saturation]% [lightness]% / [alpha]%),
+				       hsl(360 [saturation]% [lightness]% / [alpha]%)
 				    )" />
 			<input type="range" property="saturation"
-			       style="background-image: linear-gradient(to right, hsla([hue], 0%, [lightness]%, [alpha]), hsla([hue], 100%, [lightness]%, [alpha]))" />
+			       style="background-image: linear-gradient(to right, hsl([hue] 0% [lightness]% / [alpha]%), hsl([hue] 100% [lightness]% / [alpha]%))" />
 			<input type="range" property="lightness"
-			       style="background-image: linear-gradient(to right, hsla([hue], [saturation]%, 0%, [alpha]), hsla([hue], [saturation]%, 50%, [alpha]), hsla([hue], [saturation]%, 100%, [alpha]))" />
-			<input type="range" property="alpha" min="0" max="1" step=".01"
-			       style="background-image: linear-gradient(to right, hsla([hue], [saturation]%, [lightness]%, 0), hsla([hue], [saturation]%, [lightness]%, 1))" />
+			       style="background-image: linear-gradient(to right, hsl([hue] [saturation]% 0% / [alpha]%), hsl([hue] [saturation]% 50% / [alpha]%), hsl([hue] [saturation]% 100% / [alpha]%))" />
+			<input type="range" property="alpha"
+			       style="background-image: linear-gradient(to right, hsl([hue] [saturation]% [lightness]% / 0), hsl([hue] [saturation]% [lightness]%))" />
 		</div>
 
 		<output style="background-color: [color];"></output>
 	</div>
 
-	<input property="color" value="hsla([hue], [saturation]%, [lightness]%, [alpha])" readonly />
+	<input property="color" value="hsl([hue] [saturation]% [lightness]% / [alpha]%)" readonly />
 </article>
 
 <script src="/js/demo.js"></script>
