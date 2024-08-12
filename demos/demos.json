@@ -68,6 +68,17 @@
 					"featured": false
 				},
 				{
+					"name": "3D model viewer",
+					"tag": [
+						"A-Frame"
+					],
+					"id": "aframe",
+					"video": "/demos/aframe/video.mp4",
+					"url": "/demos/aframe",
+					"description": "Showcases how Mavo works with [A-Frame](https://aframe.io/)—A web framework for building 3D/AR/VR experiences.",
+					"featured": false
+				},
+				{
 					"name": "Shopping list",
 					"tag": [
 						"Actions"

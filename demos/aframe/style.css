@@ -1,0 +1,42 @@
+a {
+	&:not(:hover) {
+		color: inherit;
+	}
+}
+
+aside {
+	position: absolute;
+	top: 3rem;
+	left: 1em;
+	z-index: 1;
+	width: 18em;
+}
+
+fieldset {
+	display: grid;
+	grid-template-columns: auto 1fr 3em;
+	gap: .2em .8em;
+	border: 1px solid rgba(0,0,0,.1);
+	border-radius: .3em;
+	font-size: 150%;
+	margin-top: .5em;
+}
+
+	label {
+		display: grid;
+		grid-column: 1 / -1;
+		grid-template-columns: subgrid;
+		align-items: center;
+
+		svg {
+			height: 1em;
+		}
+	}
+
+input[type=range] {
+	width: 12em;
+}
+
+body {
+	font: 100%/1.5 system-ui, Helvetica Neue, sans-serif;
+}
