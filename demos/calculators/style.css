@@ -135,6 +135,7 @@ output {
 			font-weight: 300;
 			fill: black;
 			text-anchor: middle;
+			cursor: default;
 		}
 
 		.circle {
