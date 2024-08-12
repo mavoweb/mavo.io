@@ -1,0 +1,223 @@
+@import url("https://fonts.googleapis.com/css?family=Rubik:300,300i,400,400i,500,500i,700,700i,900,900i&display=swap");
+
+body {
+	font-family: Rubik, sans-serif;
+	font-weight: 300;
+	display: grid;
+	gap: 3rem 0;
+	justify-content: center;
+	max-width: 60vw;
+	margin-inline: auto;
+}
+
+header {
+	h1 {
+		font-size: 4rem;
+		font-weight: 300;
+		font-style: italic;
+		margin-block-end: 0;
+	}
+
+	p {
+		margin-block-start: 0;
+	};
+
+	.attribution {
+		font-weight: 500;
+		color: #ff0080;
+	}
+}
+
+main {
+	display: contents;
+}
+
+section {
+	font-size: 1.25rem;
+	font-weight: 300;
+
+	h2 {
+		font-size: 2em;
+		font-weight: 500;
+	}
+}
+
+a {
+	color: inherit;
+}
+
+input {
+	min-width: 4ch;
+	max-width: 10ch;
+	padding-block: .3em;
+	font-size: inherit;
+	border: none;
+	border-block-end: solid 1px;
+	text-align: center;
+
+	&:focus {
+		outline: none;
+
+		&::-webkit-input-placeholder {
+			color: transparent !important;
+		}
+
+		&::-moz-placeholder {
+			color: transparent !important;
+		}
+
+		&:placeholder {
+			color: transparent !important;
+		}
+	}
+}
+
+section:has(+ section), #percentages-app div:has(+ div) {
+	padding-block-end: 1.2em;
+	border-block-end: dashed 1px lightgray;
+}
+
+label:has(+ :placeholder-shown), .hint:not(:has(~ :placeholder-shown)) {
+	display: none;
+}
+
+.answer {
+	display: block;
+	margin: 1em 0;
+	font-size: 85%;
+	font-weight: 400;
+}
+
+output {
+	display: inline-block;
+	min-width: 3ch;
+	padding: .3em .5em;
+	border: 1px solid;
+	text-align: center;
+	font-weight: 600;
+}
+
+#circumference-app {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: .3em .8em;
+
+	h2 {
+		grid-column: 1 / -1;
+	}
+
+	figure {
+		margin: 0;
+
+		figcaption {
+			margin-block-end: 2em;
+			font-size: .75em;
+			font-weight: 500;
+			font-style: italic;
+		}
+	}
+
+	svg {
+		--color: gray;
+		--circle-color: #82cf17;
+		--radius-color: #ff0080;
+		--diameter-color: #25aff4;
+
+		stroke: var(--color);
+		fill: var(--color);
+
+		font: inherit;
+		font-style: italic;
+
+		text {
+			stroke-width: 0;
+			font-size: 0.35em;
+			font-weight: 300;
+			fill: black;
+			text-anchor: middle;
+			cursor: default;
+		}
+
+		.circle {
+			fill: transparent;
+			stroke-width: 1;
+		}
+	}
+
+	&:has(:where(#diameter, .diameter, .diameter-text):hover) :where(.radius, .diameter, .center, .diameter-text) {
+		stroke: var(--diameter-color);
+		fill: var(--diameter-color);
+
+		transition: stroke-width .2s;
+
+		&:not(.diameter-text) {
+			stroke-width: 2;
+		}
+
+		&.diameter-text {
+			font-weight: 500;
+		}
+	}
+
+	&:has(:where(#radius, .radius, .radius-text):hover) :where(.radius, .center, .radius-text) {
+		stroke: var(--radius-color);
+		fill: var(--radius-color);
+
+		transition: stroke-width .2s;
+
+		&:not(.radius-text) {
+			stroke-width: 2;
+		}
+
+		&.radius-text {
+			font-weight: 500;
+		}
+	}
+
+	&:has(:where(#circumference, .circle, .circumference-text):hover) :where(.circle, .circumference-text) {
+		stroke: var(--circle-color);
+		fill: var(--circle-color);
+
+		transition: stroke-width .2s;
+
+		&:not(.circumference-text) {
+			stroke-width: 2;
+		}
+
+		&.circumference-text {
+			font-weight: 500;
+		}
+	}
+}
+
+#percentages-app {
+	div {
+		margin: 1.25em 0;
+	}
+}
+
+#aspect-ratio-app {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	grid-template-rows: repeat(4, auto); /* We need an extra row to let the rectangle showing the calculated aspect ratio grow without moving the previous row down. */
+	gap: .3em .5em;
+
+	p {
+		grid-column: 1;
+	}
+
+	h2 {
+		grid-column: 1 / -1;
+	}
+
+	output {
+		grid-row: 2 / span 3;
+		grid-column: 2;
+		display: grid;
+		place-items: center;
+		width: 10em;
+		height: auto;
+		color: #ff0080;
+		border: 3px solid;
+	}
+}

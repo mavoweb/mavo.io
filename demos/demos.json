@@ -91,6 +91,18 @@
 					"featured": false
 				},
 				{
+					"name": "Calculators",
+					"tag": [
+						"mv-default",
+						"js"
+					],
+					"id": "calculators",
+					"video": "/demos/calculators/video.mp4",
+					"url": "/demos/calculators",
+					"description": "Showcases how `mv-default` can gracefully handle calculations with circular dependencies. It also showcases how Mavo functions can be extended by simply defining global JS functions (namely, a `gcd()` function).",
+					"featured": false
+				},
+				{
 					"name": "Shopping list",
 					"tag": [
 						"Actions"
