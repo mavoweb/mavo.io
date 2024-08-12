@@ -92,7 +92,7 @@
 				},
 				{
 					"name": "Calculators",
-					"tag": [],
+					"tag": ["mv-default", "js"],
 					"id": "calculators",
 					"video": "/demos/calculators/video.mp4",
 					"url": "/demos/calculators",
