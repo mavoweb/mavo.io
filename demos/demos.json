@@ -91,6 +91,15 @@
 					"featured": false
 				},
 				{
+					"name": "Calculators",
+					"tag": [],
+					"id": "calculators",
+					"video": "/demos/calculators/video.mp4",
+					"url": "/demos/calculators",
+					"description": "Showcases how Mavo can gracefully handle calculations when two or more properties depend on each other. It also shows how Mavo can work with custom JavaScript functions as if they were Mavo built-in functions.",
+					"featured": false
+				},
+				{
 					"name": "Shopping list",
 					"tag": [
 						"Actions"

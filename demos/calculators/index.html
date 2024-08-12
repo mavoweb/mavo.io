@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Calculators | Circumference, Percentage, & Aspect Ratio</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://get.mavo.io/stable/mavo.css" />
+	<link rel="stylesheet" href="style.css" />
+	<script src="https://get.mavo.io/stable/mavo.min.js"></script>
+</head>
+
+<body>
+
+<header>
+	<h1>Calculators!</h1>
+	<p>Adapted from <a href="https://mattfredfry.com/" class="attribution">Matt Fry</a>’s <a href="https://mattfredfry.com/calculator">app</a></p>
+</header>
+
+<main mv-app="calculators">
+	<section id="circumference-app">
+		<h2>Circumference</h2>
+		<p>
+			<span class="hint">Enter: </span>
+	
+			<label for="radius">r =</label>
+			<input id="radius" property mv-default="[if(diameter > 0, diameter / 2)]" type="number" min="0" placeholder="radius" />
+	
+			<span mv-value="if(radius or diameter, ', ', 'or')">or</span>
+	
+			<label for="diameter">d =</label>
+			<input id="diameter" property mv-default="[if(radius > 0, radius * 2)]" type="number" min="0" placeholder="diameter" />
+	
+			<label id="circumference" class="answer">
+				Circumference =
+				<output for="radius" property="circumference">
+					[if(radius = 0 or isNaN(radius), "&nbsp;"", radius * 2 * PI)]
+				</output>
+			</label>
+		</p>
+
+		<figure>
+			<svg id="circle" viewBox="0 0 100 100" width="204" overflow="visible">
+				<circle cx="50" cy="50" r="50" class="circle" />
+				<line y1="50" x2="100" y2="50" class="diameter" />
+				<line y1="50" x2="50" y2="50" class="radius" />
+				<circle cx="50" cy="50" r="2" class="center" />
+				<text class="circumference-text">
+					c = [if(circumference = 0 or isNaN(circumference), "circumference", circumference)]
+				</text>
+				<text x="25" y="46" class="radius-text">
+					r = [if(radius = 0 or isNaN(radius), "radius", radius)]
+				</text>
+				<text x="50" y="62" class="diameter-text">
+					d = [if(diameter = 0 or isNaN(diameter), "diameter", diameter)]
+				</text>
+			</svg>
+		</figure>
+	</section>
+
+	<section id="percentages-app">
+		<h2>Percentages</h2>
+		<div>
+			<label>
+				What is
+				<input id="a" property type="number" placeholder="this" />%
+			</label>
+			<label>
+				of
+				<input id="b" property type="number" placeholder="this" />?
+			</label>
+
+			<label class="answer">
+				Answer =
+				<output for="a b">
+					[if(a and b and !isNaN(a / 100 * b), a / 100 * b, "&nbsp;")]
+				</output>
+			</label>
+		</div>
+
+		<div>
+			<input id="c" property type="number" placeholder="this" />
+			is what percent
+			<label>
+				of
+				<input id="d" property type="number" placeholder="this" />?
+			</label>
+
+			<label class="answer">
+				Answer =
+				<output for="c d">
+					[if(c and d and !isNaN(c / d * 100), c / d * 100 & "%", "&nbsp;")]
+				</output>
+			</label>
+		</div>
+
+		<div>
+			What is the percentage change
+			<label>
+				from
+				<input id="e" property type="number" placeholder="this" />
+			</label>
+			<label>
+				to
+				<input id="f" property type="number" placeholder="this" />?
+			</label>
+
+			<label class="answer">
+				Answer =
+				<output for="e f">
+					[if(e and f and !isNaN(((f - e) / e) * 100), ((f - e) / e) * 100 & "%", "&nbsp;")]
+				</output>
+			</label>
+		</div>
+	</section>
+
+	<section id="aspect-ratio-app">
+		<h2>Aspect Ratio</h2>
+
+		<meta property="divisor" content="[gcd(width, height)]" />
+		<meta property="aspect_ratio" content="[width / height]" />
+
+		<p>
+			Old:
+			<input id="width" property type="number" min="0" placeholder="width" />
+			×
+			<input id="height" property type="number" min="0" placeholder="height" />
+		</p>
+
+		<p>
+			New:
+			<input property="new_width" mv-default="[if(aspect_ratio * new_height > 0, aspect_ratio * new_height, '')]" type="number" min="0" />
+			×
+			<input property="new_height" mv-default="[if((1 / aspect_ratio) * new_width > 0, (1 / aspect_ratio) * new_width, '')]" type="number" min="0" />
+		</p>
+
+		<output for="width height" mv-if="aspect_ratio and width != 0 and height != 0" style="aspect-ratio: [aspect_ratio];">
+			[width / divisor]:[height / divisor]
+		</output>
+	</section>
+</main>
+
+<script>
+	function gcd (a, b) {
+		return (b == 0) ? a : gcd(b, a % b);
+	}
+</script>
+
+<!-- This adds the demo navigation toolbar. It"s not actually needed for the demo to work -->
+<script src="/js/demo.js"></script>
+
+</body>
+
+</html>
