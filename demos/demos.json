@@ -48,6 +48,18 @@
 					"featured": false
 				},
 				{
+					"name": "Events list",
+					"tag": [
+						"Functions",
+						"Date & Time"
+					],
+					"id": "countdown",
+					"video": "/demos/countdown/video.mp4",
+					"url": "/demos/countdown",
+					"description": "A list of past and future events with countdowns. Showcases how effectively Mavo works with dates and how the whole HTML page can be a Mavo app.",
+					"featured": false
+				},
+				{
 					"name": "Color picker",
 					"tag": [],
 					"id": "color-picker",
