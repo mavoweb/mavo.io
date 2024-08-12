@@ -54,22 +54,22 @@ input {
 	border: none;
 	border-block-end: solid 1px;
 	text-align: center;
-}
 
-input:focus {
-	outline: none;
-}
+	&:focus {
+		outline: none;
 
-input:focus::-webkit-input-placeholder {
-	color: transparent !important;
-}
+		&::-webkit-input-placeholder {
+			color: transparent !important;
+		}
 
-input:focus::-moz-placeholder {
-	color: transparent !important;
-}
+		&::-moz-placeholder {
+			color: transparent !important;
+		}
 
-input:focus:placeholder {
-	color: transparent !important;
+		&:placeholder {
+			color: transparent !important;
+		}
+	}
 }
 
 section:has(+ section), #percentages-app div:has(+ div) {
