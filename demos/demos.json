@@ -96,7 +96,7 @@
 					"id": "calculators",
 					"video": "/demos/calculators/video.mp4",
 					"url": "/demos/calculators",
-					"description": "Showcases how Mavo can gracefully handle calculations when two or more properties depend on each other. It also shows how Mavo can work with custom JavaScript functions as if they were Mavo built-in functions.",
+					"description": "Showcases how mv-default can gracefully handle calculations with circular dependencies. It also showcases how Mavo functions can be extended by simply defining global JS functions (namely, a `gcd()` function).",
 					"featured": false
 				},
 				{
