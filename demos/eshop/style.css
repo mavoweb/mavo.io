@@ -155,7 +155,7 @@ input[property="quantity"] {
 		width: 2em;
 	}
 
-[mv-app=cart] button.remove {
+/* [mv-app=cart] button.remove {
 	all: initial;
 	font-size: 70%;
 	padding: .2em .3em;
@@ -166,7 +166,7 @@ input[property="quantity"] {
 
 	[mv-app=cart] button.remove:hover {
 		background: hsl(0,100%, 90%);
-	}
+	} */
 
 footer {
 	font-size: smaller;
@@ -175,4 +175,15 @@ footer {
 .empty-cart-message {
 	color: hsl(var(--color-muted), 60%);
 	font-style: italic;
+}
+
+.mv-item-bar.mv-item-bar.mv-item-bar {
+	position: static;
+	opacity: 1;
+	border: 0;
+	pointer-events: auto;
+}
+
+.mv-ui.mv-add.mv-add-product {
+	display: none;
 }

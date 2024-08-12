@@ -58,10 +58,10 @@
 				<th>Subtotal</th>
 			</tr>
 		</thead>
-		<tbody mv-list mv-initial-items="0">
-			<tr property="product" mv-list-item>
+		<tbody mv-list mv-initial-items="0" mv-mode="edit" mv-item-bar="delete">
+			<tr property="product" mv-list-item mv-mode="read">
 				<!-- Anything with a name attribute is sent to PayPal -->
-				<td><button type="button" title="Remove from cart" mv-action="delete(product)" class="remove">❌</button></td>
+				<td class="mv-ui mv-item-bar"></td>
 				<td property="name"></td>
 				<td><input type="number" property="quantity" value="1" min="1" name="quantity_[$index + 1]"></td>
 				<td class="price" property="amount"></td>
