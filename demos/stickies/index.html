@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://get.mavo.io/stable/mavo.min.css">
 	<script src="https://get.mavo.io/stable/mavo.es5.min.js"></script>
 </head>
-<body mv-action="add(group(position, color: get(colors.value, random(0, colors.length))), stickies)">
+<body mv-action="add(group(position, color: get(colors.value, random(0, colors.length - 1))), stickies)">
 	<meta property="position" mv-value="$mouse">
 	<meta property="colors" mv-value="list(
 		group(name: 'Gray 1', value: '#f1f3f5'),
