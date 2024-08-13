@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" mv-app="stickies" mv-storage="local" mv-autosave mv-mode="edit">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sticky Notes!</title>
+	<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">📌</text></svg>'>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://get.mavo.io/stable/mavo.min.css">
+	<script src="https://get.mavo.io/stable/mavo.es5.min.js"></script>
+</head>
+<body mv-action="add(group(position, color: get(colors.value, random(0, colors.length))), stickies)">
+	<meta property="position" mv-value="$mouse">
+	<meta property="colors" mv-value="list(
+		group(name: 'Gray 1', value: '#f1f3f5'),
+		group(name: 'Red 1', value: '#ffe3e3'),
+		group(name: 'Pink 1', value: '#ffdeeb'),
+		group(name: 'Grape 1', value: '#f3d9fa'),
+		group(name: 'Violet 1', value: '#d0bcf1'),
+		group(name: 'Indigo 1', value: '#b9d0f9'),
+		group(name: 'Blue 1', value: '#c9e4ff'),
+		group(name: 'Cyan 1', value: '#b5e7a0'),
+		group(name: 'Teal 1', value: '#b3e6e6'),
+		group(name: 'Green 1', value: '#b7e4c7'),
+		group(name: 'Lime 1', value: '#f4f1c9'),
+		group(name: 'Yellow 1', value: '#fff3bf')
+	)">
+	<main mv-list property="stickies" mv-initial-items="0">
+		<article class="sticky" mv-item-bar="delete" style="--x: [x]; --y: [y]; --color: [color]">
+			<h2 property="title" mv-mode="edit">Sticky Note</h2>
+			<div property="content"></div>
+			<span property="color" mv-editor-type="color" mv-editor-list="colors" mv-attribute="data-color">[first(colors where value = color).name or color]</span>
+		</article>
+	</main>
+	<datalist id="colors" mv-list mv-value="colors">
+		<option mv-list-item="color_suggestion" mv-group value="[value]">[name]</option>
+	</datalist>
+	<footer>
+		Colors from <a href="https://yeun.github.io/open-color/">Open Color</a>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,71 @@
+@font-face {
+	font-family: "Marker Felt";
+	src: local("Marker Felt"), url("../todo/Marker-Felt.woff");
+}
+
+html {
+	font: 100%/1.45 Marker Felt, Comic Sans MS, cursive;
+}
+
+body {
+	margin: 0;
+}
+
+main {
+	/* This needs a border image of a proper cork board */
+	border: 1em solid hsl(10 80% 40%);
+	box-sizing: border-box;
+
+	height: 100vh;
+	background: #D19862;
+}
+
+.sticky {
+	--_color: var(--color, #fff3bf);
+	/* Maybe a gradient shadow here?
+	I tried radial-gradient(at top left, transparent 67%, oklch(from var(--_color) calc(l - .15) calc(c * 1.3) h) 90%) bottom / 100% 24% no-repeat  var(--_color)
+	but it didn't work well
+	 */
+	background: var(--_color);
+	width: 20em;
+	aspect-ratio: 1;
+	overflow: hidden;
+	resize: horizontal;
+	padding: 1em;
+	box-shadow: .05em .1em 1em -.5em black;
+
+	border-bottom-right-radius: 100% .8em;
+	rotate: -3deg;
+	margin: 1em;
+
+	&[style*="--x:"] {
+		position: absolute;
+		left: calc(var(--x) * 1px);
+		top: calc(var(--y) * 1px - 1em);
+	}
+
+	h2 {
+		margin: 0;
+	}
+
+	[property="color"] {
+		position: absolute;
+		bottom: 1em;
+		background: oklch(from var(--_color) calc(l - .1) calc(c * 1.5) h);
+		padding: .15em .7em;
+		border-radius: 1em;
+	}
+}
+
+.mv-item-bar.mv-item-bar.mv-item-bar.mv-ui {
+	top: .5em;
+	right: .6em;
+
+	&:not([hidden]) {
+		opacity: 1;
+	}
+}
+
+[mv-app] .mv-ui.mv-add-stickies {
+	display: none;
+}
