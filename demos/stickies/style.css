@@ -14,10 +14,13 @@ body {
 main {
 	/* This needs a border image of a proper cork board */
 	border: 1em solid hsl(10 80% 40%);
+	border-image: url(../images/wood-texture.jpg) 20 round;
 	box-sizing: border-box;
 
 	height: 100vh;
 	background: #D19862;
+	background-image: url(../images/cork-texture.jpg);
+	box-shadow: inset 0 0 1em .05em black;
 }
 
 .sticky {
