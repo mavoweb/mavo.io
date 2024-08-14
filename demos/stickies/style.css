@@ -13,14 +13,32 @@ body {
 
 main {
 	/* This needs a border image of a proper cork board */
-	border: 1em solid hsl(10 80% 40%);
-	border-image: url(../images/wood-texture.jpg) 20 round;
+	border: 1.8em solid hsl(10 80% 40%);
+	border-image: url(../images/frame.jpg) 70;
 	box-sizing: border-box;
 
 	height: 100vh;
 	background: #D19862;
 	background-image: url(../images/cork-texture.jpg);
-	box-shadow: inset 0 0 1em .05em black;
+	background-size: 30%;
+	box-shadow: inset 0 0 2.2em -.5em black;
+}
+
+footer {
+	position: absolute;
+	left: 2.5em;
+	bottom: .1em;
+	color: hsl(0 0% 36%);
+	text-shadow: -.02em .01em .02em hsl(0 0% 0% / .5),
+	             .03em -.05em 0 hsl(0 0% 100% / .7);
+
+	a {
+		color: inherit;
+
+		&:not(:hover, :focus, :active) {
+			text-decoration: none;
+		}
+	}
 }
 
 .sticky {
