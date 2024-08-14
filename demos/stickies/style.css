@@ -21,7 +21,7 @@ main {
 	background: #D19862;
 	background-image: url(../images/cork-texture.jpg);
 	background-size: 30%;
-	box-shadow: inset 0 0 2.2em -.5em black;
+	box-shadow: inset .05em .1em 2.2em -.5em black;
 }
 
 footer {
@@ -75,6 +75,19 @@ footer {
 		background: oklch(from var(--_color) calc(l - .1) calc(c * 1.5) h);
 		padding: .15em .7em;
 		border-radius: 1em;
+
+		transition: opacity .4s;
+		&:not(:hover, :focus) {
+			opacity: 0;
+		}
+	}
+
+	&:focus-within {
+		z-index: 1;
+
+		[property="color"] {
+			opacity: 1;
+		}
 	}
 }
 
