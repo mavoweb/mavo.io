@@ -13,7 +13,7 @@ body {
 
 main {
 	/* This needs a border image of a proper cork board */
-	border: 1.8em solid hsl(10 80% 40%);
+	border: 2.5em solid hsl(10 80% 40%);
 	border-image: url(../images/frame.jpg) 70;
 	box-sizing: border-box;
 
@@ -27,10 +27,11 @@ main {
 footer {
 	position: absolute;
 	left: 2.5em;
-	bottom: .1em;
-	color: hsl(0 0% 36%);
-	text-shadow: -.02em .01em .02em hsl(0 0% 0% / .5),
-	             .03em -.05em 0 hsl(0 0% 100% / .7);
+	bottom: .2em;
+	font-size: 1.4em;
+	color: hsl(330deg, 1.85%, 21.18%);
+	text-shadow: 1px 1px 2px hsl(0 0% 100% / .2),
+	             -1px -1px 2px hsl(0 0% 0% / .8);
 
 	a {
 		color: inherit;
@@ -58,6 +59,7 @@ footer {
 	border-bottom-right-radius: 100% .8em;
 	rotate: -3deg;
 	margin: 1em;
+	z-index: 1;
 
 	&[style*="--x:"] {
 		position: absolute;
@@ -83,7 +85,7 @@ footer {
 	}
 
 	&:focus-within {
-		z-index: 1;
+		z-index: 2;
 
 		[property="color"] {
 			opacity: 1;
