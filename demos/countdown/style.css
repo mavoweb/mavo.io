@@ -1,6 +1,6 @@
 html {
 	background: hsl(220 10% 96%);
-	padding-inline: 1em;
+	padding-inline: 1.5em;
 	min-height: 100vh;
 	font: 120%/1.5 system-ui, Helvetica Neue, sans-serif;
 }
@@ -14,15 +14,16 @@ body {
 button {
 	font: inherit;
 	font-weight: bold;
-	background: hsl(220, 10%, 90%);
-	border: 1px solid rgba(0,0,0,.1);
+	background: hsl(220 10% 90%);
+	border: 1px solid rgba(0 0 0 / .1);
 	padding: 0 .4em;
 	cursor: pointer;
 }
 
 fieldset {
-	border: 1px solid rgba(0,0,0,.15);
+	border: 1px solid rgba(0 0 0 / .15);
 	border-radius: .3em;
+	margin-bottom: 1em;
 }
 
 main {
