@@ -3,11 +3,11 @@ body {
 	display: grid;
 	grid-template-columns: 1fr 30em;
 	grid-gap: 2em;
-	font: 100%/1.5 Helvetica Neue, Segoe UI, sans-serif;
+	font: 100%/1.5 system-ui, Helvetica Neue, Segoe UI, sans-serif;
 
-	--color-accent1: 26, 100%;
-	--color-accent2: 80, 60%;
-	--color-muted: 220, 20%;
+	--color-accent1: 26 100%;
+	--color-accent2: 80 60%;
+	--color-muted: 220 20%;
 }
 
 h1 {
@@ -15,11 +15,11 @@ h1 {
 	font-weight: 100;
 	font-size: 400%;
 	line-height: 1;
-	color: hsl(var(--color-accent1), 48%);
+	color: hsl(var(--color-accent1) 48%);
 }
 
 a {
-	color: hsl(var(--color-muted), 40%);
+	color: hsl(var(--color-muted) 40%);
 }
 
 button {
@@ -30,7 +30,7 @@ button {
 	display: grid;
 	grid-template: auto 1fr / auto 1fr auto;
 	grid-gap: 0 1em;
-	background: hsl(var(--color-muted), 92%);
+	background: hsl(var(--color-muted) 92%);
 	padding: .5em;
 	margin: .5em 0;
 	border-radius: .25em;
@@ -59,16 +59,11 @@ tfoot .price, button {
 
 [mv-app="eshop"] .add-to-cart {
 	margin-bottom: auto;
-	background: hsl(var(--color-muted), 82%);
-	color: hsl(var(--color-muted), 40%);
+	background: hsl(var(--color-muted) 82%);
+	color: hsl(var(--color-muted) 40%);
 	padding: .6em .8em .6em .6em;
-}
 
-	[mv-app="eshop"] .add-to-cart:hover {
-		background: hsl(var(--color-muted), 75%);
-	}
-
-	[mv-app="eshop"] .add-to-cart::before {
+	&::before {
 		content: url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="hsl(220, 20%, 40%)">\
 			<path d="M 87 26 h -59 l -3 -8.3 a 3 3 0 0 0 -2.8 -2.2 h -12 v 6 h 10 l 12 38.2 a 3 3 0 0 0 3 2 h 43 a 3 3 0 0 0 3 -1.8 l 9 -30 a 3 3 0 0 0 -2.9 -3.9 Z" />\
 			<circle r="9.4" cx="70.3" cy="78" /><circle r="9.4" cx="41.7" cy="78" />\
@@ -81,9 +76,14 @@ tfoot .price, button {
 		transition: .3s transform;
 	}
 
-		[mv-app="eshop"] .add-to-cart:hover::before {
+	&:hover {
+		background: hsl(var(--color-muted) 75%);
+
+		&::before {
 			transform: translateX(.2em);
 		}
+	}
+}
 
 [mv-app="cart"] .checkout {
 	display: block;
@@ -91,17 +91,17 @@ tfoot .price, button {
 	width: 100%;
 	padding: .3em .8em .35em;
 	margin-top: 1em;
-	background: hsl(var(--color-accent2), 60%);
-	color: hsl(var(--color-accent2), 20%);
+	background: hsl(var(--color-accent2) 60%);
+	color: hsl(var(--color-accent2) 20%);
 	font-size: 120%;
-}
 
-	[mv-app="cart"] .checkout::before {
+	&::before {
 		content: url("https://www.paypalobjects.com/webstatic/icon/favicon.ico");
 		display: inline-block;
 		vertical-align: -.4em;
 		margin-right: .2em;
 	}
+}
 
 .price::before {
 	content: "$";
@@ -110,80 +110,67 @@ tfoot .price, button {
 input[property="quantity"] {
 	width: 2em;
 	font: inherit;
-	border: 1px solid hsl(var(--color-muted), 70%);
+	border: 1px solid hsl(var(--color-muted) 70%);
 	border-radius: .15em;
 }
 
 [mv-app=cart] table {
 	width: 100%;
 	border-collapse: collapse;
-}
 
-	[mv-app=cart] tfoot {
+	tfoot {
 		border-top: 1px solid;
 		font-weight: bold;
 	}
 
-	[mv-app=cart] col.product {
+	col.product {
 		width: 80%;
 	}
 
-	[mv-app=cart] th {
+	th {
 		text-align: inherit;
 	}
 
-	[mv-app=cart] col.subtotal {
-		background: hsl(var(--color-accent1), 95%);
+	col.subtotal {
+		background: hsl(var(--color-muted) 95%);
 	}
 
-	[mv-app=cart] tr > :last-child,
-	[mv-app=cart] :not(tfoot) > tr:not(.empty-cart-message) > :nth-last-child(2) {
+	tr > :last-child,
+	:not(tfoot) > tr:not(.empty-cart-message) > :nth-last-child(2) {
 		text-align: right;
 	}
 
-	[mv-app=cart] td,
-	[mv-app=cart] th {
+	:is(td, th):not(:first-child) {
 		padding: .5rem;
 	}
 
-	[mv-app=cart] td:first-child,
-	[mv-app=cart] th:first-child {
-		padding: 0;
+	.mv-ui.mv-add-product {
+		display: none;
 	}
 
-	[mv-app=cart] col.remove {
-		width: 2em;
+	.mv-ui.mv-item-bar {
+		position: static;
+		opacity: 1;
+		border: 0;
+		pointer-events: auto;
+		vertical-align: -.4em;
+		margin-inline-end: .4em;
 	}
 
-/* [mv-app=cart] button.remove {
-	all: initial;
-	font-size: 70%;
-	padding: .2em .3em;
-	border-radius: .2em;
-	cursor: pointer;
-	text-align: center;
+	.mv-drag-handle {
+		cursor: initial;
+	}
 }
-
-	[mv-app=cart] button.remove:hover {
-		background: hsl(0,100%, 90%);
-	} */
 
 footer {
 	font-size: smaller;
 }
 
 .empty-cart-message {
-	color: hsl(var(--color-muted), 60%);
+	color: hsl(var(--color-muted) 60%);
 	font-style: italic;
 }
 
-.mv-item-bar.mv-item-bar.mv-item-bar {
-	position: static;
-	opacity: 1;
-	border: 0;
-	pointer-events: auto;
-}
 
-.mv-ui.mv-add.mv-add-product {
-	display: none;
-}
+
+

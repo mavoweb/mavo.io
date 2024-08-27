@@ -5,8 +5,8 @@
 <meta charset="UTF-8">
 <title>E-shop</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://get.mavo.io/stable/mavo.min.css">
-<script src="https://get.mavo.io/stable/mavo.es5.min.js"></script>
+<link rel="stylesheet" href="https://get.mavo.io/mavo.min.css">
+<script src="https://get.mavo.io/mavo.min.js"></script>
 <link rel="stylesheet" href="style.css">
 
 </head>
@@ -43,7 +43,6 @@
 
 	<table>
 		<colgroup>
-			<col class="remove"></col>
 			<col class="product"></col>
 			<col class="quantity"></col>
 			<col class="price"></col>
@@ -51,7 +50,6 @@
 		</colgroup>
 		<thead>
 			<tr>
-				<th></th>
 				<th>Product</th>
 				<th>Quantity</th>
 				<th>Price</th>
@@ -59,17 +57,15 @@
 			</tr>
 		</thead>
 		<tbody mv-list mv-initial-items="0" mv-mode="edit" mv-item-bar="delete">
-			<tr property="product" mv-list-item mv-mode="read">
+			<tr property="product" mv-list-item>
 				<!-- Anything with a name attribute is sent to PayPal -->
-				<td class="mv-ui mv-item-bar"></td>
-				<td property="name"></td>
+				<th>
+					<span class="mv-ui mv-item-bar"></span>
+					<span property="name" mv-editor-name="item_name_[$index + 1]" inert></span>
+				</th>
 				<td><input type="number" property="quantity" value="1" min="1" name="quantity_[$index + 1]"></td>
-				<td class="price" property="amount"></td>
-				<td>
-					<span property="subtotal" class="price">[amount * quantity]</span>
-					<input type="hidden" name="item_name_[$index + 1]" value="[name]">
-					<input type="hidden" name="amount_[$index + 1]" value="[amount]">
-				</td>
+				<td class="price" property="amount" mv-editor-name="amount_[$index + 1]" inert></td>
+				<td property="subtotal" class="price">[amount * quantity]</td>
 			</tr>
 		</tbody>
 		<tr mv-if="count(product) = 0" class="empty-cart-message">
@@ -78,7 +74,7 @@
 		</tr>
 		<tfoot>
 			<tr>
-				<td colspan="4">Total</td>
+				<td colspan="3">Total:</td>
 				<td class="price">[sum(subtotal)]</td>
 			</tr>
 		</tfoot>
