@@ -53,6 +53,20 @@ body > header {
 		}
 	}
 
+	.code-js {
+		&::before {
+			content: "⚙️ ";
+		}
+	}
+
+	.code-logo {
+		&::before {
+			content: "🐢 ";
+			display: inline-block;
+			translate: 0 -.15em;
+		}
+	}
+
 	h1 {
 		margin: 0;
 		font-size: 130%;
@@ -109,18 +123,19 @@ body > header {
 
 		& > div {
 			position: absolute;
-			left: -.5em;
+			left: 0;
+			top: 100%;
 			z-index: 2;
-			margin-top: .5em;
-			background: white;
+			margin-top: .3em;
+			background: hsl(220 10% 96%);
 			border: 1px solid rgb(0 0 0 / .2);
-			box-shadow: 0 .2em 1em rgb(0 0 0 / .2);
+			box-shadow: 0 .2em 1.5em -.5em rgb(0 0 0 / .2);
 			border-radius: .3rem;
 
 			&::before {
 				content: "";
 				position: absolute;
-				top: -.5em * .6;
+				top: calc(-.5em * .6);
 				left: 1em;
 				background: inherit;
 				border: inherit;
@@ -132,18 +147,21 @@ body > header {
 			}
 		}
 
-		/* JS */
+		/* Code */
 		textarea {
 			display: block;
-			width: 40rem;
+			field-sizing: content;
+			min-width: 12rem;
 			max-width: 90vw;
-			height: 20rem;
+			background: transparent;
+			tab-size: 4;
 			max-height: 90vh;
 			padding: 1rem;
 			box-sizing: border-box;
 			border: 0;
 			font: 60%/1.5 Consolas, Monaco, monospace;
 			border-radius: inherit;
+			white-space: pre;
 		}
 	}
 

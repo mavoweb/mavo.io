@@ -29,11 +29,18 @@ var brushDown = true;
 
 	<div class="mv-bar" mv-bar="with import export clear"></div>
 	<details>
-		<summary class="button mv-code-js">Code (JS)</summary>
+		<summary class="button code-js">Code (JS)</summary>
 		<div>
 			<textarea>[code_before][code]</textarea>
 		</div>
 	</details>
+	<details>
+		<summary class="button code-logo">Code (LOGO)</summary>
+		<div>
+			<textarea>[logo_code]</textarea>
+		</div>
+	</details>
+
 
 	<section>
 		<input type="number" property="width" value="1000" /> &times;
@@ -63,6 +70,7 @@ var brushDown = true;
 					<option value="1">clockwise</option>
 					<option value="-1">anti-clockwise</option>
 				</select>
+				<meta property="logo" content="[if(direction = 1, 'right', 'left')] [angle]" />
 				<meta property="js" content='ctx.rotate((Math.PI / 180) * [direction] * [angle]);
 '>
 			</label>
@@ -74,7 +82,7 @@ var brushDown = true;
 				</select>
 				<input type="number" property="steps" value="100" />
 				steps
-
+				<meta property="logo" content="[if(direction = 1, 'forward', 'backward')] [steps]" />
 				<meta property="js" content='
 ctx.moveTo(0, 0);
 ctx.lineTo([direction] * [steps], 0);
@@ -87,19 +95,25 @@ if (brushDown) ctx.stroke();
 				to
 				<!-- color.$previous should have worked here -->
 				<input type="color" property="color" mv-default="[first(condense(color.$all).slice(0, -1)) or '#ff0066']" />
-				<meta property="js" content='var color = ctx.strokeStyle = "[color]";
+				<meta property="logo" content="setpc [color]" />
+				<meta property="js" content='ctx.strokeStyle = "[color]";
 if (brushDown) ctx.closePath(); ctx.beginPath();'>
 			</label>
 
 			<div mv-if="type = 'up'">
+				<meta property="logo" mv-mode="read" content="penup" />
 				<meta property="js" content='ctx.closePath(); brushDown = false;' mv-mode="read">
 			</div>
 			<div mv-if="type = 'down'">
+				<meta property="logo" mv-mode="read" content="pendown" />
 				<meta property="js" content='ctx.beginPath(); brushDown = true;' mv-mode="read">
 			</div>
 			<label mv-if="type = 'repeat'">
 				<input type="number" property="times" />
 				times:
+				<meta property="logo" content='repeat [times] ["\\u005B"]
+	[ replace(join(instruction.logo, "\\n"), "\\n", "\\n\\t") ]
+["\\u005D"] ' />
 				<meta property="js" content='for (let i=0; i<[times]; i++) {
 	[ replace(join(instruction.js, "\\n"), "\\n", "\\n\\t") ]
 }'>
@@ -112,6 +126,7 @@ if (brushDown) ctx.closePath(); ctx.beginPath();'>
 		</li>
 	</ol>
 	<meta property="code" content="[join(js, '\\n')]" />
+	<meta property="logo_code" content="[join(logo, '\\n')]" />
 
 	<footer>
 		Concept & design heavily inspired <br> from Nicky Case’s awesome <a href="http://ncase.me/joy-demo/turtle/" target="_blank">Joy of Turtle</a>
