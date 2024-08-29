@@ -4,29 +4,40 @@
 
 <meta charset="UTF-8">
 <title>Turtle</title>
+<link rel="icon" href="turtle.svg">
 <link rel="stylesheet" href="https://get.mavo.io/v0.2.1/mavo.css">
-<script src="https://get.mavo.io/v0.2.1/mavo.min.js"></script> <!-- mv-like support -->
+<script src="https://get.mavo.io/v0.2.1/mavo.js"></script> <!-- mv-like support -->
 <link rel="stylesheet" href="style.css">
 
 </head>
 <body mv-app="turtle" mv-storage="local" mv-plugins="clear" mv-autosave="0">
 
 <header>
-	<h1>
-		🐢
+	<meta property="encoded_last_color" mv-value="replace(last(color), '#', '%23')" />
+	<h1><img id="turtle_image" src='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+		<circle cx="50" cy="50" r="50" opacity=".1" />
+		<circle cx="50" cy="50" r="37" style="fill: %23f06; fill: [encoded_last_color];" />
+		<circle id="eye" cx="65" cy="35" r="8.8" fill="black" stroke="white" stroke-width="6" />
+		<use href="%23eye" y="30" /></svg>'>
 	</h1>
+	<meta property="code_before" mv-mode="read" mv-storage="none" content='var ctx = canvas.getContext("2d");
+ctx.lineWidth = 8;
+ctx.lineJoin = ctx.lineCap = "round";
+ctx.strokeStyle = "#f06";
+var brushDown = true;
+' />
 
 	<div class="mv-bar" mv-bar="with import export clear"></div>
 	<details>
-		<summary class="button">JS</summary>
+		<summary class="button mv-code-js">Code (JS)</summary>
 		<div>
-			<textarea>[code]</textarea>
+			<textarea>[code_before][code]</textarea>
 		</div>
 	</details>
 
 	<section>
-		<input type="number" property="width" value="1000" class="mv-autosize" /> &times;
-		<input type="number" property="height" value="1000" class="mv-autosize" />
+		<input type="number" property="width" value="1000" /> &times;
+		<input type="number" property="height" value="1000" />
 	</section>
 </header>
 
@@ -35,7 +46,7 @@
 	<ol>
 		<li property="instruction" mv-multiple mv-mode="edit">
 
-			<select property="type" class="mv-autosize">
+			<select property="type">
 				<option value="move">Move</option>
 				<option value="turn">Turn</option>
 				<option value="color">Change color</option>
@@ -45,48 +56,54 @@
 			</select>
 
 			<label mv-if="type = turn">
-				<input type="number" property="angle" value="20" class="mv-autosize" />
+				<input type="number" property="angle" value="20" />
 				degrees
 
-				<meta property="js" content='ctx.rotate((Math.PI / 180) * [angle]);
+				<select property="direction">
+					<option value="1">clockwise</option>
+					<option value="-1">anti-clockwise</option>
+				</select>
+				<meta property="js" content='ctx.rotate((Math.PI / 180) * [direction] * [angle]);
 '>
 			</label>
 
 			<label mv-if="type = move">
-				forward
-				<input type="number" property="steps" value="100" class="mv-autosize" />
+				<select property="direction">
+					<option value="1">forward</option>
+					<option value="-1">backward</option>
+				</select>
+				<input type="number" property="steps" value="100" />
 				steps
 
 				<meta property="js" content='
-ctx.beginPath();
 ctx.moveTo(0, 0);
-ctx.lineTo([steps], 0);
-ctx.translate([steps], 0);
-ctx.stroke();
+ctx.lineTo([direction] * [steps], 0);
+ctx.translate([direction] * [steps], 0);
+if (brushDown) ctx.stroke();
 '>
 			</label>
 
 			<label mv-if="type = 'color'">
 				to
-				<input type="color" property="color" />
+				<!-- color.$previous should have worked here -->
+				<input type="color" property="color" mv-default="[first(condense(color.$all).slice(0, -1)) or '#ff0066']" />
 				<meta property="js" content='var color = ctx.strokeStyle = "[color]";
-'>
-			</label>
-
-			<label mv-if="type = 'repeat'">
-				<input type="number" property="times" class="mv-autosize" />
-				times:
-				<meta property="js" content='for (let i=0; i<[times]; i++) {
-	[replace(join(instruction.js, "\\n"), "\\n", "\\n\\t")]
-}'>
+if (brushDown) ctx.closePath(); ctx.beginPath();'>
 			</label>
 
 			<div mv-if="type = 'up'">
-				<meta property="js" content='ctx.strokeStyle = "transparent";' mv-mode="read">
+				<meta property="js" content='ctx.closePath(); brushDown = false;' mv-mode="read">
 			</div>
 			<div mv-if="type = 'down'">
-				<meta property="js" content='ctx.strokeStyle = color;' mv-mode="read">
+				<meta property="js" content='ctx.beginPath(); brushDown = true;' mv-mode="read">
 			</div>
+			<label mv-if="type = 'repeat'">
+				<input type="number" property="times" />
+				times:
+				<meta property="js" content='for (let i=0; i<[times]; i++) {
+	[ replace(join(instruction.js, "\\n"), "\\n", "\\n\\t") ]
+}'>
+			</label>
 
 			<div class="mv-item-bar mv-ui"></div>
 			<ol mv-if="type = 'repeat'">
@@ -117,12 +134,12 @@ ctx.stroke();
 <body>
 <canvas width="[width]" height="[height]" id="canvas"></canvas>
 <script>
-var ctx = canvas.getContext("2d");
-ctx.lineWidth = 8;
+[code_before]
 try {
 ctx.translate([width/2], [width/2]);
 [code]
-} catch(e) {}
+} catch(e) {console.error(e)}
+ctx.drawImage(parent.turtle_image, -25, -25, 50, 50);
 </script>
 </body>
 	' frameborder="0"></iframe>
@@ -130,7 +147,7 @@ ctx.translate([width/2], [width/2]);
 
 </main>
 
-<script src="/js/demo.js"></script>
+<!-- <script src="/js/demo.js"></script> -->
 <script>
 // Fix Chrome bug
 document.addEventListener("mv-load", evt => {
