@@ -29,9 +29,19 @@ footer {
 	left: 2.5em;
 	bottom: .2em;
 	font-size: 1.4em;
-	color: hsl(330deg, 1.85%, 21.18%);
-	text-shadow: 1px 1px 2px hsl(0 0% 100% / .2),
-	             -1px -1px 2px hsl(0 0% 0% / .8);
+	cursor: default;
+
+	&:not(:hover) {
+		color: hsl(330 1.85% 21.18%);
+		text-shadow: 1px 1px 2px hsla(0, 0%, 100%, 0.2),
+		             -1px -1px 2px hsl(0 0% 0% / .9);
+	}
+
+	&:hover {
+		color: hsl(330 1.85% 40%);;
+		text-shadow: -.02em .01em .02em hsl(0 0% 0% / .5),
+		            .03em -.05em 0 hsl(0 0% 100% / .7);
+	}
 
 	a {
 		color: inherit;
